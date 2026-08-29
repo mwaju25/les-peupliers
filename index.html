@@ -51,7 +51,7 @@
         .charniere-gauche { left: -6px !important; } .charniere-gauche::after { left: -3px; }
         .charniere-droite { right: -6px !important; } .charniere-droite::after { right: -3px; }
 
-        /* HORLOGE ANALOGIQUE FINALE SANS DÉBORD */
+        /* HORLOGE ANALOGIQUE SANS DÉBORD */
         .montre-retro-cercle { 
             position: absolute; right: 2.2vw; top: 1vh; width: 15.6vw; height: 15.6vw; 
             background: #000000 !important; border: none !important; border-radius: 50%; 
@@ -190,7 +190,7 @@
             g.style.transform = 'rotate(' + (j * 6) + 'deg)'; mC.appendChild(g);
         }
 
-        // RECONSTRUCTION AVEC TRAITEMENT INDIVIDUEL DE L'INDEX ZERO POUR LE SOLEIL (SÉCURISÉ)
+        // SYNCHRONISATION ABSOLUE ET NETTOYAGE DU DÉCODAGE DES TABLEAUX API
         function executerMeteo() {
             fetch('https://open-meteo.com')
             .then(res => res.json())
@@ -213,11 +213,11 @@
                     intervalleFeuilles = setInterval(lancerFeuille, frequence);
                 }
 
-                // SÉCURISATION DU DISQUE DU SOLEIL PAR EXTRACTION INDEXÉE STRICTE
-                var leverAujourdhui = data.daily.sunrise[0];
-                var coucherAujourdhui = data.daily.sunset[0];
-                document.getElementById('sat-lever').textContent = leverAujourdhui.split('T')[1].substring(0, 5);
-                document.getElementById('sat-coucher').textContent = coucherAujourdhui.split('T')[1].substring(0, 5);
+                // FIXATION COMPLÈTE DE LA SYNTAXE TABLEAU : ON EXTRAIT L'INDEX ZERO DU JOUR J
+                var leverBrut = data.daily.sunrise[0];
+                var coucherBrut = data.daily.sunset[0];
+                document.getElementById('sat-lever').textContent = leverBrut.split('T')[1];
+                document.getElementById('sat-coucher').textContent = coucherBrut.split('T')[1];
 
                 var bas = document.getElementById('zone-7-jours'); bas.innerHTML = "";
                 const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
