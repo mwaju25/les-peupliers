@@ -19,36 +19,29 @@
             position: relative;
         }
 
-        /* CONFIGURATION ABSOLUE DU FOND INTERNET DIRECT */
+        /* CHARGEMENT DIRECT ET FLUIDE DE VOTRE MAQUETTE FINALE */
         .fond-global {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background-image: url('https://github.io');
+            background-image: url('fond-final.png');
             background-size: cover;
             background-position: center;
             z-index: -1;
         }
         
-        .flip-tuile-js { font-size: 2.4rem; font-weight: bold; color: #fff; text-transform: uppercase; padding: 5px 10px; }
-        .heure-digitale-js { font-size: 2.2rem; font-weight: bold; color: #fff; padding: 5px; }
+        header { display: flex; justify-content: space-between; align-items: center; height: 14vh; position: relative; z-index: 10; }
+        
+        .flip-tuile-js { font-size: 2.3rem; font-weight: bold; color: #fff; text-transform: uppercase; }
+        .heure-digitale-js { font-size: 2.2rem; font-weight: bold; color: #fff; letter-spacing: 2px; }
 
-        main { display: flex; justify-content: space-between; height: 64vh; margin: 10px 0; position: relative; z-index: 10; }
-        .colonne-gauche { width: 26%; background: transparent; }
-        .colonne-droite { width: 22%; background: transparent; display: flex; flex-direction: column; gap: 10px; }
-        .espace-central-libre { width: 50%; pointer-events: none; }
-
-        .text-dynamique-transparent { color: #fff; font-weight: bold; padding: 2px 5px; display: inline-block; }
-
-        footer { height: 18vh; display: flex; flex-direction: column; justify-content: space-between; position: relative; z-index: 10; }
-
-        /* AIGUILLES DE L'HORLOGE ANALOGIQUE RESTAURÉES */
+        /* BRAS ET ROTATION DES AIGUILLES DE L'HORLOGE ANALOGIQUE */
         .cadran-aiguilles {
             position: absolute;
-            right: 50px;
-            top: 15px;
+            right: 48px;
+            top: 12px;
             width: 110px;
             height: 110px;
             background: transparent;
@@ -61,9 +54,19 @@
             border-radius: 4px;
             z-index: 15;
         }
-        .heure { width: 4px; height: 30px; background-color: #fff; }
-        .minute { width: 3px; height: 42px; background-color: #8ad400; }
+        .heure { width: 4px; height: 32px; background-color: #fff; }
+        .minute { width: 3px; height: 44px; background-color: #8ad400; }
 
+        main { display: flex; justify-content: space-between; height: 64vh; margin: 10px 0; position: relative; z-index: 10; }
+        .colonne-gauche { width: 26%; background: transparent; }
+        .colonne-droite { width: 22%; background: transparent; display: flex; flex-direction: column; gap: 10px; }
+        .espace-central-libre { width: 50%; pointer-events: none; }
+
+        .text-dynamique-transparent { color: #fff; font-weight: bold; padding: 2px 5px; display: inline-block; }
+
+        footer { height: 18vh; display: flex; flex-direction: column; justify-content: space-between; position: relative; z-index: 10; }
+
+        /* DÉFILEMENT FLUIDE DES FEUILLES DU VENT EN ZONE CENTRALE */
         .particule-feuille { position: absolute; width: 14px; height: 9px; background: #628c34; border-radius: 0 75% 0 75%; opacity: 0.65; animation: animationVent linear infinite; }
         @keyframes animationVent {
             0% { transform: translate(-40px, 0px) rotate(0deg); }
@@ -73,15 +76,15 @@
 </head>
 <body>
 
-    <!-- LIEN DE COUCHE VISUELLE UNIQUE ALLUMÉ -->
+    <!-- L'IMAGE DU DÉCOR REVIENT AU PREMIER PLAN -->
     <div id="fond-ecran-principal" class="fond-global"></div>
 
     <div id="zone-feuilles-dynamiques" style="position: fixed; top: 20vh; left: 28vw; width: 46vw; height: 55vh; pointer-events: none; z-index: 2; overflow: hidden;"></div>
 
-    <header style="display: flex; justify-content: space-between; align-items: center; height: 14vh; position: relative; z-index: 10;">
+    <header>
         <div style="width: 135px; height: 135px; background: transparent;"></div>
         
-        <!-- TEXTES DATES ALIGNÉS SUR VOS CADRES -->
+        <!-- ALIGNEMENT DES TEXTES DE LA DATE SUR LES PANNEAUX MÉCANIQUES -->
         <div style="display: flex; gap: 42px; position: absolute; left: 24.5%; top: 22px;">
             <div class="flip-tuile-js" id="date-jour">SAMEDI</div>
             <div class="flip-tuile-js" id="date-num">29</div>
@@ -89,13 +92,14 @@
             <div class="flip-tuile-js" id="date-annee">2026</div>
         </div>
 
-        <!-- BLOC HORLOGER RECALIBRÉ -->
         <div class="cadran-aiguilles">
             <div class="aiguille heure" id="needle-hour"></div>
             <div class="aiguille minute" id="needle-minute"></div>
         </div>
-        <div style="position: absolute; right: 42px; top: 138px;">
-            <div class="heure-digitale-js" id="horloge-texte">12:59:36</div>
+        
+        <!-- PLACEMENT AU PIXEL PRÈS DE L'HORLOGE DIGITALE -->
+        <div style="position: absolute; right: 54px; top: 142px;">
+            <div class="heure-digitale-js" id="horloge-texte">13:02:10</div>
         </div>
     </header>
 
@@ -115,23 +119,18 @@
         </div>
     </main>
 
-    <footer>
-        <div style="text-align: center; font-size: 1.15rem; font-style: italic; width: 100%; margin-bottom: 5px;">
-            Un environnement <span style="color: #8ad400; font-weight: bold; font-style: normal;">stimulant</span> pour un avenir <span style="color: #8ad400; font-weight: bold; font-style: normal;">prometteur</span>
-        </div>
-    </footer>
+    <!-- FOOTER VIDE DE TEXTE POUR LAISSER APPARAÎTRE VOTRE PHRASE DU FOND -->
+    <footer></footer>
 
     <script>
         function actualiserEcran() {
             var tempsReel = new Date();
             
-            // Heure digitale
             var h = tempsReel.getHours();
             var m = tempsReel.getMinutes();
             var s = tempsReel.getSeconds();
             document.getElementById('horloge-texte').textContent = h.toString().padStart(2, '0') + ':' + m.toString().padStart(2, '0') + ':' + s.toString().padStart(2, '0');
             
-            // Aiguilles de l'horloge analogique
             var degHeure = (h % 12) * 30 + m * 0.5;
             var degMinute = m * 6;
             document.getElementById('needle-hour').style.transform = 'translateX(-50%) rotate(' + degHeure + 'deg)';
