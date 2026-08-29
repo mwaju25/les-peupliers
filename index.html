@@ -50,7 +50,7 @@
         .charniere-gauche { left: -6px !important; } .charniere-gauche::after { left: -3px; }
         .charniere-droite { right: -6px !important; } .charniere-droite::after { right: -3px; }
 
-        /* HORLOGE ANALOGIQUE FINALE DU PROJET SANS DÉBORD */
+        /* HORLOGE ANALOGIQUE FINALE SANS DÉBORD EXTRA-LARGE */
         .montre-retro-cercle { 
             position: absolute; right: 2.2vw; top: 1vh; width: 15.6vw; height: 15.6vw; 
             background: #000000 !important; border: none !important; border-radius: 50%; 
@@ -93,24 +93,23 @@
         .cadran-relief-noir-bloc { background: #05080c !important; border: 2px solid #162029 !important; border-radius: 12px; box-shadow: 0 6px 12px rgba(0,0,0,0.6); }
         .carte-prev-unique { width: 10.4vw; height: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 1.5vh 0; background: transparent; }
 
-        /* RESTAURATION DE LA MAGNIFIQUE LUNE PHOTOGRAPHIQUE ET TEXTURÉE DE L'IMAGE DE RÉFÉRENCE */
+        /* RESTAURATION DE LA BELLE LUNE PHOTOGRAPHIQUE ET TEXTURÉE DE L'IMAGE 2 */
         .soleil-realiste-css { width: 3.2vw; height: 3.2vw; background: radial-gradient(circle, #fff 15%, #ffea00 55%, #ff7700 100%); border-radius: 50%; box-shadow: 0 0 18px rgba(255,210,0,0.75), 0 0 35px rgba(255,100,0,0.4); }
-        .lune-cadre-photo-vrai { 
-            position: relative; width: 3.4vw; height: 3.4vw; border-radius: 50%;
+        .lune-doree-image { 
+            width: 3.4vw; height: 3.4vw; border-radius: 50%;
             background-image: url('https://wikimedia.org') !important;
             background-size: cover; background-position: center;
             box-shadow: inset -4px -4px 10px rgba(0,0,0,0.7), 0 0 12px rgba(255,255,255,0.25);
-            filter: grayscale(1) brightness(1.05); overflow: hidden;
+            filter: grayscale(1) brightness(1.05); display: block;
         }
-        .cache-ombre-lunaire { position: absolute; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.82); transition: left 0.5s, width 0.5s; }
     </style>
 </head>
 <body>
-
     <div id="fond-ecran-principal" class="fond-global"></div>
     <div id="calque-nuage-gris"></div>
     <div id="zone-intemperies"></div>
     <div id="zone-feuilles-dynamiques" style="position: fixed; top: 22vh; left: 28vw; width: 46vw; height: 40vh; pointer-events: none; z-index: 2; overflow: hidden;"></div>
+
     <!-- CALENDRIER HAUT -->
     <div class="pos boite-flip-haut" style="left: 17.5vw; top: 2.5vh; width: 22.3vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-jour">--</div><div class="charniere-droite"></div></div>
     <div class="pos boite-flip-haut" style="left: 40.8vw; top: 2.5vh; width: 9.6vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-num">--</div><div class="charniere-droite"></div></div>
@@ -144,7 +143,6 @@
             <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1);"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 3px;"><span style="color: #e9a949; font-size: 0.9vw;">☀️</span> UV</div><div style="font-size: 1.1vw; margin-top: 4px; color: #ffffff;" id="courant-uv">--</div></div>
         </div>
     </div>
-
     <!-- MODULE CENTRAL DROIT SOLEIL REEL -->
     <div class="cadran-relief-noir-bloc" style="position: absolute; right: 2vw; top: 45.5vh; width: 17vw; height: 28vh; padding: 1vw 1.2vw; display: flex; flex-direction: column; justify-content: space-between;">
         <div style="display: flex; justify-content: space-between; align-items: center; height: 45%; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 0.5vh; width: 100%;">
@@ -176,35 +174,28 @@
                 Âge : <span id="lune-age">--</span> j<br>Éclairement : <span id="lune-ecl">--</span>%
             </div>
         </div>
-        <div class="lune-cadre-photo-vrai" id="lune-vrai-photo"><div class="cache-ombre-lunaire" id="lune-ombre"></div></div>
+        <div class="lune-doree-image" id="lune-vrai-photo"></div>
     </div>
 
     <!-- PREVISIONS D'EN BAS -->
     <div style="position: absolute; left: 1.5vw; bottom: 8vh; width: 77.5vw; height: 27.5vh; display: flex; justify-content: space-between;" id="zone-7-jours"></div>
     <script>
         const dictIcons = { 0: "☀️", 1: "🌤️", 2: "⛅", 3: "☁️", 45: "🌫️", 48: "🌫️", 51: "🌧️", 53: "🌧️", 55: "🌧️", 61: "🌧️", 63: "🌧️", 65: "🌧️", 71: "🌨️", 73: "🌨️", 75: "🌨️", 80: "🌧️", 81: "🌧️", 82: "🌧️", 95: "⛈️", 96: "⛈️" };
-        var vitesseVentActuelle = 0;
-        var intervalleFeuilles = null;
+        var vitesseVentActuelle = 0; var intervalleFeuilles = null;
 
-        // DESSIN SYNC DES 12 CHIFFRES BLANCS SUR LE CADRAN NOIR
         var mC = document.getElementById('cadran-montre');
         for (var i = 1; i <= 12; i++) {
-            var boxChiffre = document.createElement('div'); boxChiffre.className = 'chiffre-container-js';
-            boxChiffre.style.transform = 'rotate(' + (i * 30) + 'deg)';
-            var n = document.createElement('div'); n.className = 'chiffre-cadran-fixe'; n.textContent = i;
-            n.style.transform = 'rotate(' + (-i * 30) + 'deg)';
-            boxChiffre.appendChild(n); mC.appendChild(boxChiffre);
+            var box = document.createElement('div'); box.className = 'chiffre-container-js'; box.style.transform = 'rotate(' + (i * 30) + 'deg)';
+            var n = document.createElement('div'); n.className = 'chiffre-cadran-fixe'; n.textContent = i; n.style.transform = 'rotate(' + (-i * 30) + 'deg)';
+            box.appendChild(n); mC.appendChild(box);
         }
         for (var j = 0; j < 60; j++) {
-            var g = document.createElement('div'); g.className = (j % 5 === 0) ? 'graduation principale' : 'graduation';
-            g.style.transform = 'rotate(' + (j * 6) + 'deg)'; mC.appendChild(g);
+            var g = document.createElement('div'); g.className = (j % 5 === 0) ? 'graduation principale' : 'graduation'; g.style.transform = 'rotate(' + (j * 6) + 'deg)'; mC.appendChild(g);
         }
 
-        // SYNCHRONISATION ABSOLUE SANS RISQUE DE SCRIPT TRONQUÉ
         function executerMeteo() {
             fetch('https://open-meteo.com')
-            .then(res => res.json())
-            .then(data => {
+            .then(res => res.json()).then(data => {
                 var current = data.current;
                 document.getElementById('courant-temp').textContent = Math.round(current.temperature_2m) + "°C";
                 document.getElementById('courant-ressenti').textContent = Math.round(current.apparent_temperature) + "°C";
@@ -216,85 +207,53 @@
                 document.getElementById('courant-uv').textContent = Math.round(data.daily.uv_index_max) + " / Max";
 
                 gererEffetsFond(current.weather_code);
-
                 clearInterval(intervalleFeuilles);
-                if(vitesseVentActuelle > 15) {
-                    var frequence = Math.max(700, 3200 - (vitesseVentActuelle * 60));
-                    intervalleFeuilles = setInterval(lancerFeuille, frequence);
-                }
+                if(vitesseVentActuelle > 15) { intervalleFeuilles = setInterval(lancerFeuille, Math.max(700, 3200 - (vitesseVentActuelle * 60))); }
 
-                // EXTRACTEUR SÉCURISÉ CIBLÉ SUR L'INDEX DES TABLEAUX DE L'API SOLAIRE
-                var leverHeure = data.daily.sunrise[0].split('T')[1].substring(0, 5);
-                var coucherHeure = data.daily.sunset[0].split('T')[1].substring(0, 5);
-                document.getElementById('sat-lever').textContent = leverHeure;
-                document.getElementById('sat-coucher').textContent = coucherHeure;
+                // FIXATION COMPLÈTE DE L'EXTRACTION INDEXÉE DU SOLEIL JUSQU'AUX 5 PREMIERS CARACTÈRES
+                var s_raw = data.daily.sunrise[0]; var e_raw = data.daily.sunset[0];
+                document.getElementById('sat-lever').textContent = s_raw.split('T')[1].substring(0, 5);
+                document.getElementById('sat-coucher').textContent = e_raw.split('T')[1].substring(0, 5);
 
                 var bas = document.getElementById('zone-7-jours'); bas.innerHTML = "";
                 const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
                 const mois = ['JANV.', 'FÉVR.', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUIL.', 'AOÛT', 'SEPT.', 'OCT.', 'NOV.', 'DÉC.'];
                 
                 data.daily.time.forEach((jour, index) => {
-                    var d = new Date(jour);
-                    var txtJour = index === 0 ? "AUJ." : noms[d.getDay()];
-                    var box = document.createElement('div');
+                    var d = new Date(jour); var txtJour = index === 0 ? "AUJ." : noms[d.getDay()]; var box = document.createElement('div');
                     box.className = "carte-prev-unique cadran-relief-bleu";
-                    box.innerHTML = `
-                        <div style="font-weight:bold; font-family:'Arial Black'; font-size:1.1vw; color:#ffffff;">${txtJour}</div>
-                        <div style="font-size:0.75vw; color:#aaa; font-weight:bold;">${d.getDate()} ${mois[d.getMonth()]}</div>
-                        <div style="font-size:3.2vw; margin: 0.5vh 0;">${dictIcons[data.daily.weather_code[index]]||"☁️"}</div>
-                        <div style="font-size:2vw; font-weight:bold; color:#ffffff;">${Math.round(data.daily.temperature_2m_max[index])}°</div>
-                        <div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">${Math.round(data.daily.temperature_2m_min[index])}°</div>
-                    `;
+                    box.innerHTML = `<div style="font-weight:bold; font-family:'Arial Black'; font-size:1.1vw; color:#ffffff;">${txtJour}</div><div style="font-size:0.75vw; color:#aaa; font-weight:bold;">${d.getDate()} ${mois[d.getMonth()]}</div><div style="font-size:3.2vw; margin: 0.5vh 0;">${dictIcons[data.daily.weather_code[index]]||"☁️"}</div><div style="font-size:2vw; font-weight:bold; color:#ffffff;">${Math.round(data.daily.temperature_2m_max[index])}°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">${Math.round(data.daily.temperature_2m_min[index])}°</div>`;
                     bas.appendChild(box);
                 });
             }).catch(err => console.log(err));
         }
 
         function gererEffetsFond(code) {
-            var n = document.getElementById('calque-nuage-gris');
-            var intem = document.getElementById('zone-intemperies');
-            intem.innerHTML = ""; n.className = "";
+            var n = document.getElementById('calque-nuage-gris'); var intem = document.getElementById('zone-intemperies'); intem.innerHTML = ""; n.className = "";
             if(code == 0) n.style.background = "rgba(0,0,0,0)";
             if(code >= 1 && code <= 3) n.style.background = "rgba(40, 50, 60, 0.2)";
             if(code == 3 || code == 45) n.style.background = "rgba(20, 25, 35, 0.5)";
             if((code >= 51 && code <= 65) || (code >= 80 && code <= 82)) {
                 n.style.background = "rgba(12, 18, 28, 0.6)";
-                for(let i=0; i<45; i++) {
-                    let g = document.createElement('div'); g.className = "goutte-pluie";
-                    g.style.left = Math.random() * 100 + "vw"; g.style.top = Math.random() * -40 + "px";
-                    g.style.animationDelay = Math.random() * 0.8 + "s"; intem.appendChild(g);
-                }
+                for(let i=0; i<45; i++) { let g = document.createElement('div'); g.className = "goutte-pluie"; g.style.left = Math.random() * 100 + "vw"; g.style.top = Math.random() * -40 + "px"; g.style.animationDelay = Math.random() * 0.8 + "s"; intem.appendChild(g); }
             }
             if(code >= 95) { n.style.background = "rgba(8, 10, 16, 0.75)"; n.classList.add('effet-flash'); }
         }
 
         function lancerFeuille() {
-            var f = document.createElement('div'); f.className = 'particule-feuille';
-            f.style.top = (Math.random() * 90) + '%'; f.style.left = '-20px';
-            f.style.animationDuration = (Math.random() * 1.5 + 2) + 's';
-            document.getElementById('zone-feuilles-dynamiques').appendChild(f);
-            setTimeout(() => f.remove(), 4000);
+            var f = document.createElement('div'); f.className = 'particule-feuille'; f.style.top = (Math.random() * 90) + '%'; f.style.left = '-20px'; f.style.animationDuration = (Math.random() * 1.5 + 2) + 's';
+            document.getElementById('zone-feuilles-dynamiques').appendChild(f); setTimeout(() => f.remove(), 4000);
         }
 
         function calculPhaseLune() {
             var t = new Date(); var y = t.getFullYear(); var m = t.getMonth() + 1; var d = t.getDate();
             if (m <= 2) { y -= 1; m += 12; }
-            let a = Math.floor(y / 100); let b = Math.floor(a / 4);
-            let c = 2 - a + b; let e = Math.floor(365.25 * (y + 4716)); let f = Math.floor(30.6001 * (m + 1));
-            let jd = c + d + e + f - 1524.5;
-            let daysSinceNew = (jd - 2451550.1) % 29.530588853;
-            if (daysSinceNew < 0) daysSinceNew += 29.530588853;
-            
+            let jd = Math.floor(y / 100) + Math.floor(Math.floor(y / 100) / 4) + d + Math.floor(365.25 * (y + 4716)) + Math.floor(30.6001 * (m + 1)) - 1522.5;
+            let daysSinceNew = (jd - 2451550.1) % 29.530588853; if (daysSinceNew < 0) daysSinceNew += 29.530588853;
             document.getElementById('lune-age').textContent = daysSinceNew.toFixed(1);
-            let pct = Math.round((1 - Math.cos((daysSinceNew * Math.PI * 2) / 29.53)) * 50);
-            document.getElementById('lune-ecl').textContent = pct;
+            document.getElementById('lune-ecl').textContent = Math.round((1 - Math.cos((daysSinceNew * Math.PI * 2) / 29.53)) * 50);
 
-            let nom = "Nouvelle lune"; var shadow = document.getElementById('lune-ombre');
-            if(daysSinceNew < 14.7) {
-                shadow.style.left = pct + '%'; shadow.style.width = (100 - pct) + '%';
-            } else {
-                shadow.style.left = '0%'; shadow.style.width = (100 - pct) + '%';
-            }
+            let nom = "Nouvelle lune";
             if(daysSinceNew >= 1.8 && daysSinceNew < 5.5) nom = "Premier croissant";
             if(daysSinceNew >= 5.5 && daysSinceNew < 9.2) nom = "Premier quartier";
             if(daysSinceNew >= 9.2 && daysSinceNew < 13) nom = "Gibbeuse croissante";
@@ -306,12 +265,10 @@
         }
 
         function actualiserHorloge() {
-            var tempsReel = new Date();
-            var h = tempsReel.getHours(); var m = tempsReel.getMinutes(); var s = tempsReel.getSeconds();
+            var tempsReel = new Date(); var h = tempsReel.getHours(); var m = tempsReel.getMinutes(); var s = tempsReel.getSeconds();
             document.getElementById('horloge-texte').textContent = h.toString().padStart(2, '0') + ':' + m.toString().padStart(2, '0') + ':' + s.toString().padStart(2, '0');
-            var degHeure = (h % 12) * 30 + m * 0.5; var degMinute = m * 6;
-            document.getElementById('needle-hour').style.transform = 'translateX(-50%) rotate(' + degHeure + 'deg)';
-            document.getElementById('needle-minute').style.transform = 'translateX(-50%) rotate(' + degMinute + 'deg)';
+            document.getElementById('needle-hour').style.transform = 'translateX(-50%) rotate(' + ((h % 12) * 30 + m * 0.5) + 'deg)';
+            document.getElementById('needle-minute').style.transform = 'translateX(-50%) rotate(' + (m * 6) + 'deg)';
 
             var jours = ['DIMANCHE', 'LUNDI', 'MARDI', 'MERCREDI', 'JEUDI', 'VENDREDI', 'SAMEDI'];
             var mois = ['JANVIER', 'FÉVRIER', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUILLET', 'AOÛT', 'SEPTEMBRE', 'OCTOBRE', 'NOVEMBRE', 'DÉCÉMBRE'];
@@ -322,5 +279,7 @@
             document.getElementById('sat-saison').textContent = (tempsReel.getMonth() >= 2 && tempsReel.getMonth() <= 4) ? "PRINTEMPS" : ((tempsReel.getMonth() >= 5 && tempsReel.getMonth() <= 8) ? "ÉTÉ" : ((tempsReel.getMonth() >= 9 && tempsReel.getMonth() <= 10) ? "AUTOMNE" : "HIVER"));
         }
 
-        setInterval(actualiserHorloge, 1000); actualiserHorloge(); calculPhaseLune();
-window.onload = function() { executerMeteo(); };
+        setInterval(actualiserHorloge, 1000); actualiserHorloge(); calculPhaseLune(); executerMeteo(); setInterval(executerMeteo, 900000);
+    </script>
+</body>
+</html>
