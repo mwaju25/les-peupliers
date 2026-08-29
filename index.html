@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Ecran Dynamique - Master Final Conforme</title>
+    <title>Ecran Dynamique - Les Peupliers Master Final</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Arial Black', sans-serif; }
         body { background-color: #000; color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
@@ -15,7 +15,7 @@
         
         .pos { position: absolute; display: flex; align-items: center; justify-content: center; overflow: hidden; text-align: center; }
 
-        /* STRUCTURES DES BOÎTIERS FLIP-FLAP */
+        /* STRUCTURES DES BOÎTIERS FLIP-FLAP HAUT */
         .boite-flip-haut {
             background: linear-gradient(to bottom, #11151c, #05070a) !important;
             border: 2px solid #28303d !important; border-radius: 8px !important;
@@ -30,7 +30,7 @@
             background: #000000 !important; border-bottom: 1px solid rgba(255,255,255,0.18) !important; z-index: 5; 
         }
 
-        /* CONFIGURATION STRICTE DES CHARNIÈRES CHROMÉES ORIGINELLES EN CSS */
+        /* CHARNIÈRES CHROMÉES EN CYLINDRE REPRODUITES AU PIXEL */
         .charniere-gauche, .charniere-droite {
             position: absolute; top: 50%; transform: translateY(-50%);
             width: 12px; height: 24px; z-index: 10;
@@ -49,7 +49,7 @@
         .charniere-gauche { left: -6px !important; } .charniere-gauche::after { left: -3px; }
         .charniere-droite { right: -6px !important; } .charniere-droite::after { right: -3px; }
 
-        /* HORLOGE ANALOGIQUE RETRO CARRÉE */
+        /* HORLOGE ANALOGIQUE RETRO */
         .bloc-montre-carre {
             position: absolute; right: 2vw; top: 2vh; width: 17vw; height: 17vw;
             background: #05070a; border: 2px solid #1a232d; border-radius: 12px;
@@ -58,11 +58,7 @@
         .montre-retro-cercle { position: absolute; left: 5%; top: 5%; width: 90%; height: 90%; background: #000; border: 2px dashed rgba(255,255,255,0.15); border-radius: 50%; }
         .graduation { position: absolute; width: 2px; height: 10px; background: rgba(255,255,255,0.4); left: 50%; top: 0; margin-left: -1px; transform-origin: 50% 7.65vw; }
         .graduation.principale { width: 3px; height: 14px; background: #fff; }
-        
-        .chiffre-container-js {
-            position: absolute; width: 2vw; height: 2vw; left: 50%; top: 6px; margin-left: -1vw;
-            transform-origin: 50% 7.2vw; display: flex; align-items: center; justify-content: center;
-        }
+        .chiffre-container-js { position: absolute; width: 2vw; height: 2vw; left: 50%; top: 6px; margin-left: -1vw; transform-origin: 50% 7.2vw; display: flex; align-items: center; justify-content: center; }
         .chiffre-cadran-fixe { font-size: 1vw; font-weight: bold; color: #fff; font-family: 'Arial Black', sans-serif; }
 
         .aiguille { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom center; border-radius: 4px; z-index: 12; }
@@ -70,23 +66,20 @@
         .minute { width: 4px; height: 5.2vw; background-color: #8ad400; }
         .pivot { position: absolute; width: 12px; height: 12px; background: #a2f200; border-radius: 50%; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 15; box-shadow: 0 0 6px rgba(162,242,0,0.8); }
 
-        /* HORLOGE DIGITALE FLIP-FLAP COMPLÈTE */
+        /* HORLOGE DIGITALE : ENLÈVEMENT DU CADRE ET RECOUPEMENT ÉPURÉ SUR FOND NOIR AUTONOME */
         .boite-digitale-bas {
             position: absolute; right: 2vw; top: 38vh; width: 17vw; height: 8vh;
-            background: linear-gradient(to bottom, #11151c, #05070a) !important; border: 2px solid #28303d !important; border-radius: 8px;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.6), inset 0 0 10px rgba(0,0,0,0.9);
+            background: #05070a !important; border: none !important; border-radius: 8px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.8) !important;
         }
         .heure-digitale-js { 
-            font-size: 2.6vw; font-weight: 900; color: #ffffff !important;
+            font-size: 2.7vw; font-weight: 900; color: #ffffff !important;
             letter-spacing: 1px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; 
-            text-shadow: 0px 2px 4px rgba(0,0,0,0.9);
         }
         .heure-digitale-js::after { content: ''; position: absolute; left: 0; top: 50%; width: 100%; height: 2px; background: #000000; border-bottom: 1px solid rgba(255,255,255,0.15); z-index: 5; }
-        /* COULEUR NOIRE COMMUNE OPAQUE ET FORCEE SANS TRANSPARENCE POUR LES BLOCS METEO GAUCHE ET BAS */
+        /* COULEURS DES BLOCS GAUCHE ET BAS RIGIDES */
         .cadran-relief-bleu {
-            background: #0d131a !important; 
-            border: 2px solid #212c3a !important; 
-            border-radius: 12px !important;
+            background: #0d131a !important; border: 2px solid #212c3a !important; border-radius: 12px !important;
             box-shadow: 0 8px 16px rgba(0,0,0,0.7), inset 0 0 12px rgba(0,0,0,0.8) !important;
             opacity: 1 !important;
         }
@@ -104,13 +97,13 @@
     <div id="fond-ecran-principal" class="fond-global"></div>
     <div id="zone-feuilles-dynamiques" style="position: fixed; top: 22vh; left: 28vw; width: 46vw; height: 40vh; pointer-events: none; z-index: 2; overflow: hidden;"></div>
 
-    <!-- CALENDRIER HAUT -->
+    <!-- DATE FILIP-FLAP HAUT -->
     <div class="pos boite-flip-haut" style="left: 17.5vw; top: 2.5vh; width: 22.3vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-jour">SAMEDI</div><div class="charniere-droite"></div></div>
     <div class="pos boite-flip-haut" style="left: 40.8vw; top: 2.5vh; width: 9.6vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-num">29</div><div class="charniere-droite"></div></div>
     <div class="pos boite-flip-haut" style="left: 51.5vw; top: 2.5vh; width: 13.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-mois">AOÛT</div><div class="charniere-droite"></div></div>
     <div class="pos boite-flip-haut" style="left: 66.2vw; top: 2.5vh; width: 11.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-annee">2026</div><div class="charniere-droite"></div></div>
 
-    <!-- DOUBLE HORLOGE DONT L'HORLOGE DIGITALE INTEGRATION SES ATTACHES CHROMÉES -->
+    <!-- HORLOGES -->
     <div class="bloc-montre-carre">
         <div class="montre-retro-cercle" id="cadran-montre">
             <div class="pivot"></div>
@@ -120,14 +113,14 @@
     </div>
     <div class="boite-digitale-bas"><div class="charniere-gauche"></div><div class="heure-digitale-js" id="horloge-texte">00:00:00</div><div class="charniere-droite"></div></div>
 
-    <!-- BLOC MÉTÉO DE GAUCHE DEVENU INTENSÉMENT NOIR OPAQUE -->
+    <!-- BLOC MÉTÉO DE GAUCHE -->
     <div class="cadran-relief-bleu" style="position: absolute; left: 1.5vw; top: 25vh; width: 28.5vw; height: 35vh; padding: 1.3vw; color: #ffffff;">
         <div style="font-size: 1.1vw; color: #ffffff; font-weight: bold; margin-bottom: 2px; text-align: left; font-family:'Arial';">Marloie (Marche-en-Famenne)</div>
-        <div style="font-size: 0.75vw; color: #aaaaaa; text-transform: uppercase; margin-bottom: 1.2vh; letter-spacing: 1px; text-align: left;">MÉTÉO ACTUELLE</div>
+        <div style="font-size: 0.75vw; color: #aaaaaa; text-transform: uppercase; margin-bottom: 1.2vh; letter-spacing: 1px;">MÉTÉO ACTUELLE</div>
         <div style="display: flex; align-items: center; gap: 2vw; margin-bottom: 2.5vh;">
             <div style="font-size: 4.8vw;" id="courant-icone">☁️</div>
             <div style="text-align: left;">
-                <div style="font-size: 4.2vw; font-weight: bold; line-height: 1; color: #ffffff;" id="courant-temp">19°C</div>
+                <div style="font-size: 4.2vw; font-weight: bold; line-height: 1;" id="courant-temp">19°C</div>
                 <div style="font-size: 1.2vw; color: #ffffff; margin-top: 4px; font-weight: bold; font-family:'Arial';" id="courant-desc">Couvert</div>
             </div>
         </div>
@@ -138,41 +131,41 @@
             <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1);"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 3px;"><span style="color: #e9a949; font-size: 0.9vw;">☀️</span> UV</div><div style="font-size: 1.1vw; margin-top: 4px; color: #ffffff;">0 / Faible</div></div>
         </div>
     </div>
-    <!-- COMPOSITION DU BLOC CENTRAL DE DROITE SÉPARÉ VERTICALEMENT -->
+    <!-- MODULE DROITE DU CADRAN SAISON ET SOLEIL AVEC TITRES PLUS GRANDS (1.1vw) -->
     <div class="cadran-relief-noir-bloc" style="position: absolute; right: 2vw; top: 48vh; width: 17vw; height: 28vh; padding: 1vw 1.2vw; display: flex; flex-direction: column; justify-content: space-between;">
         <div style="display: flex; justify-content: space-between; align-items: center; height: 45%; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 0.5vh; width: 100%;">
             <div style="text-align: left;">
-                <div style="font-size: 0.75vw; color: #8ad400; font-weight: bold; letter-spacing: 0.5px;">SAISON</div>
-                <div style="font-size: 1.8vw; font-weight: bold; color: #ffffff; font-family:'Arial', sans-serif; margin-top: 0.2vh;">Été</div>
+                <div style="font-size: 1.1vw; color: #8ad400; font-weight: bold; letter-spacing: 0.5px;">SAISON</div>
+                <div style="font-size: 2vw; font-weight: bold; color: #ffffff; margin-top: 0.2vh;">ÉTÉ</div>
             </div>
             <div style="font-size: 3.5vw;">🌱</div>
         </div>
         <div style="display: flex; flex-direction: column; justify-content: space-between; height: 50%; width: 100%; padding-top: 0.5vh;">
-            <div style="font-size: 0.75vw; color: #8ad400; font-weight: bold; text-align: left; letter-spacing: 0.5px;">SOLEIL</div>
+            <div style="font-size: 1.1vw; color: #8ad400; font-weight: bold; text-align: left; letter-spacing: 0.5px;">SOLEIL</div>
             <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
                 <div style="font-size: 2.8vw;">☀️</div>
                 <div style="display: flex; gap: 1vw; text-align: left; align-items: center; font-family:'Arial'; font-weight:bold;">
-                    <div><div style="font-size: 1.1vw; font-weight: bold; color: #fff;">06:47</div><div style="font-size: 0.65vw; color: #aaa;">Lever</div></div>
+                    <div><div style="font-size: 1.1vw; font-weight: bold; color: #fff; font-family:'Arial Black';">06:47</div><div style="font-size: 0.65vw; color: #aaa;">Lever</div></div>
                     <div style="width: 1px; background: rgba(255,255,255,0.4); height: 2.5vh;"></div>
-                    <div><div style="font-size: 1.1vw; font-weight: bold; color: #fff;">20:32</div><div style="font-size: 0.65vw; color: #aaa;">Coucher</div></div>
+                    <div><div style="font-size: 1.1vw; font-weight: bold; color: #fff; font-family:'Arial Black';">20:32</div><div style="font-size: 0.65vw; color: #aaa;">Coucher</div></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- MODULE LUNE DU BAS DROIT REHAUSSÉ AVEC PRÉCISION -->
+    <!-- MODULE LUNE DU BAS DROIT AVEC LE TITRE AGRANDI (1.1vw) -->
     <div class="cadran-relief-noir-bloc" style="position: absolute; right: 2vw; top: 77.5vh; width: 17vw; height: 14.5vh; padding: 1vw 1.2vw; display: flex; justify-content: space-between; align-items: center; font-family:'Arial'; font-weight:bold;">
         <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; text-align: left;">
-            <div style="font-size: 0.75vw; color: #8ad400; font-weight: bold; letter-spacing: 0.5px;">LUNE</div>
+            <div style="font-size: 1.1vw; color: #8ad400; font-weight: bold; letter-spacing: 0.5px; font-family:'Arial Black';">LUNE</div>
             <div style="font-size: 0.78vw; line-height: 1.35; color: #ffffff; margin-top: 0.3vh;">
-                <strong style="font-size: 0.95vw; color: #fff; display: block; margin-bottom: 2px;">Pleine lune</strong>
+                <strong style="font-size: 0.95vw; color: #fff; display: block; margin-bottom: 2px; font-family:'Arial Black';">Pleine lune</strong>
                 Âge : 14,7 jours<br>Éclairement : 100%
             </div>
         </div>
         <div style="font-size: 3.5vw;">🌕</div>
     </div>
 
-    <!-- LES 7 PREVISIONS DU BAS INDÉPENDANTES ET ENTIÈREMENT NOIRES SANS TRANSPARENCE -->
+    <!-- PREVISIONS DU BAS -->
     <div style="position: absolute; left: 1.5vw; bottom: 8vh; width: 77.5vw; height: 27.5vh; display: flex; justify-content: space-between;">
         <div class="carte-prev-unique cadran-relief-bleu"><div>AUJ.</div><div style="font-size:0.75vw; color:#ffffff; font-weight:bold; font-family:'Arial';">28 AOÛT</div><div style="font-size:3.2vw; margin: 0.5vh 0;">☁️</div><div style="font-size:2vw; font-weight:bold; color:#ffffff;">21°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">16°</div></div>
         <div class="carte-prev-unique cadran-relief-bleu"><div>SAM.</div><div style="font-size:0.75vw; color:#ffffff; font-weight:bold; font-family:'Arial';">29 AOÛT</div><div style="font-size:3.2vw; margin: 0.5vh 0;">🌧️</div><div style="font-size:2vw; font-weight:bold; color:#ffffff;">19°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">15°</div></div>
