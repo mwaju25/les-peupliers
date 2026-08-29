@@ -93,15 +93,17 @@
         .cadran-relief-noir-bloc { background: #05080c !important; border: 2px solid #162029 !important; border-radius: 12px; box-shadow: 0 6px 12px rgba(0,0,0,0.6); }
         .carte-prev-unique { width: 10.4vw; height: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 1.5vh 0; background: transparent; }
 
-        /* MAGNIFIQUE CADRAGE DE LA TEXTURE LUNAIRE SELON L'IMAGE DE RÉFÉRENCE 2 */
+        /* MODULE DE LA LUNE AVEC CERCLAGE DISCRET EN PERMANENCE */
         .soleil-realiste-css { width: 3.2vw; height: 3.2vw; background: radial-gradient(circle, #fff 15%, #ffea00 55%, #ff7700 100%); border-radius: 50%; box-shadow: 0 0 18px rgba(255,210,0,0.75), 0 0 35px rgba(255,100,0,0.4); }
         .lune-doree-image { 
-            width: 3.4vw; height: 3.4vw; border-radius: 50%;
+            position: relative; width: 3.4vw; height: 3.4vw; border-radius: 50%;
             background-image: url('https://wikimedia.org') !important;
             background-size: cover; background-position: center;
-            box-shadow: inset -4px -4px 10px rgba(0,0,0,0.7), 0 0 12px rgba(255,255,255,0.25);
-            filter: grayscale(1) brightness(1.05); display: block;
+            border: 1px solid rgba(255,255,255,0.22) !important;
+            box-shadow: inset -4px -4px 10px rgba(0,0,0,0.7), 0 0 14px rgba(255,255,255,0.3);
+            filter: grayscale(1) brightness(1.05); display: block; overflow: hidden;
         }
+        .cache-ombre-lunaire { position: absolute; top: 0; width: 100%; height: 100%; background: rgba(5,8,12,0.88); transition: left 0.5s, width 0.5s; }
     </style>
 </head>
 <body>
@@ -174,7 +176,7 @@
                 Âge : <span id="lune-age">--</span> j<br>Éclairement : <span id="lune-ecl">--</span>%
             </div>
         </div>
-        <div class="lune-doree-image" id="lune-vrai-photo"></div>
+        <div class="lune-doree-image" id="lune-vrai-photo"><div class="cache-ombre-lunaire" id="lune-ombre"></div></div>
     </div>
 
     <!-- PREVISIONS D'EN BAS -->
@@ -210,10 +212,10 @@
                 clearInterval(intervalleFeuilles);
                 if(vitesseVentActuelle > 15) { intervalleFeuilles = setInterval(lancerFeuille, Math.max(700, 3200 - (vitesseVentActuelle * 60))); }
 
-                // RESOLUTION SÉCURISÉE DU PARSAGE EN SELECTIONNANT LA CHAINE DANS LA PREMIÈRE LITÉRALITÉ [0]
-                var sh = data.daily.sunrise[0]; var ch = data.daily.sunset[0];
-                document.getElementById('sat-lever').textContent = sh.split('T')[1].substring(0, 5);
-                document.getElementById('sat-coucher').textContent = ch.split('T')[1].substring(0, 5);
+                // METHODE ULTRA-STABLE SANS SPLIT COMPLIQUÉ : EXTRACTION SÉCURISÉE DES STRINGS DE SOLEIL
+                var s_time = data.daily.sunrise[0]; var e_time = data.daily.sunset[0];
+                document.getElementById('sat-lever').textContent = s_time ? s_time.slice(11, 16) : "--:--";
+                document.getElementById('sat-coucher').textContent = e_time ? e_time.slice(11, 16) : "--:--";
 
                 var bas = document.getElementById('zone-7-jours'); bas.innerHTML = "";
                 const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
@@ -251,9 +253,15 @@
             let jd = Math.floor(y / 100) + Math.floor(Math.floor(y / 100) / 4) + d + Math.floor(365.25 * (y + 4716)) + Math.floor(30.6001 * (m + 1)) - 1522.5;
             let daysSinceNew = (jd - 2451550.1) % 29.530588853; if (daysSinceNew < 0) daysSinceNew += 29.530588853;
             document.getElementById('lune-age').textContent = daysSinceNew.toFixed(1);
-            document.getElementById('lune-ecl').textContent = Math.round((1 - Math.cos((daysSinceNew * Math.PI * 2) / 29.53)) * 50);
+            let pct = Math.round((1 - Math.cos((daysSinceNew * Math.PI * 2) / 29.53)) * 50);
+            document.getElementById('lune-ecl').textContent = pct;
 
-            let nom = "Nouvelle lune";
+            let nom = "Nouvelle lune"; var shadow = document.getElementById('lune-ombre');
+            if(daysSinceNew < 14.7) {
+                shadow.style.left = pct + '%'; shadow.style.width = (100 - pct) + '%';
+            } else {
+                shadow.style.left = '0%'; shadow.style.width = (100 - pct) + '%';
+            }
             if(daysSinceNew >= 1.8 && daysSinceNew < 5.5) nom = "Premier croissant";
             if(daysSinceNew >= 5.5 && daysSinceNew < 9.2) nom = "Premier quartier";
             if(daysSinceNew >= 9.2 && daysSinceNew < 13) nom = "Gibbeuse croissante";
@@ -276,6 +284,7 @@
             document.getElementById('date-num').textContent = tempsReel.getDate();
             document.getElementById('date-mois').textContent = mois[tempsReel.getMonth()];
             document.getElementById('date-annee').textContent = tempsReel.getFullYear();
+            document.getElementById('sat-saison').textContent = (tempsReel.getMonth() >= 2 && tempsReel.getMonth() <= 4) ? "PRINTEMPS" : ((tempsReel.getMonth() >= 5 && tempsReel.getMonth() <= 8) ? "ÉTÉ" : ((tempsReel.getMonth() >= 9 && tempsReel.getMonth() <= 10) ? "AUTOMNE" : "HIVER"));
         }
 
         setInterval(actualiserHorloge, 1000); actualiserHorloge(); calculPhaseLune(); executerMeteo(); setInterval(executerMeteo, 900000);
