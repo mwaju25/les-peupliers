@@ -11,10 +11,8 @@
             background-color: #000;
             color: #fff;
             height: 100vh;
+            width: 100vw;
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
             position: relative;
         }
 
@@ -25,42 +23,37 @@
             width: 100vw;
             height: 100vh;
             background-image: url('fond-final.png');
-            background-size: cover;
+            background-size: 100% 100%;
             background-position: center;
             z-index: -1;
         }
 
-        header { position: relative; height: 16vh; z-index: 10; }
-
-        /* STRUCTURE ET VISUEL DU CALENDRIER STYLE FLIP-FLAP MÉCANIQUE */
-        .zone-flip-flap {
+        .position-absolue {
             position: absolute;
-            top: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 86px;
             background: transparent;
             overflow: hidden;
+            text-align: center;
         }
         
+        /* DESIGN AVEC EFFET DE COUPURE FLIP-FLAP RÉGLÉ AU PIXEL */
         .flip-tuile-js {
             width: 100%;
             height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.6rem;
+            font-size: 2.7rem;
             font-weight: bold;
             color: #fff;
             text-transform: uppercase;
-            font-family: 'Impact', 'Arial Black', sans-serif;
+            font-family: 'Arial Black', sans-serif;
             letter-spacing: 2px;
-            text-shadow: 0px 3px 4px rgba(0,0,0,0.9);
+            text-shadow: 0px 3px 5px rgba(0,0,0,0.9);
             position: relative;
         }
-
-        /* LA LIGNE HORIZONTALE DE SÉPARATION MÉCANIQUE DU FLIP-FLAP */
         .flip-tuile-js::after {
             content: '';
             position: absolute;
@@ -68,18 +61,18 @@
             top: 50%;
             width: 100%;
             height: 2px;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.5);
             border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-            z-index: 6;
+            z-index: 5;
         }
 
-        /* REPOSITIONNEMENT CHIRURGICAL ET ROTATION DES AIGUILLES SUR VOTRE HORLOGE VIDE */
+        /* HORLOGE ANALOGIQUE : SYNCHRONISATION SUR LE CADRAN DU GRAPHISME */
         .cadran-aiguilles {
             position: absolute;
-            right: 22px;
-            top: 18px;
-            width: 195px;
-            height: 195px;
+            right: 2.3vw;
+            top: 2.5vh;
+            width: 17.5vw;
+            height: 29vh;
             background: transparent;
             z-index: 10;
         }
@@ -90,39 +83,54 @@
             transform-origin: bottom center;
             border-radius: 4px;
         }
-        .heure { width: 5px; height: 50px; background-color: #fff; box-shadow: 0 0 5px rgba(0,0,0,0.5); }
-        .minute { width: 4px; height: 72px; background-color: #8ad400; box-shadow: 0 0 5px rgba(0,0,0,0.5); }
+        .heure { width: 5px; height: 55px; background-color: #fff; box-shadow: 0 0 4px rgba(0,0,0,0.6); }
+        .minute { width: 4px; height: 80px; background-color: #8ad400; box-shadow: 0 0 4px rgba(0,0,0,0.6); }
 
-        /* STYLE HORLOGE DIGITALE FLIP-FLAP */
-        .zone-digitale-flip {
-            position: absolute;
-            right: 22px;
-            top: 227px;
-            width: 195px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
+        /* COMPTEUR HORLOGE DIGITALE FLIP-FLAP */
+        .heure-digitale-js {
+            font-size: 2.9rem;
             font-weight: bold;
             color: #fff;
-            font-family: 'Courier New', monospace;
-            letter-spacing: 3px;
-            text-shadow: 0px 2px 4px rgba(0,0,0,0.8);
+            font-family: 'Arial Black', sans-serif;
+            letter-spacing: 5px;
+            text-shadow: 0px 2px 4px rgba(0,0,0,0.9);
+            width: 100%;
+            text-align: center;
+            position: relative;
         }
-        .zone-digitale-flip::after {
+        .heure-digitale-js::after {
             content: '';
             position: absolute;
             left: 0;
             top: 50%;
             width: 100%;
             height: 2px;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.6);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        main { display: flex; justify-content: space-between; height: 64vh; margin: 10px 0; position: relative; z-index: 10; }
-        footer { height: 18vh; position: relative; z-index: 10; }
+        /* GRILLE FIXE ET NETTE POUR LES 7 CARTES DU BAS */
+        .ligne-prev-bas {
+            position: absolute;
+            bottom: 7.5vh;
+            left: 0.6vw;
+            width: 98.8vw;
+            height: 25.5vh;
+            display: flex;
+            justify-content: space-between;
+            gap: 0.6vw;
+            padding: 0 0.5vw;
+        }
+        .carte-prev-unique {
+            flex: 1;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5vh 0;
+            background: transparent;
+        }
 
         .particule-feuille { position: absolute; width: 14px; height: 9px; background: #628c34; border-radius: 0 75% 0 75%; opacity: 0.65; animation: animationVent linear infinite; }
         @keyframes animationVent {
@@ -137,69 +145,56 @@
 
     <div id="zone-feuilles-dynamiques" style="position: fixed; top: 20vh; left: 28vw; width: 46vw; height: 55vh; pointer-events: none; z-index: 2; overflow: hidden;"></div>
 
-    <header>
-        <!-- PLACEMENT AU MILLIMÈTRE DES DONNÉES DANS VOS CASES FLIP-FLAP VIDES (DU HAUT) -->
-        <div class="zone-flip-flap" style="left: 173px; width: 228px;"><div class="flip-tuile-js" id="date-jour">SAMEDI</div></div>
-        <div class="zone-flip-flap" style="left: 412px; width: 95px;"><div class="flip-tuile-js" id="date-num">29</div></div>
-        <div class="zone-flip-flap" style="left: 518px; width: 140px;"><div class="flip-tuile-js" id="date-mois">AOÛT</div></div>
-        <div class="zone-flip-flap" style="left: 668px; width: 115px;"><div class="flip-tuile-js" id="date-annee">2026</div></div>
+    <!-- 1. INTÉGRATION DE LA DATE FLIP-FLAP DANS VOS LOGES SUPERIEURES -->
+    <div class="position-absolue" style="left: 17.5vw; top: 1.8vh; width: 22.3vw; height: 14.5vh;"><div class="flip-tuile-js" id="date-jour">SAMEDI</div></div>
+    <div class="position-absolue" style="left: 40.8vw; top: 1.8vh; width: 9.6vw; height: 14.5vh;"><div class="flip-tuile-js" id="date-num">29</div></div>
+    <div class="position-absolue" style="left: 51.5vw; top: 1.8vh; width: 13.5vw; height: 14.5vh;"><div class="flip-tuile-js" id="date-mois">AOÛT</div></div>
+    <div class="position-absolue" style="left: 66.2vw; top: 1.8vh; width: 11.5vw; height: 14.5vh;"><div class="flip-tuile-js" id="date-annee">2026</div></div>
 
-        <!-- CADRAN DE L'HORLOGE RONDE (CENTRE DES AIGUILLES ALIGNÉ) -->
-        <div class="cadran-aiguilles">
-            <div class="aiguille heure" id="needle-hour"></div>
-            <div class="aiguille minute" id="needle-minute"></div>
+    <!-- 2. ACTIVATION DU DOUBLE SYSTÈME HORLOGER -->
+    <div class="cadran-aiguilles">
+        <div class="aiguille heure" id="needle-hour"></div>
+        <div class="aiguille minute" id="needle-minute"></div>
+    </div>
+    <div class="position-absolue" style="right: 2.1vw; top: 32.1vh; width: 17.5vw; height: 8.8vh;">
+        <div class="heure-digitale-js" id="horloge-texte">13:20:00</div>
+    </div>
+
+    <!-- 3. INTÉGRATION CHIRURGICALE DANS LE PANNEAU MÉTÉO EN DIRECT DE MARLOIE -->
+    <div class="position-absolue" style="left: 1vw; top: 23vh; width: 28.5vw; height: 13vh; font-size: 4.5rem;" id="courant-icone">☁️</div>
+    <div class="position-absolue" style="left: 13vw; top: 35.5vh; width: 11vw; height: 9vh; font-size: 3.9rem; font-weight: bold;" id="courant-temp">19°C</div>
+    <div class="position-absolue" style="left: 1vw; top: 43vh; width: 28.5vw; height: 4vh; font-size: 1.25rem; font-weight: bold; color: #aaa;" id="courant-desc">Couvert</div>
+    
+    <div class="position-absolue" style="left: 1.5vw; top: 51.8vh; width: 6.5vw; height: 4vh; font-weight: bold; font-size: 1.15rem;" id="courant-ressenti">19°C</div>
+    <div class="position-absolue" style="left: 8.5vw; top: 51.8vh; width: 6.5vw; height: 4vh; font-weight: bold; font-size: 1.15rem;" id="courant-humidite">82%</div>
+    <div class="position-absolue" style="left: 15.5vw; top: 51.8vh; width: 6.5vw; height: 4vh; font-weight: bold; font-size: 1.15rem;" id="courant-vent">13 km/h</div>
+    <div class="position-absolue" style="left: 22.5vw; top: 51.8vh; width: 6.5vw; height: 4vh; font-weight: bold; font-size: 1rem;" id="courant-uv">0 / Faible</div>
+
+    <!-- 4. DONNÉES SATELLITES DROITE -->
+    <div class="position-absolue" style="right: 2.1vw; top: 48.2vh; width: 11vw; height: 4vh; font-size: 1.4rem; font-weight: bold; color: #8ad400;" id="sat-saison">ÉTÉ 🌱</div>
+    <div class="position-absolue" style="right: 2.1vw; top: 62.5vh; width: 6vw; height: 3vh; font-weight: bold; font-size: 1.05rem;" id="sat-lever">06:49</div>
+    <div class="position-absolue" style="right: 2.1vw; top: 65.5vh; width: 6vw; height: 3vh; font-weight: bold; font-size: 1.05rem;" id="sat-coucher">20:30</div>
+    
+    <div class="position-absolue" style="right: 2.1vw; top: 78vh; width: 4.5vw; height: 8vh; font-size: 2.6rem;" id="sat-lune-icone">🌕</div>
+    <div class="position-absolue" style="right: 6.8vw; top: 77.5vh; width: 12.5vw; height: 9vh; text-align: left; font-size: 0.78rem; line-height: 1.35; align-items: flex-start; justify-content: flex-start;" id="sat-lune-text">
+        <strong style="font-size:0.88rem; color:#fff;">Pleine lune</strong><br>Âge : 14,7 jours<br>Éclairement : 100%
+    </div>
+
+    <!-- 5. LE CADRAN DES 7 CARTES DU BAS (SANS DOUBLON DE CITATION) -->
+    <div class="ligne-prev-bas">
+        <div class="carte-prev-unique">
+            <div style="font-size:0.9rem; font-weight:bold; color:#aaa;">AUJ.</div><div style="font-size:0.75rem; color:#aaa;">28 AOÛT</div><div style="font-size:1.8rem;">☁️</div><div style="font-size:1.4rem; font-weight:bold;">21°</div><div style="color:#49a6e9; font-weight:bold;">16°</div>
         </div>
-        
-        <!-- INTÉGRATION DE L'HORLOGE DIGITALE FLIP-FLAP COMPACTE DANS VOTRE CADRAN NOIR BAS -->
-        <div class="zone-digitale-flip" id="horloge-texte">13:15:00</div>
-    </header>
-
-    <main>
-        <!-- TEXTE DE LA TEMPÉRATURE DU JOUR CENTRÉ DANS LE PANNEAU MÉTÉO DE GAUCHE -->
-        <div style="position: absolute; left: 165px; top: 115px; width: 110px; height: 60px; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; font-weight: bold; color: #fff;" id="temp-meteo-courante">19°C</div>
-    </main>
-
-    <footer></footer>
-
-    <script>
-        function actualiserEcran() {
-            var tempsReel = new Date();
-            
-            // Horloge numérique
-            var h = tempsReel.getHours();
-            var m = tempsReel.getMinutes();
-            var s = tempsReel.getSeconds();
-            document.getElementById('horloge-texte').textContent = h.toString().padStart(2, '0') + ':' + m.toString().padStart(2, '0') + ':' + s.toString().padStart(2, '0');
-            
-            // Rotation des aiguilles blanches et vertes
-            var degHeure = (h % 12) * 30 + m * 0.5;
-            var degMinute = m * 6;
-            document.getElementById('needle-hour').style.transform = 'translateX(-50%) rotate(' + degHeure + 'deg)';
-            document.getElementById('needle-minute').style.transform = 'translateX(-50%) rotate(' + degMinute + 'deg)';
-
-            var listeJours = ['DIMANCHE', 'LUNDI', 'MARDI', 'MERCREDI', 'JEUDI', 'VENDREDI', 'SAMEDI'];
-            var listeMois = ['JANVIER', 'FÉVRIER', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUILLET', 'AOÛT', 'SEPTEMBRE', 'OCTOBRE', 'NOVEMBRE', 'DÉCÉMBRE'];
-            
-            document.getElementById('date-jour').textContent = listeJours[tempsReel.getDay()];
-            document.getElementById('date-num').textContent = tempsReel.getDate();
-            document.getElementById('date-mois').textContent = listeMois[tempsReel.getMonth()];
-            document.getElementById('date-annee').textContent = tempsReel.getFullYear();
-        }
-        
-        setInterval(actualiserEcran, 1000);
-        actualiserEcran();
-
-        var conteneurFeuilles = document.getElementById('zone-feuilles-dynamiques');
-        function lancerFeuille() {
-            var feuille = document.createElement('div');
-            feuille.classList.add('particule-feuille');
-            feuille.style.top = (Math.random() * 90) + '%';
-            feuille.style.left = '-20px';
-            feuille.style.animationDuration = (Math.random() * 2.5 + 3.5) + 's';
-            conteneurFeuilles.appendChild(feuille);
-            setTimeout(function() { feuille.remove(); }, 6000);
-        }
-        setInterval(lancerFeuille, 1800);
-    </script>
-</body>
-</html>
+        <div class="carte-prev-unique">
+            <div style="font-size:0.9rem; font-weight:bold; color:#aaa;">SAM.</div><div style="font-size:0.75rem; color:#aaa;">29 AOÛT</div><div style="font-size:1.8rem;">🌧️</div><div style="font-size:1.4rem; font-weight:bold;">19°</div><div style="color:#49a6e9; font-weight:bold;">15°</div>
+        </div>
+        <div class="carte-prev-unique">
+            <div style="font-size:0.9rem; font-weight:bold; color:#aaa;">DIM.</div><div style="font-size:0.75rem; color:#aaa;">30 AOÛT</div><div style="font-size:1.8rem;">🌧️</div><div style="font-size:1.4rem; font-weight:bold;">20°</div><div style="color:#49a6e9; font-weight:bold;">16°</div>
+        </div>
+        <div class="carte-prev-unique">
+            <div style="font-size:0.9rem; font-weight:bold; color:#aaa;">LUN.</div><div style="font-size:0.75rem; color:#aaa;">31 AOÛT</div><div style="font-size:1.8rem;">☁️</div><div style="font-size:1.4rem; font-weight:bold;">21°</div><div style="color:#49a6e9; font-weight:bold;">14°</div>
+        </div>
+        <div class="carte-prev-unique">
+            <div style="font-size:0.9rem; font-weight:bold; color:#aaa;">MAR.</div><div style="font-size:0.75rem; color:#aaa;">01 SEPT</div><div style="font-size:1.8rem;">☁️</div><div style="font-size:1.4rem; font-weight:bold;">20°</div><div style="color:#49a6e9; font-weight:bold;">12°</div>
+        </div>
+        <div class="carte-prev-unique">
