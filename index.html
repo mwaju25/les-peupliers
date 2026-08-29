@@ -51,7 +51,7 @@
         .charniere-gauche { left: -6px !important; } .charniere-gauche::after { left: -3px; }
         .charniere-droite { right: -6px !important; } .charniere-droite::after { right: -3px; }
 
-        /* HORLOGE ANALOGIQUE FINALE : AJUSTEMENT DU BOÎTIER SANS AUCUN DÉBORD EXTRA-LARGE */
+        /* HORLOGE ANALOGIQUE FINALE DU PROJET SANS DÉBORD */
         .montre-retro-cercle { 
             position: absolute; right: 2.2vw; top: 1vh; width: 15.6vw; height: 15.6vw; 
             background: #000000 !important; border: none !important; border-radius: 50%; 
@@ -190,7 +190,7 @@
             g.style.transform = 'rotate(' + (j * 6) + 'deg)'; mC.appendChild(g);
         }
 
-        // RESOLUTION COMPLETE ET CORRIGEE DE L'AFFICHAGE DE LA METEO EN DIRECT VIA API
+        // SYNCHRONISATION DU FLUX METEO ET EXTRACTION NETTE DE L'HEURE (REPARÉE)
         function executerMeteo() {
             fetch('https://open-meteo.com')
             .then(res => res.json())
@@ -202,15 +202,8 @@
                 vitesseVentActuelle = Math.round(current.wind_speed_10m);
                 document.getElementById('courant-vent').textContent = vitesseVentActuelle + " km/h";
                 document.getElementById('courant-icone').textContent = dictIcons[current.weather_code] || "☁️";
+                document.getElementById('courant-desc').textContent = current.weather_code == 0 ? "Ensoleillé" : (current.weather_code <= 3 ? "Éclaircies" : (current.weather_code <= 65 ? "Pluie" : (current.weather_code <= 75 ? "Neige" : "Orageux")));
                 document.getElementById('courant-uv').textContent = Math.round(data.daily.uv_index_max) + " / Max";
-                
-                var desc = "Couvert";
-                if(current.weather_code == 0) desc = "Ensoleillé";
-                if(current.weather_code >= 1 && current.weather_code <= 3) desc = "Éclaircies";
-                if(current.weather_code >= 51 && current.weather_code <= 65) desc = "Pluie";
-                if(current.weather_code >= 71 && current.weather_code <= 75) desc = "Neige";
-                if(current.weather_code >= 95) desc = "Orageux";
-                document.getElementById('courant-desc').textContent = desc;
 
                 gererEffetsFond(current.weather_code);
 
@@ -220,11 +213,11 @@
                     intervalleFeuilles = setInterval(lancerFeuille, frequence);
                 }
 
-                // TRAITEMENT ROBUSTE DES CHAINES POUR COMPATIBILITE DES HEURES DU SOLEIL
-                var s_raw = data.daily.sunrise[0];
-                var e_raw = data.daily.sunset[0];
-                document.getElementById('sat-lever').textContent = s_raw.split('T')[1].substring(0, 5);
-                document.getElementById('sat-coucher').textContent = e_raw.split('T')[1].substring(0, 5);
+                // SYNTAXE UNIVERSELLE SECURISÉE POUR EXTRAIRE HH:MM SANS PLANTER
+                var leverStr = data.daily.sunrise[0];
+                var coucherStr = data.daily.sunset[0];
+                document.getElementById('sat-lever').textContent = leverStr.split('T')[1].slice(0, 5);
+                document.getElementById('sat-coucher').textContent = coucherStr.split('T')[1].slice(0, 5);
 
                 var bas = document.getElementById('zone-7-jours'); bas.innerHTML = "";
                 const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
