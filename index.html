@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>Les Peupliers — Écran dynamique</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#000}
+body{font-family:Arial,Helvetica,sans-serif}
+
+#screen{
+  background-image:url('fond-final.png');
+  position:fixed;
+  top:0;
+  left:0;
+  width:100vw;
+  height:100vh;
+  background-size:cover;
+  background-position:center;
+  z-index:-1;
+  overflow:hidden;
+}
+
+/* Canvas météo transparent : aucun cadre ni décor supplémentaire */
+#climate-canvas,#orage-canvas{
+  position:fixed;top:0;left:0;width:100vw;height:100vh;
+  pointer-events:none;
+}
+#climate-canvas{z-index:5}
+#orage-canvas{z-index:6}
+
+.mask{
+  position:absolute;z-index:20;
+  background:#050b0d;border:0;outline:0;box-shadow:none;
+  pointer-events:none;border-radius:0;
+}
+.tmask{
+  position:absolute;z-index:20;
+  background:#050b0d;border:0;outline:0;box-shadow:none;
+  pointer-events:none;border-radius:0;
+}
+
+/* Masques date */
+#m-day{left:17.25%;top:5.15%;width:22.05%;height:6.20%}
+#m-num{left:41.05%;top:5.15%;width:6.10%;height:6.20%}
+#m-month{left:48.55%;top:5.15%;width:15.55%;height:6.20%}
+#m-year{left:65.65%;top:5.15%;width:10.25%;height:6.20%}
+
+/* Masque heure digitale */
+#m-time{left:79.00%;top:32.15%;width:18.00%;height:5.35%}
+
+/* Masques températures 7 jours */
+#m1{left:1.35%;top:78.75%;width:8.20%;height:7.25%}
+#m2{left:11.35%;top:78.75%;width:8.20%;height:7.25%}
+#m3{left:21.75%;top:78.75%;width:8.20%;height:7.25%}
+#m4{left:32.00%;top:78.75%;width:8.20%;height:7.25%}
+#m5{left:42.05%;top:78.75%;width:8.20%;height:7.25%}
+#m6{left:52.25%;top:78.75%;width:8.20%;height:7.25%}
+#m7{left:62.55%;top:78.75%;width:8.20%;height:7.25%}
+
+/* Masques saison / soleil / lune */
+#m-season{left:79.55%;top:48.00%;width:12.10%;height:6.10%}
+#m-season-icon{left:90.55%;top:45.80%;width:6.30%;height:9.20%}
+#m-sunrise{left:85.20%;top:62.05%;width:4.75%;height:5.30%}
+#m-sunset{left:91.35%;top:62.05%;width:4.75%;height:5.30%}
+#m-moon-icon{left:79.65%;top:77.00%;width:7.00%;height:9.80%}
+#m-moonphase{left:85.25%;top:78.10%;width:10.30%;height:4.20%}
+#m-moonage{left:85.25%;top:82.55%;width:10.30%;height:3.45%}
+#m-moonlight{left:85.25%;top:86.05%;width:10.30%;height:3.10%}
+
+/* Masques météo actuelle */
+#m-current-temp{left:16.95%;top:36.25%;width:9.20%;height:7.15%}
+#m-current-cond{left:16.95%;top:43.00%;width:9.50%;height:3.40%}
+#m-current-icon{left:2.00%;top:37.00%;width:12.00%;height:10.80%}
+#m-feel{left:1.65%;top:52.65%;width:4.90%;height:2.85%}
+#m-humidity{left:7.55%;top:52.65%;width:5.05%;height:2.85%}
+#m-wind{left:13.55%;top:52.65%;width:5.05%;height:2.85%}
+#m-uv{left:19.55%;top:52.65%;width:5.55%;height:2.85%}
+
+/* Masques icônes météo des 7 jours */
+#mi1{left:1.55%;top:69.60%;width:7.80%;height:8.20%}
+#mi2{left:11.55%;top:69.60%;width:7.80%;height:8.20%}
+#mi3{left:21.95%;top:69.60%;width:7.80%;height:8.20%}
+#mi4{left:32.20%;top:69.60%;width:7.80%;height:8.20%}
+#mi5{left:42.25%;top:69.60%;width:7.80%;height:8.20%}
+#mi6{left:52.45%;top:69.60%;width:7.80%;height:8.20%}
+#mi7{left:62.75%;top:69.60%;width:7.80%;height:8.20%}
+
+/* Textes dynamiques : pas de fond, pas de cadre */
+.txt{
+  position:absolute;z-index:30;
+  background:transparent;border:0;outline:0;box-shadow:none;
+  color:#fff;pointer-events:none;white-space:nowrap;
+  display:flex;align-items:center;justify-content:center;
+  text-shadow:none
+}
+#day{left:17.25%;top:5.15%;width:22.05%;height:6.20%;font-size:clamp(20px,3.15vw,52px);font-weight:700;letter-spacing:.04em}
+#num{left:41.05%;top:5.15%;width:6.10%;height:6.20%;font-size:clamp(20px,3.15vw,52px);font-weight:700}
+#month{left:48.55%;top:5.15%;width:15.55%;height:6.20%;font-size:clamp(20px,3.15vw,52px);font-weight:700;letter-spacing:.05em}
+#year{left:65.65%;top:5.15%;width:10.25%;height:6.20%;font-size:clamp(20px,3.15vw,52px);font-weight:700;letter-spacing:.04em}
+#time{left:79.00%;top:32.15%;width:18.00%;height:5.35%;font:700 clamp(17px,2.65vw,43px)/1 "Courier New",monospace;letter-spacing:.08em}
+
+#current-temp{left:16.95%;top:36.25%;width:9.20%;height:7.15%;font-size:clamp(26px,4vw,65px);font-weight:700}
+#current-cond{left:16.95%;top:43.00%;width:9.50%;height:3.40%;font-size:clamp(14px,1.55vw,25px)}
+.metric{height:2.85%;font-size:clamp(10px,1.05vw,18px);font-weight:700}
+#feel{left:1.65%;top:52.65%;width:4.90%}
+#humidity{left:7.55%;top:52.65%;width:5.05%}
+#wind{left:13.55%;top:52.65%;width:5.05%}
+#uv{left:19.55%;top:52.65%;width:5.55%}
+
+.fc{
+  position:absolute;z-index:30;
+  background:transparent;border:0;box-shadow:none;
+  pointer-events:none;text-align:center
+}
+.fc .mx{
+  position:absolute;left:0;top:0;width:100%;height:52%;
+  display:flex;align-items:flex-end;justify-content:center;
+  color:#fff;font-size:clamp(18px,2.25vw,36px);font-weight:700
+}
+.fc .mn{
+  position:absolute;left:0;top:52%;width:100%;height:45%;
+  display:flex;align-items:flex-start;justify-content:center;
+  color:#009fe3;font-size:clamp(18px,2.25vw,36px);font-weight:700
+}
+#f1{left:1.35%;top:78.2%;width:8.20%;height:9.9%}
+#f2{left:11.35%;top:78.2%;width:8.20%;height:9.9%}
+#f3{left:21.75%;top:78.2%;width:8.20%;height:9.9%}
+#f4{left:32.00%;top:78.2%;width:8.20%;height:9.9%}
+#f5{left:42.05%;top:78.2%;width:8.20%;height:9.9%}
+#f6{left:52.25%;top:78.2%;width:8.20%;height:9.9%}
+#f7{left:62.55%;top:78.2%;width:8.20%;height:9.9%}
+
+/* Icônes météo transparentes */
+.weather-icon{
+  position:absolute;z-index:31;
+  object-fit:contain;pointer-events:none;
+  background:transparent;border:0;box-shadow:none
+}
+#current-icon{left:2.00%;top:37.00%;width:12.00%;height:10.80%}
+.fi{top:69.60%;width:7.80%;height:8.20%}
+#fi1{left:1.55%}#fi2{left:11.55%}#fi3{left:21.95%}#fi4{left:32.20%}
+#fi5{left:42.25%}#fi6{left:52.45%}#fi7{left:62.75%}
+
+#season{
+  left:79.55%;top:48.00%;width:12.10%;height:6.10%;
+  justify-content:flex-start;font-size:clamp(17px,2.2vw,34px);font-weight:700
+}
+#season-icon{
+  position:absolute;z-index:31;left:90.55%;top:45.80%;width:6.30%;height:9.20%;
+  object-fit:contain;pointer-events:none
+}
+#sunrise,#sunset{top:62.05%;height:5.30%;font-size:clamp(11px,1.35vw,23px);font-weight:700}
+#sunrise{left:85.20%;width:4.75%}#sunset{left:91.35%;width:4.75%}
+
+#moon-icon{
+  position:absolute;z-index:31;
+  left:79.65%;top:77.00%;
+  width:40px;height:40px;
+  margin-right:10px;
+  object-fit:contain;pointer-events:none
+}
+#moonphase{left:85.25%;top:78.10%;width:10.30%;height:4.20%;justify-content:flex-start;font-size:clamp(11px,1.30vw,22px);font-weight:600}
+#moonage{left:85.25%;top:82.55%;width:10.30%;height:3.45%;justify-content:flex-start;font-size:clamp(10px,1.20vw,20px)}
+#moonlight{left:85.25%;top:86.05%;width:10.30%;height:3.10%;justify-content:flex-start;font-size:clamp(10px,1.20vw,20px)}
+
+/* Aiguilles uniquement : aucune horloge supplémentaire */
+#hands{position:absolute;z-index:35;left:89.92%;top:16.05%;width:0;height:0;pointer-events:none;background:transparent}
+.hand{position:absolute;left:-1.5px;top:0;border:0;box-shadow:none;border-radius:2px;transform-origin:50% 0}
+#hour{width:3px;height:min(5.1vw,86px);background:#fff}
+#minute{width:2px;height:min(6.5vw,109px);background:#9bdc3f}
+
+/* Ambiance du ciel appliquée uniquement au fond, sans modifier les éléments dynamiques */
+body.sky-overcast #screen::before,
+body.sky-rain #screen::before,
+body.sky-sun #screen::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:-1;
+}
+body.sky-overcast #screen::before{
+  background:rgba(35,45,55,.28);
+  mix-blend-mode:multiply;
+}
+body.sky-rain #screen::before{
+  background:rgba(25,35,48,.36);
+  mix-blend-mode:multiply;
+}
+body.sky-sun #screen::before{
+  background:rgba(255,236,175,.12);
+  mix-blend-mode:screen;
+}
+body.lightning-flash #screen{filter:brightness(1.24)}
+</style>
+</head>
+
+<body>
+<div id="screen">
+  <canvas id="climate-canvas"></canvas>
+  <canvas id="orage-canvas"></canvas>
+
+  <!-- Masques chirurgicaux localisés : ils ne couvrent que les anciens pixels dynamiques -->
+  <div id="m-day" class="mask"></div><div id="m-num" class="mask"></div>
+  <div id="m-month" class="mask"></div><div id="m-year" class="mask"></div>
+  <div id="m-time" class="mask"></div>
+
+  <div id="m1" class="tmask"></div><div id="m2" class="tmask"></div>
+  <div id="m3" class="tmask"></div><div id="m4" class="tmask"></div>
+  <div id="m5" class="tmask"></div><div id="m6" class="tmask"></div>
+  <div id="m7" class="tmask"></div>
+
+  <div id="m-season" class="mask"></div><div id="m-season-icon" class="mask"></div>
+  <div id="m-sunrise" class="mask"></div><div id="m-sunset" class="mask"></div>
+  <div id="m-moon-icon" class="mask"></div><div id="m-moonphase" class="mask"></div>
+  <div id="m-moonage" class="mask"></div><div id="m-moonlight" class="mask"></div>
+
+  <div id="m-current-temp" class="mask"></div><div id="m-current-cond" class="mask"></div>
+  <div id="m-current-icon" class="mask"></div><div id="m-feel" class="mask"></div>
+  <div id="m-humidity" class="mask"></div><div id="m-wind" class="mask"></div><div id="m-uv" class="mask"></div>
+
+  <div id="mi1" class="tmask"></div><div id="mi2" class="tmask"></div>
+  <div id="mi3" class="tmask"></div><div id="mi4" class="tmask"></div>
+  <div id="mi5" class="tmask"></div><div id="mi6" class="tmask"></div>
+  <div id="mi7" class="tmask"></div>
+
+  <div id="day" class="txt"></div><div id="num" class="txt"></div>
+  <div id="month" class="txt"></div><div id="year" class="txt"></div>
+  <div id="time" class="txt"></div>
+
+  <div id="current-temp" class="txt"></div><div id="current-cond" class="txt"></div>
+  <img id="current-icon" class="weather-icon" alt="">
+  <div id="feel" class="txt metric"></div><div id="humidity" class="txt metric"></div>
+  <div id="wind" class="txt metric"></div><div id="uv" class="txt metric"></div>
+
+  <img id="fi1" class="weather-icon fi" alt=""><div id="f1" class="fc"><span class="mx"></span><span class="mn"></span></div>
+  <img id="fi2" class="weather-icon fi" alt=""><div id="f2" class="fc"><span class="mx"></span><span class="mn"></span></div>
+  <img id="fi3" class="weather-icon fi" alt=""><div id="f3" class="fc"><span class="mx"></span><span class="mn"></span></div>
+  <img id="fi4" class="weather-icon fi" alt=""><div id="f4" class="fc"><span class="mx"></span><span class="mn"></span></div>
+  <img id="fi5" class="weather-icon fi" alt=""><div id="f5" class="fc"><span class="mx"></span><span class="mn"></span></div>
+  <img id="fi6" class="weather-icon fi" alt=""><div id="f6" class="fc"><span class="mx"></span><span class="mn"></span></div>
+  <img id="fi7" class="weather-icon fi" alt=""><div id="f7" class="fc"><span class="mx"></span><span class="mn"></span></div>
+
+  <div id="season" class="txt"></div>
+  <img id="season-icon" alt="">
+  <div id="sunrise" class="txt"></div><div id="sunset" class="txt"></div>
+
+  <img id="moon-icon" alt="">
+  <div id="moonphase" class="txt"></div><div id="moonage" class="txt"></div><div id="moonlight" class="txt"></div>
+
+  <div id="hands"><div id="hour" class="hand"></div><div id="minute" class="hand"></div></div>
+</div>
+
+<script>
+"use strict";
+
+/* =========================================================
+   HORLOGE + DATE
+   ========================================================= */
+const LAT=50.20,LON=5.33;
+const DAYS=["DIMANCHE","LUNDI","MARDI","MERCREDI","JEUDI","VENDREDI","SAMEDI"];
+const MONTHS=["JANVIER","FÉVRIER","MARS","AVRIL","MAI","JUIN","JUILLET","AOÛT","SEPTEMBRE","OCTOBRE","NOVEMBRE","DÉCEMBRE"];
+const $=id=>document.getElementById(id);
+const pad=n=>String(n).padStart(2,"0");
+
+function clockAndDate(){
+  const d=new Date(),h=d.getHours(),m=d.getMinutes(),s=d.getSeconds();
+  $("day").textContent=DAYS[d.getDay()];
+  $("num").textContent=pad(d.getDate());
+  $("month").textContent=MONTHS[d.getMonth()];
+  $("year").textContent=d.getFullYear();
+  $("time").textContent=`${pad(h)}:${pad(m)}:${pad(s)}`;
+
+  const hourDeg=(h%12)*30+m*.5+s/120;
+  const minuteDeg=m*6+s*.1;
+  $("hour").style.transform=`rotate(${hourDeg}deg)`;
+  $("minute").style.transform=`rotate(${minuteDeg}deg)`;
+}
+clockAndDate();
+setInterval(clockAndDate,1000);
+
+/* =========================================================
+   SAISON + SYMBOLE TRANSPARENT SVG
+   ========================================================= */
+function seasonNow(){
+  const d=new Date(),m=d.getMonth()+1,day=d.getDate();
+  let name,symbol;
+  if((m===3&&day>=20)||m===4||m===5||(m===6&&day<21)){name="PRINTEMPS";symbol="spring"}
+  else if((m===6&&day>=21)||m===7||m===8||(m===9&&day<23)){name="ÉTÉ";symbol="summer"}
+  else if((m===9&&day>=23)||m===10||m===11||(m===12&&day<21)){name="AUTOMNE";symbol="autumn"}
+  else{name="HIVER";symbol="winter"}
+  $("season").textContent=name;
+  $("season-icon").src=seasonSVG(symbol);
+}
+function seasonSVG(kind){
+  const svg={
+    spring:`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 85V48" stroke="#74b843" stroke-width="7"/><path d="M50 55C30 48 22 34 30 22c17 0 27 10 20 28Z" fill="#72c83e"/><path d="M51 51c3-19 17-28 34-24 2 17-9 28-34 30Z" fill="#9be34d"/><path d="M16 88h68c-9-18-20-20-34-20S25 70 16 88Z" fill="#9b664f"/><path d="M27 84c14-7 31-8 46 0" fill="none" stroke="#68a63b" stroke-width="4"/></svg>`,
+    summer:`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 84V43" stroke="#74b843" stroke-width="7"/><path d="M50 52C27 45 21 28 29 16c18 1 29 14 22 31Z" fill="#76cf38"/><path d="M51 48c4-22 20-31 39-26 0 18-13 29-39 32Z" fill="#a3e64c"/><path d="M16 88h68c-7-18-19-23-34-23S23 70 16 88Z" fill="#9b664f"/></svg>`,
+    autumn:`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M49 84c4-21 13-36 29-49" fill="none" stroke="#8c5c3c" stroke-width="6"/><path d="M73 31c12-7 19-2 20 9-8 8-15 8-20 2Z" fill="#d87528"/><path d="M59 46c-11-5-16-13-10-22 10-2 16 5 15 15Z" fill="#b84b2f"/><path d="M34 43c-10-6-16-3-18 7 7 9 14 10 20 4Z" fill="#e1a52e"/><path d="M16 88h68c-7-18-19-23-34-23S23 70 16 88Z" fill="#8f6047"/></svg>`,
+    winter:`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 78V22M25 35l50 30M25 65l50-30M50 22l-7 8M50 22l7 8M25 35l10 1M25 35l4 9M75 65l-10-1M75 65l-4-9M25 65l10-1M25 65l4-9M75 35l-10 1M75 35l-4 9" stroke="#dff6ff" stroke-width="5" stroke-linecap="round"/></svg>`
+  }[kind];
+  return "data:image/svg+xml;charset=UTF-8,"+encodeURIComponent(svg);
+}
+seasonNow();
+
+/* =========================================================
+   LUNE : calcul d'âge + image SVG transparente
+   ========================================================= */
+const SYNODIC=29.530588853,MOON_REF=Date.UTC(2000,0,6,18,14);
+function moonAge(){
+  let age=((Date.now()-MOON_REF)/86400000)%SYNODIC;
+  if(age<0)age+=SYNODIC;
+  return age;
+}
+function moonPhaseName(age){
+  if(age<1.85)return"Nouvelle lune";
+  if(age<7.38)return"Premier croissant";
+  if(age<9.23)return"Premier quartier";
+  if(age<14.77)return"Gibbeuse croissante";
+  if(age<16.61)return"Pleine lune";
+  if(age<22.15)return"Gibbeuse décroissante";
+  if(age<23.99)return"Dernier quartier";
+  return"Dernier croissant";
+}
+function moonSVG(age){
+  const illum=(1-Math.cos(2*Math.PI*age/SYNODIC))/2;
+  const waxing=age<SYNODIC/2;
+  const r=42,cx=50,cy=50;
+  const terminatorRx=Math.abs(Math.cos(2*Math.PI*age/SYNODIC))*r;
+  const shadowSide=waxing?-1:1;
+  const path=`<path d="M ${cx} ${cy-r} A ${r} ${r} 0 1 1 ${cx} ${cy+r} A ${r} ${r} 0 1 1 ${cx} ${cy-r}" fill="#f2c66d"/>`;
+  const shade=`<ellipse cx="${cx+shadowSide*terminatorRx}" cy="${cy}" rx="${Math.max(1,terminatorRx)}" ry="${r}" fill="#27313a" opacity=".88"/>`;
+  const craters=`<g fill="#b8894c" opacity=".48"><circle cx="33" cy="34" r="6"/><circle cx="63" cy="28" r="4"/><circle cx="68" cy="59" r="7"/><circle cx="42" cy="70" r="4"/><circle cx="27" cy="61" r="3"/></g>`;
+  const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">${path}${shade}${craters}<circle cx="50" cy="50" r="42" fill="none" stroke="#f8df9a" stroke-width="2"/></svg>`;
+  return "data:image/svg+xml;charset=UTF-8,"+encodeURIComponent(svg);
+}
+function moonNow(){
+  const age=moonAge(),illum=Math.round((1-Math.cos(2*Math.PI*age/SYNODIC))/2*100);
+  $("moonphase").textContent=moonPhaseName(age);
+  $("moonage").textContent=`Âge : ${age.toFixed(1)} jours`;
+  $("moonlight").textContent=`Éclairage : ${illum}%`;
+  $("moon-icon").src=moonSVG(age);
+}
+moonNow();
+setInterval(moonNow,3600000);
+
+/* =========================================================
+   MÉTÉO OPEN-METEO — sans clé API
+   ========================================================= */
+const labels={
+0:"Ciel dégagé",1:"Peu nuageux",2:"Partiellement nuageux",3:"Couvert",
+45:"Brouillard",48:"Brouillard givrant",51:"Bruine faible",53:"Bruine",55:"Bruine forte",
+56:"Bruine verglaçante",57:"Bruine verglaçante",61:"Pluie faible",63:"Pluie",65:"Forte pluie",
+66:"Pluie verglaçante",67:"Forte pluie verglaçante",71:"Neige faible",73:"Neige",75:"Forte neige",
+77:"Grains de neige",80:"Averses",81:"Averses",82:"Fortes averses",85:"Averses de neige",
+86:"Fortes averses de neige",95:"Orage",96:"Orage avec grêle",99:"Orage avec grêle"
+};
+
+function isStorm(code){return[95,96,99].includes(Number(code))}
+function isRain(code){return[51,53,55,56,57,61,63,65,66,67,80,81,82].includes(Number(code))}
+function weatherKind(code){
+  code=Number(code);
+  if(isStorm(code))return"storm";
+  if([71,73,75,77,85,86].includes(code))return"snow";
+  if(isRain(code))return"rain";
+  if([45,48].includes(code))return"fog";
+  if([1,2,3].includes(code))return"cloud";
+  return"sun";
+}
+
+/* SVG météo : images transparentes, aucun cadre */
+function weatherSVG(code){
+  const kind=weatherKind(code);
+  let body="";
+  if(kind==="sun"||kind==="cloud"){
+    body+=`<circle cx="55" cy="42" r="20" fill="#ffd22e"/>`;
+    if(kind==="sun")for(let i=0;i<8;i++){const a=i*Math.PI/4,x1=55+27*Math.cos(a),y1=42+27*Math.sin(a),x2=55+34*Math.cos(a),y2=42+34*Math.sin(a);body+=`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#ffd22e" stroke-width="4" stroke-linecap="round"/>`}
+  }
+  if(kind==="cloud"||kind==="rain"||kind==="storm"||kind==="snow"||kind==="fog"){
+    body+=`<g><ellipse cx="42" cy="55" rx="25" ry="17" fill="#f5f7f9"/><ellipse cx="58" cy="51" rx="22" ry="20" fill="#ffffff"/><ellipse cx="72" cy="57" rx="18" ry="14" fill="#eef2f5"/></g>`;
+  }
+  if(kind==="rain"||kind==="storm")body+=`<g stroke="#1ea8ff" stroke-width="4" stroke-linecap="round"><line x1="40" y1="75" x2="36" y2="87"/><line x1="57" y1="75" x2="53" y2="87"/><line x1="74" y1="75" x2="70" y2="87"/></g>`;
+  if(kind==="storm")body+=`<path d="M58 69 L48 88 L58 84 L54 98 L70 77 L60 81 Z" fill="#ffe02f"/>`;
+  if(kind==="snow")body+=`<g stroke="#bfeaff" stroke-width="3"><path d="M42 76v15M35 83h14M37 78l10 10M47 78L37 88"/><path d="M65 76v15M58 83h14M60 78l10 10M70 78L60 88"/></g>`;
+  if(kind==="fog")body+=`<g stroke="#e9f3f7" stroke-width="5" stroke-linecap="round"><line x1="28" y1="77" x2="78" y2="77"/><line x1="35" y1="88" x2="70" y2="88"/></g>`;
+  const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">${body}</svg>`;
+  return "data:image/svg+xml;charset=UTF-8,"+encodeURIComponent(svg);
+}
+function fmtTime(iso){
+  return new Date(iso).toLocaleTimeString("fr-BE",{hour:"2-digit",minute:"2-digit"});
+}
+
+/* =========================================================
+   PARTICULES : pluie + feuilles selon vent
+   ========================================================= */
+const climateCanvas=$("climate-canvas"),climateCtx=climateCanvas.getContext("2d");
+let rainActive=false,leavesActive=false,climateWind=0,rainDrops=[],leaves=[];
+function resizeClimateCanvas(){
+  const dpr=Math.min(devicePixelRatio||1,2);
+  climateCanvas.width=Math.round(innerWidth*dpr);climateCanvas.height=Math.round(innerHeight*dpr);
+  climateCtx.setTransform(dpr,0,0,dpr,0,0);createRainDrops();createLeaves();
+}
+function createRainDrops(){
+  const count=Math.max(0,Math.min(180,Math.round(innerWidth/10)));
+  rainDrops=Array.from({length:count},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,len:5+Math.random()*13,speed:7+Math.random()*8,alpha:.18+Math.random()*.32}));
+}
+function createLeaves(){
+  const count=Math.max(0,Math.min(28,Math.round(innerWidth/75)));
+  leaves=Array.from({length:count},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,size:4+Math.random()*7,speed:.7+Math.random()*1.5,drift:(Math.random()-.5)*.55,angle:Math.random()*Math.PI*2,spin:(Math.random()-.5)*.045,alpha:.45+Math.random()*.45}));
+}
+function drawClimate(){
+  climateCtx.clearRect(0,0,innerWidth,innerHeight);
+  if(rainActive){
+    climateCtx.lineCap="round";
+    for(const d of rainDrops){
+      climateCtx.beginPath();climateCtx.moveTo(d.x,d.y);climateCtx.lineTo(d.x,d.y+d.len);
+      climateCtx.strokeStyle=`rgba(205,235,255,${d.alpha})`;climateCtx.lineWidth=1;climateCtx.stroke();
+      d.y+=d.speed;if(d.y>innerHeight+20){d.y=-20-Math.random()*80;d.x=Math.random()*innerWidth}
+    }
+  }
+  if(leavesActive){
+    for(const l of leaves){
+      climateCtx.save();climateCtx.translate(l.x,l.y);climateCtx.rotate(l.angle);climateCtx.globalAlpha=l.alpha;
+      climateCtx.fillStyle="#65a83d";climateCtx.beginPath();climateCtx.ellipse(0,0,l.size,l.size*.48,0,0,Math.PI*2);climateCtx.fill();climateCtx.restore();
+      l.x+=l.speed+climateWind*.035;l.y+=l.drift;l.angle+=l.spin;
+      if(l.x>innerWidth+20){l.x=-20;l.y=Math.random()*innerHeight}
+      if(l.y<-20)l.y=innerHeight+20;if(l.y>innerHeight+20)l.y=-20;
+    }
+  }
+  requestAnimationFrame(drawClimate);
+}
+resizeClimateCanvas();addEventListener("resize",resizeClimateCanvas);drawClimate();
+
+/* =========================================================
+   ÉCLAIRS : canvas transparent uniquement en cas d'orage
+   ========================================================= */
+const canvas=$("orage-canvas"),ctx=canvas.getContext("2d");let stormActive=false;
+function resizeLightningCanvas(){
+  const dpr=Math.min(devicePixelRatio||1,2);
+  canvas.width=Math.round(innerWidth*dpr);canvas.height=Math.round(innerHeight*dpr);
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+}
+function branch(x1,y1,x2,y2,depth=0){
+  if(depth>4)return;
+  const points=[],steps=8;
+  for(let i=0;i<=steps;i++){
+    const t=i/steps,x=x1+(x2-x1)*t,y=y1+(y2-y1)*t;
+    const offset=(i===0||i===steps)?0:(Math.random()-.5)*45*(1-depth*.12);
+    points.push([x+offset,y]);
+  }
+  ctx.beginPath();ctx.moveTo(points[0][0],points[0][1]);
+  for(let i=1;i<points.length;i++)ctx.lineTo(points[i][0],points[i][1]);
+  ctx.strokeStyle="rgba(70,215,255,.78)";ctx.lineWidth=depth===0?6:3;ctx.shadowColor="#45dcff";ctx.shadowBlur=22;ctx.stroke();
+  ctx.beginPath();ctx.moveTo(points[0][0],points[0][1]);
+  for(let i=1;i<points.length;i++)ctx.lineTo(points[i][0],points[i][1]);
+  ctx.strokeStyle="rgba(245,252,255,.98)";ctx.lineWidth=depth===0?2.2:1.1;ctx.shadowColor="#fff";ctx.shadowBlur=12;ctx.stroke();
+  if(depth<3&&Math.random()<.65){
+    const p=points[2+Math.floor(Math.random()*5)];
+    branch(p[0],p[1],p[0]+(Math.random()-.5)*230,p[1]+80+Math.random()*180,depth+1);
+  }
+}
+function clearLightning(){ctx.clearRect(0,0,innerWidth,innerHeight);document.body.classList.remove("lightning-flash")}
+function lightningFlash(){
+  if(stormActive){
+    ctx.clearRect(0,0,innerWidth,innerHeight);
+    const x=innerWidth*(.12+Math.random()*.76);
+    branch(x,-20,x+(Math.random()-.5)*280,innerHeight*(.25+Math.random()*.48),0);
+    document.body.classList.add("lightning-flash");
+    setTimeout(clearLightning,150);
+  }
+  setTimeout(lightningFlash,1800+Math.random()*6500);
+}
+resizeLightningCanvas();addEventListener("resize",resizeLightningCanvas);setTimeout(lightningFlash,3000);
+
+/* =========================================================
+   APPEL MÉTÉO
+   ========================================================= */
+async function weather(){
+  const url=`https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}`+
+    `&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,uv_index`+
+    `&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset`+
+    `&timezone=Europe%2FBrussels&forecast_days=7`;
+
+  try{
+    const r=await fetch(url,{cache:"no-store"});if(!r.ok)throw new Error("API météo indisponible");
+    const x=await r.json(),c=x.current,d=x.daily,condition=labels[c.weather_code]||"Conditions actuelles";
+
+    $("current-temp").textContent=Math.round(c.temperature_2m)+"°C";
+    $("current-cond").textContent=condition;
+    $("current-icon").src=weatherSVG(c.weather_code);
+    $("feel").textContent=Math.round(c.apparent_temperature)+"°C";
+    $("humidity").textContent=Math.round(c.relative_humidity_2m)+"%";
+    $("wind").textContent=Math.round(c.wind_speed_10m)+" km/h";
+    $("uv").textContent=`${Math.round(c.uv_index||0)} / ${c.uv_index<3?"Faible":c.uv_index<6?"Modéré":"Élevé"}`;
+
+    for(let i=0;i<7;i++){
+      $(`f${i+1}`).querySelector(".mx").textContent=Math.round(d.temperature_2m_max[i])+"°";
+      $(`f${i+1}`).querySelector(".mn").textContent=Math.round(d.temperature_2m_min[i])+"°";
+      $(`fi${i+1}`).src=weatherSVG(d.weather_code[i]);
+    }
+
+    $("sunrise").textContent=fmtTime(d.sunrise[0]);
+    $("sunset").textContent=fmtTime(d.sunset[0]);
+
+    const now=new Date(),sr=new Date(d.sunrise[0]),ss=new Date(d.sunset[0]);
+    document.body.classList.toggle("night",now<sr||now>ss);
+
+    rainActive=isRain(c.weather_code)||isStorm(c.weather_code);
+    climateWind=Number(c.wind_speed_10m)||0;
+    leavesActive=climateWind>15;
+    stormActive=isStorm(c.weather_code);
+
+    /* Ambiance du ciel sur fond-final.png :
+       Couvert/Pluvieux = gris et voilé
+       Grand soleil = plus lumineux
+       Les icônes, la lune et leurs positions restent inchangées.
+    */
+    document.body.classList.remove("sky-overcast","sky-rain","sky-sun");
+    const wcode=Number(c.weather_code);
+    if(isRain(wcode) || isStorm(wcode)){
+      document.body.classList.add("sky-rain");
+    }else if([3,45,48].includes(wcode)){
+      document.body.classList.add("sky-overcast");
+    }else if([0].includes(wcode)){
+      document.body.classList.add("sky-sun");
+    }
+  }catch(err){
+    console.error(err);
+    $("current-temp").textContent="--°C";
+    $("current-cond").textContent="Données indisponibles";
+    $("current-icon").src=weatherSVG(3);
+    rainActive=false;leavesActive=false;stormActive=false;
+    document.body.classList.remove("sky-overcast","sky-rain","sky-sun");
+  }
+}
+weather();
+setInterval(weather,600000);
+</script>
+</body>
+</html>
