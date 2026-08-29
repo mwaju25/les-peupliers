@@ -15,11 +15,9 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 15px;
             position: relative;
         }
 
-        /* INJECTION DIRECTE DU DÉCOR GLOBAL */
         .fond-global {
             position: fixed;
             top: 0;
@@ -31,20 +29,59 @@
             background-position: center;
             z-index: -1;
         }
-        
-        header { display: flex; justify-content: space-between; align-items: center; height: 14vh; position: relative; z-index: 10; }
-        
-        .flip-tuile-js { font-size: 2.3rem; font-weight: bold; color: #fff; text-transform: uppercase; }
-        .heure-digitale-js { font-size: 2.2rem; font-weight: bold; color: #fff; letter-spacing: 4px; }
 
-        /* DEUXIÈME HORLOGE : SYSTEME DE ROTATION DES AIGUILLES SUR LA MONTRE DE L'IMAGE */
+        header { position: relative; height: 16vh; z-index: 10; }
+
+        /* STRUCTURE ET VISUEL DU CALENDRIER STYLE FLIP-FLAP MÉCANIQUE */
+        .zone-flip-flap {
+            position: absolute;
+            top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 86px;
+            background: transparent;
+            overflow: hidden;
+        }
+        
+        .flip-tuile-js {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.6rem;
+            font-weight: bold;
+            color: #fff;
+            text-transform: uppercase;
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            letter-spacing: 2px;
+            text-shadow: 0px 3px 4px rgba(0,0,0,0.9);
+            position: relative;
+        }
+
+        /* LA LIGNE HORIZONTALE DE SÉPARATION MÉCANIQUE DU FLIP-FLAP */
+        .flip-tuile-js::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            height: 2px;
+            background: rgba(0, 0, 0, 0.4);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            z-index: 6;
+        }
+
+        /* REPOSITIONNEMENT CHIRURGICAL ET ROTATION DES AIGUILLES SUR VOTRE HORLOGE VIDE */
         .cadran-aiguilles {
             position: absolute;
-            right: 114px;
-            top: 25px;
-            width: 110px;
-            height: 110px;
+            right: 22px;
+            top: 18px;
+            width: 195px;
+            height: 195px;
             background: transparent;
+            z-index: 10;
         }
         .aiguille {
             position: absolute;
@@ -52,19 +89,39 @@
             left: 50%;
             transform-origin: bottom center;
             border-radius: 4px;
-            z-index: 15;
         }
-        .heure { width: 4px; height: 32px; background-color: #fff; }
-        .minute { width: 3px; height: 44px; background-color: #8ad400; }
+        .heure { width: 5px; height: 50px; background-color: #fff; box-shadow: 0 0 5px rgba(0,0,0,0.5); }
+        .minute { width: 4px; height: 72px; background-color: #8ad400; box-shadow: 0 0 5px rgba(0,0,0,0.5); }
+
+        /* STYLE HORLOGE DIGITALE FLIP-FLAP */
+        .zone-digitale-flip {
+            position: absolute;
+            right: 22px;
+            top: 227px;
+            width: 195px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #fff;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 3px;
+            text-shadow: 0px 2px 4px rgba(0,0,0,0.8);
+        }
+        .zone-digitale-flip::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            height: 2px;
+            background: rgba(0, 0, 0, 0.5);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
         main { display: flex; justify-content: space-between; height: 64vh; margin: 10px 0; position: relative; z-index: 10; }
-        .colonne-gauche { width: 26%; background: transparent; }
-        .colonne-droite { width: 22%; background: transparent; display: flex; flex-direction: column; gap: 10px; }
-        .espace-central-libre { width: 50%; pointer-events: none; }
-
-        .text-dynamique-transparent { color: #fff; font-weight: bold; padding: 2px 5px; display: inline-block; }
-
-        /* AUCUN TEXTE SOUHAITÉ DANS LE FOOTER POUR ÉVITER LE DOUBLON AVEC VOTRE MAQUETTE */
         footer { height: 18vh; position: relative; z-index: 10; }
 
         .particule-feuille { position: absolute; width: 14px; height: 9px; background: #628c34; border-radius: 0 75% 0 75%; opacity: 0.65; animation: animationVent linear infinite; }
@@ -76,48 +133,30 @@
 </head>
 <body>
 
-    <!-- APPEL VISUEL GLOBAL -->
     <div id="fond-ecran-principal" class="fond-global"></div>
 
     <div id="zone-feuilles-dynamiques" style="position: fixed; top: 20vh; left: 28vw; width: 46vw; height: 55vh; pointer-events: none; z-index: 2; overflow: hidden;"></div>
 
     <header>
-        <div style="width: 135px; height: 135px; background: transparent;"></div>
-        
-        <!-- CALENDRIER FLIP-FLAP TRANSPARENT -->
-        <div style="display: flex; gap: 42px; position: absolute; left: 24.5%; top: 22px;">
-            <div class="flip-tuile-js" id="date-jour">SAMEDI</div>
-            <div class="flip-tuile-js" id="date-num">29</div>
-            <div class="flip-tuile-js" id="date-mois">AOÛT</div>
-            <div class="flip-tuile-js" id="date-annee">2026</div>
-        </div>
+        <!-- PLACEMENT AU MILLIMÈTRE DES DONNÉES DANS VOS CASES FLIP-FLAP VIDES (DU HAUT) -->
+        <div class="zone-flip-flap" style="left: 173px; width: 228px;"><div class="flip-tuile-js" id="date-jour">SAMEDI</div></div>
+        <div class="zone-flip-flap" style="left: 412px; width: 95px;"><div class="flip-tuile-js" id="date-num">29</div></div>
+        <div class="zone-flip-flap" style="left: 518px; width: 140px;"><div class="flip-tuile-js" id="date-mois">AOÛT</div></div>
+        <div class="zone-flip-flap" style="left: 668px; width: 115px;"><div class="flip-tuile-js" id="date-annee">2026</div></div>
 
-        <!-- HORLOGE ANALOGIQUE : EMBLEME DES AIGUILLES ACTIVÉ -->
+        <!-- CADRAN DE L'HORLOGE RONDE (CENTRE DES AIGUILLES ALIGNÉ) -->
         <div class="cadran-aiguilles">
             <div class="aiguille heure" id="needle-hour"></div>
             <div class="aiguille minute" id="needle-minute"></div>
         </div>
         
-        <!-- HORLOGE DIGITALE SUR LE CADRAN FLIP INFÉRIEUR -->
-        <div style="position: absolute; right: 54px; top: 142px;">
-            <div class="heure-digitale-js" id="horloge-texte">13:08:03</div>
-        </div>
+        <!-- INTÉGRATION DE L'HORLOGE DIGITALE FLIP-FLAP COMPACTE DANS VOTRE CADRAN NOIR BAS -->
+        <div class="zone-digitale-flip" id="horloge-texte">13:15:00</div>
     </header>
 
     <main>
-        <div class="colonne-gauche">
-            <div style="position: absolute; left: 65px; top: 85px; font-size: 3.5rem;" id="icone-meteo-courante">☁️</div>
-            <div style="position: absolute; left: 45px; top: 155px; font-size: 4rem; font-weight: bold;" id="temp-meteo-courante">19°C</div>
-        </div>
-
-        <div class="espace-central-libre"></div>
-
-        <div class="colonne-droite">
-            <div style="position: absolute; right: 55px; top: 15px;"><span class="text-dynamique-transparent" id="val-saison">ÉTÉ 🌱</span></div>
-            <div style="position: absolute; right: 35px; top: 102px; font-size: 0.95rem;"><span class="text-dynamique-transparent" id="val-lever">06:49</span></div>
-            <div style="position: absolute; right: 35px; top: 128px; font-size: 0.95rem;"><span class="text-dynamique-transparent" id="val-coucher">20:30</span></div>
-            <div style="position: absolute; right: 25px; top: 225px; font-size: 0.85rem;"><span class="text-dynamique-transparent" id="val-lune">Pleine lune (100%)</span></div>
-        </div>
+        <!-- TEXTE DE LA TEMPÉRATURE DU JOUR CENTRÉ DANS LE PANNEAU MÉTÉO DE GAUCHE -->
+        <div style="position: absolute; left: 165px; top: 115px; width: 110px; height: 60px; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; font-weight: bold; color: #fff;" id="temp-meteo-courante">19°C</div>
     </main>
 
     <footer></footer>
@@ -126,13 +165,13 @@
         function actualiserEcran() {
             var tempsReel = new Date();
             
-            // Horloge digitale
+            // Horloge numérique
             var h = tempsReel.getHours();
             var m = tempsReel.getMinutes();
             var s = tempsReel.getSeconds();
             document.getElementById('horloge-texte').textContent = h.toString().padStart(2, '0') + ':' + m.toString().padStart(2, '0') + ':' + s.toString().padStart(2, '0');
             
-            // Horloge analogique (aiguilles)
+            // Rotation des aiguilles blanches et vertes
             var degHeure = (h % 12) * 30 + m * 0.5;
             var degMinute = m * 6;
             document.getElementById('needle-hour').style.transform = 'translateX(-50%) rotate(' + degHeure + 'deg)';
