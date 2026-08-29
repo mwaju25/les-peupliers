@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Ecran Dynamique Connecté - Les Peupliers</title>
+    <title>Ecran Dynamique - Les Peupliers Master Conforme</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Arial', sans-serif; }
         body { background-color: #000; color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
@@ -15,6 +15,7 @@
         
         .pos { position: absolute; display: flex; align-items: center; justify-content: center; overflow: hidden; text-align: center; }
 
+        /* LOGO DE L'ÉCOLE AVEC CERCLAGE BLANC ET BELLE OMBRE PORTÉE */
         .logo-ecole-cerclé {
             position: absolute; left: 1.5vw; top: 2vh; width: 13vw; height: 13vw;
             background: #ffffff; border: 4px solid #ffffff; border-radius: 50%;
@@ -23,6 +24,7 @@
         }
         .logo-ecole-cerclé img { width: 100%; height: auto; object-fit: contain; }
 
+        /* CALENDRIER MECHANIC STYLE FLIP-FLAP */
         .boite-flip-haut {
             background-color: #0a0d14; border: 2px solid #222a36; border-radius: 8px;
             box-shadow: 0px 6px 12px rgba(0,0,0,0.5), inset 0px 0px 10px rgba(0,0,0,0.8);
@@ -37,6 +39,7 @@
             background: rgba(0,0,0,0.6); border-bottom: 1px solid rgba(255,255,255,0.15); z-index: 5; 
         }
 
+        /* HORLOGE ANALOGIQUE : ETUI CARRE À COINS ARRONDIS */
         .bloc-montre-carre {
             position: absolute; right: 2vw; top: 2vh; width: 17vw; height: 17vw;
             background: #07090e; border: 2px solid #1c232e; border-radius: 12px;
@@ -52,6 +55,7 @@
         .minute { width: 4px; height: 5vw; background-color: #8ad400; }
         .pivot { position: absolute; width: 10px; height: 10px; background: #8ad400; border-radius: 50%; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 15; box-shadow: 0 0 4px #8ad400; }
 
+        /* BLOCK CHRONO NUMERIQUE */
         .boite-digitale-bas {
             position: absolute; right: 2vw; top: 38vh; width: 17vw; height: 8vh;
             background: #05070a; border: 2px solid #1a222d; border-radius: 8px;
@@ -62,7 +66,6 @@
             letter-spacing: 2px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; 
         }
         .heure-digitale-js::after { content: ''; position: absolute; left: 0; top: 50%; width: 100%; height: 2px; background: rgba(0,0,0,0.7); border-bottom: 1px solid rgba(255,255,255,0.1); }
-
         .cadran-relief-bleu {
             background: linear-gradient(to bottom, #09141d, #04080f); border: 1.5px solid #172836; border-radius: 12px;
             box-shadow: 0 8px 16px rgba(0,0,0,0.5), inset 0 0 12px rgba(0,0,0,0.7);
@@ -82,10 +85,11 @@
         <img src="logo.png" alt="Logo" onerror="this.src='https://github.io'">
     </div>
 
-    <div class="pos boite-flip-haut" style="left: 17.5vw; top: 2.5vh; width: 22.3vw; height: 10vh;"><div class="flip-tuile-js" id="date-jour">--</div></div>
-    <div class="pos boite-flip-haut" style="left: 40.8vw; top: 2.5vh; width: 9.6vw; height: 10vh;"><div class="flip-tuile-js" id="date-num">--</div></div>
-    <div class="pos boite-flip-haut" style="left: 51.5vw; top: 2.5vh; width: 13.5vw; height: 10vh;"><div class="flip-tuile-js" id="date-mois">--</div></div>
-    <div class="pos boite-flip-haut" style="left: 66.2vw; top: 2.5vh; width: 11.5vw; height: 10vh;"><div class="flip-tuile-js" id="date-annee">----</div></div>
+    <!-- CALENDRIER HAUT -->
+    <div class="pos boite-flip-haut" style="left: 17.5vw; top: 2.5vh; width: 22.3vw; height: 10vh;"><div class="flip-tuile-js" id="date-jour">SAMEDI</div></div>
+    <div class="pos boite-flip-haut" style="left: 40.8vw; top: 2.5vh; width: 9.6vw; height: 10vh;"><div class="flip-tuile-js" id="date-num">29</div></div>
+    <div class="pos boite-flip-haut" style="left: 51.5vw; top: 2.5vh; width: 13.5vw; height: 10vh;"><div class="flip-tuile-js" id="date-mois">AOÛT</div></div>
+    <div class="pos boite-flip-haut" style="left: 66.2vw; top: 2.5vh; width: 11.5vw; height: 10vh;"><div class="flip-tuile-js" id="date-annee">2026</div></div>
 
     <div class="bloc-montre-carre">
         <div class="montre-retro-cercle" id="cadran-montre">
@@ -99,44 +103,30 @@
         </div>
     </div>
     <div class="boite-digitale-bas"><div class="heure-digitale-js" id="horloge-texte">--:--:--</div></div>
+
+    <!-- MÉTÉO COURANTE COMPLÈTE EN TEXTE BLANC ET ICÔNES DE VOTRE MAQUETTE -->
     <div class="cadran-relief-bleu" style="position: absolute; left: 1.5vw; top: 25vh; width: 28.5vw; height: 35vh; padding: 1.3vw; color: #ffffff;">
         <div style="font-size: 1.1vw; color: #ffffff; font-weight: bold; margin-bottom: 2px; text-align: left;">Marloie (Marche-en-Famenne)</div>
         <div style="font-size: 0.75vw; color: #aaaaaa; text-transform: uppercase; margin-bottom: 1.2vh; letter-spacing: 1px; text-align: left;">MÉTÉO ACTUELLE</div>
-        
         <div style="display: flex; align-items: center; gap: 2vw; margin-bottom: 2.5vh;">
             <div style="font-size: 4.8vw;" id="courant-icone">☁️</div>
             <div style="text-align: left;">
-                <div style="font-size: 4.2vw; font-weight: bold; line-height: 1; font-family: 'Arial Black'; color: #ffffff;" id="courant-temp">--°C</div>
-                <div style="font-size: 1.2vw; color: #ffffff; margin-top: 4px; font-weight: bold;" id="courant-desc">Chargement...</div>
+                <div style="font-size: 4.2vw; font-weight: bold; line-height: 1; font-family: 'Arial Black'; color: #ffffff;" id="courant-temp">19°C</div>
+                <div style="font-size: 1.2vw; color: #ffffff; margin-top: 4px; font-weight: bold;" id="courant-desc">Couvert</div>
             </div>
         </div>
-        
         <div style="display: flex; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 1.5vh; text-align: center;">
-            <div style="flex: 1;">
-                <div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase;">RESSENTIE</div>
-                <div style="font-size: 1.15vw; font-weight: bold; margin-top: 4px;" id="courant-ressenti">--°C</div>
-            </div>
-            <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1);">
-                <div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 3px;"><span style="color:#49a6e9;">💧</span> HUMIDITÉ</div>
-                <div style="font-size: 1.15vw; font-weight: bold; margin-top: 4px;" id="courant-humidite">--%</div>
-            </div>
-            <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1);">
-                <div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 3px;"><span style="color:#fff;">💨</span> VENT</div>
-                <div style="font-size: 1.15vw; font-weight: bold; margin-top: 4px;" id="courant-vent">-- km/h</div>
-            </div>
-            <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1);">
-                <div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 3px;"><span style="color:#e9a949;">☀️</span> UV</div>
-                <div style="font-size: 1.15vw; font-weight: bold; margin-top: 4px;" id="courant-uv">0 / Faible</div>
-            </div>
+            <div style="flex: 1;"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase;">RESSENTIE</div><div style="font-size: 1.15vw; font-weight: bold; margin-top: 4px; color: #ffffff;">19°C</div></div>
+            <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1);"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 3px;"><span style="color: #49a6e9; font-size: 0.9vw;">💧</span> HUMIDITÉ</div><div style="font-size: 1.15vw; font-weight: bold; margin-top: 4px; color: #ffffff;">82%</div></div>
+            <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1);"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 3px;"><span style="color: #ffffff; font-size: 0.9vw;">💨</span> VENT</div><div style="font-size: 1.15vw; font-weight: bold; margin-top: 4px; color: #ffffff;">13 km/h</div></div>
+            <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1);"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 3px;"><span style="color: #e9a949; font-size: 0.9vw;">☀️</span> UV</div><div style="font-size: 1.1vw; font-weight: bold; margin-top: 4px; color: #ffffff;">0 / Faible</div></div>
         </div>
     </div>
 
+    <!-- PANNEAUX SAISON SOLEIL LUNE DROITE CONFORMES -->
     <div class="cadran-relief-noir-bloc" style="position: absolute; right: 2vw; top: 48vh; width: 17vw; height: 30vh; padding: 1.2vw; display: flex; flex-direction: column; justify-content: space-between;">
         <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; height: 45%; border-bottom: 1px solid #1f2937; padding-bottom: 1vh;">
-            <div style="text-align: left;">
-                <div style="font-size: 0.8vw; color: #8ad400; font-weight: bold; letter-spacing: 1px;">SAISON</div>
-                <div style="font-size: 1.8vw; font-weight: bold; margin-top: 0.3vh;" id="sat-saison">--</div>
-            </div>
+            <div style="text-align: left;"><div style="font-size: 0.8vw; color: #8ad400; font-weight: bold; letter-spacing: 1px;">SAISON</div><div style="font-size: 1.8vw; font-weight: bold; margin-top: 0.3vh;">ÉTÉ</div></div>
             <div style="font-size: 3.5vw;">🌱</div>
         </div>
         <div style="display: flex; flex-direction: column; justify-content: space-between; width: 100%; height: 50%; padding-top: 0.5vh;">
@@ -144,9 +134,9 @@
             <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5vh;">
                 <div style="font-size: 2.8vw;">☀️</div>
                 <div style="display: flex; gap: 1.2vw; text-align: center;">
-                    <div><div style="font-size: 1.1vw; font-weight: bold;" id="sat-lever">--:--</div><div style="font-size: 0.7vw; color: #888;">Lever</div></div>
+                    <div><div style="font-size: 1.1vw; font-weight: bold;">06:47</div><div style="font-size: 0.7vw; color: #888;">Lever</div></div>
                     <div style="width: 1px; background: #222a36; height: 2.5vh;"></div>
-                    <div><div style="font-size: 1.1vw; font-weight: bold;" id="sat-coucher">--:--</div><div style="font-size: 0.7vw; color: #888;">Coucher</div></div>
+                    <div><div style="font-size: 1.1vw; font-weight: bold;">20:32</div><div style="font-size: 0.7vw; color: #888;">Coucher</div></div>
                 </div>
             </div>
         </div>
@@ -156,70 +146,30 @@
         <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; text-align: left;">
             <div style="font-size: 0.8vw; color: #8ad400; font-weight: bold; letter-spacing: 1px;">LUNE</div>
             <div style="font-size: 0.78vw; line-height: 1.35; color: #ccc; margin-top: 0.5vh;">
-                <strong style="font-size: 0.95vw; color: #fff; display: block; margin-bottom: 2px;" id="lune-nom">Lune</strong>
-                Âge : <span id="lune-age">--</span> jours<br>Éclairement : <span id="lune-ecl">--</span>%
+                <strong style="font-size: 0.95vw; color: #fff; display: block; margin-bottom: 2px;">Pleine lune</strong>Âge : 14,7 jours<br>Éclairement : 100%
             </div>
         </div>
-        <div style="font-size: 3.5vw;" id="sat-lune-icone">🌕</div>
+        <div style="font-size: 3.5vw;">🌕</div>
+    </div>
+    <!-- LES 7 PANNEAUX DU BAS INTEGRALEMENT REHAUSSES ET REDESSINES -->
+    <div style="position: absolute; left: 1.5vw; bottom: 8vh; width: 77.5vw; height: 27.5vh; display: flex; justify-content: space-between;">
+        <div class="carte-prev-unique cadran-relief-bleu"><div style="font-weight:bold; font-family:'Arial Black'; font-size:1.1vw;">AUJ.</div><div style="font-size:0.75vw; color:#777; font-weight:bold;">28 AOÛT</div><div style="font-size:3.2vw; margin: 0.5vh 0;">☁️</div><div style="font-size:2vw; font-weight:bold;">21°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">16°</div></div>
+        <div class="carte-prev-unique cadran-relief-bleu"><div style="font-weight:bold; font-family:'Arial Black'; font-size:1.1vw;">SAM.</div><div style="font-size:0.75vw; color:#777; font-weight:bold;">29 AOÛT</div><div style="font-size:3.2vw; margin: 0.5vh 0;">🌧️</div><div style="font-size:2vw; font-weight:bold;">19°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">15°</div></div>
+        <div class="carte-prev-unique cadran-relief-bleu"><div style="font-weight:bold; font-family:'Arial Black'; font-size:1.1vw;">DIM.</div><div style="font-size:0.75vw; color:#777; font-weight:bold;">30 AOÛT</div><div style="font-size:3.2vw; margin: 0.5vh 0;">🌧️</div><div style="font-size:2vw; font-weight:bold;">20°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">16°</div></div>
+        <div class="carte-prev-unique cadran-relief-bleu"><div style="font-weight:bold; font-family:'Arial Black'; font-size:1.1vw;">LUN.</div><div style="font-size:0.75vw; color:#777; font-weight:bold;">31 AOÛT</div><div style="font-size:3.2vw; margin: 0.5vh 0;">☁️</div><div style="font-size:2vw; font-weight:bold;">21°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">14°</div></div>
+        <div class="carte-prev-unique cadran-relief-bleu"><div style="font-weight:bold; font-family:'Arial Black'; font-size:1.1vw;">MAR.</div><div style="font-size:0.75vw; color:#777; font-weight:bold;">01 SEPT</div><div style="font-size:3.2vw; margin: 0.5vh 0;">☁️</div><div style="font-size:2vw; font-weight:bold;">20°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">12°</div></div>
+        <div class="carte-prev-unique cadran-relief-bleu"><div style="font-weight:bold; font-family:'Arial Black'; font-size:1.1vw;">MER.</div><div style="font-size:0.75vw; color:#777; font-weight:bold;">02 SEPT</div><div style="font-size:3.2vw; margin: 0.5vh 0;">☁️</div><div style="font-size:2vw; font-weight:bold;">20°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">10°</div></div>
+        <div class="carte-prev-unique cadran-relief-bleu"><div style="font-weight:bold; font-family:'Arial Black'; font-size:1.1vw;">JEU.</div><div style="font-size:0.75vw; color:#777; font-weight:bold;">03 SEPT</div><div style="font-size:3.2vw; margin: 0.5vh 0;">🌤️</div><div style="font-size:2vw; font-weight:bold;">22°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">12°</div></div>
     </div>
 
-    <div style="position: absolute; left: 1.5vw; bottom: 8vh; width: 77.5vw; height: 27.5vh; display: flex; justify-content: space-between;" id="zone-previsions"></div>
     <script>
         var cadran = document.getElementById('cadran-montre');
         for (var j = 0; j < 60; j++) {
             if (j % 5 === 0) {
-                var gP = document.createElement('div'); gP.classList.add('graduation', 'principale');
-                gP.style.transform = 'rotate(' + (j * 6) + 'deg)'; cadran.appendChild(gP);
+                var gP = document.createElement('div'); gP.classList.add('graduation', 'principale'); gP.style.transform = 'rotate(' + (j * 6) + 'deg)'; cadran.appendChild(gP);
             } else {
-                var g = document.createElement('div'); g.classList.add('graduation');
-                g.style.transform = 'rotate(' + (j * 6) + 'deg)'; cadran.appendChild(g);
+                var g = document.createElement('div'); g.classList.add('graduation'); g.style.transform = 'rotate(' + (j * 6) + 'deg)'; cadran.appendChild(g);
             }
-        }
-
-        const codesMeteo = { "113": "☀️", "116": "🌤️", "119": "☁️", "122": "☁️", "143": "🌫️", "188": "🌫️", "200": "⛈️", "227": "🌨️", "248": "🌫️", "266": "🌧️", "296": "🌧️", "302": "🌧️", "308": "🌧️", "353": "🌧️", "356": "🌧️", "359": "🌧️", "389": "⛈️" };
-
-        function recupererMeteo() {
-            fetch('https://wttr.in')
-            .then(res => res.json())
-            .then(data => {
-                var actuel = data.current_condition[0];
-                document.getElementById('courant-temp').textContent = actuel.temp_C + "°C";
-                document.getElementById('courant-desc').textContent = actuel.lang_fr ? actuel.lang_fr[0].value : actuel.weatherDesc[0].value;
-                document.getElementById('courant-ressenti').textContent = actuel.FeelsLikeC + "°C";
-                document.getElementById('courant-humidite').textContent = actuel.humidity + "%";
-                document.getElementById('courant-vent').textContent = actuel.windspeedKmph + " km/h";
-                document.getElementById('courant-uv').textContent = actuel.uvIndex + " / " + (actuel.uvIndex <= 2 ? 'Faible' : (actuel.uvIndex <= 5 ? 'Modéré' : 'Élevé'));
-                document.getElementById('courant-icone').textContent = codesMeteo[actuel.weatherCode] || "☁️";
-
-                var astro = data.weather[0].astronomy[0];
-                document.getElementById('sat-lever').textContent = astro.sunrise;
-                document.getElementById('sat-coucher').textContent = astro.sunset;
-                document.getElementById('lune-nom').textContent = astro.moon_phase;
-                document.getElementById('lune-ecl').textContent = astro.moon_illumination;
-
-                var zonePrev = document.getElementById('zone-previsions');
-                zonePrev.innerHTML = "";
-                const joursSemaine = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
-                const moisAnnee = ['JANV.', 'FÉVR.', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUIL.', 'AOÛT', 'SEPT.', 'OCT.', 'NOV.', 'DÉC.'];
-
-                data.weather.forEach((jour, index) => {
-                    var d = new Date(jour.date);
-                    var nomJour = index === 0 ? "AUJ." : joursSemaine[d.getDay()];
-                    var texteDate = d.getDate() + " " + moisAnnee[d.getMonth()];
-                    var icone = codesMeteo[jour.hourly[0].weatherCode] || "☁️";
-
-                    var carte = document.createElement('div');
-                    carte.className = "carte-prev-unique cadran-relief-bleu";
-                    carte.innerHTML = `
-                        <div style="font-weight:bold; font-family:'Arial Black'; font-size:1.1vw;">${nomJour}</div>
-                        <div style="font-size:0.75vw; color:#777; font-weight:bold;">${texteDate}</div>
-                        <div style="font-size:3.2vw; margin:0.2vh 0;">${icone}</div>
-                        <div style="font-size:2vw; font-weight:bold;">${jour.maxtempC}°</div>
-                        <div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">${jour.mintempC}°</div>
-                    `;
-                    zonePrev.appendChild(carte);
-                });
-            }).catch(err => console.log("Erreur:", err));
         }
 
         function actualiserEcran() {
@@ -237,15 +187,9 @@
             document.getElementById('date-num').textContent = tempsReel.getDate();
             document.getElementById('date-mois').textContent = listeMois[tempsReel.getMonth()];
             document.getElementById('date-annee').textContent = tempsReel.getFullYear();
-
-            var mois = tempsReel.getMonth();
-            var saison = (mois >= 2 && mois <= 4) ? "PRINTEMPS" : ((mois >= 5 && mois <= 8) ? "ÉTÉ" : ((mois >= 9 && mois <= 10) ? "AUTOMNE" : "HIVER"));
-            document.getElementById('sat-saison').textContent = saison;
         }
-
         setInterval(actualiserEcran, 1000); actualiserEcran();
-        setInterval(recupererMeteo, 900000); recupererMeteo();
-        
+
         var conteneurFeuilles = document.getElementById('zone-feuilles-dynamiques');
         function lancerFeuille() {
             var feuille = document.createElement('div'); feuille.classList.add('particule-feuille');
