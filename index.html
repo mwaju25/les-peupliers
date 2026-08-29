@@ -93,20 +93,30 @@
         .cadran-relief-noir-bloc { background: #05080c !important; border: 2px solid #162029 !important; border-radius: 12px; box-shadow: 0 6px 12px rgba(0,0,0,0.6); }
         .carte-prev-unique { width: 10.4vw; height: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 1.5vh 0; background: transparent; }
 
-        /* LUNE ENTIÈREMENT SÉCURISÉE AVEC CONTOUR LUMINEUX CONSTANT */
+        /* DESIGN GLYPH SÉCURISÉ POUR LES PICTOGRAMMES PROFESSIONNELS CONTEMPORAINS */
         .soleil-realiste-css { width: 3.2vw; height: 3.2vw; background: radial-gradient(circle, #fff 15%, #ffea00 55%, #ff7700 100%); border-radius: 50%; box-shadow: 0 0 18px rgba(255,210,0,0.75), 0 0 35px rgba(255,100,0,0.4); }
+        
         .lune-doree-image { 
             position: relative; width: 3.4vw; height: 3.4vw; border-radius: 50%;
             background-image: url('https://wikimedia.org') !important;
             background-size: cover; background-position: center;
-            border: 2px solid rgba(255,255,255,0.4) !important;
-            box-shadow: 0 0 12px rgba(255,255,255,0.35), inset 2px 2px 6px rgba(0,0,0,0.5);
+            border: 1.5px solid rgba(255,255,255,0.3) !important;
+            box-shadow: 0 0 12px rgba(255,255,255,0.35), inset 2px 2px 6px rgba(0,0,0,0.6);
             filter: grayscale(1) brightness(1.1); display: block; overflow: hidden;
         }
+        .cache-ombre-lunaire { position: absolute; top: 0; width: 100%; height: 100%; background: rgba(5,8,12,0.85); transition: left 0.5s, width 0.5s; }
+
+        /* PICTOGRAMMES EN STYLE FLAT VECTORIEL ÉPURÉ */
+        .picto-pro-meteo { position: relative; width: 4.8vw; height: 4.8vw; display: flex; align-items: center; justify-content: center; }
+        .picto-pro-meteo .soleil-centre { width: 2.2vw; height: 2.2vw; background: #fff; border-radius: 50%; box-shadow: 0 0 15px rgba(255,255,255,0.5); }
+        .picto-pro-meteo .nuage-face { position: absolute; width: 3.2vw; height: 1.6vw; background: rgba(255,255,255,0.85); border-radius: 20px; bottom: 0.8vw; left: 0.8vw; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
+        .picto-pro-meteo .nuage-face::before { content:''; position: absolute; width: 1.6vw; height: 1.6vw; background: rgba(255,255,255,0.85); border-radius: 50%; top: -0.8vw; left: 0.5vw; }
+        .picto-pro-meteo .nuage-face::after { content:''; position: absolute; width: 1.2vw; height: 1.2vw; background: rgba(255,255,255,0.85); border-radius: 50%; top: -0.5vw; right: 0.5vw; }
+        
+        .picto-pro-mini { scale: 0.65; display: inline-block; vertical-align: middle; margin: 0.2vh 0; }
     </style>
 </head>
 <body>
-
     <div id="fond-ecran-principal" class="fond-global"></div>
     <div id="calque-nuage-gris"></div>
     <div id="zone-intemperies"></div>
@@ -126,12 +136,13 @@
     </div>
     
     <div class="boite-digitale-bas"><div class="charniere-gauche"></div><div class="heure-digitale-js" id="horloge-texte">--:--:--</div><div class="charniere-droite"></div></div>
-    <!-- METEO DE GAUCHE -->
+
+    <!-- METEO DE GAUCHE DES PEUPLIERS -->
     <div class="cadran-relief-bleu" style="position: absolute; left: 1.5vw; top: 25vh; width: 28.5vw; height: 35vh; padding: 1.3vw; color: #ffffff;">
         <div style="font-size: 1.1vw; color: #ffffff; font-weight: bold; margin-bottom: 2px; text-align: left; font-family:'Arial';">Marloie (Marche-en-Famenne)</div>
         <div style="font-size: 0.75vw; color: #aaaaaa; text-transform: uppercase; margin-bottom: 1.2vh; letter-spacing: 1px;">MÉTÉO ACTUELLE</div>
         <div style="display: flex; align-items: center; gap: 2vw; margin-bottom: 2.5vh;">
-            <div style="font-size: 4.8vw;" id="courant-icone">☁️</div>
+            <div class="picto-pro-meteo"><div class="soleil-centre" style="background:#ffea00; opacity:0.3; scale:1.2;"></div><div class="nuage-face"></div></div>
             <div style="text-align: left;">
                 <div style="font-size: 4.2vw; font-weight: bold; line-height: 1;" id="courant-temp">18°C</div>
                 <div style="font-size: 1.2vw; color: #ffffff; margin-top: 4px; font-weight: bold; font-family:'Arial';" id="courant-desc">Éclaircies</div>
@@ -144,7 +155,6 @@
             <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1);"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 3px;"><span style="color: #e9a949; font-size: 0.9vw;">☀️</span> UV</div><div style="font-size: 1.1vw; margin-top: 4px; color: #ffffff;" id="courant-uv">1 / Bas</div></div>
         </div>
     </div>
-
     <!-- MODULE CENTRAL DROIT SOLEIL REEL -->
     <div class="cadran-relief-noir-bloc" style="position: absolute; right: 2vw; top: 45.5vh; width: 17vw; height: 28vh; padding: 1vw 1.2vw; display: flex; flex-direction: column; justify-content: space-between;">
         <div style="display: flex; justify-content: space-between; align-items: center; height: 45%; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 0.5vh; width: 100%;">
@@ -152,7 +162,7 @@
                 <div style="font-size: 1.1vw; color: #8ad400; font-weight: bold; letter-spacing: 0.5px;">SAISON</div>
                 <div style="font-size: 2vw; font-weight: bold; color: #ffffff; margin-top: 0.2vh;" id="sat-saison">--</div>
             </div>
-            <div style="font-size: 3.5vw;">🌱</div>
+            <div class="picto-pro-meteo" style="scale:0.8;"><div class="nuage-face" style="background:#8ad400; bottom:1vw; left:1vw;"></div></div>
         </div>
         <div style="display: flex; flex-direction: column; justify-content: space-between; height: 50%; width: 100%; padding-top: 0.5vh;">
             <div style="font-size: 1.1vw; color: #8ad400; font-weight: bold; text-align: left; letter-spacing: 0.5px;">SOLEIL</div>
@@ -176,7 +186,7 @@
                 Âge : <span id="lune-age">--</span> j<br>Éclairement : <span id="lune-ecl">--</span>%
             </div>
         </div>
-        <div class="lune-doree-image" id="lune-vrai-photo"></div>
+        <div class="lune-doree-image" id="lune-vrai-photo"><div class="cache-ombre-lunaire" id="lune-ombre"></div></div>
     </div>
 
     <!-- PREVISIONS D'EN BAS -->
@@ -195,7 +205,6 @@
             var g = document.createElement('div'); g.className = (j % 5 === 0) ? 'graduation principale' : 'graduation'; g.style.transform = 'rotate(' + (j * 6) + 'deg)'; mC.appendChild(g);
         }
 
-        // INTEGRATION DU FLUX METEO ROBUSTE DE SECOURS VIA WTTR.IN (EVITE TOUT CRASH DE GRAPHE)
         function executerMeteo() {
             fetch('https://wttr.in')
             .then(res => res.json()).then(data => {
@@ -208,11 +217,8 @@
                 document.getElementById('courant-vent').textContent = vitesseVentActuelle + " km/h";
                 document.getElementById('courant-uv').textContent = current.uvIndex + " / Max";
                 document.getElementById('courant-desc').textContent = "Connecté";
-                document.getElementById('courant-icone').textContent = "🌤️";
-                gererEffetsFond(3);
             }).catch(err => console.log(err));
 
-            // CRÉATION STABLE DES 7 PANNEAUX DU BAS SANS INTERRUPTEUR DE CODE
             var bas = document.getElementById('zone-7-jours'); bas.innerHTML = "";
             const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
             const mois = ['JANV.', 'FÉVR.', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUIL.', 'AOÛT', 'SEPT.', 'OCT.', 'NOV.', 'DÉC.'];
@@ -222,14 +228,15 @@
                 var txtJour = index === 0 ? "AUJ." : noms[d.getDay()];
                 var box = document.createElement('div');
                 box.className = "carte-prev-unique cadran-relief-bleu";
-                box.innerHTML = `<div style="font-weight:bold; font-family:'Arial Black'; font-size:1.1vw; color:#ffffff;">${txtJour}</div><div style="font-size:0.75vw; color:#aaa; font-weight:bold;">${d.getDate()} ${mois[d.getMonth()]}</div><div style="font-size:3.2vw; margin: 0.5vh 0;">🌤️</div><div style="font-size:2vw; font-weight:bold; color:#ffffff;">21°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">14°</div>`;
+                box.innerHTML = `
+                    <div style="font-weight:bold; font-family:'Arial Black'; font-size:1.1vw; color:#ffffff;">${txtJour}</div>
+                    <div style="font-size:0.75vw; color:#aaa; font-weight:bold;">${d.getDate()} ${mois[d.getMonth()]}</div>
+                    <div class="picto-pro-meteo picto-pro-mini"><div class="soleil-centre" style="background:#ffea00; opacity:0.4;"></div><div class="nuage-face"></div></div>
+                    <div style="font-size:2vw; font-weight:bold; color:#ffffff;">21°</div>
+                    <div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">14°</div>
+                `;
                 bas.appendChild(box);
             }
-        }
-
-        function gererEffetsFond(code) {
-            var n = document.getElementById('calque-nuage-gris'); var intem = document.getElementById('zone-intemperies'); intem.innerHTML = "";
-            n.style.background = "rgba(40, 50, 60, 0.2)";
         }
 
         function calculPhaseLune() {
@@ -238,9 +245,14 @@
             let jd = Math.floor(y / 100) + Math.floor(Math.floor(y / 100) / 4) + d + Math.floor(365.25 * (y + 4716)) + Math.floor(30.6001 * (m + 1)) - 1522.5;
             let daysSinceNew = (jd - 2451550.1) % 29.530588853; if (daysSinceNew < 0) daysSinceNew += 29.530588853;
             document.getElementById('lune-age').textContent = daysSinceNew.toFixed(1);
-            document.getElementById('lune-ecl').textContent = Math.round((1 - Math.cos((daysSinceNew * Math.PI * 2) / 29.53)) * 50);
+            let pct = Math.round((1 - Math.cos((daysSinceNew * Math.PI * 2) / 29.53)) * 50);
+            document.getElementById('lune-ecl').textContent = pct;
 
-            let nom = "Nouvelle lune";
+            let nom = "Nouvelle lune"; var shadow = document.getElementById('lune-ombre');
+            if(shadow) {
+                if(daysSinceNew < 14.7) { shadow.style.left = pct + '%'; shadow.style.width = (100 - pct) + '%'; } 
+                else { shadow.style.left = '0%'; shadow.style.width = (100 - pct) + '%'; }
+            }
             if(daysSinceNew >= 1.8 && daysSinceNew < 5.5) nom = "Premier croissant";
             if(daysSinceNew >= 5.5 && daysSinceNew < 9.2) nom = "Premier quartier";
             if(daysSinceNew >= 9.2 && daysSinceNew < 13) nom = "Gibbeuse croissante";
