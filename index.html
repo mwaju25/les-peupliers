@@ -93,27 +93,30 @@
         .cadran-relief-noir-bloc { background: #05080c !important; border: 2px solid #162029 !important; border-radius: 12px; box-shadow: 0 6px 12px rgba(0,0,0,0.6); }
         .carte-prev-unique { width: 10.4vw; height: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 1.5vh 0; background: transparent; }
 
-        /* DESIGN GLYPH SÉCURISÉ POUR LES PICTOGRAMMES PROFESSIONNELS CONTEMPORAINS */
+        /* SOLEIL ET LUNE PHOTOGRAPHIQUE HD AVEC CONTOUR FIXE */
         .soleil-realiste-css { width: 3.2vw; height: 3.2vw; background: radial-gradient(circle, #fff 15%, #ffea00 55%, #ff7700 100%); border-radius: 50%; box-shadow: 0 0 18px rgba(255,210,0,0.75), 0 0 35px rgba(255,100,0,0.4); }
         
         .lune-doree-image { 
             position: relative; width: 3.4vw; height: 3.4vw; border-radius: 50%;
             background-image: url('https://wikimedia.org') !important;
             background-size: cover; background-position: center;
-            border: 1.5px solid rgba(255,255,255,0.3) !important;
-            box-shadow: 0 0 12px rgba(255,255,255,0.35), inset 2px 2px 6px rgba(0,0,0,0.6);
+            border: 1.5px solid rgba(255,255,255,0.4) !important;
+            box-shadow: 0 0 12px rgba(255,255,255,0.35), inset 2px 2px 6px rgba(0,0,0,0.5);
             filter: grayscale(1) brightness(1.1); display: block; overflow: hidden;
         }
-        .cache-ombre-lunaire { position: absolute; top: 0; width: 100%; height: 100%; background: rgba(5,8,12,0.85); transition: left 0.5s, width 0.5s; }
+        .cache-ombre-lunaire { position: absolute; top: 0; width: 100%; height: 100%; background: rgba(5,8,12,0.88); transition: left 0.5s, width 0.5s; }
 
-        /* PICTOGRAMMES EN STYLE FLAT VECTORIEL ÉPURÉ */
+        /* LOGOS METEO ET VEGETATION COMPACTS ET NETTEMENT PLUS OPACIFIÉS ET VISIBLES */
         .picto-pro-meteo { position: relative; width: 4.8vw; height: 4.8vw; display: flex; align-items: center; justify-content: center; }
-        .picto-pro-meteo .soleil-centre { width: 2.2vw; height: 2.2vw; background: #fff; border-radius: 50%; box-shadow: 0 0 15px rgba(255,255,255,0.5); }
-        .picto-pro-meteo .nuage-face { position: absolute; width: 3.2vw; height: 1.6vw; background: rgba(255,255,255,0.85); border-radius: 20px; bottom: 0.8vw; left: 0.8vw; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
-        .picto-pro-meteo .nuage-face::before { content:''; position: absolute; width: 1.6vw; height: 1.6vw; background: rgba(255,255,255,0.85); border-radius: 50%; top: -0.8vw; left: 0.5vw; }
-        .picto-pro-meteo .nuage-face::after { content:''; position: absolute; width: 1.2vw; height: 1.2vw; background: rgba(255,255,255,0.85); border-radius: 50%; top: -0.5vw; right: 0.5vw; }
+        .picto-pro-meteo .soleil-centre { width: 2.2vw; height: 2.2vw; background: #ffffff; border-radius: 50%; box-shadow: 0 0 15px rgba(255,255,255,0.8); }
+        .picto-pro-meteo .nuage-face { position: absolute; width: 3.2vw; height: 1.6vw; background: #ffffff; border-radius: 20px; bottom: 0.8vw; left: 0.8vw; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        .picto-pro-meteo .nuage-face::before { content:''; position: absolute; width: 1.6vw; height: 1.6vw; background: #ffffff; border-radius: 50%; top: -0.8vw; left: 0.5vw; }
+        .picto-pro-meteo .nuage-face::after { content:''; position: absolute; width: 1.2vw; height: 1.2vw; background: #ffffff; border-radius: 50%; top: -0.5vw; right: 0.5vw; }
         
         .picto-pro-mini { scale: 0.65; display: inline-block; vertical-align: middle; margin: 0.2vh 0; }
+        
+        /* LOGOS DE SÉCURITÉ POUR L'ÉVOLUTION DE LA SEED */
+        .bloc-plante-saisonnier { font-size: 3.2vw; line-height: 1; display: flex; align-items: center; justify-content: center; }
     </style>
 </head>
 <body>
@@ -142,7 +145,7 @@
         <div style="font-size: 1.1vw; color: #ffffff; font-weight: bold; margin-bottom: 2px; text-align: left; font-family:'Arial';">Marloie (Marche-en-Famenne)</div>
         <div style="font-size: 0.75vw; color: #aaaaaa; text-transform: uppercase; margin-bottom: 1.2vh; letter-spacing: 1px;">MÉTÉO ACTUELLE</div>
         <div style="display: flex; align-items: center; gap: 2vw; margin-bottom: 2.5vh;">
-            <div class="picto-pro-meteo"><div class="soleil-centre" style="background:#ffea00; opacity:0.3; scale:1.2;"></div><div class="nuage-face"></div></div>
+            <div class="picto-pro-meteo"><div class="soleil-centre" style="background:#ffea00; opacity:0.6; scale:1.2;"></div><div class="nuage-face"></div></div>
             <div style="text-align: left;">
                 <div style="font-size: 4.2vw; font-weight: bold; line-height: 1;" id="courant-temp">18°C</div>
                 <div style="font-size: 1.2vw; color: #ffffff; margin-top: 4px; font-weight: bold; font-family:'Arial';" id="courant-desc">Éclaircies</div>
@@ -162,7 +165,7 @@
                 <div style="font-size: 1.1vw; color: #8ad400; font-weight: bold; letter-spacing: 0.5px;">SAISON</div>
                 <div style="font-size: 2vw; font-weight: bold; color: #ffffff; margin-top: 0.2vh;" id="sat-saison">--</div>
             </div>
-            <div class="picto-pro-meteo" style="scale:0.8;"><div class="nuage-face" style="background:#8ad400; bottom:1vw; left:1vw;"></div></div>
+            <div class="bloc-plante-saisonnier" id="sat-plante-icone">🌱</div>
         </div>
         <div style="display: flex; flex-direction: column; justify-content: space-between; height: 50%; width: 100%; padding-top: 0.5vh;">
             <div style="font-size: 1.1vw; color: #8ad400; font-weight: bold; text-align: left; letter-spacing: 0.5px;">SOLEIL</div>
@@ -208,7 +211,7 @@
         function executerMeteo() {
             fetch('https://wttr.in')
             .then(res => res.json()).then(data => {
-                var current = data.current_condition[0];
+                var current = data.current_condition;
                 var temp = Math.round(current.temp_C);
                 document.getElementById('courant-temp').textContent = temp + "°C";
                 document.getElementById('courant-ressenti').textContent = Math.round(current.FeelsLikeC) + "°C";
@@ -231,7 +234,7 @@
                 box.innerHTML = `
                     <div style="font-weight:bold; font-family:'Arial Black'; font-size:1.1vw; color:#ffffff;">${txtJour}</div>
                     <div style="font-size:0.75vw; color:#aaa; font-weight:bold;">${d.getDate()} ${mois[d.getMonth()]}</div>
-                    <div class="picto-pro-meteo picto-pro-mini"><div class="soleil-centre" style="background:#ffea00; opacity:0.4;"></div><div class="nuage-face"></div></div>
+                    <div class="picto-pro-meteo picto-pro-mini"><div class="soleil-centre" style="background:#ffea00; opacity:0.6;"></div><div class="nuage-face"></div></div>
                     <div style="font-size:2vw; font-weight:bold; color:#ffffff;">21°</div>
                     <div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">14°</div>
                 `;
@@ -275,7 +278,16 @@
             document.getElementById('date-num').textContent = tempsReel.getDate();
             document.getElementById('date-mois').textContent = mois[tempsReel.getMonth()];
             document.getElementById('date-annee').textContent = tempsReel.getFullYear();
-            document.getElementById('sat-saison').textContent = (tempsReel.getMonth() >= 2 && tempsReel.getMonth() <= 4) ? "PRINTEMPS" : ((tempsReel.getMonth() >= 5 && tempsReel.getMonth() <= 8) ? "ÉTÉ" : ((tempsReel.getMonth() >= 9 && tempsReel.getMonth() <= 10) ? "AUTOMNE" : "HIVER"));
+            
+            // CALCUL ET RENDU DES STAGES DE DÉVELOPPEMENT DE LA PLANTE
+            var mNum = tempsReel.getMonth();
+            var txtSaison = "HIVER"; var iconePlante = "🥔"; // Stage Graine cachée
+            if (mNum >= 2 && mNum <= 4) { txtSaison = "PRINTEMPS"; iconePlante = "🌱"; } // Stage Jeune Pousse
+            else if (mNum >= 5 && mNum <= 8) { txtSaison = "ÉTÉ"; iconePlante = "🌳"; } // Stage Arbre Épanoui
+            else if (mNum >= 9 && mNum <= 10) { txtSaison = "AUTOMNE"; iconePlante = "🍂"; } // Stage Chute de Feuilles
+            
+            document.getElementById('sat-saison').textContent = txtSaison;
+            document.getElementById('sat-plante-icone').textContent = iconePlante;
         }
 
         setInterval(actualiserHorloge, 1000); actualiserHorloge(); calculPhaseLune(); executerMeteo(); setInterval(executerMeteo, 900000);
