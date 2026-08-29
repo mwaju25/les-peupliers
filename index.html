@@ -50,7 +50,7 @@
         .charniere-gauche { left: -6px !important; } .charniere-gauche::after { left: -3px; }
         .charniere-droite { right: -6px !important; } .charniere-droite::after { right: -3px; }
 
-        /* HORLOGE ANALOGIQUE FINALE SANS DÉBORD EXTRA-LARGE */
+        /* HORLOGE ANALOGIQUE SANS DÉBORD EXTRA-LARGE */
         .montre-retro-cercle { 
             position: absolute; right: 2.2vw; top: 1vh; width: 15.6vw; height: 15.6vw; 
             background: #000000 !important; border: none !important; border-radius: 50%; 
@@ -93,17 +93,17 @@
         .cadran-relief-noir-bloc { background: #05080c !important; border: 2px solid #162029 !important; border-radius: 12px; box-shadow: 0 6px 12px rgba(0,0,0,0.6); }
         .carte-prev-unique { width: 10.4vw; height: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 1.5vh 0; background: transparent; }
 
-        /* MODULE DE LA LUNE AVEC CERCLAGE DISCRET EN PERMANENCE */
+        /* VISUEL LUNE RÉELLE AVEC DISQUE DE CONTOUR LUMINEUX */
         .soleil-realiste-css { width: 3.2vw; height: 3.2vw; background: radial-gradient(circle, #fff 15%, #ffea00 55%, #ff7700 100%); border-radius: 50%; box-shadow: 0 0 18px rgba(255,210,0,0.75), 0 0 35px rgba(255,100,0,0.4); }
         .lune-doree-image { 
             position: relative; width: 3.4vw; height: 3.4vw; border-radius: 50%;
             background-image: url('https://wikimedia.org') !important;
             background-size: cover; background-position: center;
-            border: 1px solid rgba(255,255,255,0.22) !important;
-            box-shadow: inset -4px -4px 10px rgba(0,0,0,0.7), 0 0 14px rgba(255,255,255,0.3);
-            filter: grayscale(1) brightness(1.05); display: block; overflow: hidden;
+            border: 1.5px solid rgba(255,255,255,0.3) !important;
+            box-shadow: inset -4px -4px 10px rgba(0,0,0,0.8), 0 0 12px rgba(255,255,255,0.4);
+            filter: grayscale(1) brightness(1.1); display: block; overflow: hidden;
         }
-        .cache-ombre-lunaire { position: absolute; top: 0; width: 100%; height: 100%; background: rgba(5,8,12,0.88); transition: left 0.5s, width 0.5s; }
+        .cache-ombre-lunaire { position: absolute; top: 0; width: 100%; height: 100%; background: rgba(5,8,12,0.85); transition: left 0.5s, width 0.5s; }
     </style>
 </head>
 <body>
@@ -212,10 +212,11 @@
                 clearInterval(intervalleFeuilles);
                 if(vitesseVentActuelle > 15) { intervalleFeuilles = setInterval(lancerFeuille, Math.max(700, 3200 - (vitesseVentActuelle * 60))); }
 
-                // METHODE ULTRA-STABLE SANS SPLIT COMPLIQUÉ : EXTRACTION SÉCURISÉE DES STRINGS DE SOLEIL
-                var s_time = data.daily.sunrise[0]; var e_time = data.daily.sunset[0];
-                document.getElementById('sat-lever').textContent = s_time ? s_time.slice(11, 16) : "--:--";
-                document.getElementById('sat-coucher').textContent = e_time ? e_time.slice(11, 16) : "--:--";
+                // LOGIQUE RESTAURÉE INFALLIBLE AVEC INDEXATION DU JOUR [0] POUR LE SOLEIL
+                var sunriseStr = data.daily.sunrise[0];
+                var sunsetStr = data.daily.sunset[0];
+                document.getElementById('sat-lever').textContent = sunriseStr ? sunriseStr.split('T')[1].slice(0, 5) : "--:--";
+                document.getElementById('sat-coucher').textContent = sunsetStr ? sunsetStr.split('T')[1].slice(0, 5) : "--:--";
 
                 var bas = document.getElementById('zone-7-jours'); bas.innerHTML = "";
                 const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
@@ -284,7 +285,6 @@
             document.getElementById('date-num').textContent = tempsReel.getDate();
             document.getElementById('date-mois').textContent = mois[tempsReel.getMonth()];
             document.getElementById('date-annee').textContent = tempsReel.getFullYear();
-            document.getElementById('sat-saison').textContent = (tempsReel.getMonth() >= 2 && tempsReel.getMonth() <= 4) ? "PRINTEMPS" : ((tempsReel.getMonth() >= 5 && tempsReel.getMonth() <= 8) ? "ÉTÉ" : ((tempsReel.getMonth() >= 9 && tempsReel.getMonth() <= 10) ? "AUTOMNE" : "HIVER"));
         }
 
         setInterval(actualiserHorloge, 1000); actualiserHorloge(); calculPhaseLune(); executerMeteo(); setInterval(executerMeteo, 900000);
