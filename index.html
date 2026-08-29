@@ -30,7 +30,7 @@
             background: #000000 !important; border-bottom: 1px solid rgba(255,255,255,0.18) !important; z-index: 5; 
         }
 
-        /* CHARNIÈRES CHROMÉES EN CYLINDRE REPRODUITES AU PIXEL */
+        /* CHARNIÈRES CHROMÉES EN CYLINDRE */
         .charniere-gauche, .charniere-droite {
             position: absolute; top: 50%; transform: translateY(-50%);
             width: 12px; height: 24px; z-index: 10;
@@ -49,26 +49,25 @@
         .charniere-gauche { left: -6px !important; } .charniere-gauche::after { left: -3px; }
         .charniere-droite { right: -6px !important; } .charniere-droite::after { right: -3px; }
 
-        /* HORLOGE ANALOGIQUE RETRO */
-        .bloc-montre-carre {
-            position: absolute; right: 2vw; top: 2vh; width: 17vw; height: 17vw;
-            background: #05070a; border: 2px solid #1a232d; border-radius: 12px;
+        /* HORLOGE ANALOGIQUE : CADRAN PUR SANS CADRE CARRÉ EXTÉRIEUR, REHAUSSÉ ET DOTÉ D'UN CONTOUR FIN */
+        .montre-retro-cercle { 
+            position: absolute; right: 2vw; top: 1vh; width: 16vw; height: 16vw; 
+            background: #000000 !important; border: 2px solid #1a232d !important; border-radius: 50%; 
             box-shadow: 0px 8px 16px rgba(0,0,0,0.6); z-index: 10;
         }
-        .montre-retro-cercle { position: absolute; left: 5%; top: 5%; width: 90%; height: 90%; background: #000; border: 2px dashed rgba(255,255,255,0.15); border-radius: 50%; }
-        .graduation { position: absolute; width: 2px; height: 10px; background: rgba(255,255,255,0.4); left: 50%; top: 0; margin-left: -1px; transform-origin: 50% 7.65vw; }
+        .graduation { position: absolute; width: 2px; height: 10px; background: rgba(255,255,255,0.4); left: 50%; top: 0; margin-left: -1px; transform-origin: 50% 7.2vw; }
         .graduation.principale { width: 3px; height: 14px; background: #fff; }
-        .chiffre-container-js { position: absolute; width: 2vw; height: 2vw; left: 50%; top: 6px; margin-left: -1vw; transform-origin: 50% 7.2vw; display: flex; align-items: center; justify-content: center; }
-        .chiffre-cadran-fixe { font-size: 1vw; font-weight: bold; color: #fff; font-family: 'Arial Black', sans-serif; }
+        .chiffre-container-js { position: absolute; width: 2vw; height: 2vw; left: 50%; top: 6px; margin-left: -1vw; transform-origin: 50% 6.75vw; display: flex; align-items: center; justify-content: center; }
+        .chiffre-cadran-fixe { font-size: 0.95vw; font-weight: bold; color: #fff; font-family: 'Arial Black', sans-serif; }
 
         .aiguille { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom center; border-radius: 4px; z-index: 12; }
-        .heure { width: 5px; height: 3.5vw; background-color: #fff; }
-        .minute { width: 4px; height: 5.2vw; background-color: #8ad400; }
+        .heure { width: 5px; height: 3.2vw; background-color: #fff; }
+        .minute { width: 4px; height: 4.9vw; background-color: #8ad400; }
         .pivot { position: absolute; width: 12px; height: 12px; background: #a2f200; border-radius: 50%; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 15; box-shadow: 0 0 6px rgba(162,242,0,0.8); }
 
-        /* HORLOGE DIGITALE : ENLÈVEMENT DU CADRE ET RECOUPEMENT ÉPURÉ SUR FOND NOIR AUTONOME */
+        /* HORLOGE DIGITALE : COMPACTÉE ET AJUSTÉE SOUS LA NOUVELLE POSITION DE LA MONTRE */
         .boite-digitale-bas {
-            position: absolute; right: 2vw; top: 38vh; width: 17vw; height: 8vh;
+            position: absolute; right: 2vw; top: 35.5vh; width: 17vw; height: 8vh;
             background: #05070a !important; border: none !important; border-radius: 8px;
             box-shadow: inset 0 0 10px rgba(0,0,0,0.8) !important;
         }
@@ -103,14 +102,13 @@
     <div class="pos boite-flip-haut" style="left: 51.5vw; top: 2.5vh; width: 13.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-mois">AOÛT</div><div class="charniere-droite"></div></div>
     <div class="pos boite-flip-haut" style="left: 66.2vw; top: 2.5vh; width: 11.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-annee">2026</div><div class="charniere-droite"></div></div>
 
-    <!-- HORLOGES -->
-    <div class="bloc-montre-carre">
-        <div class="montre-retro-cercle" id="cadran-montre">
-            <div class="pivot"></div>
-            <div class="aiguille heure" id="needle-hour"></div>
-            <div class="aiguille minute" id="needle-minute"></div>
-        </div>
+    <!-- HORLOGE ANALOGIQUE RETRO DIRECTE ÉPURÉE SANS BOÎTIER CARRÉ -->
+    <div class="montre-retro-cercle" id="cadran-montre">
+        <div class="pivot"></div>
+        <div class="aiguille heure" id="needle-hour"></div>
+        <div class="aiguille minute" id="needle-minute"></div>
     </div>
+    
     <div class="boite-digitale-bas"><div class="charniere-gauche"></div><div class="heure-digitale-js" id="horloge-texte">00:00:00</div><div class="charniere-droite"></div></div>
 
     <!-- BLOC MÉTÉO DE GAUCHE -->
@@ -131,8 +129,8 @@
             <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1);"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 3px;"><span style="color: #e9a949; font-size: 0.9vw;">☀️</span> UV</div><div style="font-size: 1.1vw; margin-top: 4px; color: #ffffff;">0 / Faible</div></div>
         </div>
     </div>
-    <!-- MODULE DROITE DU CADRAN SAISON ET SOLEIL AVEC TITRES PLUS GRANDS (1.1vw) -->
-    <div class="cadran-relief-noir-bloc" style="position: absolute; right: 2vw; top: 48vh; width: 17vw; height: 28vh; padding: 1vw 1.2vw; display: flex; flex-direction: column; justify-content: space-between;">
+    <!-- MODULE DROITE COMPACTÉ ET REHAUSSÉ (TOP: 45.5vh ET TOP: 75vh POUR HARMONISER LA COLONNE DE DROITE) -->
+    <div class="cadran-relief-noir-bloc" style="position: absolute; right: 2vw; top: 45.5vh; width: 17vw; height: 28vh; padding: 1vw 1.2vw; display: flex; flex-direction: column; justify-content: space-between;">
         <div style="display: flex; justify-content: space-between; align-items: center; height: 45%; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 0.5vh; width: 100%;">
             <div style="text-align: left;">
                 <div style="font-size: 1.1vw; color: #8ad400; font-weight: bold; letter-spacing: 0.5px;">SAISON</div>
@@ -153,8 +151,7 @@
         </div>
     </div>
 
-    <!-- MODULE LUNE DU BAS DROIT AVEC LE TITRE AGRANDI (1.1vw) -->
-    <div class="cadran-relief-noir-bloc" style="position: absolute; right: 2vw; top: 77.5vh; width: 17vw; height: 14.5vh; padding: 1vw 1.2vw; display: flex; justify-content: space-between; align-items: center; font-family:'Arial'; font-weight:bold;">
+    <div class="cadran-relief-noir-bloc" style="position: absolute; right: 2vw; top: 75vh; width: 17vw; height: 14.5vh; padding: 1vw 1.2vw; display: flex; justify-content: space-between; align-items: center; font-family:'Arial'; font-weight:bold;">
         <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; text-align: left;">
             <div style="font-size: 1.1vw; color: #8ad400; font-weight: bold; letter-spacing: 0.5px; font-family:'Arial Black';">LUNE</div>
             <div style="font-size: 0.78vw; line-height: 1.35; color: #ffffff; margin-top: 0.3vh;">
