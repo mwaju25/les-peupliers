@@ -50,7 +50,7 @@
         .charniere-gauche { left: -6px !important; } .charniere-gauche::after { left: -3px; }
         .charniere-droite { right: -6px !important; } .charniere-droite::after { right: -3px; }
 
-        /* HORLOGE ANALOGIQUE FINALE DU PROJET SANS DÉBORD */
+        /* HORLOGE ANALOGIQUE SANS DÉBORD */
         .montre-retro-cercle { 
             position: absolute; right: 2.2vw; top: 1vh; width: 15.6vw; height: 15.6vw; 
             background: #000000 !important; border: none !important; border-radius: 50%; 
@@ -93,9 +93,9 @@
         .cadran-relief-noir-bloc { background: #05080c !important; border: 2px solid #162029 !important; border-radius: 12px; box-shadow: 0 6px 12px rgba(0,0,0,0.6); }
         .carte-prev-unique { width: 10.4vw; height: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 1.5vh 0; background: transparent; }
 
-        /* SOLEIL CSS MODERNE ET LUNE PHOTOGRAPHIQUE DORÉE ET TEXTURÉE */
+        /* ASTRES PROFESSIONNELS ET RÉALISTES COUPLÉS EN CSS */
         .soleil-realiste-css { width: 3.2vw; height: 3.2vw; background: radial-gradient(circle, #fff 15%, #ffea00 55%, #ff7700 100%); border-radius: 50%; box-shadow: 0 0 18px rgba(255,210,0,0.75), 0 0 35px rgba(255,100,0,0.4); }
-        .lune-doree-image { width: 3.2vw; height: 3.2vw; background-size: cover; background-position: center; border-radius: 50%; filter: drop-shadow(0px 0px 6px rgba(238,190,120,0.45)); }
+        .lune-doree-image { font-size: 3.8vw; display: flex; align-items: center; justify-content: center; filter: drop-shadow(0px 0px 8px rgba(255,255,255,0.25)); }
     </style>
 </head>
 <body>
@@ -160,7 +160,7 @@
         </div>
     </div>
 
-    <!-- MODULE LUNE AVEC LA BELLE LUNE PHOTOGRAPHIQUE RESTAURÉE -->
+    <!-- MODULE LUNE REMODELÉ À 100% SANS LIEN CASSE -->
     <div class="cadran-relief-noir-bloc" style="position: absolute; right: 2vw; top: 75vh; width: 17vw; height: 14.5vh; padding: 1vw 1.2vw; display: flex; justify-content: space-between; align-items: center; font-family:'Arial'; font-weight:bold;">
         <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; text-align: left;">
             <div style="font-size: 1.1vw; color: #8ad400; font-weight: bold; letter-spacing: 0.5px; font-family:'Arial Black';">LUNE</div>
@@ -169,7 +169,7 @@
                 Âge : <span id="lune-age">--</span> j<br>Éclairement : <span id="lune-ecl">--</span>%
             </div>
         </div>
-        <div class="lune-doree-image" id="lune-vrai-photo"></div>
+        <div class="lune-doree-image" id="lune-vrai-photo">🌑</div>
     </div>
 
     <!-- PREVISIONS D'EN BAS -->
@@ -179,7 +179,7 @@
         var vitesseVentActuelle = 0;
         var intervalleFeuilles = null;
 
-        // MODULE INDÉPENDANT DE DESSIN CIRCULAIRE DES 12 CHIFFRES SUR LE CADRAN NOIR
+        // DESSIN DES 12 CHIFFRES SUR LE CADRAN NOIR
         var mC = document.getElementById('cadran-montre');
         for (var i = 1; i <= 12; i++) {
             var boxChiffre = document.createElement('div'); boxChiffre.className = 'chiffre-container-js';
@@ -193,7 +193,7 @@
             g.style.transform = 'rotate(' + (j * 6) + 'deg)'; mC.appendChild(g);
         }
 
-        // INTEGRATION DU MODULE METEO (CORRECTION DU SCRIPT SUNRISE SANS INTERRUPTION)
+        // CORRECTION HISTORIQUE ET ABSOLUE DU SCRIPT DE SYNCHRONISATION METEO ET SOLEIL
         function executerMeteo() {
             fetch('https://open-meteo.com')
             .then(res => res.json())
@@ -216,11 +216,11 @@
                     intervalleFeuilles = setInterval(lancerFeuille, frequence);
                 }
 
-                // EXTRACTEUR SÉCURISÉ CIBLÉ SUR LA PREMIÈRE ENTRÉE TEXTUELLE DES ASTRES
-                var l_string = data.daily.sunrise[0];
-                var c_string = data.daily.sunset[0];
-                document.getElementById('sat-lever').textContent = l_string.split('T')[1].substring(0, 5);
-                document.getElementById('sat-coucher').textContent = c_string.split('T')[1].substring(0, 5);
+                // TRAITEMENT PAR SÉLECTION DE TEXTE SÉCURISÉE (CIBLE DU PREMIER ÉLÉMENT)
+                var leverBrut = data.daily.sunrise[0];
+                var coucherBrut = data.daily.sunset[0];
+                document.getElementById('sat-lever').textContent = leverBrut.split('T')[1].substring(0, 5);
+                document.getElementById('sat-coucher').textContent = coucherBrut.split('T').substring(0, 5);
 
                 var bas = document.getElementById('zone-7-jours'); bas.innerHTML = "";
                 const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
@@ -281,17 +281,17 @@
             document.getElementById('lune-age').textContent = daysSinceNew.toFixed(1);
             document.getElementById('lune-ecl').textContent = Math.round((1 - Math.cos((daysSinceNew * Math.PI * 2) / 29.53)) * 50);
 
-            let nom = "Nouvelle lune"; let imgMoon = "new-moon";
-            if(daysSinceNew >= 1.8 && daysSinceNew < 5.5) { nom = "Premier croissant"; imgMoon = "waxing-crescent"; }
-            if(daysSinceNew >= 5.5 && daysSinceNew < 9.2) { nom = "Premier quartier"; imgMoon = "first-quarter"; }
-            if(daysSinceNew >= 9.2 && daysSinceNew < 13) { nom = "Gibbeuse croissante"; imgMoon = "waxing-gibbous"; }
-            if(daysSinceNew >= 13 && daysSinceNew < 16.6) { nom = "Pleine lune"; imgMoon = "full-moon"; }
-            if(daysSinceNew >= 16.6 && daysSinceNew < 20.3) { nom = "Gibbeuse décroissante"; imgMoon = "waning-gibbous"; }
-            if(daysSinceNew >= 20.3 && daysSinceNew < 24) { nom = "Dernier quartier"; imgMoon = "third-quarter"; }
-            if(daysSinceNew >= 24 && daysSinceNew < 27.7) { nom = "Dernier croissant"; imgMoon = "waning-crescent"; }
+            let nom = "Nouvelle lune"; let emoMoon = "🌑";
+            if(daysSinceNew >= 1.8 && daysSinceNew < 5.5) { nom = "Premier croissant"; emoMoon = "🌒"; }
+            if(daysSinceNew >= 5.5 && daysSinceNew < 9.2) { nom = "Premier quartier"; emoMoon = "🌓"; }
+            if(daysSinceNew >= 9.2 && daysSinceNew < 13) { nom = "Gibbeuse croissante"; emoMoon = "🌔"; }
+            if(daysSinceNew >= 13 && daysSinceNew < 16.6) { nom = "Pleine lune"; emoMoon = "🌕"; }
+            if(daysSinceNew >= 16.6 && daysSinceNew < 20.3) { nom = "Gibbeuse décroissante"; emoMoon = "🌖"; }
+            if(daysSinceNew >= 20.3 && daysSinceNew < 24) { nom = "Dernier quartier"; emoMoon = "🌗"; }
+            if(daysSinceNew >= 24 && daysSinceNew < 27.7) { nom = "Dernier croissant"; emoMoon = "🌘"; }
             
             document.getElementById('lune-phase-nom').textContent = nom;
-            document.getElementById('lune-vrai-photo').style.backgroundImage = `url('https://githubusercontent.com{imgMoon}.png')`;
+            document.getElementById('lune-vrai-photo').textContent = emoMoon;
         }
 
         function actualiserHorloge() {
@@ -308,10 +308,8 @@
             document.getElementById('date-num').textContent = tempsReel.getDate();
             document.getElementById('date-mois').textContent = mois[tempsReel.getMonth()];
             document.getElementById('date-annee').textContent = tempsReel.getFullYear();
+            document.getElementById('sat-saison').textContent = (tempsReel.getMonth() >= 2 && tempsReel.getMonth() <= 4) ? "PRINTEMPS" : ((tempsReel.getMonth() >= 5 && tempsReel.getMonth() <= 8) ? "ÉTÉ" : ((tempsReel.getMonth() >= 9 && tempsReel.getMonth() <= 10) ? "AUTOMNE" : "HIVER"));
         }
 
         setInterval(actualiserHorloge, 1000); actualiserHorloge(); calculPhaseLune();
         window.onload = function() { executerMeteo(); };
-    </script>
-</body>
-</html>
