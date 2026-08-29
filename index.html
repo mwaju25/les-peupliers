@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Ecran Dynamique - Les Peupliers Master Final Conforme</title>
+    <title>Ecran Dynamique - Les Peupliers Master Conforme Final</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Arial', sans-serif; }
         body { background-color: #000; color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
@@ -30,7 +30,7 @@
             background: rgba(0,0,0,0.6); border-bottom: 1px solid rgba(255,255,255,0.15); z-index: 5; 
         }
 
-        /* HORLOGE ANALOGIQUE CONFORME COMPACTE */
+        /* HORLOGE ANALOGIQUE FINIE SANS CERCLE BLANC DU LOGO CORRIGÉ */
         .bloc-montre-carre {
             position: absolute; right: 2vw; top: 2vh; width: 17vw; height: 17vw;
             background: #07090e; border: 2px solid #1c232e; border-radius: 12px;
@@ -46,7 +46,7 @@
         .minute { width: 4px; height: 5vw; background-color: #8ad400; }
         .pivot { position: absolute; width: 10px; height: 10px; background: #8ad400; border-radius: 50%; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 15; box-shadow: 0 0 4px #8ad400; }
 
-        /* MULTIPLE AJUSTEMENT DE LARGEUR (PASSÉE À 17vw DE FORCE POUR S'ALIGNER SUR LES COMPTEURS DU BAS) */
+        /* ÉLARGISSEMENT DE L'HORLOGE DIGITALE À 17vw POUR S'ALIGNER DE FORCE SUR LE BORD DES CASIERS DU BAS */
         .boite-digitale-bas {
             position: absolute; right: 2vw; top: 38vh; width: 17vw; height: 8vh;
             background: #05070a; border: 2px solid #1a222d; border-radius: 8px;
@@ -57,10 +57,10 @@
             letter-spacing: 2px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; 
         }
         .heure-digitale-js::after { content: ''; position: absolute; left: 0; top: 50%; width: 100%; height: 2px; background: rgba(0,0,0,0.7); border-bottom: 1px solid rgba(255,255,255,0.1); }
-        /* COULEUR NOIRE OPAQUE INTENSE SUR LES PRÉVISIONS DU BAS POUR SUPPRIMER LA TRANSPARENCE POUR LA LISIBILITÉ */
+        /* PRÉVISIONS DU BAS : OPACIFICATION AVEC GRADIENT TRÈS SOMBRE ET BORDURE ASSOMBRIE */
         .cadran-relief-bleu {
-            background: linear-gradient(to bottom, #071017, #03060b); border: 1.5px solid #1c2e3d; border-radius: 12px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.7), inset 0 0 12px rgba(0,0,0,0.8);
+            background: linear-gradient(to bottom, #070e14, #03060a); border: 1.5px solid #14222c; border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.6), inset 0 0 12px rgba(0,0,0,0.8);
         }
         .cadran-relief-noir-bloc {
             background: #06090e; border: 2px solid #162029; border-radius: 8px;
@@ -96,7 +96,7 @@
     </div>
     <div class="boite-digitale-bas"><div class="heure-digitale-js" id="horloge-texte">--:--:--</div></div>
 
-    <!-- BLOC MÉTÉO COURANTE COMPLET -->
+    <!-- PANNEAU MÉTÉO DE GAUCHE INTEGRALEMENT BLANC AVEC SES SECTIONS -->
     <div class="cadran-relief-bleu" style="position: absolute; left: 1.5vw; top: 25vh; width: 28.5vw; height: 35vh; padding: 1.3vw; color: #ffffff;">
         <div style="font-size: 1.1vw; color: #ffffff; font-weight: bold; margin-bottom: 2px; text-align: left;">Marloie (Marche-en-Famenne)</div>
         <div style="font-size: 0.75vw; color: #aaaaaa; text-transform: uppercase; margin-bottom: 1.2vh; letter-spacing: 1px; text-align: left;">MÉTÉO ACTUELLE</div>
@@ -115,12 +115,12 @@
         </div>
     </div>
 
-    <!-- MODULE CENTRAL DROIT EN BLANC RENFORCÉ POUR LA LISIBILITÉ -->
+    <!-- MODULE CENTRAL DROIT INTEGRANT SAISON ET SOLEIL AVEC ÉCRITURES LISIBLES ET TEXTES BLANCS REHAUSSÉS -->
     <div class="cadran-relief-noir-bloc" style="position: absolute; right: 2vw; top: 48vh; width: 17vw; height: 30vh; padding: 1.2vw; display: flex; flex-direction: column; justify-content: space-between;">
         <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; height: 45%; border-bottom: 1px solid #1f2937; padding-bottom: 1vh;">
             <div style="text-align: left;">
                 <div style="font-size: 0.8vw; color: #8ad400; font-weight: bold; letter-spacing: 1px;">SAISON</div>
-                <div style="font-size: 1.8vw; font-weight: bold; margin-top: 0.3vh; color: #ffffff;">ÉTÉ</div>
+                <div style="font-size: 1.8vw; font-weight: bold; margin-top: 0.3vh; color: #ffffff; font-family: 'Arial Black';">ÉTÉ</div>
             </div>
             <div style="font-size: 3.5vw;">🌱</div>
         </div>
@@ -137,7 +137,7 @@
         </div>
     </div>
 
-    <!-- MODULE LUNE DROIT EN BLANC RENFORCÉ -->
+    <!-- MODULE LUNE DROIT AVEC TOUTES LES ÉCRITURES SECONDAIRES EN BLANC ENTIEREMENT LISIBLES -->
     <div class="cadran-relief-noir-bloc" style="position: absolute; right: 2vw; top: 80vh; width: 17vw; height: 15vh; padding: 1.2vw; display: flex; justify-content: space-between; align-items: center;">
         <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; text-align: left;">
             <div style="font-size: 0.8vw; color: #8ad400; font-weight: bold; letter-spacing: 1px;">LUNE</div>
@@ -148,7 +148,7 @@
         </div>
         <div style="font-size: 3.5vw;">🌕</div>
     </div>
-    <!-- LES 7 PREVISIONS DU BAS OPACIFIÉES NOIRES (BOTTOM FIXÉ À 8vh AVEC OPACITÉ COMPLÈTE) -->
+    <!-- LES 7 PREVISIONS DU BAS OPACIFIÉES DE FORCE (FONDS SOMBRES INTENSES POUR LIRE SANS TRANSPARENCE) -->
     <div style="position: absolute; left: 1.5vw; bottom: 8vh; width: 77.5vw; height: 27.5vh; display: flex; justify-content: space-between;">
         <div class="carte-prev-unique cadran-relief-bleu"><div style="font-weight:bold; font-family:'Arial Black'; font-size:1.1vw; color:#ffffff;">AUJ.</div><div style="font-size:0.75vw; color:#ffffff; font-weight:bold;">28 AOÛT</div><div style="font-size:3.2vw; margin: 0.5vh 0;">☁️</div><div style="font-size:2vw; font-weight:bold; color:#ffffff;">21°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">16°</div></div>
         <div class="carte-prev-unique cadran-relief-bleu"><div style="font-weight:bold; font-family:'Arial Black'; font-size:1.1vw; color:#ffffff;">SAM.</div><div style="font-size:0.75vw; color:#ffffff; font-weight:bold;">29 AOÛT</div><div style="font-size:3.2vw; margin: 0.5vh 0;">🌧️</div><div style="font-size:2vw; font-weight:bold; color:#ffffff;">19°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">15°</div></div>
