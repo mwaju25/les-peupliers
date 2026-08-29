@@ -22,16 +22,16 @@
         }
         .flip-tuile-js::after { 
             content: ''; position: absolute; left: 0; top: 50%; width: 100%; height: 2px; 
-            background: rgba(0,0,0,0.5); border-bottom: 1px solid rgba(255,255,255,0.15); z-index: 5; 
+            background: rgba(0, 0, 0, 0.5); border-bottom: 1px solid rgba(255, 255, 255, 0.15); z-index: 5; 
         }
 
-        .cadran-aiguilles { position: absolute; right: 2.3vw; top: 2.6vh; width: 17.5vw; height: 28.5vh; background: transparent; z-index: 10; }
+        .cadran-aiguilles { position: absolute; right: 2.1vw; top: 2.6vh; width: 17.5vw; height: 28.5vh; background: transparent; z-index: 10; }
         .aiguille { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom center; border-radius: 4px; }
         .heure { width: 5px; height: 50px; background-color: #fff; box-shadow: 0 0 4px rgba(0,0,0,0.6); }
         .minute { width: 4px; height: 75px; background-color: #8ad400; box-shadow: 0 0 4px rgba(0,0,0,0.6); }
 
         .heure-digitale-js { 
-            font-size: 2.9vw; font-weight: bold; color: #fff; font-family: 'Arial Black', sans-serif; 
+            font-size: 2.7vw; font-weight: bold; color: #fff; font-family: 'Arial Black', sans-serif; 
             letter-spacing: 2px; text-shadow: 0px 2px 4px rgba(0,0,0,0.9); width: 100%; text-align: center; position: relative; 
         }
         .heure-digitale-js::after { 
@@ -39,9 +39,9 @@
             background: rgba(0,0,0,0.6); border-bottom: 1px solid rgba(255,255,255,0.1); 
         }
 
-        /* EXTENSION DE LA ZONE DU BAS POUR COUVRIR TOUTE LA LARGEUR DE VOS CADRES */
-        .ligne-prev-bas { position: absolute; bottom: 8.8vh; left: 0.6vw; width: 98.8vw; height: 25.5vh; display: flex; justify-content: space-between; }
-        .carte-prev-unique { width: 13.5vw; height: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 1vh 0; background: transparent; }
+        /* AJUSTEMENT MILLIMÉTRÉ DE LA BANDE DES 7 CARTES POUR S'ALIGNER DE FORCE SUR LES ENCADRÉS GITHUB */
+        .ligne-prev-bas { position: absolute; bottom: 8.8vh; left: 0.6vw; width: 78vw; height: 25.5vh; display: flex; justify-content: flex-start; gap: 0.6vw; }
+        .carte-prev-unique { width: 10.6vw; height: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 1vh 0; background: transparent; }
 
         .particule-feuille { position: absolute; width: 14px; height: 9px; background: #628c34; border-radius: 0 75% 0 75%; opacity: 0.65; animation: animationVent linear infinite; }
         @keyframes animationVent { 0% { transform: translate(-40px, 0px) rotate(0deg); } 100% { transform: translate(55vw, 180px) rotate(540deg); } }
@@ -52,27 +52,29 @@
     <div id="fond-ecran-principal" class="fond-global"></div>
     <div id="zone-feuilles-dynamiques" style="position: fixed; top: 20vh; left: 28vw; width: 46vw; height: 55vh; pointer-events: none; z-index: 2; overflow: hidden;"></div>
 
+    <!-- CALENDRIER COUPLÉ -->
     <div class="pos" style="left: 17.5vw; top: 1.8vh; width: 22.3vw; height: 14.5vh;"><div class="flip-tuile-js" id="date-jour">SAMEDI</div></div>
     <div class="pos" style="left: 40.8vw; top: 1.8vh; width: 9.6vw; height: 14.5vh;"><div class="flip-tuile-js" id="date-num">29</div></div>
     <div class="pos" style="left: 51.5vw; top: 1.8vh; width: 13.5vw; height: 14.5vh;"><div class="flip-tuile-js" id="date-mois">AOÛT</div></div>
     <div class="pos" style="left: 66.2vw; top: 1.8vh; width: 11.5vw; height: 14.5vh;"><div class="flip-tuile-js" id="date-annee">2026</div></div>
 
+    <!-- ZONE HORLOGES DROITE COUCHES ÉLARGIES -->
     <div class="cadran-aiguilles">
         <div class="aiguille heure" id="needle-hour"></div>
         <div class="aiguille minute" id="needle-minute"></div>
     </div>
-    <!-- AGRANDISSEMENT DE LA LARGEUR POUR RECADRER SANS COUPURE L'HEURE DIGITALE -->
-    <div class="pos" style="right: 0.5vw; top: 32.1vh; width: 21vw; height: 8.8vh;"><div class="heure-digitale-js" id="horloge-texte">--:--:--</div></div>
-    <!-- ALIGNEMENT CHIRURGICAL ET REDISTRIBUTION DES VALEURS DU BLOC METEO DE GAUCHE -->
+    <div class="pos" style="right: 0.5vw; top: 32.1vh; width: 20.5vw; height: 8.8vh;"><div class="heure-digitale-js" id="horloge-texte">--:--:--</div></div>
+    <!-- LE BLOC METEO DE GAUCHE INTEGRAL ET ENTIEREMENT RE-CALIBRÉ -->
     <div class="pos" style="left: 1vw; top: 22.5vh; width: 28.5vw; height: 13vh; font-size: 5rem;" id="courant-icone">☁️</div>
-    <div class="pos" style="left: 1vw; top: 35vh; width: 28.5vw; height: 10vh; font-size: 4.2rem; font-weight: bold;" id="courant-temp">19°C</div>
-    <div class="pos" style="left: 1vw; top: 43.5vh; width: 28.5vw; height: 4vh; font-size: 1.25rem; font-weight: bold; color: #cbd5e0;" id="courant-desc">Couvert</div>
+    <div class="pos" style="left: 1vw; top: 34.5vh; width: 28.5vw; height: 10vh; font-size: 4.2rem; font-weight: bold;" id="courant-temp">19°C</div>
+    <div class="pos" style="left: 1vw; top: 43vh; width: 28.5vw; height: 4vh; font-size: 1.25rem; font-weight: bold; color: #cbd5e0;" id="courant-desc">Couvert</div>
     
-    <div class="pos" style="left: 2vw; top: 51.6vh; width: 5.5vw; height: 4vh; font-weight: bold; font-size: 1.25rem;" id="courant-ressenti">19°C</div>
-    <div class="pos" style="left: 9vw; top: 51.6vh; width: 5.5vw; height: 4vh; font-weight: bold; font-size: 1.25rem;" id="courant-humidite">82%</div>
-    <div class="pos" style="left: 16vw; top: 51.6vh; width: 5.5vw; height: 4vh; font-weight: bold; font-size: 1.15rem;" id="courant-vent">13km/h</div>
-    <div class="pos" style="left: 23vw; top: 51.6vh; width: 5.5vw; height: 4vh; font-weight: bold; font-size: 1rem; color: #a0aec0;" id="courant-uv">0/Faible</div>
+    <div class="pos" style="left: 1.5vw; top: 51.6vh; width: 6.5vw; height: 4vh; font-weight: bold; font-size: 1.3rem;" id="courant-ressenti">19°C</div>
+    <div class="pos" style="left: 8.5vw; top: 51.6vh; width: 6.5vw; height: 4vh; font-weight: bold; font-size: 1.3rem;" id="courant-humidite">82%</div>
+    <div class="pos" style="left: 15.5vw; top: 51.6vh; width: 6.5vw; height: 4vh; font-weight: bold; font-size: 1.2rem;" id="courant-vent">13km/h</div>
+    <div class="pos" style="left: 22.5vw; top: 51.6vh; width: 6.5vw; height: 4vh; font-weight: bold; font-size: 1rem; color: #a0aec0;" id="courant-uv">0/Faible</div>
 
+    <!-- BLOCS VERTICAUX DE DROITE -->
     <div class="pos" style="right: 2.1vw; top: 48.5vh; width: 11vw; height: 4vh; font-size: 1.6rem; font-weight: bold; color: #8ad400;" id="sat-saison">ÉTÉ 🌱</div>
     <div class="pos" style="right: 2.1vw; top: 62.6vh; width: 5.5vw; height: 3vh; font-weight: bold; font-size: 1.2rem;" id="sat-lever">06:49</div>
     <div class="pos" style="right: 2.1vw; top: 65.6vh; width: 5.5vw; height: 3vh; font-weight: bold; font-size: 1.2rem;" id="sat-coucher">20:32</div>
@@ -82,15 +84,15 @@
         <strong style="font-size:0.95rem; color:#fff;">Pleine lune</strong><br>Âge : 14,7 jours<br>Éclairement : 100%
     </div>
 
-    <!-- PREVISIONS SUR LES 7 CARTES DISPATCHÉES SUR TOUTE LA LARGEUR -->
+    <!-- LES 7 PANNEAUX DU BAS AVEC ALIGNEMENT CELLULAIRE CORRIGÉ -->
     <div class="ligne-prev-bas">
         <div class="carte-prev-unique"><div style="font-size:1.1rem; font-weight:bold; color:#aaa;">AUJ.</div><div style="font-size:0.85rem; color:#aaa;">28 AOÛT</div><div style="font-size:2.2rem;">☁️</div><div style="font-size:1.6rem; font-weight:bold;">21°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.2rem;">16°</div></div>
-        <div class="carte-prev-unique"><div style="font-size:1.1rem; font-weight:bold; color:#aaa;">SAM.</div><div style="font-size:0.85rem; color:#aaa;">29 AOÛT</div><div style="font-size:2.2rem;">🌧️</div><div style="font-size:1.6rem; font-weight:bold;">19°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.2rem;">15°</div></div>
-        <div class="carte-prev-unique"><div style="font-size:1.1rem; font-weight:bold; color:#aaa;">DIM.</div><div style="font-size:0.85rem; color:#aaa;">30 AOÛT</div><div style="font-size:2.2rem;">🌧️</div><div style="font-size:1.6rem; font-weight:bold;">20°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.2rem;">16°</div></div>
-        <div class="carte-prev-unique"><div style="font-size:1.1rem; font-weight:bold; color:#aaa;">LUN.</div><div style="font-size:0.85rem; color:#aaa;">31 AOÛT</div><div style="font-size:2.2rem;">☁️</div><div style="font-size:1.6rem; font-weight:bold;">21°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.2rem;">14°</div></div>
-        <div class="carte-prev-unique"><div style="font-size:1.1rem; font-weight:bold; color:#aaa;">MAR.</div><div style="font-size:0.85rem; color:#aaa;">01 SEPT</div><div style="font-size:2.2rem;">☁️</div><div style="font-size:1.6rem; font-weight:bold;">20°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.2rem;">12°</div></div>
-        <div class="carte-prev-unique"><div style="font-size:1.1rem; font-weight:bold; color:#aaa;">MER.</div><div style="font-size:0.85rem; color:#aaa;">02 SEPT</div><div style="font-size:2.2rem;">☁️</div><div style="font-size:1.6rem; font-weight:bold;">20°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.2rem;">10°</div></div>
-        <div class="carte-prev-unique"><div style="font-size:1.1rem; font-weight:bold; color:#aaa;">JEU.</div><div style="font-size:0.85rem; color:#aaa;">03 SEPT</div><div style="font-size:2.2rem;">🌤️</div><div style="font-size:1.6rem; font-weight:bold;">22°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.2rem;">12°</div></div>
+        <div class="carte-prev-unique" style="margin-left: 0.5vw;"><div style="font-size:1.1rem; font-weight:bold; color:#aaa;">SAM.</div><div style="font-size:0.85rem; color:#aaa;">29 AOÛT</div><div style="font-size:2.2rem;">🌧️</div><div style="font-size:1.6rem; font-weight:bold;">19°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.2rem;">15°</div></div>
+        <div class="carte-prev-unique" style="margin-left: 0.6vw;"><div style="font-size:1.1rem; font-weight:bold; color:#aaa;">DIM.</div><div style="font-size:0.85rem; color:#aaa;">30 AOÛT</div><div style="font-size:2.2rem;">🌧️</div><div style="font-size:1.6rem; font-weight:bold;">20°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.2rem;">16°</div></div>
+        <div class="carte-prev-unique" style="margin-left: 0.5vw;"><div style="font-size:1.1rem; font-weight:bold; color:#aaa;">LUN.</div><div style="font-size:0.85rem; color:#aaa;">31 AOÛT</div><div style="font-size:2.2rem;">☁️</div><div style="font-size:1.6rem; font-weight:bold;">21°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.2rem;">14°</div></div>
+        <div class="carte-prev-unique" style="margin-left: 0.5vw;"><div style="font-size:1.1rem; font-weight:bold; color:#aaa;">MAR.</div><div style="font-size:0.85rem; color:#aaa;">01 SEPT</div><div style="font-size:2.2rem;">☁️</div><div style="font-size:1.6rem; font-weight:bold;">20°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.2rem;">12°</div></div>
+        <div class="carte-prev-unique" style="margin-left: 0.5vw;"><div style="font-size:1.1rem; font-weight:bold; color:#aaa;">MER.</div><div style="font-size:0.85rem; color:#aaa;">02 SEPT</div><div style="font-size:2.2rem;">☁️</div><div style="font-size:1.6rem; font-weight:bold;">20°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.2rem;">10°</div></div>
+        <div class="carte-prev-unique" style="margin-left: 0.5vw;"><div style="font-size:1.1rem; font-weight:bold; color:#aaa;">JEU.</div><div style="font-size:0.85rem; color:#aaa;">03 SEPT</div><div style="font-size:2.2rem;">🌤️</div><div style="font-size:1.6rem; font-weight:bold;">22°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.2rem;">12°</div></div>
     </div>
 
     <script>
