@@ -3,19 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Ecran Dynamique - Les Peupliers Master Final</title>
+    <title>Ecran Master Connecté et Intelligent - Les Peupliers</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Arial Black', sans-serif; }
         body { background-color: #000; color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
         
+        /* FOND DE BASE AU CIEL BLEU VIERGE */
         .fond-global { 
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; 
-            background-image: url('fond-final.png'); background-size: 100% 100%; background-position: center; z-index: -1; 
+            background-image: url('fond-final.png'); background-size: 100% 100%; background-position: center; z-index: -3; 
         }
         
+        /* CALQUES METEO CELLULAIRES INJECTÉS PAR-DESSUS LE FOND */
+        #calque-nuage-gris { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(30, 40, 50, 0); z-index: -2; transition: background 2s ease; pointer-events: none; }
+        #zone-intemperies { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; }
+
         .pos { position: absolute; display: flex; align-items: center; justify-content: center; overflow: hidden; text-align: center; }
 
-        /* STRUCTURES DES BOÎTIERS FLIP-FLAP HAUT */
+        /* BOÎTIERS FLIP-FLAP */
         .boite-flip-haut {
             background: linear-gradient(to bottom, #11151c, #05070a) !important;
             border: 2px solid #28303d !important; border-radius: 8px !important;
@@ -49,7 +54,7 @@
         .charniere-gauche { left: -6px !important; } .charniere-gauche::after { left: -3px; }
         .charniere-droite { right: -6px !important; } .charniere-droite::after { right: -3px; }
 
-        /* HORLOGE ANALOGIQUE : CADRAN PUR SANS CADRE CARRÉ EXTÉRIEUR, REHAUSSÉ ET DOTÉ D'UN CONTOUR FIN */
+        /* HORLOGE ANALOGIQUE ÉPURÉE */
         .montre-retro-cercle { 
             position: absolute; right: 2vw; top: 1vh; width: 16vw; height: 16vw; 
             background: #000000 !important; border: 2px solid #1a232d !important; border-radius: 50%; 
@@ -65,76 +70,76 @@
         .minute { width: 4px; height: 4.9vw; background-color: #8ad400; }
         .pivot { position: absolute; width: 12px; height: 12px; background: #a2f200; border-radius: 50%; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 15; box-shadow: 0 0 6px rgba(162,242,0,0.8); }
 
-        /* HORLOGE DIGITALE : COMPACTÉE ET AJUSTÉE SOUS LA NOUVELLE POSITION DE LA MONTRE */
+        /* HORLOGE DIGITALE FLOATING */
         .boite-digitale-bas {
             position: absolute; right: 2vw; top: 35.5vh; width: 17vw; height: 8vh;
             background: #05070a !important; border: none !important; border-radius: 8px;
             box-shadow: inset 0 0 10px rgba(0,0,0,0.8) !important;
         }
-        .heure-digitale-js { 
-            font-size: 2.7vw; font-weight: 900; color: #ffffff !important;
-            letter-spacing: 1px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; 
-        }
+        .heure-digitale-js { font-size: 2.7vw; font-weight: 900; color: #ffffff !important; letter-spacing: 1px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; }
         .heure-digitale-js::after { content: ''; position: absolute; left: 0; top: 50%; width: 100%; height: 2px; background: #000000; border-bottom: 1px solid rgba(255,255,255,0.15); z-index: 5; }
-        /* COULEURS DES BLOCS GAUCHE ET BAS RIGIDES */
+        /* EFFETS EN RESSORT DES PARTICULES DE PLUIE, NEIGE ET FEUILLES */
+        .goutte-pluie { position: absolute; width: 2px; height: 25px; background: rgba(174,194,224,0.6); animation: chutePluie 0.8s linear infinite; }
+        @keyframes chutePluie { 0% { transform: translateY(-30px) translateX(0px); } 100% { transform: translateY(105vh) translateX(-50px); } }
+        
+        .flocon-neige { position: absolute; width: 5px; height: 5px; background: #fff; border-radius: 50%; animation: chuteNeige 3.5s linear infinite; }
+        @keyframes chuteNeige { 0% { transform: translateY(-10px) translateX(0deg); } 50% { transform: translateY(50vh) translateX(20px); } 100% { transform: translateY(105vh) translateX(-20px); } }
+
+        .particule-feuille { position: absolute; width: 14px; height: 9px; background: #557a27; border-radius: 0 75% 0 75%; opacity: 0.75; animation: animationVent linear infinite; }
+        @keyframes animationVent { 0% { transform: translate(-40px, 0px) rotate(0deg); } 100% { transform: translate(65vw, 180px) rotate(540deg); } }
+        @keyframes flashOrage { 0%, 95%, 100% { background: transparent; } 96%, 98% { background: rgba(255,255,255,0.7); } }
+        .effet-flash { animation: flashOrage 4s infinite; }
+
         .cadran-relief-bleu {
             background: #0d131a !important; border: 2px solid #212c3a !important; border-radius: 12px !important;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.7), inset 0 0 12px rgba(0,0,0,0.8) !important;
-            opacity: 1 !important;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.7), inset 0 0 12px rgba(0,0,0,0.8) !important; opacity: 1 !important;
         }
-        .cadran-relief-noir-bloc {
-            background: #05080c !important; border: 2px solid #162029 !important; border-radius: 12px;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.6);
-        }
+        .cadran-relief-noir-bloc { background: #05080c !important; border: 2px solid #162029 !important; border-radius: 12px; box-shadow: 0 6px 12px rgba(0,0,0,0.6); }
         .carte-prev-unique { width: 10.4vw; height: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 1.5vh 0; background: transparent; }
-        .particule-feuille { position: absolute; width: 14px; height: 9px; background: #628c34; border-radius: 0 75% 0 75%; opacity: 0.65; animation: animationVent linear infinite; }
-        @keyframes animationVent { 0% { transform: translate(-40px, 0px) rotate(0deg); } 100% { transform: translate(55vw, 180px) rotate(540deg); } }
     </style>
 </head>
 <body>
 
     <div id="fond-ecran-principal" class="fond-global"></div>
+    <div id="calque-nuage-gris"></div>
+    <div id="zone-intemperies"></div>
     <div id="zone-feuilles-dynamiques" style="position: fixed; top: 22vh; left: 28vw; width: 46vw; height: 40vh; pointer-events: none; z-index: 2; overflow: hidden;"></div>
 
-    <!-- DATE FILIP-FLAP HAUT -->
-    <div class="pos boite-flip-haut" style="left: 17.5vw; top: 2.5vh; width: 22.3vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-jour">SAMEDI</div><div class="charniere-droite"></div></div>
-    <div class="pos boite-flip-haut" style="left: 40.8vw; top: 2.5vh; width: 9.6vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-num">29</div><div class="charniere-droite"></div></div>
-    <div class="pos boite-flip-haut" style="left: 51.5vw; top: 2.5vh; width: 13.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-mois">AOÛT</div><div class="charniere-droite"></div></div>
-    <div class="pos boite-flip-haut" style="left: 66.2vw; top: 2.5vh; width: 11.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-annee">2026</div><div class="charniere-droite"></div></div>
+    <!-- CALENDRIER HAUT -->
+    <div class="pos boite-flip-haut" style="left: 17.5vw; top: 2.5vh; width: 22.3vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-jour">--</div><div class="charniere-droite"></div></div>
+    <div class="pos boite-flip-haut" style="left: 40.8vw; top: 2.5vh; width: 9.6vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-num">--</div><div class="charniere-droite"></div></div>
+    <div class="pos boite-flip-haut" style="left: 51.5vw; top: 2.5vh; width: 13.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-mois">--</div><div class="charniere-droite"></div></div>
+    <div class="pos boite-flip-haut" style="left: 66.2vw; top: 2.5vh; width: 11.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-annee">----</div><div class="charniere-droite"></div></div>
 
-    <!-- HORLOGE ANALOGIQUE RETRO DIRECTE ÉPURÉE SANS BOÎTIER CARRÉ -->
-    <div class="montre-retro-cercle" id="cadran-montre">
-        <div class="pivot"></div>
-        <div class="aiguille heure" id="needle-hour"></div>
-        <div class="aiguille minute" id="needle-minute"></div>
-    </div>
-    
-    <div class="boite-digitale-bas"><div class="charniere-gauche"></div><div class="heure-digitale-js" id="horloge-texte">00:00:00</div><div class="charniere-droite"></div></div>
+    <!-- DROITE COLONNE -->
+    <div class="montre-retro-cercle" id="cadran-montre"></div>
+    <div class="boite-digitale-bas"><div class="charniere-gauche"></div><div class="heure-digitale-js" id="horloge-texte">--:--:--</div><div class="charniere-droite"></div></div>
 
-    <!-- BLOC MÉTÉO DE GAUCHE -->
+    <!-- MÉTÉO DU GAUCHE CONNECTÉE -->
     <div class="cadran-relief-bleu" style="position: absolute; left: 1.5vw; top: 25vh; width: 28.5vw; height: 35vh; padding: 1.3vw; color: #ffffff;">
         <div style="font-size: 1.1vw; color: #ffffff; font-weight: bold; margin-bottom: 2px; text-align: left; font-family:'Arial';">Marloie (Marche-en-Famenne)</div>
         <div style="font-size: 0.75vw; color: #aaaaaa; text-transform: uppercase; margin-bottom: 1.2vh; letter-spacing: 1px;">MÉTÉO ACTUELLE</div>
         <div style="display: flex; align-items: center; gap: 2vw; margin-bottom: 2.5vh;">
             <div style="font-size: 4.8vw;" id="courant-icone">☁️</div>
             <div style="text-align: left;">
-                <div style="font-size: 4.2vw; font-weight: bold; line-height: 1;" id="courant-temp">19°C</div>
-                <div style="font-size: 1.2vw; color: #ffffff; margin-top: 4px; font-weight: bold; font-family:'Arial';" id="courant-desc">Couvert</div>
+                <div style="font-size: 4.2vw; font-weight: bold; line-height: 1;" id="courant-temp">--°C</div>
+                <div style="font-size: 1.2vw; color: #ffffff; margin-top: 4px; font-weight: bold; font-family:'Arial';" id="courant-desc">Synchro...</div>
             </div>
         </div>
         <div style="display: flex; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 1.5vh; text-align: center; font-family:'Arial'; font-weight:bold;">
-            <div style="flex: 1;"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase;">RESSENTIE</div><div style="font-size: 1.15vw; margin-top: 4px; color: #ffffff;">19°C</div></div>
-            <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1);"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 3px;"><span style="color: #49a6e9; font-size: 0.9vw;">💧</span> HUMIDITÉ</div><div style="font-size: 1.15vw; margin-top: 4px; color: #ffffff;">82%</div></div>
-            <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1);"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 3px;"><span style="color: #ffffff; font-size: 0.9vw;">💨</span> VENT</div><div style="font-size: 1.15vw; margin-top: 4px; color: #ffffff;">13 km/h</div></div>
-            <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1);"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 3px;"><span style="color: #e9a949; font-size: 0.9vw;">☀️</span> UV</div><div style="font-size: 1.1vw; margin-top: 4px; color: #ffffff;">0 / Faible</div></div>
+            <div style="flex: 1;"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase;">RESSENTIE</div><div style="font-size: 1.15vw; margin-top: 4px; color: #ffffff;" id="courant-ressenti">--°C</div></div>
+            <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1);"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 3px;"><span style="color: #49a6e9; font-size: 0.9vw;">💧</span> HUMIDITÉ</div><div style="font-size: 1.15vw; margin-top: 4px; color: #ffffff;" id="courant-humidite">--%</div></div>
+            <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1);"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 3px;"><span style="color: #ffffff; font-size: 0.9vw;">💨</span> VENT</div><div style="font-size: 1.15vw; margin-top: 4px; color: #ffffff;" id="courant-vent">-- km/h</div></div>
+            <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1);"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 3px;"><span style="color: #e9a949; font-size: 0.9vw;">☀️</span> UV</div><div style="font-size: 1.1vw; margin-top: 4px; color: #ffffff;" id="courant-uv">--</div></div>
         </div>
     </div>
-    <!-- MODULE DROITE COMPACTÉ ET REHAUSSÉ (TOP: 45.5vh ET TOP: 75vh POUR HARMONISER LA COLONNE DE DROITE) -->
+
+    <!-- MODULE CENTRAL DROIT -->
     <div class="cadran-relief-noir-bloc" style="position: absolute; right: 2vw; top: 45.5vh; width: 17vw; height: 28vh; padding: 1vw 1.2vw; display: flex; flex-direction: column; justify-content: space-between;">
         <div style="display: flex; justify-content: space-between; align-items: center; height: 45%; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 0.5vh; width: 100%;">
             <div style="text-align: left;">
                 <div style="font-size: 1.1vw; color: #8ad400; font-weight: bold; letter-spacing: 0.5px;">SAISON</div>
-                <div style="font-size: 2vw; font-weight: bold; color: #ffffff; margin-top: 0.2vh;">ÉTÉ</div>
+                <div style="font-size: 2vw; font-weight: bold; color: #ffffff; margin-top: 0.2vh;" id="sat-saison">--</div>
             </div>
             <div style="font-size: 3.5vw;">🌱</div>
         </div>
@@ -143,9 +148,9 @@
             <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
                 <div style="font-size: 2.8vw;">☀️</div>
                 <div style="display: flex; gap: 1vw; text-align: left; align-items: center; font-family:'Arial'; font-weight:bold;">
-                    <div><div style="font-size: 1.1vw; font-weight: bold; color: #fff; font-family:'Arial Black';">06:47</div><div style="font-size: 0.65vw; color: #aaa;">Lever</div></div>
+                    <div><div style="font-size: 1.1vw; font-weight: bold; color: #fff;" id="sat-lever">--:--</div><div style="font-size: 0.65vw; color: #aaa;">Lever</div></div>
                     <div style="width: 1px; background: rgba(255,255,255,0.4); height: 2.5vh;"></div>
-                    <div><div style="font-size: 1.1vw; font-weight: bold; color: #fff; font-family:'Arial Black';">20:32</div><div style="font-size: 0.65vw; color: #aaa;">Coucher</div></div>
+                    <div><div style="font-size: 1.1vw; font-weight: bold; color: #fff;" id="sat-coucher">--:--</div><div style="font-size: 0.65vw; color: #aaa;">Coucher</div></div>
                 </div>
             </div>
         </div>
@@ -155,25 +160,17 @@
         <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; text-align: left;">
             <div style="font-size: 1.1vw; color: #8ad400; font-weight: bold; letter-spacing: 0.5px; font-family:'Arial Black';">LUNE</div>
             <div style="font-size: 0.78vw; line-height: 1.35; color: #ffffff; margin-top: 0.3vh;">
-                <strong style="font-size: 0.95vw; color: #fff; display: block; margin-bottom: 2px; font-family:'Arial Black';">Pleine lune</strong>
-                Âge : 14,7 jours<br>Éclairement : 100%
+                <strong style="font-size: 0.95vw; color: #fff; display: block; margin-bottom: 2px;" id="lune-phase-nom">Pleine lune</strong>
+                Âge : <span id="lune-age">14.7</span> jours<br>Éclairement : <span id="lune-ecl">100</span>%
             </div>
         </div>
-        <div style="font-size: 3.5vw;">🌕</div>
+        <div style="font-size: 3.5vw;" id="lune-icone">🌕</div>
     </div>
 
-    <!-- PREVISIONS DU BAS -->
-    <div style="position: absolute; left: 1.5vw; bottom: 8vh; width: 77.5vw; height: 27.5vh; display: flex; justify-content: space-between;">
-        <div class="carte-prev-unique cadran-relief-bleu"><div>AUJ.</div><div style="font-size:0.75vw; color:#ffffff; font-weight:bold; font-family:'Arial';">28 AOÛT</div><div style="font-size:3.2vw; margin: 0.5vh 0;">☁️</div><div style="font-size:2vw; font-weight:bold; color:#ffffff;">21°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">16°</div></div>
-        <div class="carte-prev-unique cadran-relief-bleu"><div>SAM.</div><div style="font-size:0.75vw; color:#ffffff; font-weight:bold; font-family:'Arial';">29 AOÛT</div><div style="font-size:3.2vw; margin: 0.5vh 0;">🌧️</div><div style="font-size:2vw; font-weight:bold; color:#ffffff;">19°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">15°</div></div>
-        <div class="carte-prev-unique cadran-relief-bleu"><div>DIM.</div><div style="font-size:0.75vw; color:#ffffff; font-weight:bold; font-family:'Arial';">30 AOÛT</div><div style="font-size:3.2vw; margin: 0.5vh 0;">🌧️</div><div style="font-size:2vw; font-weight:bold; color:#ffffff;">20°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">16°</div></div>
-        <div class="carte-prev-unique cadran-relief-bleu"><div>LUN.</div><div style="font-size:0.75vw; color:#ffffff; font-weight:bold; font-family:'Arial';">31 AOÛT</div><div style="font-size:3.2vw; margin: 0.5vh 0;">☁️</div><div style="font-size:2vw; font-weight:bold; color:#ffffff;">21°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">14°</div></div>
-        <div class="carte-prev-unique cadran-relief-bleu"><div>MAR.</div><div style="font-size:0.75vw; color:#ffffff; font-weight:bold; font-family:'Arial';">01 SEPT</div><div style="font-size:3.2vw; margin: 0.5vh 0;">☁️</div><div style="font-size:2vw; font-weight:bold; color:#ffffff;">20°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">12°</div></div>
-        <div class="carte-prev-unique cadran-relief-bleu"><div>MER.</div><div style="font-size:0.75vw; color:#ffffff; font-weight:bold; font-family:'Arial';">02 SEPT</div><div style="font-size:3.2vw; margin: 0.5vh 0;">☁️</div><div style="font-size:2vw; font-weight:bold; color:#ffffff;">20°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">10°</div></div>
-        <div class="carte-prev-unique cadran-relief-bleu"><div>JEU.</div><div style="font-size:0.75vw; color:#ffffff; font-weight:bold; font-family:'Arial';">03 SEPT</div><div style="font-size:3.2vw; margin: 0.5vh 0;">🌤️</div><div style="font-size:2vw; font-weight:bold; color:#ffffff;">22°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">12°</div></div>
-    </div>
-
+    <!-- PREVISIONS BASSE COUCHE -->
+    <div style="position: absolute; left: 1.5vw; bottom: 8vh; width: 77.5vw; height: 27.5vh; display: flex; justify-content: space-between;" id="zone-7-jours"></div>
     <script>
+        // Dessin complet du cadran
         var cadran = document.getElementById('cadran-montre');
         for (var i = 1; i <= 12; i++) {
             var container = document.createElement('div'); container.className = 'chiffre-container-js';
@@ -183,14 +180,108 @@
             container.appendChild(n); cadran.appendChild(container);
         }
         for (var j = 0; j < 60; j++) {
-            if (j % 5 === 0) {
-                var gP = document.createElement('div'); gP.classList.add('graduation', 'principale'); gP.style.transform = 'rotate(' + (j * 6) + 'deg)'; cadran.appendChild(gP);
-            } else {
-                var g = document.createElement('div'); g.classList.add('graduation', 'petite'); g.style.transform = 'rotate(' + (j * 6) + 'deg)'; cadran.appendChild(g);
+            var g = document.createElement('div'); g.className = (j % 5 === 0) ? 'graduation principale' : 'graduation';
+            g.style.transform = 'rotate(' + (j * 6) + 'deg)'; cadran.appendChild(g);
+        }
+
+        const dictIcons = { 0: "☀️", 1: "🌤️", 2: "⛅", 3: "☁️", 45: "🌫️", 48: "🌫️", 51: "🌧️", 53: "🌧️", 55: "🌧️", 61: "🌧️", 63: "🌧️", 65: "🌧️", 71: "🌨️", 73: "🌨️", 75: "🌨️", 80: "🌧️", 81: "🌧️", 82: "🌧️", 95: "⛈️", 96: "⛈️" };
+        var vitesseVentActuelle = 0;
+        var intervalleFeuilles = null;
+
+        function executerMeteo() {
+            // Requête vers la localisation exacte de Marloie (Belgique) via Open-Meteo
+            fetch('https://open-meteo.com')
+            .then(res => res.json())
+            .then(data => {
+                var c = data.current;
+                document.getElementById('courant-temp').textContent = Math.round(c.temperature_2m) + "°C";
+                document.getElementById('courant-ressenti').textContent = Math.round(c.apparent_temperature) + "°C";
+                document.getElementById('courant-humidite').textContent = c.relative_humidity_2m + "%";
+                vitesseVentActuelle = Math.round(c.wind_speed_10m);
+                document.getElementById('courant-vent').textContent = vitesseVentActuelle + " km/h";
+                document.getElementById('courant-icone').textContent = dictIcons[c.weather_code] || "☁️";
+                document.getElementById('courant-uv').textContent = Math.round(data.daily.uv_index_max[0]) + " / Max";
+                
+                // Traduction textuelle du code météo
+                var desc = "Couvert";
+                if(c.weather_code == 0) desc = "Ensoleillé";
+                if(c.weather_code >= 1 && c.weather_code <= 3) desc = "Éclaircies";
+                if(c.weather_code >= 51 && c.weather_code <= 65) desc = "Pluie";
+                if(c.weather_code >= 71 && c.weather_code <= 75) desc = "Chute de Neige";
+                if(c.weather_code >= 95) desc = "Orageux";
+                document.getElementById('courant-desc').textContent = desc;
+
+                // ACTIONS SUR LES EFFETS ET PARTICULES DU FOND GRAPHISME
+                gererEffetsFond(c.weather_code);
+
+                // GESTION DU VENT : Seulement si > 15 km/h
+                clearInterval(intervalleFeuilles);
+                if(vitesseVentActuelle > 15) {
+                    var ms = Math.max(800, 3000 - (vitesseVentActuelle * 50));
+                    intervalleFeuilles = setInterval(lancerFeuille, ms);
+                }
+
+                // Astres
+                document.getElementById('sat-lever').textContent = data.daily.sunrise[0].split('T')[1];
+                document.getElementById('sat-coucher').textContent = data.daily.sunset[0].split('T')[1];
+
+                // 7 jours du bas
+                var bas = document.getElementById('zone-7-jours'); bas.innerHTML = "";
+                const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
+                data.daily.time.forEach((jour, i) => {
+                    var d = new Date(jour);
+                    var txtJour = i === 0 ? "AUJ." : noms[d.getDay()];
+                    var box = document.createElement('div');
+                    box.className = "carte-prev-unique cadran-relief-bleu";
+                    box.innerHTML = `<div>${txtJour}</div><div style="font-size:0.75vw;color:#aaa;font-weight:bold;">${d.getDate()} AOÛT</div><div style="font-size:3.2vw;margin:0.5vh 0;">${dictIcons[data.daily.weather_code[i]]||"☁️"}</div><div style="font-size:2vw;font-weight:bold;">${Math.round(data.daily.temperature_2m_max[i])}°</div><div style="color:#49a6e9;font-weight:bold;font-size:1.4vw;">${Math.round(data.daily.temperature_2m_min[i])}°</div>`;
+                    bas.appendChild(box);
+                });
+            });
+        }
+
+        function gererEffetsFond(code) {
+            var n = document.getElementById('calque-nuage-gris');
+            var intem = document.getElementById('zone-intemperies');
+            intem.innerHTML = ""; n.className = "";
+            
+            if(code == 0) n.style.background = "rgba(0,0,0,0)"; // Grand soleil
+            if(code >= 1 && code <= 3) n.style.background = "rgba(40, 50, 60, 0.25)"; // Partiel
+            if(code == 3 || code == 45) n.style.background = "rgba(20, 25, 35, 0.55)"; // Nuages/Brouillard
+            
+            // Pluie (Codes 51-65, 80-82)
+            if((code >= 51 && code <= 65) || (code >= 80 && code <= 82)) {
+                n.style.background = "rgba(15, 20, 30, 0.65)";
+                for(let i=0; i<40; i++) {
+                    let g = document.createElement('div'); g.className = "goutte-pluie";
+                    g.style.left = Math.random() * 100 + "vw"; g.style.top = Math.random() * -50 + "px";
+                    g.style.animationDelay = Math.random() * 0.8 + "s"; intem.appendChild(g);
+                }
+            }
+            // Neige (Codes 71-75)
+            if(code >= 71 && code <= 75) {
+                n.style.background = "rgba(30, 40, 50, 0.4)";
+                for(let i=0; i<30; i++) {
+                    let f = document.createElement('div'); f.className = "flocon-neige";
+                    f.style.left = Math.random() * 100 + "vw"; f.style.top = Math.random() * -20 + "px";
+                    f.style.animationDelay = Math.random() * 3 + "s"; intem.appendChild(f);
+                }
+            }
+            // Orage (Codes 95+)
+            if(code >= 95) {
+                n.style.background = "rgba(10, 12, 20, 0.75)";
+                n.classList.add('effet-flash');
             }
         }
 
-        function actualiserEcran() {
+        function lancerFeuille() {
+            var f = document.createElement('div'); f.className = 'particule-feuille';
+            f.style.top = (Math.random() * 90) + '%'; f.style.left = '-20px';
+            f.style.animationDuration = (Math.random() * 1.5 + 2) + 's';
+            document.getElementById('zone-feuilles-dynamiques').appendChild(f);
+            setTimeout(() => f.remove(), 4000);
+        }
+
+        function actualiserHorloge() {
             var tempsReel = new Date();
             var h = tempsReel.getHours(); var m = tempsReel.getMinutes(); var s = tempsReel.getSeconds();
             document.getElementById('horloge-texte').textContent = h.toString().padStart(2, '0') + ':' + m.toString().padStart(2, '0') + ':' + s.toString().padStart(2, '0');
@@ -199,23 +290,19 @@
             document.getElementById('needle-hour').style.transform = 'translateX(-50%) rotate(' + degHeure + 'deg)';
             document.getElementById('needle-minute').style.transform = 'translateX(-50%) rotate(' + degMinute + 'deg)';
 
-            var listeJours = ['DIMANCHE', 'LUNDI', 'MARDI', 'MERCREDI', 'JEUDI', 'VENDREDI', 'SAMEDI'];
-            var listeMois = ['JANVIER', 'FÉVRIER', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUILLET', 'AOÛT', 'SEPTEMBRE', 'OCTOBRE', 'NOVEMBRE', 'DÉCÉMBRE'];
-            document.getElementById('date-jour').textContent = listeJours[tempsReel.getDay()];
+            var jours = ['DIMANCHE', 'LUNDI', 'MARDI', 'MERCREDI', 'JEUDI', 'VENDREDI', 'SAMEDI'];
+            var mois = ['JANVIER', 'FÉVRIER', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUILLET', 'AOÛT', 'SEPTEMBRE', 'OCTOBRE', 'NOVEMBRE', 'DÉCÉMBRE'];
+            document.getElementById('date-jour').textContent = jours[tempsReel.getDay()];
             document.getElementById('date-num').textContent = tempsReel.getDate();
-            document.getElementById('date-mois').textContent = listeMois[tempsReel.getMonth()];
+            document.getElementById('date-mois').textContent = mois[tempsReel.getMonth()];
             document.getElementById('date-annee').textContent = tempsReel.getFullYear();
-        }
-        setInterval(actualiserEcran, 1000); actualiserEcran();
 
-        var conteneurFeuilles = document.getElementById('zone-feuilles-dynamiques');
-        function lancerFeuille() {
-            var feuille = document.createElement('div'); feuille.classList.add('particule-feuille');
-            feuille.style.top = (Math.random() * 90) + '%'; feuille.style.left = '-20px';
-            feuille.style.animationDuration = (Math.random() * 2.5 + 3.5) + 's';
-            conteneurFeuilles.appendChild(feuille); setTimeout(function() { feuille.remove(); }, 6000);
+            var mNum = tempsReel.getMonth();
+            document.getElementById('sat-saison').textContent = (mNum >= 2 && mNum <= 4) ? "PRINTEMPS" : ((mNum >= 5 && mNum <= 8) ? "ÉTÉ" : ((mNum >= 9 && mNum <= 10) ? "AUTOMNE" : "HIVER"));
         }
-        setInterval(lancerFeuille, 1800);
+
+        setInterval(actualiserHorloge, 1000); actualiserHorloge();
+        setInterval(executerMeteo, 900000); executerMeteo();
     </script>
 </body>
 </html>
