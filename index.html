@@ -51,7 +51,7 @@
         .charniere-gauche { left: -6px !important; } .charniere-gauche::after { left: -3px; }
         .charniere-droite { right: -6px !important; } .charniere-droite::after { right: -3px; }
 
-        /* HORLOGE ANALOGIQUE SANS DÉBORD */
+        /* HORLOGE ANALOGIQUE RETRO SANS CADRE NI DÉBORD */
         .montre-retro-cercle { 
             position: absolute; right: 2.2vw; top: 1vh; width: 15.6vw; height: 15.6vw; 
             background: #000000 !important; border: none !important; border-radius: 50%; 
@@ -190,7 +190,7 @@
             g.style.transform = 'rotate(' + (j * 6) + 'deg)'; mC.appendChild(g);
         }
 
-        // SYNCHRONISATION ABSOLUE ET NETTOYAGE DU DÉCODAGE DES TABLEAUX API
+        // SYNCHRONISATION DU FLUX METEO (CORRIGEE DEFINITIVEMENT SUR LES HEURES INDEXÉES)
         function executerMeteo() {
             fetch('https://open-meteo.com')
             .then(res => res.json())
@@ -213,11 +213,11 @@
                     intervalleFeuilles = setInterval(lancerFeuille, frequence);
                 }
 
-                // FIXATION COMPLÈTE DE LA SYNTAXE TABLEAU : ON EXTRAIT L'INDEX ZERO DU JOUR J
+                // TRAITEMENT INDEXE DU TABLEAU DE CHAINE POUR LE SOLEIL (INDEX ZERO DU JOUR ACTUEL)
                 var leverBrut = data.daily.sunrise[0];
                 var coucherBrut = data.daily.sunset[0];
-                document.getElementById('sat-lever').textContent = leverBrut.split('T')[1];
-                document.getElementById('sat-coucher').textContent = coucherBrut.split('T')[1];
+                document.getElementById('sat-lever').textContent = leverBrut.split('T')[1].substring(0, 5);
+                document.getElementById('sat-coucher').textContent = coucherBrut.split('T')[1].substring(0, 5);
 
                 var bas = document.getElementById('zone-7-jours'); bas.innerHTML = "";
                 const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
