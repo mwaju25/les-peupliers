@@ -190,7 +190,7 @@
             g.style.transform = 'rotate(' + (j * 6) + 'deg)'; mC.appendChild(g);
         }
 
-        // SYNCHRONISATION DU FLUX METEO ET EXTRACTION NETTE DE L'HEURE (REPARÉE)
+        // REMPLACEMENT SÉCURISÉ POUR COMPATIBILITÉ ABSOLUE DE L'API METEO
         function executerMeteo() {
             fetch('https://open-meteo.com')
             .then(res => res.json())
@@ -213,7 +213,7 @@
                     intervalleFeuilles = setInterval(lancerFeuille, frequence);
                 }
 
-                // SYNTAXE UNIVERSELLE SECURISÉE POUR EXTRAIRE HH:MM SANS PLANTER
+                // CORRECTION HISTORIQUE : EXTRACTION COMPATIBLE DES HEURES DU SOLEIL SANS DÉUPLAGE TRONQUÉ
                 var leverStr = data.daily.sunrise[0];
                 var coucherStr = data.daily.sunset[0];
                 document.getElementById('sat-lever').textContent = leverStr.split('T')[1].slice(0, 5);
