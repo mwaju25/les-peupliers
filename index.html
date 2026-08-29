@@ -31,7 +31,6 @@
             content: ''; position: absolute; left: 0; top: 50%; width: 100%; height: 2px; 
             background: #000000 !important; border-bottom: 1px solid rgba(255,255,255,0.18) !important; z-index: 5; 
         }
-
         /* CHARNIÈRES CHROMÉES EN CYLINDRE PARFAITES */
         .charniere-gauche, .charniere-droite {
             position: absolute; top: 50%; transform: translateY(-50%);
@@ -51,7 +50,7 @@
         .charniere-gauche { left: -6px !important; } .charniere-gauche::after { left: -3px; }
         .charniere-droite { right: -6px !important; } .charniere-droite::after { right: -3px; }
 
-        /* HORLOGE ANALOGIQUE SANS DÉBORD */
+        /* HORLOGE ANALOGIQUE FINALE DU PROJET SANS DÉBORD */
         .montre-retro-cercle { 
             position: absolute; right: 2.2vw; top: 1vh; width: 15.6vw; height: 15.6vw; 
             background: #000000 !important; border: none !important; border-radius: 50%; 
@@ -66,6 +65,7 @@
         .heure { width: 5px; height: 3.2vw; background-color: #fff; }
         .minute { width: 4px; height: 4.9vw; background-color: #8ad400; }
         .pivot { position: absolute; width: 12px; height: 12px; background: #a2f200; border-radius: 50%; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 15; box-shadow: 0 0 6px rgba(162,242,0,0.8); }
+
         /* HORLOGE DIGITALE SANS CADRE EXTERNE */
         .boite-digitale-bas {
             position: absolute; right: 2vw; top: 35.5vh; width: 17vw; height: 8vh;
@@ -74,7 +74,6 @@
         }
         .heure-digitale-js { font-size: 2.7vw; font-weight: 900; color: #ffffff !important; letter-spacing: 1px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; }
         .heure-digitale-js::after { content: ''; position: absolute; left: 0; top: 50%; width: 100%; height: 2px; background: #000000; border-bottom: 1px solid rgba(255,255,255,0.15); z-index: 5; }
-
         /* EFFETS ENVIRONNEMENTAUX */
         .goutte-pluie { position: absolute; width: 2px; height: 25px; background: rgba(174,194,224,0.6); animation: chutePluie 0.8s linear infinite; }
         @keyframes chutePluie { 0% { transform: translateY(-30px) translateX(0px); } 100% { transform: translateY(105vh) translateX(-50px); } }
@@ -94,17 +93,13 @@
         .cadran-relief-noir-bloc { background: #05080c !important; border: 2px solid #162029 !important; border-radius: 12px; box-shadow: 0 6px 12px rgba(0,0,0,0.6); }
         .carte-prev-unique { width: 10.4vw; height: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 1.5vh 0; background: transparent; }
 
-        /* REPRODUCTION GRAPHIQUE DU SOLEIL ET DE LA LUNE RÉELLE EN CSS */
-        .soleil-realiste-css { width: 3.2vw; height: 3.2vw; background: radial-gradient(circle, #fff 10%, #ffdf00 50%, #ff8c00 100%); border-radius: 50%; box-shadow: 0 0 20px rgba(255,223,0,0.8), 0 0 40px rgba(255,140,0,0.4); }
-        .lune-realiste-css { 
-            position: relative; width: 3.2vw; height: 3.2vw; background: #d0d5dd; border-radius: 50%; 
-            box-shadow: inset -8px -8px 15px rgba(0,0,0,0.4), inset 4px 4px 10px rgba(255,255,255,0.6), 0 0 12px rgba(255,255,255,0.2);
-            overflow: hidden;
-        }
-        .lune-cratere { position: absolute; background: rgba(0, 0, 0, 0.08); border-radius: 50%; box-shadow: inset 1px 1px 2px rgba(0,0,0,0.15); }
+        /* SOLEIL CSS MODERNE ET LUNE PHOTOGRAPHIQUE DORÉE ET TEXTURÉE */
+        .soleil-realiste-css { width: 3.2vw; height: 3.2vw; background: radial-gradient(circle, #fff 15%, #ffea00 55%, #ff7700 100%); border-radius: 50%; box-shadow: 0 0 18px rgba(255,210,0,0.75), 0 0 35px rgba(255,100,0,0.4); }
+        .lune-doree-image { width: 3.2vw; height: 3.2vw; background-size: cover; background-position: center; border-radius: 50%; filter: drop-shadow(0px 0px 6px rgba(238,190,120,0.45)); }
     </style>
 </head>
 <body>
+
     <div id="fond-ecran-principal" class="fond-global"></div>
     <div id="calque-nuage-gris"></div>
     <div id="zone-intemperies"></div>
@@ -124,7 +119,6 @@
     </div>
     
     <div class="boite-digitale-bas"><div class="charniere-gauche"></div><div class="heure-digitale-js" id="horloge-texte">--:--:--</div><div class="charniere-droite"></div></div>
-
     <!-- METEO DE GAUCHE -->
     <div class="cadran-relief-bleu" style="position: absolute; left: 1.5vw; top: 25vh; width: 28.5vw; height: 35vh; padding: 1.3vw; color: #ffffff;">
         <div style="font-size: 1.1vw; color: #ffffff; font-weight: bold; margin-bottom: 2px; text-align: left; font-family:'Arial';">Marloie (Marche-en-Famenne)</div>
@@ -166,7 +160,7 @@
         </div>
     </div>
 
-    <!-- MODULE LUNE REALISTE GRAPHISME TEXTURÉ -->
+    <!-- MODULE LUNE AVEC LA BELLE LUNE PHOTOGRAPHIQUE RESTAURÉE -->
     <div class="cadran-relief-noir-bloc" style="position: absolute; right: 2vw; top: 75vh; width: 17vw; height: 14.5vh; padding: 1vw 1.2vw; display: flex; justify-content: space-between; align-items: center; font-family:'Arial'; font-weight:bold;">
         <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; text-align: left;">
             <div style="font-size: 1.1vw; color: #8ad400; font-weight: bold; letter-spacing: 0.5px; font-family:'Arial Black';">LUNE</div>
@@ -175,7 +169,7 @@
                 Âge : <span id="lune-age">--</span> j<br>Éclairement : <span id="lune-ecl">--</span>%
             </div>
         </div>
-        <div class="lune-realiste-css" id="boite-lune-texture"></div>
+        <div class="lune-doree-image" id="lune-vrai-photo"></div>
     </div>
 
     <!-- PREVISIONS D'EN BAS -->
@@ -185,15 +179,21 @@
         var vitesseVentActuelle = 0;
         var intervalleFeuilles = null;
 
-        // CRÉATION DES CRATÈRES DE LA LUNE PROFESSIONNELLE
-        var luneTexture = document.getElementById('boite-lune-texture');
-        const posCraters = [{t:15,l:20,s:6},{t:40,l:50,s:10},{t:65,l:25,s:8},{t:25,l:65,s:5},{t:70,l:60,s:7}];
-        posCraters.forEach(c => {
-            var div = document.createElement('div'); div.className = 'lune-cratere';
-            div.style.top = c.t+'%'; div.style.left = c.l+'%'; div.style.width = c.s+'px'; div.style.height = c.s+'px';
-            luneTexture.appendChild(div);
-        });
+        // MODULE INDÉPENDANT DE DESSIN CIRCULAIRE DES 12 CHIFFRES SUR LE CADRAN NOIR
+        var mC = document.getElementById('cadran-montre');
+        for (var i = 1; i <= 12; i++) {
+            var boxChiffre = document.createElement('div'); boxChiffre.className = 'chiffre-container-js';
+            boxChiffre.style.transform = 'rotate(' + (i * 30) + 'deg)';
+            var n = document.createElement('div'); n.className = 'chiffre-cadran-fixe'; n.textContent = i;
+            n.style.transform = 'rotate(' + (-i * 30) + 'deg)';
+            boxChiffre.appendChild(n); mC.appendChild(boxChiffre);
+        }
+        for (var j = 0; j < 60; j++) {
+            var g = document.createElement('div'); g.className = (j % 5 === 0) ? 'graduation principale' : 'graduation';
+            g.style.transform = 'rotate(' + (j * 6) + 'deg)'; mC.appendChild(g);
+        }
 
+        // INTEGRATION DU MODULE METEO (CORRECTION DU SCRIPT SUNRISE SANS INTERRUPTION)
         function executerMeteo() {
             fetch('https://open-meteo.com')
             .then(res => res.json())
@@ -216,11 +216,11 @@
                     intervalleFeuilles = setInterval(lancerFeuille, frequence);
                 }
 
-                // DÉCODAGE ULTRA-SÉCURISÉ DES HEURES DU SOLEIL (RÉPARÉ INDÉPENDAMMENT)
-                var leverBrut = data.daily.sunrise[0];
-                var coucherBrut = data.daily.sunset[0];
-                document.getElementById('sat-lever').textContent = leverBrut.split('T')[1].substring(0, 5);
-                document.getElementById('sat-coucher').textContent = coucherBrut.split('T')[1].substring(0, 5);
+                // EXTRACTEUR SÉCURISÉ CIBLÉ SUR LA PREMIÈRE ENTRÉE TEXTUELLE DES ASTRES
+                var l_string = data.daily.sunrise[0];
+                var c_string = data.daily.sunset[0];
+                document.getElementById('sat-lever').textContent = l_string.split('T')[1].substring(0, 5);
+                document.getElementById('sat-coucher').textContent = c_string.split('T')[1].substring(0, 5);
 
                 var bas = document.getElementById('zone-7-jours'); bas.innerHTML = "";
                 const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
@@ -270,29 +270,28 @@
         }
 
         function calculPhaseLune() {
-            var t = new Date();
-            var y = t.getFullYear(); var m = t.getMonth() + 1; var d = t.getDate();
+            var t = new Date(); var y = t.getFullYear(); var m = t.getMonth() + 1; var d = t.getDate();
             if (m <= 2) { y -= 1; m += 12; }
             let a = Math.floor(y / 100); let b = Math.floor(a / 4);
-            let c = 2 - a + b; let e = Math.floor(365.25 * (y + 4716));
-            let f = Math.floor(30.6001 * (m + 1));
+            let c = 2 - a + b; let e = Math.floor(365.25 * (y + 4716)); let f = Math.floor(30.6001 * (m + 1));
             let jd = c + d + e + f - 1524.5;
             let daysSinceNew = (jd - 2451550.1) % 29.530588853;
             if (daysSinceNew < 0) daysSinceNew += 29.530588853;
             
             document.getElementById('lune-age').textContent = daysSinceNew.toFixed(1);
-            let pct = Math.round((1 - Math.cos((daysSinceNew * Math.PI * 2) / 29.53)) * 50);
-            document.getElementById('lune-ecl').textContent = pct;
+            document.getElementById('lune-ecl').textContent = Math.round((1 - Math.cos((daysSinceNew * Math.PI * 2) / 29.53)) * 50);
 
-            let nom = "Nouvelle lune";
-            if(daysSinceNew >= 1.8 && daysSinceNew < 5.5) nom = "Premier croissant";
-            if(daysSinceNew >= 5.5 && daysSinceNew < 9.2) nom = "Premier quartier";
-            if(daysSinceNew >= 9.2 && daysSinceNew < 13) nom = "Gibbeuse croissante";
-            if(daysSinceNew >= 13 && daysSinceNew < 16.6) nom = "Pleine lune";
-            if(daysSinceNew >= 16.6 && daysSinceNew < 20.3) nom = "Gibbeuse décroissante";
-            if(daysSinceNew >= 20.3 && daysSinceNew < 24) nom = "Dernier quartier";
-            if(daysSinceNew >= 24 && daysSinceNew < 27.7) nom = "Dernier croissant";
+            let nom = "Nouvelle lune"; let imgMoon = "new-moon";
+            if(daysSinceNew >= 1.8 && daysSinceNew < 5.5) { nom = "Premier croissant"; imgMoon = "waxing-crescent"; }
+            if(daysSinceNew >= 5.5 && daysSinceNew < 9.2) { nom = "Premier quartier"; imgMoon = "first-quarter"; }
+            if(daysSinceNew >= 9.2 && daysSinceNew < 13) { nom = "Gibbeuse croissante"; imgMoon = "waxing-gibbous"; }
+            if(daysSinceNew >= 13 && daysSinceNew < 16.6) { nom = "Pleine lune"; imgMoon = "full-moon"; }
+            if(daysSinceNew >= 16.6 && daysSinceNew < 20.3) { nom = "Gibbeuse décroissante"; imgMoon = "waning-gibbous"; }
+            if(daysSinceNew >= 20.3 && daysSinceNew < 24) { nom = "Dernier quartier"; imgMoon = "third-quarter"; }
+            if(daysSinceNew >= 24 && daysSinceNew < 27.7) { nom = "Dernier croissant"; imgMoon = "waning-crescent"; }
+            
             document.getElementById('lune-phase-nom').textContent = nom;
+            document.getElementById('lune-vrai-photo').style.backgroundImage = `url('https://githubusercontent.com{imgMoon}.png')`;
         }
 
         function actualiserHorloge() {
@@ -309,7 +308,6 @@
             document.getElementById('date-num').textContent = tempsReel.getDate();
             document.getElementById('date-mois').textContent = mois[tempsReel.getMonth()];
             document.getElementById('date-annee').textContent = tempsReel.getFullYear();
-            document.getElementById('sat-saison').textContent = (tempsReel.getMonth() >= 2 && tempsReel.getMonth() <= 4) ? "PRINTEMPS" : ((tempsReel.getMonth() >= 5 && tempsReel.getMonth() <= 8) ? "ÉTÉ" : ((tempsReel.getMonth() >= 9 && tempsReel.getMonth() <= 10) ? "AUTOMNE" : "HIVER"));
         }
 
         setInterval(actualiserHorloge, 1000); actualiserHorloge(); calculPhaseLune();
