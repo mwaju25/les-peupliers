@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ecran Dynamique - Les Peupliers Final</title>
+    <title>Ecran Dynamique - Les Peupliers V4</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Arial', sans-serif; }
         body { background-color: #000; color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
@@ -15,7 +15,7 @@
         
         .pos { position: absolute; display: flex; align-items: center; justify-content: center; background: transparent; overflow: hidden; text-align: center; }
         
-        /* DESCENTE MAXIMALE DE LA DATE (TOP CORRIGÉ À 9.2vh) POUR S'ALIGNER SUR LES COMPTEURS */
+        /* SYSTÈME FLIP-FLAP AVEC CENTRAGE ABSOLU ET AUTO-ADAPTATIF POUR TOUS LES MOIS DE L'ANNÉE */
         .flip-tuile-js { 
             width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; 
             font-size: 2.5vw; font-weight: bold; color: #fff; text-transform: uppercase; 
@@ -40,8 +40,9 @@
             background: rgba(0,0,0,0.6); border-bottom: 1px solid rgba(255,255,255,0.1); 
         }
 
-        /* CONFIGURATION LARGES COMPTEURS DU BAS POUR S'IMPLANTER PIXEL-PERFECT */
-        .carte-prev-unique { width: 10.2vw; height: 24vh; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 0.5vh 0; background: transparent; }
+        /* GRILLE DE COMPRESSION ÉLASTIQUE POUR LES 7 CADRANS DU BAS */
+        .ligne-prev-bas { position: absolute; bottom: 8.8vh; left: 0.5vw; width: 78.5vw; height: 24.5vh; display: flex; justify-content: space-between; align-items: center; background: transparent; }
+        .carte-prev-unique { width: 10.4vw; height: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 0.8vh 0; background: transparent; }
 
         .particule-feuille { position: absolute; width: 14px; height: 9px; background: #628c34; border-radius: 0 75% 0 75%; opacity: 0.65; animation: animationVent linear infinite; }
         @keyframes animationVent { 0% { transform: translate(-40px, 0px) rotate(0deg); } 100% { transform: translate(55vw, 180px) rotate(540deg); } }
@@ -52,11 +53,11 @@
     <div id="fond-ecran-principal" class="fond-global"></div>
     <div id="zone-feuilles-dynamiques" style="position: fixed; top: 20vh; left: 28vw; width: 46vw; height: 55vh; pointer-events: none; z-index: 2; overflow: hidden;"></div>
 
-    <!-- CALENDRIER PARFAITEMENT CENTRÉ VERTICALEMENT SUR LA LIEN BLANCHE -->
-    <div class="pos" style="left: 17.5vw; top: 9.2vh; width: 22.3vw; height: 11vh;"><div class="flip-tuile-js" id="date-jour">SAMEDI</div></div>
-    <div class="pos" style="left: 40.8vw; top: 9.2vh; width: 9.6vw; height: 11vh;"><div class="flip-tuile-js" id="date-num">29</div></div>
-    <div class="pos" style="left: 51.5vw; top: 9.2vh; width: 13.5vw; height: 11vh;"><div class="flip-tuile-js" id="date-mois">AOÛT</div></div>
-    <div class="pos" style="left: 66.2vw; top: 9.2vh; width: 11.5vw; height: 11vh;"><div class="flip-tuile-js" id="date-annee">2026</div></div>
+    <!-- CALENDRIER REMONTÉ À 5.5vh ET ENFERMÉ DANS DES BOITES DE CENTRAGE STRICTES -->
+    <div class="pos" style="left: 17.5vw; top: 5.5vh; width: 22.3vw; height: 11vh;"><div class="flip-tuile-js" id="date-jour">SAMEDI</div></div>
+    <div class="pos" style="left: 40.8vw; top: 5.5vh; width: 9.6vw; height: 11vh;"><div class="flip-tuile-js" id="date-num">29</div></div>
+    <div class="pos" style="left: 51.5vw; top: 5.5vh; width: 13.5vw; height: 11vh;"><div class="flip-tuile-js" id="date-mois">AOÛT</div></div>
+    <div class="pos" style="left: 66.2vw; top: 5.5vh; width: 11.5vw; height: 11vh;"><div class="flip-tuile-js" id="date-annee">2026</div></div>
 
     <!-- HORLOGES DROITE -->
     <div class="cadran-aiguilles">
@@ -85,14 +86,16 @@
         <strong style="font-size:0.95rem; color:#fff;">Pleine lune</strong><br>Âge : 14,7 jours<br>Éclairement : 100%
     </div>
 
-    <!-- ÉCARTEMENT ET LARGEUR DES 7 CARTES DU BAS RECALCULÉS PAS À PAS AU CENTIMÈTRE PRÈS -->
-    <div class="pos carte-prev-unique" style="left: 1.1vw; bottom: 8.8vh;"><div style="font-size:1.15rem; font-weight:bold; color:#aaa;">AUJ.</div><div style="font-size:0.9rem; color:#aaa;">28 AOÛT</div><div style="font-size:2.6rem; margin: 0.3vh 0;">☁️</div><div style="font-size:1.75rem; font-weight:bold;">21°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.35rem;">16°</div></div>
-    <div class="pos carte-prev-unique" style="left: 12.8vw; bottom: 8.8vh;"><div style="font-size:1.15rem; font-weight:bold; color:#aaa;">SAM.</div><div style="font-size:0.9rem; color:#aaa;">29 AOÛT</div><div style="font-size:2.6rem; margin: 0.3vh 0;">🌧️</div><div style="font-size:1.75rem; font-weight:bold;">19°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.35rem;">15°</div></div>
-    <div class="pos carte-prev-unique" style="left: 24.5vw; bottom: 8.8vh;"><div style="font-size:1.15rem; font-weight:bold; color:#aaa;">DIM.</div><div style="font-size:0.9rem; color:#aaa;">30 AOÛT</div><div style="font-size:2.6rem; margin: 0.3vh 0;">🌧️</div><div style="font-size:1.75rem; font-weight:bold;">20°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.35rem;">16°</div></div>
-    <div class="pos carte-prev-unique" style="left: 36.2vw; bottom: 8.8vh;"><div style="font-size:1.15rem; font-weight:bold; color:#aaa;">LUN.</div><div style="font-size:0.9rem; color:#aaa;">31 AOÛT</div><div style="font-size:2.6rem; margin: 0.3vh 0;">☁️</div><div style="font-size:1.75rem; font-weight:bold;">21°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.35rem;">14°</div></div>
-    <div class="pos carte-prev-unique" style="left: 47.9vw; bottom: 8.8vh;"><div style="font-size:1.15rem; font-weight:bold; color:#aaa;">MAR.</div><div style="font-size:0.9rem; color:#aaa;">01 SEPT</div><div style="font-size:2.6rem; margin: 0.3vh 0;">☁️</div><div style="font-size:1.75rem; font-weight:bold;">20°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.35rem;">12°</div></div>
-    <div class="pos carte-prev-unique" style="left: 59.6vw; bottom: 8.8vh;"><div style="font-size:1.15rem; font-weight:bold; color:#aaa;">MER.</div><div style="font-size:0.9rem; color:#aaa;">02 SEPT</div><div style="font-size:2.6rem; margin: 0.3vh 0;">☁️</div><div style="font-size:1.75rem; font-weight:bold;">20°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.35rem;">10°</div></div>
-    <div class="pos carte-prev-unique" style="left: 71.3vw; bottom: 8.8vh;"><div style="font-size:1.15rem; font-weight:bold; color:#aaa;">JEU.</div><div style="font-size:0.9rem; color:#aaa;">03 SEPT</div><div style="font-size:2.6rem; margin: 0.3vh 0;">🌤️</div><div style="font-size:1.75rem; font-weight:bold;">22°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.35rem;">12°</div></div>
+    <!-- DISTRIBUTION FLEXBOX INTELLIGENTE : LES 7 CARTES S'ÉCARTENT TOUTES SEULES DANS CHAQUE LOGE -->
+    <div class="ligne-prev-bas">
+        <div class="carte-prev-unique"><div style="font-size:1.15rem; font-weight:bold; color:#aaa;">AUJ.</div><div style="font-size:0.9rem; color:#aaa;">28 AOÛT</div><div style="font-size:2.6rem; margin: 0.2vh 0;">☁️</div><div style="font-size:1.75rem; font-weight:bold;">21°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.35rem;">16°</div></div>
+        <div class="carte-prev-unique"><div style="font-size:1.15rem; font-weight:bold; color:#aaa;">SAM.</div><div style="font-size:0.9rem; color:#aaa;">29 AOÛT</div><div style="font-size:2.6rem; margin: 0.2vh 0;">🌧️</div><div style="font-size:1.75rem; font-weight:bold;">19°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.35rem;">15°</div></div>
+        <div class="carte-prev-unique"><div style="font-size:1.15rem; font-weight:bold; color:#aaa;">DIM.</div><div style="font-size:0.9rem; color:#aaa;">30 AOÛT</div><div style="font-size:2.6rem; margin: 0.2vh 0;">🌧️</div><div style="font-size:1.75rem; font-weight:bold;">20°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.35rem;">16°</div></div>
+        <div class="carte-prev-unique"><div style="font-size:1.15rem; font-weight:bold; color:#aaa;">LUN.</div><div style="font-size:0.9rem; color:#aaa;">31 AOÛT</div><div style="font-size:2.6rem; margin: 0.2vh 0;">☁️</div><div style="font-size:1.75rem; font-weight:bold;">21°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.35rem;">14°</div></div>
+        <div class="carte-prev-unique"><div style="font-size:1.15rem; font-weight:bold; color:#aaa;">MAR.</div><div style="font-size:0.9rem; color:#aaa;">01 SEPT</div><div style="font-size:2.6rem; margin: 0.2vh 0;">☁️</div><div style="font-size:1.75rem; font-weight:bold;">20°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.35rem;">12°</div></div>
+        <div class="carte-prev-unique"><div style="font-size:1.15rem; font-weight:bold; color:#aaa;">MER.</div><div style="font-size:0.9rem; color:#aaa;">02 SEPT</div><div style="font-size:2.6rem; margin: 0.2vh 0;">☁️</div><div style="font-size:1.75rem; font-weight:bold;">20°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.35rem;">10°</div></div>
+        <div class="carte-prev-unique"><div style="font-size:1.15rem; font-weight:bold; color:#aaa;">JEU.</div><div style="font-size:0.9rem; color:#aaa;">03 SEPT</div><div style="font-size:2.6rem; margin: 0.2vh 0;">🌤️</div><div style="font-size:1.75rem; font-weight:bold;">22°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.35rem;">12°</div></div>
+    </div>
 
     <script>
         function actualiserEcran() {
