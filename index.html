@@ -51,7 +51,7 @@
         .charniere-gauche { left: -6px !important; } .charniere-gauche::after { left: -3px; }
         .charniere-droite { right: -6px !important; } .charniere-droite::after { right: -3px; }
 
-        /* HORLOGE ANALOGIQUE FINALE DU PROJET SANS DÉBORD */
+        /* HORLOGE ANALOGIQUE FINALE SANS DÉBORD */
         .montre-retro-cercle { 
             position: absolute; right: 2.2vw; top: 1vh; width: 15.6vw; height: 15.6vw; 
             background: #000000 !important; border: none !important; border-radius: 50%; 
@@ -190,7 +190,7 @@
             g.style.transform = 'rotate(' + (j * 6) + 'deg)'; mC.appendChild(g);
         }
 
-        // REMPLACEMENT SÉCURISÉ POUR COMPATIBILITÉ ABSOLUE DE L'API METEO
+        // RECONSTRUCTION AVEC TRAITEMENT INDIVIDUEL DE L'INDEX ZERO POUR LE SOLEIL (SÉCURISÉ)
         function executerMeteo() {
             fetch('https://open-meteo.com')
             .then(res => res.json())
@@ -213,11 +213,11 @@
                     intervalleFeuilles = setInterval(lancerFeuille, frequence);
                 }
 
-                // CORRECTION HISTORIQUE : EXTRACTION COMPATIBLE DES HEURES DU SOLEIL SANS DÉUPLAGE TRONQUÉ
-                var leverStr = data.daily.sunrise[0];
-                var coucherStr = data.daily.sunset[0];
-                document.getElementById('sat-lever').textContent = leverStr.split('T')[1].slice(0, 5);
-                document.getElementById('sat-coucher').textContent = coucherStr.split('T')[1].slice(0, 5);
+                // SÉCURISATION DU DISQUE DU SOLEIL PAR EXTRACTION INDEXÉE STRICTE
+                var leverAujourdhui = data.daily.sunrise[0];
+                var coucherAujourdhui = data.daily.sunset[0];
+                document.getElementById('sat-lever').textContent = leverAujourdhui.split('T')[1].substring(0, 5);
+                document.getElementById('sat-coucher').textContent = coucherAujourdhui.split('T')[1].substring(0, 5);
 
                 var bas = document.getElementById('zone-7-jours'); bas.innerHTML = "";
                 const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
