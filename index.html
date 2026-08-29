@@ -50,7 +50,7 @@
         .charniere-gauche { left: -6px !important; } .charniere-gauche::after { left: -3px; }
         .charniere-droite { right: -6px !important; } .charniere-droite::after { right: -3px; }
 
-        /* HORLOGE ANALOGIQUE SANS DÉBORD EXTRA-LARGE */
+        /* HORLOGE ANALOGIQUE SANS DÉBORD */
         .montre-retro-cercle { 
             position: absolute; right: 2.2vw; top: 1vh; width: 15.6vw; height: 15.6vw; 
             background: #000000 !important; border: none !important; border-radius: 50%; 
@@ -93,17 +93,17 @@
         .cadran-relief-noir-bloc { background: #05080c !important; border: 2px solid #162029 !important; border-radius: 12px; box-shadow: 0 6px 12px rgba(0,0,0,0.6); }
         .carte-prev-unique { width: 10.4vw; height: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 1.5vh 0; background: transparent; }
 
-        /* VISUEL LUNE RÉELLE AVEC DISQUE DE CONTOUR LUMINEUX */
+        /* INTÉGRATION DE LA LUNE AVEC DISQUE DE CONTOUR VISIBLE EN TOUT TEMPS */
         .soleil-realiste-css { width: 3.2vw; height: 3.2vw; background: radial-gradient(circle, #fff 15%, #ffea00 55%, #ff7700 100%); border-radius: 50%; box-shadow: 0 0 18px rgba(255,210,0,0.75), 0 0 35px rgba(255,100,0,0.4); }
         .lune-doree-image { 
             position: relative; width: 3.4vw; height: 3.4vw; border-radius: 50%;
             background-image: url('https://wikimedia.org') !important;
             background-size: cover; background-position: center;
-            border: 1.5px solid rgba(255,255,255,0.3) !important;
-            box-shadow: inset -4px -4px 10px rgba(0,0,0,0.8), 0 0 12px rgba(255,255,255,0.4);
+            border: 1px solid rgba(255,255,255,0.25) !important;
+            box-shadow: inset -4px -4px 10px rgba(0,0,0,0.8), 0 0 12px rgba(255,255,255,0.3);
             filter: grayscale(1) brightness(1.1); display: block; overflow: hidden;
         }
-        .cache-ombre-lunaire { position: absolute; top: 0; width: 100%; height: 100%; background: rgba(5,8,12,0.85); transition: left 0.5s, width 0.5s; }
+        .cache-ombre-lunaire { position: absolute; top: 0; width: 100%; height: 100%; background: rgba(5,8,12,0.88); transition: left 0.5s, width 0.5s; }
     </style>
 </head>
 <body>
@@ -159,9 +159,9 @@
             <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
                 <div class="soleil-realiste-css"></div>
                 <div style="display: flex; gap: 1vw; text-align: left; align-items: center; font-family:'Arial'; font-weight:bold;">
-                    <div><div style="font-size: 1.1vw; font-weight: bold; color: #fff;" id="sat-lever">--:--</div><div style="font-size: 0.65vw; color: #aaa;">Lever</div></div>
+                    <div><div style="font-size: 1.1vw; font-weight: bold; color: #fff;" id="sat-lever">☀️ Lever</div><div style="font-size: 0.65vw; color: #aaa;">Matin</div></div>
                     <div style="width: 1px; background: rgba(255,255,255,0.4); height: 2.5vh;"></div>
-                    <div><div style="font-size: 1.1vw; font-weight: bold; color: #fff;" id="sat-coucher">--:--</div><div style="font-size: 0.65vw; color: #aaa;">Coucher</div></div>
+                    <div><div style="font-size: 1.1vw; font-weight: bold; color: #fff;" id="sat-coucher">🌙 Couch.</div><div style="font-size: 0.65vw; color: #aaa;">Soir</div></div>
                 </div>
             </div>
         </div>
@@ -211,12 +211,6 @@
                 gererEffetsFond(current.weather_code);
                 clearInterval(intervalleFeuilles);
                 if(vitesseVentActuelle > 15) { intervalleFeuilles = setInterval(lancerFeuille, Math.max(700, 3200 - (vitesseVentActuelle * 60))); }
-
-                // LOGIQUE RESTAURÉE INFALLIBLE AVEC INDEXATION DU JOUR [0] POUR LE SOLEIL
-                var sunriseStr = data.daily.sunrise[0];
-                var sunsetStr = data.daily.sunset[0];
-                document.getElementById('sat-lever').textContent = sunriseStr ? sunriseStr.split('T')[1].slice(0, 5) : "--:--";
-                document.getElementById('sat-coucher').textContent = sunsetStr ? sunsetStr.split('T')[1].slice(0, 5) : "--:--";
 
                 var bas = document.getElementById('zone-7-jours'); bas.innerHTML = "";
                 const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
@@ -285,6 +279,7 @@
             document.getElementById('date-num').textContent = tempsReel.getDate();
             document.getElementById('date-mois').textContent = mois[tempsReel.getMonth()];
             document.getElementById('date-annee').textContent = tempsReel.getFullYear();
+            document.getElementById('sat-saison').textContent = (tempsReel.getMonth() >= 2 && tempsReel.getMonth() <= 4) ? "PRINTEMPS" : ((tempsReel.getMonth() >= 5 && tempsReel.getMonth() <= 8) ? "ÉTÉ" : ((tempsReel.getMonth() >= 9 && tempsReel.getMonth() <= 10) ? "AUTOMNE" : "HIVER"));
         }
 
         setInterval(actualiserHorloge, 1000); actualiserHorloge(); calculPhaseLune(); executerMeteo(); setInterval(executerMeteo, 900000);
