@@ -93,7 +93,7 @@
         .cadran-relief-noir-bloc { background: #05080c !important; border: 2px solid #162029 !important; border-radius: 12px; box-shadow: 0 6px 12px rgba(0,0,0,0.6); }
         .carte-prev-unique { width: 10.4vw; height: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 1.5vh 0; background: transparent; }
 
-        /* RESTAURATION DE LA BELLE LUNE PHOTOGRAPHIQUE ET TEXTURÉE DE L'IMAGE 2 */
+        /* MAGNIFIQUE CADRAGE DE LA TEXTURE LUNAIRE SELON L'IMAGE DE RÉFÉRENCE 2 */
         .soleil-realiste-css { width: 3.2vw; height: 3.2vw; background: radial-gradient(circle, #fff 15%, #ffea00 55%, #ff7700 100%); border-radius: 50%; box-shadow: 0 0 18px rgba(255,210,0,0.75), 0 0 35px rgba(255,100,0,0.4); }
         .lune-doree-image { 
             width: 3.4vw; height: 3.4vw; border-radius: 50%;
@@ -210,10 +210,10 @@
                 clearInterval(intervalleFeuilles);
                 if(vitesseVentActuelle > 15) { intervalleFeuilles = setInterval(lancerFeuille, Math.max(700, 3200 - (vitesseVentActuelle * 60))); }
 
-                // FIXATION COMPLÈTE DE L'EXTRACTION INDEXÉE DU SOLEIL JUSQU'AUX 5 PREMIERS CARACTÈRES
-                var s_raw = data.daily.sunrise[0]; var e_raw = data.daily.sunset[0];
-                document.getElementById('sat-lever').textContent = s_raw.split('T')[1].substring(0, 5);
-                document.getElementById('sat-coucher').textContent = e_raw.split('T')[1].substring(0, 5);
+                // RESOLUTION SÉCURISÉE DU PARSAGE EN SELECTIONNANT LA CHAINE DANS LA PREMIÈRE LITÉRALITÉ [0]
+                var sh = data.daily.sunrise[0]; var ch = data.daily.sunset[0];
+                document.getElementById('sat-lever').textContent = sh.split('T')[1].substring(0, 5);
+                document.getElementById('sat-coucher').textContent = ch.split('T')[1].substring(0, 5);
 
                 var bas = document.getElementById('zone-7-jours'); bas.innerHTML = "";
                 const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
@@ -276,7 +276,6 @@
             document.getElementById('date-num').textContent = tempsReel.getDate();
             document.getElementById('date-mois').textContent = mois[tempsReel.getMonth()];
             document.getElementById('date-annee').textContent = tempsReel.getFullYear();
-            document.getElementById('sat-saison').textContent = (tempsReel.getMonth() >= 2 && tempsReel.getMonth() <= 4) ? "PRINTEMPS" : ((tempsReel.getMonth() >= 5 && tempsReel.getMonth() <= 8) ? "ÉTÉ" : ((tempsReel.getMonth() >= 9 && tempsReel.getMonth() <= 10) ? "AUTOMNE" : "HIVER"));
         }
 
         setInterval(actualiserHorloge, 1000); actualiserHorloge(); calculPhaseLune(); executerMeteo(); setInterval(executerMeteo, 900000);
