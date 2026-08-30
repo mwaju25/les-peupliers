@@ -41,7 +41,7 @@
         .carte-prev-unique { width: 10.4vw; height: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 1.5vh 0; background: #0d131a !important; border: 2px solid #212c3a !important; border-radius: 12px !important; }
         .soleil-realiste-css { width: 3.2vw; height: 3.2vw; background: radial-gradient(circle, #fff 15%, #ffea00 55%, #ff7700 100%); border-radius: 50%; box-shadow: 0 0 18px rgba(255,210,0,0.75), 0 0 35px rgba(255,100,0,0.4); }
         .lune-doree-image { position: relative; width: 3.4vw; height: 3.4vw; border-radius: 50%; background-image: url('https://wikimedia.org') !important; background-size: cover; background-position: center; border: 1.5px solid rgba(255,255,255,0.5) !important; box-shadow: 0 0 14px rgba(255,255,255,0.4); filter: grayscale(1) brightness(1.2); display: block; overflow: hidden; }
-        .cache-ombre-lunaire { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #05080c; border-radius: 50%; transition: all 0.5s ease-in-out; mix-blend-mode: multiply; }
+        .cache-ombre-lunaire { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5,8,12,0.88); transition: left 0.5s, width 0.5s; }
         .case-illustration-pommier { width: 4.8vw; height: 4.8vw; position: relative; display: flex; align-items: center; justify-content: center; background: #121b24 !important; border-radius: 8px; border: 1px solid rgba(255,255,255,0.08); box-shadow: inset 0 0 6px rgba(0,0,0,0.6); }
         .pommier-trunk { position: absolute; width: 4px; background: #5c4033; bottom: 0.2vw; height: 1.8vw; left: 50%; transform: translateX(-50%); border-radius: 2px; }
         .pommier-branch-l { position: absolute; width: 10px; height: 2px; background: #5c4033; bottom: 1.4vw; left: 1.2vw; transform: rotate(-30deg); }
@@ -88,15 +88,15 @@
         <div style="display: flex; align-items: center; gap: 2vw; margin-bottom: 2.5vh;">
             <div class="picto-pro-meteo"><div class="soleil-centre"></div><div class="nuage-face"></div></div>
             <div style="text-align: left;">
-                <div style="font-size: 4.2vw; font-weight: bold; line-height: 1;" id="courant-temp">19°C</div>
-                <div style="font-size: 1.2vw; color: #ffffff; margin-top: 4px; font-weight: bold;" id="courant-desc">Éclaircies</div>
+                <div style="font-size: 4.2vw; font-weight: bold; line-height: 1;" id="courant-temp">--°C</div>
+                <div style="font-size: 1.2vw; color: #ffffff; margin-top: 4px; font-weight: bold;" id="courant-desc">Calcul...</div>
             </div>
         </div>
         <div style="display: flex; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 1.5vh; text-align: center; font-weight:bold;">
-            <div style="flex: 1;"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase;">RESSENTIE</div><div style="font-size: 1.15vw; margin-top: 4px; color: #ffffff;" id="courant-ressenti">19°C</div></div>
-            <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1);"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 3px;"><span style="color: #49a6e9; font-size: 0.9vw;">💧</span> HUMIDITÉ</div><div style="font-size: 1.15vw; margin-top: 4px; color: #ffffff;" id="courant-humidite">76%</div></div>
-            <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1);"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 3px;"><span style="color: #ffffff; font-size: 0.9vw;">💨</span> VENT</div><div style="font-size: 1.15vw; margin-top: 4px; color: #ffffff;" id="courant-vent">11 km/h</div></div>
-            <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1);"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 3px;"><span style="color: #e9a949; font-size: 0.9vw;">☀️</span> UV</div><div style="font-size: 1.1vw; margin-top: 4px; color: #ffffff;" id="courant-uv">0 / Bas</div></div>
+            <div style="flex: 1;"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase;">RESSENTIE</div><div style="font-size: 1.15vw; margin-top: 4px; color: #ffffff;" id="courant-ressenti">--°C</div></div>
+            <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1);"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 3px;"><span style="color: #49a6e9; font-size: 0.9vw;">💧</span> HUMIDITÉ</div><div style="font-size: 1.15vw; margin-top: 4px; color: #ffffff;" id="courant-humidite">--%</div></div>
+            <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1);"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 3px;"><span style="color: #ffffff; font-size: 0.9vw;">💨</span> VENT</div><div style="font-size: 1.15vw; margin-top: 4px; color: #ffffff;" id="courant-vent">-- km/h</div></div>
+            <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1);"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 3px;"><span style="color: #e9a949; font-size: 0.9vw;">☀️</span> UV</div><div style="font-size: 1.1vw; margin-top: 4px; color: #ffffff;" id="courant-uv">--</div></div>
         </div>
     </div>
     <div class="cadran-relief-noir-bloc" id="cadran-saison-d" style="position: absolute; right: 2vw; top: 45.5vh; width: 17vw; height: 28vh; display: flex; flex-direction: column; justify-content: space-between;">
@@ -116,9 +116,9 @@
             <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
                 <div class="soleil-realiste-css"></div>
                 <div style="display: flex; gap: 1vw; text-align: left; align-items: center; font-family:'Arial'; font-weight:bold;">
-                    <div><div style="font-size: 1.1vw; font-weight: bold; color: #fff;" id="sat-lever">06:48</div></div>
+                    <div><div style="font-size: 1.1vw; font-weight: bold; color: #fff;" id="sat-lever">--:--</div></div>
                     <div style="width: 1px; background: rgba(255,255,255,0.4); height: 2.5vh;"></div>
-                    <div><div style="font-size: 1.1vw; font-weight: bold; color: #fff;" id="sat-coucher">20:26</div></div>
+                    <div><div style="font-size: 1.1vw; font-weight: bold; color: #fff;" id="sat-coucher">--:--</div></div>
                 </div>
             </div>
         </div>
@@ -172,9 +172,9 @@
                 let uvText = "Bas"; if(uvVal >= 3 && uvVal <= 5) uvText = "Modéré"; if(uvVal >= 6) uvText = "Élevé";
                 document.getElementById('courant-uv').textContent = uvVal + " / " + uvText;
                 
-                let parseTime = (str) => { return str.split('T').substring(0, 5); };
-                document.getElementById('sat-lever').textContent = parseTime(data.daily.sunrise);
-                document.getElementById('sat-coucher').textContent = parseTime(data.daily.sunset);
+                let parseTime = (str) => { return str.split('T')[1].substring(0, 5); };
+                document.getElementById('sat-lever').textContent = parseTime(data.daily.sunrise[0]);
+                document.getElementById('sat-coucher').textContent = parseTime(data.daily.sunset[0]);
                 
                 let code = cur.weather_code;
                 let desc = "Éclaircies"; if(code === 0) desc = "Ensoleillé"; if(code > 0 && code <= 3) desc = "Éclaircies"; if(code >= 51 && code <= 67) desc = "Pluie Fine"; if(code >= 80) desc = "Orageux";
@@ -187,7 +187,7 @@
                 var dRef = new Date();
                 for(let index = 0; index < 7; index++) {
                     var dObj = new Date(); dObj.setDate(dRef.getDate() + index);
-                    // Raccordement direct sur le weather_code de chaque journée distincte
+                    // Raccordement direct sur le weather_code de chaque journée de la frise inférieure
                     injecterCartePrevisionHTML(bas, index, noms[dObj.getDay()], dObj.getDate(), mois[dObj.getMonth()], Math.round(data.daily.temperature_2m_max[index]), Math.round(data.daily.temperature_2m_min[index]), data.daily.weather_code[index]);
                 }
             }).catch(() => {
