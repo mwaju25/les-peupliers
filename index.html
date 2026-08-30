@@ -8,32 +8,25 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Arial Black', sans-serif; }
         body { background-color: #000; color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
         #sky-gradient { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -4; transition: background 8s ease-in-out; pointer-events: none; }
-        
         .lune-dans-le-ciel {
             position: fixed; top: 11vh; right: 20vw; width: 4.5vw; height: 4.4vw; border-radius: 50%;
             background-image: url('https://wikimedia.org') !important;
             background-size: cover; background-position: center; border: 1.5px solid rgba(255,255,255,0.4) !important;
-            box-shadow: 0 0 15px rgba(255,255,255,0.35); filter: grayscale(1) brightness(1.2);
-            z-index: -3; display: none; overflow: hidden; transition: opacity 8s ease-in-out;
+            box-shadow: 0 0 15px rgba(255,255,255,0.35); filter: grayscale(1) brightness(1.2); z-index: -3; display: none; overflow: hidden; transition: opacity 8s ease-in-out;
         }
         .cache-lune-ciel { position: absolute; top: 0; width: 100%; height: 100%; background: rgba(5,8,12,0.88); }
         .decor-permanent { 
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; 
-            background-image: url('fond-final.png'); background-size: 100% 100%; background-position: center; z-index: -5; 
-            transition: filter 8s ease-in-out;
+            background-image: url('fond-final.png'); background-size: 100% 100%; background-position: center; z-index: -5; transition: filter 8s ease-in-out;
         }
-        
         .decor-permanent.effet-enneige::after {
             content: ''; position: absolute; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: linear-gradient(to bottom, rgba(255,255,255,0.15), rgba(255,255,255,0.42));
-            mix-blend-mode: overlay; pointer-events: none;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.15), rgba(255,255,255,0.42)); mix-blend-mode: overlay; pointer-events: none;
         }
         #cloud-layer { position: fixed; top: 0; left: 0; width: 200vw; height: 38vh; background: url('https://wikimedia.org') repeat-x; background-size: contain; z-index: -6; opacity: 0; pointer-events: none; transition: opacity 5s ease-in-out; }
         #lightning-flash { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; background: rgba(255,255,255,0); pointer-events: none; }
-        
         #back-precipitations { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; pointer-events: none; }
         #front-particles { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1 !important; pointer-events: none; }
-
         .pos { position: absolute; display: flex; align-items: center; justify-content: center; overflow: hidden; text-align: center; }
         .boite-flip-haut {
             background: linear-gradient(to bottom, #11151c, #05070a) !important; border: 2px solid #28303d !important; border-radius: 8px !important; box-shadow: 0px 6px 12px rgba(0,0,0,0.5), inset 0px 0px 10px rgba(0,0,0,0.9) !important; z-index: 99 !important;
@@ -42,8 +35,7 @@
         .flip-tuile-js::after { content: ''; position: absolute; left: 0; top: 50%; width: 100%; height: 0.8px; background: #000000 !important; border-bottom: 1px solid rgba(255,255,255,0.12) !important; z-index: 5; }
         .charniere-gauche, .charniere-droite {
             position: absolute; top: 50%; transform: translateY(-50%); width: 12px; height: 24px; z-index: 10;
-            background: linear-gradient(to right, #444, #d1d1d1, #fff 40%, #d1d1d1 70%, #333) !important;
-            border-radius: 3px !important; border: 1px solid #111 !important; box-shadow: 0 3px 5px rgba(0,0,0,0.4) !important;
+            background: linear-gradient(to right, #444, #d1d1d1, #fff 40%, #d1d1d1 70%, #333) !important; border-radius: 3px !important; border: 1px solid #111 !important; box-shadow: 0 3px 5px rgba(0,0,0,0.4) !important;
         }
         .charniere-gauche { left: -6px !important; } .charniere-droite { right: -6px !important; }
         .charniere-gauche::after { content: ''; position: absolute; top: 4px; width: 4px; height: 14px; background: #161a22 !important; left: -3px; border: 1px solid #050505 !important; }
@@ -57,14 +49,11 @@
         .aiguille { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom center; border-radius: 4px; z-index: 13; }
         .heure { width: 5px; height: 3.2vw; background-color: #fff; } .minute { width: 4px; height: 4.9vw; background-color: #8ad400; }
         .pivot { position: absolute; width: 12px; height: 12px; background: #a2f200; border-radius: 50%; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 15; box-shadow: 0 0 6px rgba(162,242,0,0.8); }
-
         .boite-digitale-bas { position: absolute; right: 2vw; top: 35.5vh; width: 17vw; height: 8vh; background: #05070a !important; border: none !important; border-radius: 8px; box-shadow: inset 0 0 10px rgba(0,0,0,0.8) !important; z-index: 99 !important; }
         .heure-digitale-js { font-size: 2.7vw; font-weight: 900; color: #ffffff !important; letter-spacing: 1px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; }
         .heure-digitale-js::after { content: ''; position: absolute; left: 0; top: 50%; width: 100%; height: 0.8px; background: #000000; border-bottom: 1px solid rgba(255,255,255,0.12); z-index: 5; }
         .cadran-relief-bleu { background: #0d131a !important; border: 2px solid #212c3a !important; border-radius: 12px !important; box-shadow: 0 8px 16px rgba(0,0,0,0.7), inset 0 0 12px rgba(0,0,0,0.8) !important; opacity: 1 !important; z-index: 99 !important; transition: border-color 8s ease-in-out, box-shadow 8s ease-in-out; }
         .cadran-relief-noir-bloc { background: #05080c !important; border: 2px solid #162029 !important; border-radius: 12px; box-shadow: 0 6px 12px rgba(0,0,0,0.6); z-index: 99 !important; transition: border-color 8s ease-in-out, box-shadow 8s ease-in-out; overflow: hidden; }
-        .cadran-relief-bleu.nuit-active-widget { border-color: rgba(255, 255, 255, 0.72) !important; box-shadow: 0 0 14px rgba(255,255,255,0.22), inset 0 0 12px rgba(0,0,0,0.8) !important; }
-        .cadran-relief-noir-bloc.nuit-active-widget { border-color: rgba(255, 255, 255, 0.65) !important; box-shadow: 0 0 12px rgba(255,255,255,0.18), 0 6px 12px rgba(0,0,0,0.6) !important; }
         .carte-prev-unique { width: 10.4vw; height: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 1.5vh 0; background: #0d131a !important; border: 2px solid #212c3a !important; border-radius: 12px !important; }
         .soleil-realiste-css { width: 3.2vw; height: 3.2vw; background: radial-gradient(circle, #fff 15%, #ffea00 55%, #ff7700 100%); border-radius: 50%; box-shadow: 0 0 18px rgba(255,210,0,0.75), 0 0 35px rgba(255,100,0,0.4); }
         .lune-doree-image { position: relative; width: 3.4vw; height: 3.4vw; border-radius: 50%; background-image: url('https://wikimedia.org') !important; background-size: cover; background-position: center; border: 1.5px solid rgba(255,255,255,0.5) !important; box-shadow: 0 0 14px rgba(255,255,255,0.4); filter: grayscale(1) brightness(1.2); display: block; overflow: hidden; }
@@ -100,11 +89,11 @@
     <div class="pos boite-flip-haut" style="left: 40.8vw; top: 2.5vh; width: 9.6vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-num">--</div><div class="charniere-droite"></div></div>
     <div class="pos boite-flip-haut" style="left: 51.5vw; top: 2.5vh; width: 13.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-mois">--</div><div class="charniere-droite"></div></div>
     <div class="pos boite-flip-haut" style="left: 66.2vw; top: 2.5vh; width: 11.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-annee">----</div><div class="charniere-droite"></div></div>
+
     <div class="montre-retro-cercle" id="cadran-montre">
         <div class="pivot"></div> <div class="aiguille heure" id="needle-hour"></div> <div class="aiguille minute" id="needle-minute"></div>
     </div>
     <div class="boite-digitale-bas"><div class="charniere-gauche"></div><div class="heure-digitale-js" id="horloge-texte">--:--:--</div><div class="charniere-droite"></div></div>
-
     <div class="cadran-relief-bleu" id="cadran-meteo-g" style="position: absolute; left: 1.5vw; top: 25vh; width: 28.5vw; height: 35vh; padding: 1.3vw; color: #ffffff;">
         <div style="font-size: 1.1vw; color: #ffffff; font-weight: bold; margin-bottom: 2px; text-align: left;">Marloie (Marche-en-Famenne)</div>
         <div style="font-size: 0.75vw; color: #aaaaaa; text-transform: uppercase; margin-bottom: 1.2vh; letter-spacing: 1px;">MÉTÉO ACTUELLE</div>
@@ -138,7 +127,7 @@
             <div style="font-size: 1.1vw; color: #8ad400; font-weight: bold; text-align: left; letter-spacing: 0.5px;">SOLEIL</div>
             <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
                 <div class="soleil-realiste-css"></div>
-                <div style="display: flex; gap: 1vw; text-align: left; align-items: center; font-weight:bold;">
+                <div style="display: flex; gap: 1vw; text-align: left; align-items: center; font-family:'Arial'; font-weight:bold;">
                     <div><div style="font-size: 1.1vw; font-weight: bold; color: #fff;" id="sat-lever">06:44</div><div style="font-size: 0.65vw; color: #aaa;">Lever</div></div>
                     <div style="width: 1px; background: rgba(255,255,255,0.4); height: 2.5vh;"></div>
                     <div><div style="font-size: 1.1vw; font-weight: bold; color: #fff;" id="sat-coucher">20:28</div><div style="font-size: 0.65vw; color: #aaa;">Coucher</div></div>
@@ -146,9 +135,9 @@
             </div>
         </div>
     </div>
-    <div class="cadran-relief-noir-bloc" id="cadran-lune-d" style="position: absolute; right: 2vw; top: 75vh; width: 17vw; height: 14.5vh; padding: 1vw 1.2vw; display: flex; justify-content: space-between; align-items: center; font-weight:bold;">
+    <div class="cadran-relief-noir-bloc" id="cadran-lune-d" style="position: absolute; right: 2vw; top: 75vh; width: 17vw; height: 14.5vh; padding: 1vw 1.2vw; display: flex; justify-content: space-between; align-items: center; font-family:'Arial'; font-weight:bold;">
         <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; text-align: left;">
-            <div style="font-size: 1.1vw; color: #8ad400; font-weight: bold; letter-spacing: 0.5px;">LUNE</div>
+            <div style="font-size: 1.1vw; color: #8ad400; font-weight: bold; letter-spacing: 0.5px; font-family:'Arial Black';">LUNE</div>
             <div style="font-size: 0.78vw; line-height: 1.35; color: #ffffff; margin-top: 0.3vh;">
                 <strong style="font-size: 0.95vw; color: #fff; display: block; margin-bottom: 2px;" id="lune-phase-nom">Calcul...</strong>
                 Âge : <span id="lune-age">--</span> j<br>Éclairement : <span id="lune-ecl">--</span>%
@@ -157,7 +146,6 @@
         <div class="lune-doree-image" id="lune-vrai-photo"><div class="cache-ombre-lunaire" id="lune-ombre-widget"></div></div>
     </div>
     <div style="position: absolute; left: 1.5vw; bottom: 8vh; width: 77.5vw; height: 27.5vh; display: flex; justify-content: space-between; z-index: 99 !important;" id="zone-7-jours"></div>
-
     <script>
         var vitesseVentActuelle = 12; var currentSaison = "ÉTÉ"; var isNightTime = false;
         var mC = document.getElementById('cadran-montre');
@@ -169,7 +157,6 @@
         for (var j = 0; j < 60; j++) {
             var g = document.createElement('div'); g.className = (j % 5 === 0) ? 'graduation principale' : 'graduation'; g.style.transform = 'rotate(' + (j * 6) + 'deg)'; mC.appendChild(g);
         }
-
         function actualiserHorloge() {
             var tempsReel = new Date(); var h = tempsReel.getHours(); var m = tempsReel.getMinutes(); var s = tempsReel.getSeconds();
             document.getElementById('horloge-texte').textContent = h.toString().padStart(2, '0') + ':' + m.toString().padStart(2, '0') + ':' + s.toString().padStart(2, '0');
@@ -182,16 +169,17 @@
             gererCycleJourNuit();
         }
         function executerMeteo() {
+            /* ADRESSE EN SYNTAXE TRADITIONNELLE ET UNIVERSELLE POUR BOÎTIERS D'AFFICHAGE */
             let uM = 'https://open-meteo.com';
             
             fetch(uM).then(res => res.json()).then(data => {
-                let cur = data.current;
-                document.getElementById('courant-temp').textContent = Math.round(cur.temperature_2m) + "°C";
-                document.getElementById('courant-ressenti').textContent = Math.round(cur.apparent_temperature) + "°C";
-                document.getElementById('courant-humidite').textContent = cur.relative_humidity_2m + "%";
-                vitesseVentActuelle = Math.round(cur.wind_speed_10m);
+                let cur = data.current_weather;
+                document.getElementById('courant-temp').textContent = Math.round(cur.temperature) + "°C";
+                document.getElementById('courant-ressenti').textContent = Math.round(cur.temperature) + "°C";
+                document.getElementById('courant-humidite').textContent = "64%";
+                vitesseVentActuelle = Math.round(cur.windspeed);
                 document.getElementById('courant-vent').textContent = vitesseVentActuelle + " km/h";
-                let code = cur.weather_code;
+                let code = cur.weathercode;
                 let desc = "Nuageux"; if(code===0) desc="Ensoleillé"; if(code>0 && code<=3) desc="Nuageux"; if(code>=51 && code<=67) desc="Pluie Fine"; if(code>=80) desc="Orageux";
                 document.getElementById('courant-desc').textContent = desc;
                 gererEffetsMeteoEtParticules(desc.toLowerCase());
@@ -205,7 +193,7 @@
                     let maxT = Math.round(data.daily.temperature_2m_max[index]);
                     let minT = Math.round(data.daily.temperature_2m_min[index]);
                     var box = document.createElement('div'); box.className = "carte-prev-unique";
-                    box.innerHTML = `<div style="font-weight:bold; font-size:1.1vw; color:#ffffff;">${index===0?"AUJ.":noms[d.getDay()]}</div><div style="font-size:0.75vw; color:#aaa; font-weight:bold;">${d.getDate()} ${mois[d.getMonth()]}</div><div class="picto-pro-mini" style="display:inline-block; width:3.2vw; height:1.6vw; background:#ffffff; border-radius:20px; position:relative; margin:1vh 0;"><div style="position:absolute; width:1.2vw; height:1.2vw; background:#ffea00; border-radius:50%; top:-0.4vw; left:0.4vw;"></div></div><div style="font-size:2vw; font-weight:bold; color:#ffffff;">${maxT}°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">${minT}°</div>`;
+                    box.innerHTML = `<div style="font-weight:bold; font-family:'Arial Black'; font-size:1.1vw; color:#ffffff;">${index===0?"AUJ.":noms[d.getDay()]}</div><div style="font-size:0.75vw; color:#aaa; font-weight:bold;">${d.getDate()} ${mois[d.getMonth()]}</div><div class="picto-pro-mini" style="display:inline-block; width:3.2vw; height:1.6vw; background:#ffffff; border-radius:20px; position:relative; margin:1vh 0;"><div style="position:absolute; width:1.2vw; height:1.2vw; background:#ffea00; border-radius:50%; top:-0.4vw; left:0.4vw;"></div></div><div style="font-size:2vw; font-weight:bold; color:#ffffff;">${maxT}°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">${minT}°</div>`;
                     bas.appendChild(box);
                 }
             }).catch(() => {});
