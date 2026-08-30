@@ -172,10 +172,9 @@
                 let uvText = "Bas"; if(uvVal >= 3 && uvVal <= 5) uvText = "Modéré"; if(uvVal >= 6) uvText = "Élevé";
                 document.getElementById('courant-uv').textContent = uvVal + " / " + uvText;
                 
-                // Extraction directe des vraies heures officielles transmises par la station de référence
-                let extraireHeureFormate = (str) => { return str.split('T')[1].substring(0, 5); };
-                document.getElementById('sat-lever').textContent = extraireHeureFormate(data.daily.sunrise[0]);
-                document.getElementById('sat-coucher').textContent = extraireHeureFormate(data.daily.sunset[0]);
+                let parseTime = (str) => { return str.split('T')[1].substring(0, 5); };
+                document.getElementById('sat-lever').textContent = parseTime(data.daily.sunrise[0]);
+                document.getElementById('sat-coucher').textContent = parseTime(data.daily.sunset[0]);
                 
                 let code = cur.weather_code;
                 let desc = "Éclaircies"; if(code === 0) desc = "Ensoleillé"; if(code > 0 && code <= 3) desc = "Éclaircies"; if(code >= 51 && code <= 67) desc = "Pluie Fine"; if(code >= 80) desc = "Orageux";
@@ -214,8 +213,9 @@
             let pType = "nuageux";
             if(weatherCode === 0) pType = "ensoleillé";
             else if(weatherCode > 0 && weatherCode <= 3) pType = "éclaircies";
-            else if(weatherCode >= 51 && weatherCode <= 67) pType = "pluie";
-            else if(weatherCode >= 80) pType = "orageux";
+            else if((weatherCode >= 51 && weatherCode <= 67) || weatherCode >= 80) pType = "pluie";
+            if(weatherCode >= 71 && weatherCode <= 77) pType = "neige";
+            if(weatherCode >= 95) pType = "orageux";
             
             let pictoHTML = "";
             if (pType === "ensoleillé") {
@@ -228,10 +228,12 @@
                 pictoHTML = `<div style="width:2.6vw; height:1.4vw; background:#546e7a; border-radius:10px; position:relative; margin: 0 auto; top:0.2vh;"><div style="position:absolute; bottom:-0.8vh; left:0.5vw; width:3px; height:7px; background:#29b6f6; border-radius:2px;"></div><div style="position:absolute; bottom:-0.8vh; left:1.4vw; width:3px; height:7px; background:#29b6f6; border-radius:2px;"></div></div>`;
             } else if (pType === "orageux") {
                 pictoHTML = `<div style="width:2.6vw; height:1.4vw; background:#263238; border-radius:10px; position:relative; margin: 0 auto; top:0.2vh;"><div style="position:absolute; bottom:-1vh; left:1vw; width:5px; height:9px; background:#ffeb3b; clip-path:polygon(40% 0%, 100% 30%, 30% 50%, 70% 100%, 0% 40%, 50% 30%);"></div></div>`;
+            } else if (pType === "neige") {
+                pictoHTML = `<div style="width:2.6vw; height:1.4vw; background:#b0bec5; border-radius:10px; position:relative; margin: 0 auto; top:0.2vh;"><div style="position:absolute; bottom:-0.6vh; left:0.4vw; font-size:1vw; color:#fff; line-height:1;">❄️</div><div style="position:absolute; bottom:-0.6vh; left:1.3vw; font-size:1vw; color:#fff; line-height:1;">❄️</div></div>`;
             }
             
             var box = document.createElement('div'); box.className = "carte-prev-unique";
-            box.style.display = "flex"; box.style.flexDirection = "column"; box.style.justify = "space-between"; box.style.alignItems = "center";
+            box.style.display = "flex"; box.style.flexDirection = "column"; box.style.justifyContent = "space-between"; box.style.alignItems = "center";
             box.innerHTML = `<div style="font-weight:bold; font-size:1.1vw; color:#fff; margin-bottom:2px; width:100%; text-align:center;">${index===0?"AUJ.":jourNom}</div><div style="font-size:0.75vw; color:#aaa; font-weight:bold; margin-bottom:4px; width:100%; text-align:center;">${jourNum} ${moisNom}</div><div style="width:3.2vw; height:3.2vw; display:flex; align-items:center; justify-content:center; overflow:visible; margin:0.3vh 0; position:relative;">${pictoHTML}</div><div style="font-size:2vw; font-weight:bold; color:#fff; margin-top:2px; width:100%; text-align:center;">${maxT}°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.4vw; width:100%; text-align:center;">${minT}°</div>`;
             conteneur.appendChild(box);
         }
@@ -282,11 +284,9 @@
             if (m <= 2) { y -= 1; m += 12; }
             let jd = Math.floor(y / 100) + Math.floor(Math.floor(y / 100) / 4) + d + Math.floor(365.25 * (y + 4716)) + Math.floor(30.6001 * (m + 1)) - 1524.5;
             
-            // Étalonnage de précision absolue recalibré sur la Nouvelle Lune d'Août 2026 (JD 2461265.316)
             let daysSinceNew = (jd - 2461265.316) % 29.530588853; if (daysSinceNew < 0) daysSinceNew += 29.530588853;
             document.getElementById('lune-age').textContent = daysSinceNew.toFixed(1);
             
-            // Calcul réel de l'éclairement géométrique de la surface lunaire
             let pct = Math.round((1 - Math.cos((daysSinceNew * Math.PI * 2) / 29.530588853)) * 50);
             document.getElementById('lune-ecl').textContent = pct;
             
@@ -295,10 +295,8 @@
                 if(s) { 
                     s.style.top = '0%';
                     if(daysSinceNew < 14.765) { 
-                        // Croissante
                         s.style.left = pct + '%'; s.style.width = (100 - pct) + '%'; 
                     } else { 
-                        // Décroissante (Vrai profil de ce soir du 30 août)
                         s.style.left = '0%'; s.style.width = (100 - pct) + '%'; 
                     } 
                 } 
@@ -310,7 +308,7 @@
             if(daysSinceNew >= 6.5 && daysSinceNew < 8.5) nom = "Premier quartier"; 
             if(daysSinceNew >= 8.5 && daysSinceNew < 13.5) nom = "Gibbeuse croissante"; 
             if(daysSinceNew >= 13.5 && daysSinceNew < 15.5) nom = "Pleine lune"; 
-            if(daysSinceNew >= 15.5 && daysSinceNew < 20.5) nom = "Gibbeuse décroissante"; // Activation immédiate ce soir
+            if(daysSinceNew >= 15.5 && daysSinceNew < 20.5) nom = "Gibbeuse décroissante"; 
             if(daysSinceNew >= 20.5 && daysSinceNew < 22.5) nom = "Dernier quartier"; 
             if(daysSinceNew >= 22.5 && daysSinceNew < 28.0) nom = "Dernier croissant"; 
             document.getElementById('lune-phase-nom').textContent = nom;
