@@ -146,6 +146,7 @@
         <div class="lune-doree-image" id="lune-vrai-photo"><div class="cache-ombre-lunaire" id="lune-ombre-widget"></div></div>
     </div>
     <div style="position: absolute; left: 1.5vw; bottom: 8vh; width: 77.5vw; height: 27.5vh; display: flex; justify-content: space-between; z-index: 99 !important;" id="zone-7-jours"></div>
+
     <script>
         var vitesseVentActuelle = 12; var currentSaison = "ÉTÉ"; var isNightTime = false;
         var mC = document.getElementById('cadran-montre');
@@ -157,6 +158,7 @@
         for (var j = 0; j < 60; j++) {
             var g = document.createElement('div'); g.className = (j % 5 === 0) ? 'graduation principale' : 'graduation'; g.style.transform = 'rotate(' + (j * 6) + 'deg)'; mC.appendChild(g);
         }
+
         function actualiserHorloge() {
             var tempsReel = new Date(); var h = tempsReel.getHours(); var m = tempsReel.getMinutes(); var s = tempsReel.getSeconds();
             document.getElementById('horloge-texte').textContent = h.toString().padStart(2, '0') + ':' + m.toString().padStart(2, '0') + ':' + s.toString().padStart(2, '0');
@@ -202,7 +204,6 @@
             const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
             const mois = ['JANV.', 'FÉVR.', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUIL.', 'AOÛT', 'SEPT.', 'OCT.', 'NOV.', 'DÉC.'];
             var dRef = new Date();
-            /* LES TABLEAUX DE TEMPÉRATURES DE SECOURS SONT ENFIN INJECTÉS ICI EN DUR */
             let simMax =;
             let simMin =;
             for(let index=0; index<7; index++) {
