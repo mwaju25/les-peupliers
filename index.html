@@ -239,6 +239,7 @@
             box.innerHTML = `<div style="font-weight:bold; font-size:1.1vw; color:#fff; margin-bottom:2px; width:100%; text-align:center;">${index===0?"AUJ.":jourNom}</div><div style="font-size:0.75vw; color:#aaa; font-weight:bold; margin-bottom:4px; width:100%; text-align:center;">${jourNum} ${moisNom}</div><div style="width:3.2vw; height:3.2vw; display:flex; align-items:center; justify-content:center; overflow:visible; margin:0.3vh 0; position:relative;">${pictoHTML}</div><div style="font-size:2vw; font-weight:bold; color:#fff; margin-top:2px; width:100%; text-align:center;">${maxT}°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.4vw; width:100%; text-align:center;">${minT}°</div>`;
             conteneur.appendChild(box);
         }
+        
         }
         function gererEffetsMeteoEtParticules(desc) {
             var avant = document.getElementById('front-particles'); var nuage = document.getElementById('cloud-layer');
