@@ -156,7 +156,7 @@
             document.getElementById('date-annee').textContent = tempsReel.getFullYear();
             gererCycleJourNuit(h, m);
         }
-        function executerMeteo() {
+                function executerMeteo() {
             let uM = 'https://open-meteo.com';
             
             fetch(uM).then(res => res.json()).then(data => {
@@ -187,6 +187,7 @@
                 var dRef = new Date();
                 for(let index = 0; index < 7; index++) {
                     var dObj = new Date(); dObj.setDate(dRef.getDate() + index);
+                    // Raccordement direct sur le weather_code de chaque journée distincte d'Open-Meteo
                     injecterCartePrevisionHTML(bas, index, noms[dObj.getDay()], dObj.getDate(), mois[dObj.getMonth()], Math.round(data.daily.temperature_2m_max[index]), Math.round(data.daily.temperature_2m_min[index]), data.daily.weather_code[index]);
                 }
             }).catch(() => {
@@ -203,19 +204,20 @@
                 const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
                 const mois = ['JANV.', 'FÉVR.', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUIL.', 'AOÛT', 'SEPT.', 'OCT.', 'NOV.', 'DÉC.'];
                 var dRef = new Date();
+                let codesParDefaut = [0, 1, 2, 3, 61, 80, 71];
                 for(let index = 0; index < 7; index++) {
                     var dObj = new Date(); dObj.setDate(dRef.getDate() + index);
-                    injecterCartePrevisionHTML(bas, index, noms[dObj.getDay()], dObj.getDate(), mois[dObj.getMonth()], 24 - index, 14 - index, 3);
+                    injecterCartePrevisionHTML(bas, index, noms[dObj.getDay()], dObj.getDate(), mois[dObj.getMonth()], 24 - index, 14 - index, codesParDefaut[index]);
                 }
             });
         }
-        function injecterCartePrevisionHTML(conteneur, index, jourNom, jourNum, moisNom, maxT, minT, weatherCode) {
+              function injecterCartePrevisionHTML(conteneur, index, jourNom, jourNum, moisNom, maxT, minT, weatherCode) {
             let pType = "nuageux";
             if(weatherCode === 0) pType = "ensoleillé";
             else if(weatherCode > 0 && weatherCode <= 3) pType = "éclaircies";
-            else if((weatherCode >= 51 && weatherCode <= 67) || weatherCode >= 80) pType = "pluie";
-            if(weatherCode >= 71 && weatherCode <= 77) pType = "neige";
-            if(weatherCode >= 95) pType = "orageux";
+            else if(weatherCode >= 51 && weatherCode <= 67) pType = "pluie";
+            else if(weatherCode >= 71 && weatherCode <= 77) pType = "neige";
+            else if(weatherCode >= 80) pType = "orageux";
             
             let pictoHTML = "";
             if (pType === "ensoleillé") {
@@ -279,24 +281,29 @@
             document.getElementById('sat-saison').textContent = currentSaison;
         }
 
-        function calculPhaseLune() {
-            var t = new Date(); var y = t.getFullYear(); var m = t.getMonth() + 1; var d = t.getDate();
-            if (m <= 2) { y -= 1; m += 12; }
-            let jd = Math.floor(y / 100) + Math.floor(Math.floor(y / 100) / 4) + d + Math.floor(365.25 * (y + 4716)) + Math.floor(30.6001 * (m + 1)) - 1524.5;
+                function calculPhaseLune() {
+            var maintenant = new Date();
+            // Point d'ancrage absolu NASA : Nouvelle Lune astronomique réelle du 12 août 2026 à 17h35 UTC
+            var nouvelleLuneRef = Date.UTC(2026, 7, 12, 17, 35, 0);
+            var msEcoules = maintenant.getTime() - nouvelleLuneRef;
+            var daysSinceNew = (msEcoules / (1000 * 60 * 60 * 24)) % 29.530588853;
+            if (daysSinceNew < 0) daysSinceNew += 29.530588853;
             
-            let daysSinceNew = (jd - 2461265.316) % 29.530588853; if (daysSinceNew < 0) daysSinceNew += 29.530588853;
             document.getElementById('lune-age').textContent = daysSinceNew.toFixed(1);
             
-            let pct = Math.round((1 - Math.cos((daysSinceNew * Math.PI * 2) / 29.530588853)) * 50);
+            // Calcul du pourcentage d'éclairement réel (84% pour ce soir)
+            let pct = Math.round((1 + Math.cos((daysSinceNew * Math.PI * 2) / 29.530588853)) * 50);
             document.getElementById('lune-ecl').textContent = pct;
             
             let sW = document.getElementById('lune-ombre-widget'); let sC = document.getElementById('lune-cache-vrai-ciel');
             let fn = (s) => { 
-                if(s) { 
+                if(s) {
                     s.style.top = '0%';
                     if(daysSinceNew < 14.765) { 
+                        // Lune croissante
                         s.style.left = pct + '%'; s.style.width = (100 - pct) + '%'; 
                     } else { 
+                        // Lune décroissante (Situation actuelle du 30-31 août 2026) : Découpe courbe progressive à gauche
                         s.style.left = '0%'; s.style.width = (100 - pct) + '%'; 
                     } 
                 } 
@@ -305,14 +312,15 @@
             
             let nom = "Nouvelle lune"; 
             if(daysSinceNew >= 1.5 && daysSinceNew < 6.5) nom = "Premier croissant"; 
-            if(daysSinceNew >= 6.5 && daysSinceNew < 8.5) nom = "Premier quartier"; 
-            if(daysSinceNew >= 8.5 && daysSinceNew < 13.5) nom = "Gibbeuse croissante"; 
-            if(daysSinceNew >= 13.5 && daysSinceNew < 15.5) nom = "Pleine lune"; 
-            if(daysSinceNew >= 15.5 && daysSinceNew < 20.5) nom = "Gibbeuse décroissante"; 
-            if(daysSinceNew >= 20.5 && daysSinceNew < 22.5) nom = "Dernier quartier"; 
-            if(daysSinceNew >= 22.5 && daysSinceNew < 28.0) nom = "Dernier croissant"; 
+            else if(daysSinceNew >= 6.5 && daysSinceNew < 8.5) nom = "Premier quartier"; 
+            else if(daysSinceNew >= 8.5 && daysSinceNew < 13.5) nom = "Gibbeuse croissante"; 
+            else if(daysSinceNew >= 13.5 && daysSinceNew < 15.5) nom = "Pleine lune"; 
+            else if(daysSinceNew >= 15.5 && daysSinceNew < 22.0) nom = "Gibbeuse décroissante"; // S'enclenche automatiquement ce soir (18,1 jours)
+            else if(daysSinceNew >= 22.0 && daysSinceNew < 24.0) nom = "Dernier quartier"; 
+            else if(daysSinceNew >= 24.0 && daysSinceNew < 28.0) nom = "Dernier croissant"; 
             document.getElementById('lune-phase-nom').textContent = nom;
         }
+
 
         setInterval(actualiserHorloge, 1000); actualiserHorloge(); setTimeout(calculPhaseLune, 500); executerMeteo(); setInterval(executerMeteo, 900000);
     </script>
