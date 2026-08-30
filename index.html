@@ -281,9 +281,8 @@
             document.getElementById('sat-saison').textContent = currentSaison;
         }
 
-                function calculPhaseLune() {
+                        function calculPhaseLune() {
             var maintenant = new Date();
-            // Point d'ancrage absolu NASA : Nouvelle Lune astronomique réelle du 12 août 2026 à 17h35 UTC
             var nouvelleLuneRef = Date.UTC(2026, 7, 12, 17, 35, 0);
             var msEcoules = maintenant.getTime() - nouvelleLuneRef;
             var daysSinceNew = (msEcoules / (1000 * 60 * 60 * 24)) % 29.530588853;
@@ -291,31 +290,50 @@
             
             document.getElementById('lune-age').textContent = daysSinceNew.toFixed(1);
             
-            // Calcul du pourcentage d'éclairement réel (84% pour ce soir)
             let pct = Math.round((1 + Math.cos((daysSinceNew * Math.PI * 2) / 29.530588853)) * 50);
             document.getElementById('lune-ecl').textContent = pct;
             
-            let sW = document.getElementById('lune-ombre-widget'); let sC = document.getElementById('lune-cache-vrai-ciel');
-            let fn = (s) => { 
-                if(s) {
-                    s.style.top = '0%';
-                    if(daysSinceNew < 14.765) { 
-                        // Lune croissante
-                        s.style.left = pct + '%'; s.style.width = (100 - pct) + '%'; 
-                    } else { 
-                        // Lune décroissante (Situation actuelle du 30-31 août 2026) : Découpe courbe progressive à gauche
-                        s.style.left = '0%'; s.style.width = (100 - pct) + '%'; 
-                    } 
-                } 
-            }; 
-            fn(sW); fn(sC);
+            let sW = document.getElementById('lune-ombre-widget');
+            let sC = document.getElementById('lune-cache-vrai-ciel');
+            
+            // Activation de l'affichage de la photo réelle de la lune
+            let conteneurLune = document.getElementById('lune-vrai-photo');
+            if (conteneurLune) {
+                conteneurLune.style.backgroundImage = "url('https://wikimedia.org')";
+                conteneurLune.style.backgroundSize = 'cover';
+                conteneurLune.style.backgroundPosition = 'center';
+            }
+            
+            let conteneurCiel = document.getElementById('lune-vrai-ciel');
+            if (conteneurCiel) {
+                conteneurCiel.style.backgroundImage = "url('https://wikimedia.org')";
+                conteneurCiel.style.backgroundSize = 'cover';
+                conteneurCiel.style.backgroundPosition = 'center';
+            }
+
+            // Application du masque astronomique elliptique pour dessiner la vraie phase (croissant, demi, gibbeuse...)
+            let appliquerVraieOmbreCurvee = (element) => {
+                if (!element) return;
+                element.style.display = "block";
+                element.style.left = "0%"; element.style.width = "100%"; element.style.background = "#05080c"; element.style.opacity = "0.88";
+                
+                if (daysSinceNew < 14.765) {
+                    let doublePct = Math.max(0, 100 - (pct * 2));
+                    element.style.clipPath = `ellipse(${doublePct}% 100% at 100% 50%)`;
+                } else {
+                    let doublePct = Math.max(0, 100 - (pct * 2));
+                    element.style.clipPath = `ellipse(${doublePct}% 100% at 0% 50%)`;
+                }
+            };
+            
+            appliquerVraieOmbreCurvee(sW); appliquerVraieOmbreCurvee(sC);
             
             let nom = "Nouvelle lune"; 
             if(daysSinceNew >= 1.5 && daysSinceNew < 6.5) nom = "Premier croissant"; 
             else if(daysSinceNew >= 6.5 && daysSinceNew < 8.5) nom = "Premier quartier"; 
             else if(daysSinceNew >= 8.5 && daysSinceNew < 13.5) nom = "Gibbeuse croissante"; 
             else if(daysSinceNew >= 13.5 && daysSinceNew < 15.5) nom = "Pleine lune"; 
-            else if(daysSinceNew >= 15.5 && daysSinceNew < 22.0) nom = "Gibbeuse décroissante"; // S'enclenche automatiquement ce soir (18,1 jours)
+            else if(daysSinceNew >= 15.5 && daysSinceNew < 22.0) nom = "Gibbeuse décroissante"; 
             else if(daysSinceNew >= 22.0 && daysSinceNew < 24.0) nom = "Dernier quartier"; 
             else if(daysSinceNew >= 24.0 && daysSinceNew < 28.0) nom = "Dernier croissant"; 
             document.getElementById('lune-phase-nom').textContent = nom;
