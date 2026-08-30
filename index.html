@@ -211,7 +211,7 @@
                 }
             });
         }
-              function injecterCartePrevisionHTML(conteneur, index, jourNom, jourNum, moisNom, maxT, minT, weatherCode) {
+                      function injecterCartePrevisionHTML(conteneur, index, jourNom, jourNum, moisNom, maxT, minT, weatherCode) {
             let pType = "nuageux";
             if(weatherCode === 0) pType = "ensoleillé";
             else if(weatherCode > 0 && weatherCode <= 3) pType = "éclaircies";
@@ -221,23 +221,24 @@
             
             let pictoHTML = "";
             if (pType === "ensoleillé") {
-                pictoHTML = `<div style="width:2.2vw; height:2.2vw; background:radial-gradient(circle, #fff 10%, #ffea00 60%, #ff9800 100%); border-radius:50%; box-shadow:0 0 10px #ffdf00; margin: 0 auto;"></div>`;
+                pictoHTML = `<svg viewBox="0 0 24 24" style="width:2.8vw; height:2.8vw; display:block; margin:0 auto;"><circle cx="12" cy="12" r="5" fill="#ffa726"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="#ffa726" stroke-width="2" stroke-linecap="round"/></svg>`;
             } else if (pType === "nuageux") {
-                pictoHTML = `<div style="width:2.8vw; height:1.5vw; background:#78909c; border-radius:12px; position:relative; box-shadow:0 2px 4px rgba(0,0,0,0.3); margin: 0 auto; top:0.4vh;"></div>`;
+                pictoHTML = `<svg viewBox="0 0 24 24" style="width:2.8vw; height:2.8vw; display:block; margin:0 auto;"><path d="M6 19c0 .55.45 1 1 1h12c1.66 0 3-1.34 3-3 0-1.42-.97-2.6-2.3-2.92C19.34 11.51 17.11 9 14.5 9c-2.07 0-3.9 1.59-4.38 3.65C9.44 12.24 8.76 12 8 12c-2.21 0-4 1.79-4 4 0 .34.05.67.14 1 .23.82.95 1.47 1.86 1.84c.14.06.31.11.48.14.17.03.34.02.52.02z" fill="#90a4ae"/></svg>`;
             } else if (pType === "éclaircies") {
-                pictoHTML = `<div style="width:2.6vw; height:1.4vw; background:#fff; border-radius:10px; position:relative; box-shadow:0 2px 4px rgba(0,0,0,0.2); margin: 0 auto; top:0.6vh;"><div style="position:absolute; width:1.4vw; height:1.4vw; background:radial-gradient(circle, #fff, #ffeb3b); border-radius:50%; top:-0.8vh; left:-0.3vw; box-shadow:0 0 4px #ffeb3b;"></div></div>`;
+                pictoHTML = `<svg viewBox="0 0 24 24" style="width:2.8vw; height:2.8vw; display:block; margin:0 auto;"><circle cx="15" cy="9" r="3" fill="#ffb74d"/><path d="M6 19c0 .55.45 1 1 1h12c1.66 0 3-1.34 3-3 0-1.42-.97-2.6-2.3-2.92C19.34 11.51 17.11 9 14.5 9c-2.07 0-3.9 1.59-4.38 3.65C9.44 12.24 8.76 12 8 12c-2.21 0-4 1.79-4 4 0 .34.05.67.14 1c.23.82.95 1.47 1.86 1.84z" fill="#b0bec5"/></svg>`;
             } else if (pType === "pluie") {
-                pictoHTML = `<div style="width:2.6vw; height:1.4vw; background:#546e7a; border-radius:10px; position:relative; margin: 0 auto; top:0.2vh;"><div style="position:absolute; bottom:-0.8vh; left:0.5vw; width:3px; height:7px; background:#29b6f6; border-radius:2px;"></div><div style="position:absolute; bottom:-0.8vh; left:1.4vw; width:3px; height:7px; background:#29b6f6; border-radius:2px;"></div></div>`;
+                pictoHTML = `<svg viewBox="0 0 24 24" style="width:2.8vw; height:2.8vw; display:block; margin:0 auto;"><path d="M6 19c0 .55.45 1 1 1h12c1.66 0 3-1.34 3-3 0-1.42-.97-2.6-2.3-2.92C19.34 11.51 17.11 9 14.5 9c-2.07 0-3.9 1.59-4.38 3.65C9.44 12.24 8.76 12 8 12c-2.21 0-4 1.79-4 4 0 .34.05.67.14 1c.23.82.95 1.47 1.86 1.84z" fill="#78909c"/><path d="M10 21v2M14 21v2" stroke="#29b6f6" stroke-width="2" stroke-linecap="round"/></svg>`;
             } else if (pType === "orageux") {
-                pictoHTML = `<div style="width:2.6vw; height:1.4vw; background:#263238; border-radius:10px; position:relative; margin: 0 auto; top:0.2vh;"><div style="position:absolute; bottom:-1vh; left:1vw; width:5px; height:9px; background:#ffeb3b; clip-path:polygon(40% 0%, 100% 30%, 30% 50%, 70% 100%, 0% 40%, 50% 30%);"></div></div>`;
+                pictoHTML = `<svg viewBox="0 0 24 24" style="width:2.8vw; height:2.8vw; display:block; margin:0 auto;"><path d="M6 19c0 .55.45 1 1 1h12c1.66 0 3-1.34 3-3 0-1.42-.97-2.6-2.3-2.92C19.34 11.51 17.11 9 14.5 9c-2.07 0-3.9 1.59-4.38 3.65C9.44 12.24 8.76 12 8 12c-2.21 0-4 1.79-4 4 0 .34.05.67.14 1c.23.82.95 1.47 1.86 1.84z" fill="#37474f"/><path d="M11 21l1.5-2.5h-2l1.5-2.5" stroke="#ffd54f" stroke-width="2" stroke-linecap="round" fill="none"/></svg>`;
             } else if (pType === "neige") {
-                pictoHTML = `<div style="width:2.6vw; height:1.4vw; background:#b0bec5; border-radius:10px; position:relative; margin: 0 auto; top:0.2vh;"><div style="position:absolute; bottom:-0.6vh; left:0.4vw; font-size:1vw; color:#fff; line-height:1;">❄️</div><div style="position:absolute; bottom:-0.6vh; left:1.3vw; font-size:1vw; color:#fff; line-height:1;">❄️</div></div>`;
+                pictoHTML = `<svg viewBox="0 0 24 24" style="width:2.8vw; height:2.8vw; display:block; margin:0 auto;"><path d="M6 19c0 .55.45 1 1 1h12c1.66 0 3-1.34 3-3 0-1.42-.97-2.6-2.3-2.92C19.34 11.51 17.11 9 14.5 9c-2.07 0-3.9 1.59-4.38 3.65C9.44 12.24 8.76 12 8 12c-2.21 0-4 1.79-4 4 0 .34.05.67.14 1c.23.82.95 1.47 1.86 1.84z" fill="#cfd8dc"/><circle cx="10" cy="22" r="0.8" fill="#fff"/><circle cx="14" cy="22" r="0.8" fill="#fff"/></svg>`;
             }
             
             var box = document.createElement('div'); box.className = "carte-prev-unique";
             box.style.display = "flex"; box.style.flexDirection = "column"; box.style.justifyContent = "space-between"; box.style.alignItems = "center";
             box.innerHTML = `<div style="font-weight:bold; font-size:1.1vw; color:#fff; margin-bottom:2px; width:100%; text-align:center;">${index===0?"AUJ.":jourNom}</div><div style="font-size:0.75vw; color:#aaa; font-weight:bold; margin-bottom:4px; width:100%; text-align:center;">${jourNum} ${moisNom}</div><div style="width:3.2vw; height:3.2vw; display:flex; align-items:center; justify-content:center; overflow:visible; margin:0.3vh 0; position:relative;">${pictoHTML}</div><div style="font-size:2vw; font-weight:bold; color:#fff; margin-top:2px; width:100%; text-align:center;">${maxT}°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.4vw; width:100%; text-align:center;">${minT}°</div>`;
             conteneur.appendChild(box);
+        }
         }
         function gererEffetsMeteoEtParticules(desc) {
             var avant = document.getElementById('front-particles'); var nuage = document.getElementById('cloud-layer');
