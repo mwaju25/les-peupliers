@@ -169,9 +169,8 @@
             gererCycleJourNuit();
         }
         function executerMeteo() {
-            /* ADRESSE EN SYNTAXE TRADITIONNELLE ET UNIVERSELLE POUR BOÎTIERS D'AFFICHAGE */
             let uM = 'https://open-meteo.com';
-            
+            construirePrevisionsDefault();
             fetch(uM).then(res => res.json()).then(data => {
                 let cur = data.current_weather;
                 document.getElementById('courant-temp').textContent = Math.round(cur.temperature) + "°C";
@@ -197,6 +196,21 @@
                     bas.appendChild(box);
                 }
             }).catch(() => {});
+        }
+        function construirePrevisionsDefault() {
+            var bas = document.getElementById('zone-7-jours'); bas.innerHTML = "";
+            const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
+            const mois = ['JANV.', 'FÉVR.', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUIL.', 'AOÛT', 'SEPT.', 'OCT.', 'NOV.', 'DÉC.'];
+            var dRef = new Date();
+            /* LES TABLEAUX DE TEMPÉRATURES DE SECOURS SONT ENFIN INJECTÉS ICI EN DUR */
+            let simMax =;
+            let simMin =;
+            for(let index=0; index<7; index++) {
+                var d = new Date(); d.setDate(dRef.getDate() + index);
+                var box = document.createElement('div'); box.className = "carte-prev-unique";
+                box.innerHTML = `<div style="font-weight:bold; font-size:1.1vw; color:#fff;">${index===0?"AUJ.":noms[d.getDay()]}</div><div style="font-size:0.75vw; color:#aaa; font-weight:bold;">${d.getDate()} ${mois[d.getMonth()]}</div><div class="picto-pro-mini" style="display:inline-block; width:3.2vw; height:1.6vw; background:#fff; border-radius:20px; position:relative; margin:1vh 0;"><div style="position:absolute; width:1.2vw; height:1.2vw; background:#ffea00; border-radius:50%; top:-0.4vw; left:0.4vw;"></div></div><div style="font-size:2vw; font-weight:bold; color:#fff;">${simMax[index]}°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">${simMin[index]}°</div>`;
+                bas.appendChild(box);
+            }
         }
         function gererEffetsMeteoEtParticules(desc) {
             var avant = document.getElementById('front-particles'); var nuage = document.getElementById('cloud-layer');
