@@ -56,7 +56,7 @@
         .picto-pro-mini { scale: 0.65; display: inline-block; vertical-align: middle; }
         .feuille-peuplier-svg { position: absolute; width: 13px; height: 13px; background: var(--leaf-color); border-radius: 2px 75% 60% 75%; transform-origin: center; animation: flowWind linear infinite; }
         .goutte-particule { position: absolute; background: rgba(255,255,255,0.4); width: 1.5px; height: 20px; animation: flowChute linear infinite; }
-        .flocon-particule { position: absolute; background: #ffffff; border-radius: 50%; animation: flowChute linear infinite; }
+        .flocon-particule { position: absolute; background: #ffffff; border-radius: 50%; animation: flowChute linear infinite; width: 6px; height: 6px; box-shadow: 0 0 4px #fff; }
         @keyframes flowChute { 0% { transform: translateY(-5vh) translateX(0); } 100% { transform: translateY(105vh) translateX(var(--wind-x)); } }
         @keyframes flowWind { 0% { transform: translate(-5vw, var(--start-y)) rotate(0deg); } 100% { transform: translate(105vw, var(--end-y)) rotate(1080deg); } }
         @keyframes cloudMove { 0% { transform: translateX(0); } 100% { transform: translateX(-100vw); } }
@@ -189,15 +189,14 @@
             var dRef = new Date();
             var hActuelle = dRef.getHours();
             
-            // Profil météo de base pour chaque jour (Matin / Après-midi / Soirée)
             const profilsSemaine = [
-                ["éclaircies", "ensoleillé", "nuageux"], // DIM.
-                ["nuageux", "nuageux", "pluie"],         // LUN.
-                ["pluie", "pluie", "éclaircies"],        // MAR.
-                ["éclaircies", "orageux", "orageux"],    // MER.
-                ["nuageux", "éclaircies", "ensoleillé"], // JEU.
-                ["ensoleillé", "ensoleillé", "orageux"], // VEN.
-                ["éclaircies", "nuageux", "nuageux"]     // SAM.
+                ["éclaircies", "ensoleillé", "nuageux"], 
+                ["nuageux", "nuageux", "pluie"],         
+                ["pluie", "pluie", "éclaircies"],        
+                ["éclaircies", "orageux", "orageux"],    
+                ["nuageux", "éclaircies", "ensoleillé"], 
+                ["ensoleillé", "ensoleillé", "orageux"], 
+                ["éclaircies", "nuageux", "nuageux"]     
             ];
             
             var variationsMax = [tActuelle + 5, tActuelle + 7, tActuelle + 4, tActuelle + 3, tActuelle + 6, tActuelle + 8, tActuelle + 7];
@@ -206,7 +205,6 @@
             for(let index=0; index<7; index++) {
                 var d = new Date(); d.setDate(dRef.getDate() + index);
                 
-                // Sélection de la prévision en fonction de l'heure courante (Matin, Après-midi ou Soir)
                 let tranche = 0;
                 if (hActuelle >= 12 && hActuelle < 18) tranche = 1;
                 else if (hActuelle >= 18 || hActuelle < 6) tranche = 2;
@@ -242,6 +240,16 @@
                     g.style.left = (Math.random() * 100) + "vw"; g.style.setProperty('--wind-x', (Math.random() * 30 - 15) + "vw");
                     g.style.animationDuration = (Math.random() * 0.4 + 0.6) + "s"; g.style.animationDelay = (Math.random() * 2) + "s";
                     avant.appendChild(g);
+                }
+            }
+            if (desc.includes("neige")) {
+                let snowCount = desc.includes("fine") ? 20 : 60;
+                let snowSpeed = desc.includes("fine") ? 3.5 : 1.8;
+                for (let i = 0; i < snowCount; i++) {
+                    let f = document.createElement('div'); f.className = "flocon-particule";
+                    f.style.left = (Math.random() * 100) + "vw"; f.style.setProperty('--wind-x', (Math.random() * 20 - 10) + "vw");
+                    f.style.animationDuration = (Math.random() * 1.5 + snowSpeed) + "s"; f.style.animationDelay = (Math.random() * 4) + "s";
+                    avant.appendChild(f);
                 }
             }
             let leafCount = Math.min(10, Math.floor(vitesseVentActuelle * 0.08) + 2);
