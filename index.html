@@ -34,7 +34,7 @@
         #cloud-layer { position: fixed; top: 0; left: 0; width: 200vw; height: 38vh; background: url('https://wikimedia.org') repeat-x; background-size: contain; z-index: -6; opacity: 0; pointer-events: none; transition: opacity 5s ease-in-out; }
         #lightning-flash { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; background: rgba(255,255,255,0); pointer-events: none; }
         
-        /* PROTECTION ANTI-DEBORDEMENT ET PLAN DES PARTICULES ET FEUILLES DERRIERE LES BLOCS */
+        /* IMPERMEABILITE DES FEUILLES ET DE LA PLUIE */
         #back-precipitations { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; pointer-events: none; }
         #front-particles { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1 !important; pointer-events: none; }
 
@@ -42,7 +42,6 @@
         .boite-flip-haut {
             background: linear-gradient(to bottom, #11151c, #05070a) !important; border: 2px solid #28303d !important; border-radius: 8px !important; box-shadow: 0px 6px 12px rgba(0,0,0,0.5), inset 0px 0px 10px rgba(0,0,0,0.9) !important; z-index: 99 !important;
         }
-        /* LIGNE FLIP-FLAP AFFINEE A 0.8PX EXALTEE */
         .flip-tuile-js { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 2.3vw; font-weight: 900; color: #fff; text-transform: uppercase; letter-spacing: 1px; position: relative; }
         .flip-tuile-js::after { content: ''; position: absolute; left: 0; top: 50%; width: 100%; height: 0.8px; background: #000000 !important; border-bottom: 1px solid rgba(255,255,255,0.12) !important; z-index: 5; }
 
@@ -70,7 +69,7 @@
         .heure-digitale-js { font-size: 2.7vw; font-weight: 900; color: #ffffff !important; letter-spacing: 1px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; }
         .heure-digitale-js::after { content: ''; position: absolute; left: 0; top: 50%; width: 100%; height: 0.8px; background: #000000; border-bottom: 1px solid rgba(255,255,255,0.12); z-index: 5; }
 
-        /* ALLOCATION IMPERMEABLE DU Z-INDEX CONTRE LE FLUX DU VENT ET DES PARTICULES */
+        /* PARAMÈTRES DE COUCHES CONTRE LE DEBORDEMENT DES FEUILLES */
         .cadran-relief-bleu { background: #0d131a !important; border: 2px solid #212c3a !important; border-radius: 12px !important; box-shadow: 0 8px 16px rgba(0,0,0,0.7), inset 0 0 12px rgba(0,0,0,0.8) !important; opacity: 1 !important; z-index: 99 !important; transition: border-color 8s ease-in-out, box-shadow 8s ease-in-out; }
         .cadran-relief-noir-bloc { background: #05080c !important; border: 2px solid #162029 !important; border-radius: 12px; box-shadow: 0 6px 12px rgba(0,0,0,0.6); z-index: 99 !important; transition: border-color 8s ease-in-out, box-shadow 8s ease-in-out; overflow: hidden; }
         .cadran-relief-bleu.nuit-active-widget { border-color: rgba(255, 255, 255, 0.72) !important; box-shadow: 0 0 14px rgba(255,255,255,0.22), inset 0 0 12px rgba(0,0,0,0.8) !important; }
@@ -80,7 +79,7 @@
         .soleil-realiste-css { width: 3.2vw; height: 3.2vw; background: radial-gradient(circle, #fff 15%, #ffea00 55%, #ff7700 100%); border-radius: 50%; box-shadow: 0 0 18px rgba(255,210,0,0.75), 0 0 35px rgba(255,100,0,0.4); }
         .lune-doree-image { position: relative; width: 3.4vw; height: 3.4vw; border-radius: 50%; background-image: url('https://wikimedia.org') !important; background-size: cover; background-position: center; border: 1.5px solid rgba(255,255,255,0.5) !important; box-shadow: 0 0 14px rgba(255,255,255,0.4); filter: grayscale(1) brightness(1.2); display: block; overflow: hidden; }
         .cache-ombre-lunaire { position: absolute; top: 0; width: 100%; height: 100%; background: rgba(5,8,12,0.88); transition: left 0.5s, width 0.5s; }
-        /* ZONE GRIS CLAIR DU POMMIER #121B24 AVEC ETANCHEITE COMPLETE */
+        /* EFFET DU CADRAN SAISON EN ÉTÉ (ZONE EXCLUSIVE GRIS ACIER #121B24 AVEC SÉPARATION) */
         .case-illustration-pommier { width: 4.8vw; height: 4.8vw; position: relative; display: flex; align-items: center; justify-content: center; background: #121b24 !important; border-radius: 8px; border: 1px solid rgba(255,255,255,0.08); box-shadow: inset 0 0 6px rgba(0,0,0,0.6); }
         .pommier-trunk { position: absolute; width: 4px; background: #5c4033; bottom: 0.2vw; height: 1.8vw; left: 50%; transform: translateX(-50%); border-radius: 2px; }
         .pommier-branch-l { position: absolute; width: 10px; height: 2px; background: #5c4033; bottom: 1.4vw; left: 1.2vw; transform: rotate(-30deg); }
@@ -111,7 +110,7 @@
     <div id="school-view-bg" class="decor-permanent"></div>
     <div id="cloud-layer"></div> <div id="lightning-flash"></div> <div id="back-precipitations"></div> <div id="front-particles"></div>
 
-    <!-- CALENDRIER SUPERIEUR COUCHE -->
+    <!-- CALENDRIER -->
     <div class="pos boite-flip-haut" style="left: 17.5vw; top: 2.5vh; width: 22.3vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-jour">--</div><div class="charniere-droite"></div></div>
     <div class="pos boite-flip-haut" style="left: 40.8vw; top: 2.5vh; width: 9.6vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-num">--</div><div class="charniere-droite"></div></div>
     <div class="pos boite-flip-haut" style="left: 51.5vw; top: 2.5vh; width: 13.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-mois">--</div><div class="charniere-droite"></div></div>
@@ -123,25 +122,25 @@
     </div>
     <div class="boite-digitale-bas"><div class="charniere-gauche"></div><div class="heure-digitale-js" id="horloge-texte">--:--:--</div><div class="charniere-droite"></div></div>
 
-    <!-- METEO GAUCHE MAJ (PROTECTION COMPLETE ET AUTOMATIQUE CONTRE LE VIDE DE REQUETE AVEC LE SYSTEME DOUBLE-PASS) -->
+    <!-- METEO ACTUELLE -->
     <div class="cadran-relief-bleu" id="cadran-meteo-g" style="position: absolute; left: 1.5vw; top: 25vh; width: 28.5vw; height: 35vh; padding: 1.3vw; color: #ffffff;">
         <div style="font-size: 1.1vw; color: #ffffff; font-weight: bold; margin-bottom: 2px; text-align: left; font-family:'Arial';">Marloie (Marche-en-Famenne)</div>
         <div style="font-size: 0.75vw; color: #aaaaaa; text-transform: uppercase; margin-bottom: 1.2vh; letter-spacing: 1px;">MÉTÉO ACTUELLE</div>
         <div style="display: flex; align-items: center; gap: 2vw; margin-bottom: 2.5vh;">
             <div class="picto-pro-meteo"><div class="soleil-centre"></div><div class="nuage-face"></div></div>
             <div style="text-align: left;">
-                <div style="font-size: 4.2vw; font-weight: bold; line-height: 1;" id="courant-temp">21°C</div>
-                <div style="font-size: 1.2vw; color: #ffffff; margin-top: 4px; font-weight: bold; font-family:'Arial';" id="courant-desc">Éclaircies</div>
+                <div style="font-size: 4.2vw; font-weight: bold; line-height: 1;" id="courant-temp">--°C</div>
+                <div style="font-size: 1.2vw; color: #ffffff; margin-top: 4px; font-weight: bold; font-family:'Arial';" id="courant-desc">Actualisation...</div>
             </div>
         </div>
         <div style="display: flex; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 1.5vh; text-align: center; font-family:'Arial'; font-weight:bold;">
-            <div style="flex: 1;"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase;">RESSENTIE</div><div style="font-size: 1.15vw; margin-top: 4px; color: #ffffff;" id="courant-ressenti">21°C</div></div>
-            <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1);"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 3px;"><span style="color: #49a6e9; font-size: 0.9vw;">💧</span> HUMIDITÉ</div><div style="font-size: 1.15vw; margin-top: 4px; color: #ffffff;" id="courant-humidite">64%</div></div>
-            <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1);"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 3px;"><span style="color: #ffffff; font-size: 0.9vw;">💨</span> VENT</div><div style="font-size: 1.15vw; margin-top: 4px; color: #ffffff;" id="courant-vent">14 km/h</div></div>
+            <div style="flex: 1;"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase;">RESSENTIE</div><div style="font-size: 1.15vw; margin-top: 4px; color: #ffffff;" id="courant-ressenti">--°C</div></div>
+            <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1);"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 3px;"><span style="color: #49a6e9; font-size: 0.9vw;">💧</span> HUMIDITÉ</div><div style="font-size: 1.15vw; margin-top: 4px; color: #ffffff;" id="courant-humidite">--%</div></div>
+            <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1);"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 3px;"><span style="color: #ffffff; font-size: 0.9vw;">💨</span> VENT</div><div style="font-size: 1.15vw; margin-top: 4px; color: #ffffff;" id="courant-vent">-- km/h</div></div>
             <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1);"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 3px;"><span style="color: #e9a949; font-size: 0.9vw;">☀️</span> UV</div><div style="font-size: 1.1vw; margin-top: 4px; color: #ffffff;" id="courant-uv">1 / Bas</div></div>
         </div>
     </div>
-    <!-- MODULE DROIT SAISON SÉPARÉ ET PLUS CLAIR SUR LA ZONE DU PEUPLIER -->
+    <!-- MODULE DE SAISON -->
     <div class="cadran-relief-noir-bloc" id="cadran-saison-d" style="position: absolute; right: 2vw; top: 45.5vh; width: 17vw; height: 28vh; display: flex; flex-direction: column; justify-content: space-between;">
         <div style="display: flex; justify-content: space-between; align-items: center; height: 46%; background: #121b24; padding: 0.5vw 1.2vw; position: relative;">
             <div style="text-align: left;">
@@ -152,7 +151,7 @@
                 <div class="pommier-trunk"></div><div class="pommier-branch-l"></div><div class="pommier-branch-r"></div><div class="pommier-canopy"></div>
                 <div class="pommier-fruit" style="bottom:2.4vw; left:1.3vw;"></div><div class="pommier-fruit" style="bottom:3vw; right:1.6vw;"></div><div class="pommier-fruit" style="bottom:3.4vw; left:2vw;"></div>
             </div>
-            <!-- LIGNE INTERNE DE SEPARATION ÉTROITE DE 0.8PX -->
+            <!-- SEPARATION HORIZONTALE FINE -->
             <div style="position: absolute; left: 0; bottom: 0; width: 100%; height: 0.8px; background: #000000; border-bottom: 1px solid rgba(255,255,255,0.12);"></div>
         </div>
         <div style="display: flex; flex-direction: column; justify-content: space-between; height: 52%; width: 100%; padding: 0.6vw 1.2vw 1vw 1.2vw;">
@@ -167,7 +166,7 @@
             </div>
         </div>
     </div>
-    <!-- MODULE DE LA LUNE -->
+    <!-- MODULE LUNE -->
     <div class="cadran-relief-noir-bloc" id="cadran-lune-d" style="position: absolute; right: 2vw; top: 75vh; width: 17vw; height: 14.5vh; padding: 1vw 1.2vw; display: flex; justify-content: space-between; align-items: center; font-family:'Arial'; font-weight:bold;">
         <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; text-align: left;">
             <div style="font-size: 1.1vw; color: #8ad400; font-weight: bold; letter-spacing: 0.5px; font-family:'Arial Black';">LUNE</div>
@@ -179,12 +178,12 @@
         <div class="lune-doree-image" id="lune-vrai-photo"><div class="cache-ombre-lunaire" id="lune-ombre-widget"></div></div>
     </div>
 
-    <!-- PREVISIONS D'EN BAS AVEC FILTRE SÉCURISÉ Z-INDEX 99 COMPLÈTEMENT IMPLÉMENTÉ -->
+    <!-- ZONE DES PREVISIONS SEMAINE (Z-INDEX 99 TOTAL) -->
     <div style="position: absolute; left: 1.5vw; bottom: 8vh; width: 77.5vw; height: 27.5vh; display: flex; justify-content: space-between; z-index: 99 !important;" id="zone-7-jours"></div>
     <script>
-        var vitesseVentActuelle = 14; var currentSaison = "ÉTÉ"; var isNightTime = false;
+        var vitesseVentActuelle = 12; var currentSaison = "ÉTÉ"; var isNightTime = false;
 
-        /* INJECTION HORLOGE INDEPENDANTE */
+        /* EXECUTION INTERNE DE L'HORLOGE RETRO SANS CONFLITS */
         var mC = document.getElementById('cadran-montre');
         for (var i = 1; i <= 12; i++) {
             var box = document.createElement('div'); box.className = 'chiffre-container-js'; box.style.transform = 'rotate(' + (i * 30) + 'deg)';
@@ -207,12 +206,9 @@
             gererCycleJourNuit();
         }
         function executerMeteo() {
-            /* INTEGRATION SÉCURISÉE DE L'API OPEN-METEO AVEC GESTION DU RECOUVREMENT DES SOUS-TABLEAUX DIRECTS */
+            /* RECONSTRUISEZ LE LIEN SANS FILTRES AVEC PARAMETRES INDEPENDANTS DAILY CORRECTS */
             let uM = 'https://open-meteo.com';
             
-            // CHARGEMENT PAR DÉFAUT IMMÉDIAT DES CARTES POUR INTERDIRE LE BLOCAGE VISUEL DES PANNEAUX VISUELS
-            construirePrevisionsDefault();
-
             fetch(uM).then(res => res.json()).then(data => {
                 let cur = data.current;
                 document.getElementById('courant-temp').textContent = Math.round(cur.temperature_2m) + "°C";
@@ -226,12 +222,13 @@
                 document.getElementById('courant-desc').textContent = desc;
                 gererEffetsMeteoEtParticules(desc.toLowerCase());
 
-                /* APPEL DYNAMIQUE SÉCURISÉ DES TEMPERATURES MAX/MIN DU FLUX DIRECT */
+                /* INJECTION EN CASCADE REÉLLEMENT DYNAMIQUE ET RELIEE POUR LES PREVISIONS DU BAS */
                 var bas = document.getElementById('zone-7-jours'); bas.innerHTML = "";
                 const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
                 const mois = ['JANV.', 'FÉVR.', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUIL.', 'AOÛT', 'SEPT.', 'OCT.', 'NOV.', 'DÉC.'];
                 var dRef = new Date();
-                for(let index=0; index<7; index++) {
+                
+                for(let index = 0; index < 7; index++) {
                     var d = new Date(); d.setDate(dRef.getDate() + index);
                     let maxT = Math.round(data.daily.temperature_2m_max[index]);
                     let minT = Math.round(data.daily.temperature_2m_min[index]);
@@ -242,26 +239,20 @@
             }).catch(() => {});
         }
 
-        function construirePrevisionsDefault() {
-            var bas = document.getElementById('zone-7-jours'); bas.innerHTML = "";
-            const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
-            const mois = ['JANV.', 'FÉVR.', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUIL.', 'AOÛT', 'SEPT.', 'OCT.', 'NOV.', 'DÉC.'];
-            var dRef = new Date();
-            let simulationMax = [21, 22, 20, 19, 21, 23, 22];
-            let simulationMin = [13, 14, 12, 11, 12, 14, 13];
-            for(let index=0; index<7; index++) {
-                var d = new Date(); d.setDate(dRef.getDate() + index);
-                var box = document.createElement('div'); box.className = "carte-prev-unique";
-                box.innerHTML = `<div style="font-weight:bold; font-family:'Arial Black'; font-size:1.1vw; color:#ffffff;">${index===0?"AUJ.":noms[d.getDay()]}</div><div style="font-size:0.75vw; color:#aaa; font-weight:bold;">${d.getDate()} ${mois[d.getMonth()]}</div><div class="picto-pro-mini" style="display:inline-block; width:3.2vw; height:1.6vw; background:#ffffff; border-radius:20px; position:relative; margin:1vh 0;"><div style="position:absolute; width:1.2vw; height:1.2vw; background:#ffea00; border-radius:50%; top:-0.4vw; left:0.4vw;"></div></div><div style="font-size:2vw; font-weight:bold; color:#ffffff;">${simulationMax[index]}°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">${simulationMin[index]}°</div>`;
-                bas.appendChild(box);
-            }
-        }
-
         function gererEffetsMeteoEtParticules(desc) {
             var avant = document.getElementById('front-particles'); var nuage = document.getElementById('cloud-layer');
-            avant.innerHTML = "";
-            if (desc.includes("nuageux")) nuage.style.opacity = "0.35"; else if(desc.includes("pluie")) nuage.style.opacity = "0.7"; else nuage.style.opacity = "0";
+            avant.innerHTML = ""; var windX = (vitesseVentActuelle * 2.5) + "vw";
+            
+            // DEBLOCAGE ET AFFICHAGE REEL DES NUAGES ANIMES SUR VOTRE IMAGE DE FOND
+            if (desc.includes("nuageux") || desc.includes("éclaircies")) {
+                nuage.style.opacity = "0.45";
+            } else if (desc.includes("pluie")) {
+                nuage.style.opacity = "0.75";
+            } else {
+                nuage.style.opacity = "0";
+            }
             if (nuage.style.opacity > 0) nuage.className = "anim-clouds";
+            
             let leafCount = Math.min(10, Math.floor(vitesseVentActuelle * 0.08) + 2);
             for(let i=0; i<leafCount; i++) {
                 let l = document.createElement('div'); l.className = "feuille-peuplier-svg"; l.style.setProperty('--leaf-color', "#5cb81b");
