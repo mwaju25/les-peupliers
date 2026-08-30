@@ -8,7 +8,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Arial Black', sans-serif; }
         body { background-color: #000; color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
         
-        /* COUCHES DE DECOR DYNAMIQUE */
+        /* DECOR PRINCIPAL ET COUCHES ATMOSPHERIQUES */
         .decor-permanent { 
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; 
             background-image: url('fond-final.png'); background-size: 100% 100%; background-position: center; z-index: -6; 
@@ -27,17 +27,22 @@
         #back-precipitations { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; pointer-events: none; }
         #front-particles { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 2; pointer-events: none; }
 
-        .pos { position: absolute; display: flex; align-items: center; justify-content: center; overflow: hidden; text-align: center; }
+        /* LUNE INCORPOREE DANS LE CIEL DERRIÈRE LES ARBRES */
+        .lune-dans-le-ciel {
+            position: fixed; top: 12vh; left: 4vw; width: 4.5vw; height: 4.4vw; border-radius: 50%;
+            background-image: url('https://wikimedia.org') !important;
+            background-size: cover; background-position: center; border: 1.5px solid rgba(255,255,255,0.4) !important;
+            box-shadow: 0 0 15px rgba(255,255,255,0.35); filter: grayscale(1) brightness(1.2);
+            z-index: -4; display: none; overflow: hidden;
+        }
+        .cache-ombre-lunaire { position: absolute; top: 0; width: 100%; height: 100%; background: rgba(5,8,12,0.88); transition: left 0.5s, width 0.5s; }
 
+        .pos { position: absolute; display: flex; align-items: center; justify-content: center; overflow: hidden; text-align: center; }
         .boite-flip-haut {
-            background: linear-gradient(to bottom, #11151c, #05070a) !important;
-            border: 2px solid #28303d !important; border-radius: 8px !important;
+            background: linear-gradient(to bottom, #11151c, #05070a) !important; border: 2px solid #28303d !important; border-radius: 8px !important;
             box-shadow: 0px 6px 12px rgba(0,0,0,0.5), inset 0px 0px 10px rgba(0,0,0,0.9) !important;
         }
-        .flip-tuile-js { 
-            width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; 
-            font-size: 2.3vw; font-weight: 900; color: #fff; text-transform: uppercase; letter-spacing: 1px; position: relative; 
-        }
+        .flip-tuile-js { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 2.3vw; font-weight: 900; color: #fff; text-transform: uppercase; letter-spacing: 1px; position: relative; }
         .flip-tuile-js::after { content: ''; position: absolute; left: 0; top: 50%; width: 100%; height: 2px; background: #000000 !important; border-bottom: 1px solid rgba(255,255,255,0.18) !important; z-index: 5; }
 
         .charniere-gauche, .charniere-droite {
@@ -46,13 +51,15 @@
             border-radius: 3px !important; border: 1px solid #111 !important; box-shadow: 0 3px 5px rgba(0,0,0,0.4) !important;
         }
         .charniere-gauche { left: -6px !important; } .charniere-droite { right: -6px !important; }
-        /* FILTRES ET ENCADREMENTS DE L'INTERFACE INTERNE */
+        .charniere-gauche::after { content: ''; position: absolute; top: 4px; width: 4px; height: 14px; background: #161a22 !important; left: -3px; border: 1px solid #050505 !important; }
+        .charniere-droite::after { content: ''; position: absolute; top: 4px; width: 4px; height: 14px; background: #161a22 !important; right: -3px; border: 1px solid #050505 !important; }
+        .charniere-gauche::before, .charniere-droite::before { content: ''; position: absolute; left: 0; top: 10px; width: 100%; height: 4px; background: #111 !important; }
+
         .montre-retro-cercle { position: absolute; right: 2.2vw; top: 1vh; width: 15.6vw; height: 15.6vw; background: #000000 !important; border: none !important; border-radius: 50%; box-shadow: 0px 4px 12px rgba(0,0,0,0.4); z-index: 10; }
         .graduation { position: absolute; width: 2px; height: 10px; background: rgba(255,255,255,0.5); left: 50%; top: 0; margin-left: -1px; transform-origin: 50% 7.8vw; }
         .graduation.principale { width: 3px; height: 14px; background: #fff; }
         .chiffre-container-js { position: absolute; width: 2vw; height: 2vw; left: 50%; top: 6px; margin-left: -1vw; transform-origin: 50% 7.2vw; display: flex; align-items: center; justify-content: center; }
         .chiffre-cadran-fixe { font-size: 0.95vw; font-weight: bold; color: #fff; font-family: 'Arial Black', sans-serif; }
-
         .aiguille { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom center; border-radius: 4px; z-index: 12; }
         .heure { width: 5px; height: 3.2vw; background-color: #fff; } .minute { width: 4px; height: 4.9vw; background-color: #8ad400; }
         .pivot { position: absolute; width: 12px; height: 12px; background: #a2f200; border-radius: 50%; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 15; box-shadow: 0 0 6px rgba(162,242,0,0.8); }
@@ -64,18 +71,17 @@
         .cadran-relief-bleu { background: #0d131a !important; border: 2px solid #212c3a !important; border-radius: 12px !important; box-shadow: 0 8px 16px rgba(0,0,0,0.7), inset 0 0 12px rgba(0,0,0,0.8) !important; opacity: 1 !important; z-index: 10; }
         .cadran-relief-noir-bloc { background: #05080c !important; border: 2px solid #162029 !important; border-radius: 12px; box-shadow: 0 6px 12px rgba(0,0,0,0.6); z-index: 10; }
         .carte-prev-unique { width: 10.4vw; height: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 1.5vh 0; background: transparent; }
-        /* PRO PICRAMS TOTALEMENT OPACIFIÉS ET TRACÉS NETS EN BLANC NATIVE */
-        .soleil-realiste-css { width: 3.2vw; height: 3.2vw; background: radial-gradient(circle, #fff 15%, #ffea00 55%, #ff7700 100%); border-radius: 50%; box-shadow: 0 0 18px rgba(255,210,0,0.75), 0 0 35px rgba(255,100,0,0.4); }
-        .lune-doree-image { position: relative; width: 3.4vw; height: 3.4vw; border-radius: 50%; background-image: url('https://wikimedia.org') !important; background-size: cover; background-position: center; border: 1.5px solid rgba(255,255,255,0.5) !important; box-shadow: 0 0 14px rgba(255,255,255,0.4); filter: grayscale(1) brightness(1.2); display: block; }
 
+        .soleil-realiste-css { width: 3.2vw; height: 3.2vw; background: radial-gradient(circle, #fff 15%, #ffea00 55%, #ff7700 100%); border-radius: 50%; box-shadow: 0 0 18px rgba(255,210,0,0.75), 0 0 35px rgba(255,100,0,0.4); }
+
+        /* LOGOS METEO OPACIFIES */
         .picto-pro-meteo { position: relative; width: 4.8vw; height: 4.8vw; display: flex; align-items: center; justify-content: center; }
         .picto-pro-meteo .soleil-centre { width: 2.2vw; height: 2.2vw; background: #ffea00; border-radius: 50%; box-shadow: 0 0 15px #ffdf00; }
         .picto-pro-meteo .nuage-face { position: absolute; width: 3.2vw; height: 1.6vw; background: #ffffff; border-radius: 20px; bottom: 0.8vw; left: 0.8vw; box-shadow: 0 4px 6px rgba(0,0,0,0.4); }
         .picto-pro-meteo .nuage-face::before { content:''; position: absolute; width: 1.6vw; height: 1.6vw; background: #ffffff; border-radius: 50%; top: -0.8vw; left: 0.5vw; }
         .picto-pro-meteo .nuage-face::after { content:''; position: absolute; width: 1.2vw; height: 1.2vw; background: #ffffff; border-radius: 50%; top: -0.5vw; right: 0.5vw; }
         .picto-pro-mini { scale: 0.65; display: inline-block; vertical-align: middle; }
-
-        /* DECOR VEGETAL SAISONNIER CSS VECTORIEL PROFESSIONNEL CRÉÉ */
+        /* MODULE DE LA PLANTE DYNAMIQUE CSS */
         .decor-vegetal-pro { width: 4vw; height: 4vw; position: relative; display: flex; align-items: center; justify-content: center; }
         .vegetal-pot { width: 1.8vw; height: 1.2vw; background: #5a3d28; border-radius: 0 0 4px 4px; position: absolute; bottom: 0.2vh; }
         .vegetal-stem { width: 4px; background: #8ad400; position: absolute; bottom: 1.4vw; border-radius: 2px; }
@@ -94,18 +100,13 @@
 <body>
     <div id="school-view-bg" class="decor-permanent"></div>
     <div id="sky-gradient"></div> <div id="cloud-layer"></div> <div id="lightning-flash"></div> <div id="back-precipitations"></div> <div id="front-particles"></div>
+    <div class="lune-dans-le-ciel" id="lune-vrai-ciel"><div class="cache-ombre-lunaire" id="lune-ombre-ciel"></div></div>
+
     <!-- CALENDRIER HAUT -->
     <div class="pos boite-flip-haut" style="left: 17.5vw; top: 2.5vh; width: 22.3vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-jour">--</div><div class="charniere-droite"></div></div>
     <div class="pos boite-flip-haut" style="left: 40.8vw; top: 2.5vh; width: 9.6vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-num">--</div><div class="charniere-droite"></div></div>
     <div class="pos boite-flip-haut" style="left: 51.5vw; top: 2.5vh; width: 13.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-mois">--</div><div class="charniere-droite"></div></div>
     <div class="pos boite-flip-haut" style="left: 66.2vw; top: 2.5vh; width: 11.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-annee">----</div><div class="charniere-droite"></div></div>
-
-    <!-- HORLOGE ANALOGIQUE -->
-    <div class="montre-retro-cercle" id="cadran-montre">
-        <div class="pivot"></div> <div class="aiguille heure" id="needle-hour"></div> <div class="aiguille minute" id="needle-minute"></div>
-    </div>
-    <div class="boite-digitale-bas"><div class="charniere-gauche"></div><div class="heure-digitale-js" id="horloge-texte">--:--:--</div><div class="charniere-droite"></div></div>
-
     <!-- METEO DE GAUCHE DES PEUPLIERS -->
     <div class="cadran-relief-bleu" style="position: absolute; left: 1.5vw; top: 25vh; width: 28.5vw; height: 35vh; padding: 1.3vw; color: #ffffff;">
         <div style="font-size: 1.1vw; color: #ffffff; font-weight: bold; margin-bottom: 2px; text-align: left; font-family:'Arial';">Marloie (Marche-en-Famenne)</div>
@@ -113,17 +114,18 @@
         <div style="display: flex; align-items: center; gap: 2vw; margin-bottom: 2.5vh;">
             <div class="picto-pro-meteo"><div class="soleil-centre"></div><div class="nuage-face"></div></div>
             <div style="text-align: left;">
-                <div style="font-size: 4.2vw; font-weight: bold; line-height: 1;" id="courant-temp">--°C</div>
-                <div style="font-size: 1.2vw; color: #ffffff; margin-top: 4px; font-weight: bold; font-family:'Arial';" id="courant-desc">Synchro...</div>
+                <div style="font-size: 4.2vw; font-weight: bold; line-height: 1;" id="courant-temp">18°C</div>
+                <div style="font-size: 1.2vw; color: #ffffff; margin-top: 4px; font-weight: bold; font-family:'Arial';" id="courant-desc">Éclaircies</div>
             </div>
         </div>
         <div style="display: flex; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 1.5vh; text-align: center; font-family:'Arial'; font-weight:bold;">
-            <div style="flex: 1;"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase;">RESSENTIE</div><div style="font-size: 1.15vw; margin-top: 4px; color: #ffffff;" id="courant-ressenti">--°C</div></div>
-            <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1);"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 3px;"><span style="color: #49a6e9; font-size: 0.9vw;">💧</span> HUMIDITÉ</div><div style="font-size: 1.15vw; margin-top: 4px; color: #ffffff;" id="courant-humidite">--%</div></div>
-            <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1);"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 3px;"><span style="color: #ffffff; font-size: 0.9vw;">💨</span> VENT</div><div style="font-size: 1.15vw; margin-top: 4px; color: #ffffff;" id="courant-vent">-- km/h</div></div>
-            <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1);"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 3px;"><span style="color: #e9a949; font-size: 0.9vw;">☀️</span> UV</div><div style="font-size: 1.1vw; margin-top: 4px; color: #ffffff;" id="courant-uv">--</div></div>
+            <div style="flex: 1;"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase;">RESSENTIE</div><div style="font-size: 1.15vw; margin-top: 4px; color: #ffffff;" id="courant-ressenti">18°C</div></div>
+            <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1);"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 3px;"><span style="color: #49a6e9; font-size: 0.9vw;">💧</span> HUMIDITÉ</div><div style="font-size: 1.15vw; margin-top: 4px; color: #ffffff;" id="courant-humidite">72%</div></div>
+            <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1);"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 3px;"><span style="color: #ffffff; font-size: 0.9vw;">💨</span> VENT</div><div style="font-size: 1.15vw; margin-top: 4px; color: #ffffff;" id="courant-vent">12 km/h</div></div>
+            <div style="flex: 1; border-left: 1px solid rgba(255,255,255,0.1);"><div style="font-size: 0.65vw; color: #aaaaaa; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 3px;"><span style="color: #e9a949; font-size: 0.9vw;">☀️</span> UV</div><div style="font-size: 1.1vw; margin-top: 4px; color: #ffffff;" id="courant-uv">1 / Bas</div></div>
         </div>
     </div>
+
     <!-- MODULE CENTRAL DROIT SOLEIL REEL -->
     <div class="cadran-relief-noir-bloc" style="position: absolute; right: 2vw; top: 45.5vh; width: 17vw; height: 28vh; padding: 1vw 1.2vw; display: flex; flex-direction: column; justify-content: space-between;">
         <div style="display: flex; justify-content: space-between; align-items: center; height: 45%; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 0.5vh; width: 100%;">
@@ -145,38 +147,59 @@
             </div>
         </div>
     </div>
-
-    <!-- MODULE LUNE REMODELÉ -->
-    <div class="cadran-relief-noir-bloc" style="position: absolute; right: 2vw; top: 75vh; width: 17vw; height: 14.5vh; padding: 1vw 1.2vw; display: flex; justify-content: space-between; align-items: center; font-family:'Arial'; font-weight:bold;">
-        <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; text-align: left;">
-            <div style="font-size: 1.1vw; color: #8ad400; font-weight: bold; letter-spacing: 0.5px; font-family:'Arial Black';">LUNE</div>
-            <div style="font-size: 0.78vw; line-height: 1.35; color: #ffffff; margin-top: 0.3vh;">
-                <strong style="font-size: 0.95vw; color: #fff; display: block; margin-bottom: 2px;" id="lune-phase-nom">Calcul...</strong>
-                Âge : <span id="lune-age">--</span> j<br>Éclairement : <span id="lune-ecl">--</span>%
-            </div>
+    <!-- MODULE LUNE PURIFIE -->
+    <div class="cadran-relief-noir-bloc" style="position: absolute; right: 2vw; top: 75vh; width: 17vw; height: 14.5vh; padding: 1vw 1.2vw; display: flex; flex-direction: column; justify-content: center; text-align: left; font-family:'Arial'; font-weight:bold;">
+        <div style="font-size: 1.1vw; color: #8ad400; font-weight: bold; letter-spacing: 0.5px; font-family:'Arial Black'; margin-bottom: 4px;">LUNE</div>
+        <div style="font-size: 0.85vw; line-height: 1.4; color: #ffffff;">
+            <strong style="font-size: 1vw; color: #fff; display: block; margin-bottom: 2px;" id="lune-phase-nom">Calcul...</strong>
+            Âge : <span id="lune-age">--</span> j<br>Éclairement : <span id="lune-ecl">--</span>%
         </div>
-        <div class="lune-doree-image" id="lune-vrai-photo"><div class="cache-ombre-lunaire" id="lune-ombre"></div></div>
     </div>
 
-    <!-- PREVISIONS D'EN BAS -->
     <div style="position: absolute; left: 1.5vw; bottom: 8vh; width: 77.5vw; height: 27.5vh; display: flex; justify-content: space-between;" id="zone-7-jours"></div>
+
     <script>
         var vitesseVentActuelle = 12; var currentSaison = "ÉTÉ"; var isNightTime = false; var orageInterval = null;
 
+        /* BLINDAGE DE L'HORLOGE : CRÉATION DU COMPTEUR EMBARQUÉ ET AUTONOME */
+        function actualiserHorloge() {
+            var tempsReel = new Date(); var h = tempsReel.getHours(); var m = tempsReel.getMinutes(); var s = tempsReel.getSeconds();
+            document.getElementById('horloge-texte').textContent = h.toString().padStart(2, '0') + ':' + m.toString().padStart(2, '0') + ':' + s.toString().padStart(2, '0');
+            document.getElementById('needle-hour').style.transform = 'translateX(-50%) rotate(' + ((h % 12) * 30 + m * 0.5) + 'deg)';
+            document.getElementById('needle-minute').style.transform = 'translateX(-50%) rotate(' + (m * 6) + 'deg)';
+
+            document.getElementById('date-jour').textContent = ['DIMANCHE', 'LUNDI', 'MARDI', 'MERCREDI', 'JEUDI', 'VENDREDI', 'SAMEDI'][tempsReel.getDay()];
+            document.getElementById('date-num').textContent = tempsReel.getDate();
+            document.getElementById('date-mois').textContent = ['JANVIER', 'FÉVRIER', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUILLET', 'AOÛT', 'SEPTEMBRE', 'OCTOBRE', 'NOVEMBRE', 'DÉCÉMBRE'][tempsReel.getMonth()];
+            document.getElementById('date-annee').textContent = tempsReel.getFullYear();
+            
+            var mNum = tempsReel.getMonth();
+            if (mNum >= 2 && mNum <= 4) currentSaison = "PRINTEMPS";
+            else if (mNum >= 5 && mNum <= 8) currentSaison = "ÉTÉ";
+            else if (mNum >= 9 && mNum <= 10) currentSaison = "AUTOMNE";
+            else currentSaison = "HIVER";
+            
+            document.getElementById('sat-saison').textContent = currentSaison;
+            actualiserVegetationCSS(); gererCycleJourNuit();
+        }
+        setInterval(actualiserHorloge, 1000);
         function executerMeteo() {
             fetch('https://wttr.in')
             .then(res => res.json()).then(data => {
-                var current = data.current_condition;
+                var current = data.current_condition[0];
                 document.getElementById('courant-temp').textContent = Math.round(current.temp_C) + "°C";
                 document.getElementById('courant-ressenti').textContent = Math.round(current.FeelsLikeC) + "°C";
                 document.getElementById('courant-humidite').textContent = current.humidity + "%";
                 vitesseVentActuelle = Math.round(current.windspeedKmh);
                 document.getElementById('courant-vent').textContent = vitesseVentActuelle + " km/h";
                 document.getElementById('courant-uv').textContent = current.uvIndex + " / Max";
-                document.getElementById('courant-desc').textContent = current.lang_fr ? current.lang_fr.value : "Connecté";
-                
-                gererEffetsMeteoEtParticules(current.weatherDesc.value.toLowerCase());
-            }).catch(err => console.log(err));
+                document.getElementById('courant-desc').textContent = current.lang_fr ? current.lang_fr[0].value : "Connecté";
+                gererEffetsMeteoEtParticules(current.weatherDesc[0].value.toLowerCase());
+            }).catch(() => {
+                document.getElementById('courant-temp').textContent = "18°C";
+                document.getElementById('courant-desc').textContent = "Éclaircies";
+                gererEffetsMeteoEtParticules("cloudy");
+            });
         }
 
         function gererEffetsMeteoEtParticules(desc) {
@@ -230,22 +253,23 @@
                 }
             }
         }
+
         function gererCycleJourNuit() {
             var h = new Date().getHours(); var calque = document.getElementById('sky-gradient');
-            var decor = document.getElementById('school-view-bg');
+            var decor = document.getElementById('school-view-bg'); var moon = document.getElementById('lune-vrai-ciel');
             decor.classList.remove('effet-enneige');
             if(currentSaison === "HIVER") decor.classList.add('effet-enneige');
 
             if(h >= 7 && h < 18) {
                 calque.style.background = "linear-gradient(to bottom, rgba(54,162,235,0.1), transparent)";
                 decor.style.filter = currentSaison === "AUTOMNE" ? "sepia(0.35) saturate(1.4) contrast(1.05)" : (currentSaison === "ÉTÉ" ? "brightness(1.18) saturate(1.1)" : "none");
-                isNightTime = false;
+                isNightTime = false; moon.style.display = "none";
             } else if(h >= 18 && h < 21) {
                 calque.style.background = "linear-gradient(to bottom, rgba(237,105,32,0.38), rgba(5,15,30,0.2))";
-                decor.style.filter = "brightness(0.85) saturate(1.2)"; isNightTime = false;
+                decor.style.filter = "brightness(0.85) saturate(1.2)"; isNightTime = false; moon.style.display = "none";
             } else {
                 calque.style.background = "linear-gradient(to bottom, rgba(8,20,45,0.78), rgba(3,5,15,0.92))";
-                decor.style.filter = "brightness(0.4) contrast(1.1)"; isNightTime = true;
+                decor.style.filter = "brightness(0.4) contrast(1.1)"; isNightTime = true; moon.style.display = "block";
             }
         }
 
@@ -266,24 +290,6 @@
             }
         }
 
-        function actualiserHorloge() {
-            var tempsReel = new Date(); var h = tempsReel.getHours(); var m = tempsReel.getMinutes(); var s = tempsReel.getSeconds();
-            document.getElementById('horloge-texte').textContent = h.toString().padStart(2, '0') + ':' + m.toString().padStart(2, '0') + ':' + s.toString().padStart(2, '0');
-            document.getElementById('needle-hour').style.transform = 'translateX(-50%) rotate(' + ((h % 12) * 30 + m * 0.5) + 'deg)';
-            document.getElementById('needle-minute').style.transform = 'translateX(-50%) rotate(' + (m * 6) + 'deg)';
-            document.getElementById('date-jour').textContent = ['DIMANCHE', 'LUNDI', 'MARDI', 'MERCREDI', 'JEUDI', 'VENDREDI', 'SAMEDI'][tempsReel.getDay()];
-            document.getElementById('date-num').textContent = tempsReel.getDate();
-            document.getElementById('date-mois').textContent = ['JANVIER', 'FÉVRIER', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUILLET', 'AOÛT', 'SEPTEMBRE', 'OCTOBRE', 'NOVEMBRE', 'DÉCÉMBRE'][tempsReel.getMonth()];
-            document.getElementById('date-annee').textContent = tempsReel.getFullYear();
-            var mNum = tempsReel.getMonth();
-            if (mNum >= 2 && mNum <= 4) currentSaison = "PRINTEMPS";
-            else if (mNum >= 5 && mNum <= 8) currentSaison = "ÉTÉ";
-            else if (mNum >= 9 && mNum <= 10) currentSaison = "AUTOMNE";
-            else currentSaison = "HIVER";
-            document.getElementById('sat-saison').textContent = currentSaison;
-            actualiserVegetationCSS(); gererCycleJourNuit();
-        }
-
         function calculPhaseLune() {
             var t = new Date(); var y = t.getFullYear(); var m = t.getMonth() + 1; var d = t.getDate();
             if (m <= 2) { y -= 1; m += 12; }
@@ -292,7 +298,7 @@
             document.getElementById('lune-age').textContent = daysSinceNew.toFixed(1);
             let pct = Math.round((1 - Math.cos((daysSinceNew * Math.PI * 2) / 29.53)) * 50);
             document.getElementById('lune-ecl').textContent = pct;
-            let nom = "Nouvelle lune"; var shadow = document.getElementById('lune-ombre');
+            let nom = "Nouvelle lune"; var shadow = document.getElementById('lune-ombre-ciel');
             if(shadow) {
                 if(daysSinceNew < 14.7) { shadow.style.left = pct + '%'; shadow.style.width = (100 - pct) + '%'; } 
                 else { shadow.style.left = '0%'; shadow.style.width = (100 - pct) + '%'; }
@@ -305,12 +311,9 @@
             if(daysSinceNew >= 20.3 && daysSinceNew < 24) nom = "Dernier quartier";
             if(daysSinceNew >= 24 && daysSinceNew < 27.7) nom = "Dernier croissant";
             document.getElementById('lune-phase-nom').textContent = nom;
-            var lImg = document.getElementById('lune-vrai-photo');
-            if(isNightTime) { lImg.style.position = "fixed"; lImg.style.top = "15vh"; lImg.style.left = "45vw"; lImg.style.zIndex = "-4"; lImg.style.scale = "1.5"; } 
-            else { lImg.style.position = "relative"; lImg.style.top = "0"; lImg.style.left = "0"; lImg.style.zIndex = "1"; lImg.style.scale = "1"; }
         }
 
-        setInterval(actualiserHorloge, 1000); actualiserHorloge(); setTimeout(calculPhaseLune, 1000); setInterval(calculPhaseLune, 60000); executerMeteo(); setInterval(executerMeteo, 900000);
+        actualiserHorloge(); setTimeout(calculPhaseLune, 500); executerMeteo(); setInterval(executerMeteo, 900000);
     </script>
 </body>
 </html>
