@@ -41,7 +41,7 @@
         .carte-prev-unique { width: 10.4vw; height: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 1.5vh 0; background: #0d131a !important; border: 2px solid #212c3a !important; border-radius: 12px !important; }
         .soleil-realiste-css { width: 3.2vw; height: 3.2vw; background: radial-gradient(circle, #fff 15%, #ffea00 55%, #ff7700 100%); border-radius: 50%; box-shadow: 0 0 18px rgba(255,210,0,0.75), 0 0 35px rgba(255,100,0,0.4); }
         .lune-doree-image { position: relative; width: 3.4vw; height: 3.4vw; border-radius: 50%; background-image: url('https://wikimedia.org') !important; background-size: cover; background-position: center; border: 1.5px solid rgba(255,255,255,0.5) !important; box-shadow: 0 0 14px rgba(255,255,255,0.4); filter: grayscale(1) brightness(1.2); display: block; overflow: hidden; }
-        .cache-ombre-lunaire { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #05080c; border-radius: 50%; transition: transform 0.5s ease-in-out, background 0.5s; mix-blend-mode: multiply; }
+        .cache-ombre-lunaire { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #05080c; border-radius: 50%; transition: all 0.5s ease-in-out; mix-blend-mode: multiply; }
         .case-illustration-pommier { width: 4.8vw; height: 4.8vw; position: relative; display: flex; align-items: center; justify-content: center; background: #121b24 !important; border-radius: 8px; border: 1px solid rgba(255,255,255,0.08); box-shadow: inset 0 0 6px rgba(0,0,0,0.6); }
         .pommier-trunk { position: absolute; width: 4px; background: #5c4033; bottom: 0.2vw; height: 1.8vw; left: 50%; transform: translateX(-50%); border-radius: 2px; }
         .pommier-branch-l { position: absolute; width: 10px; height: 2px; background: #5c4033; bottom: 1.4vw; left: 1.2vw; transform: rotate(-30deg); }
@@ -116,9 +116,9 @@
             <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
                 <div class="soleil-realiste-css"></div>
                 <div style="display: flex; gap: 1vw; text-align: left; align-items: center; font-family:'Arial'; font-weight:bold;">
-                    <div><div style="font-size: 1.1vw; font-weight: bold; color: #fff;" id="sat-lever">--:--</div></div>
+                    <div><div style="font-size: 1.1vw; font-weight: bold; color: #fff;" id="sat-lever">06:48</div></div>
                     <div style="width: 1px; background: rgba(255,255,255,0.4); height: 2.5vh;"></div>
-                    <div><div style="font-size: 1.1vw; font-weight: bold; color: #fff;" id="sat-coucher">--:--</div></div>
+                    <div><div style="font-size: 1.1vw; font-weight: bold; color: #fff;" id="sat-coucher">20:26</div></div>
                 </div>
             </div>
         </div>
@@ -203,9 +203,10 @@
                 const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
                 const mois = ['JANV.', 'FÉVR.', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUIL.', 'AOÛT', 'SEPT.', 'OCT.', 'NOV.', 'DÉC.'];
                 var dRef = new Date();
+                let codesParDefaut =;
                 for(let index = 0; index < 7; index++) {
                     var dObj = new Date(); dObj.setDate(dRef.getDate() + index);
-                    injecterCartePrevisionHTML(bas, index, noms[dObj.getDay()], dObj.getDate(), mois[dObj.getMonth()], 24 - index, 14 - index, 3);
+                    injecterCartePrevisionHTML(bas, index, noms[dObj.getDay()], dObj.getDate(), mois[dObj.getMonth()], 24 - index, 14 - index, codesParDefaut[index]);
                 }
             });
         }
@@ -213,9 +214,9 @@
             let pType = "nuageux";
             if(weatherCode === 0) pType = "ensoleillé";
             else if(weatherCode > 0 && weatherCode <= 3) pType = "éclaircies";
-            else if((weatherCode >= 51 && weatherCode <= 67) || weatherCode >= 80) pType = "pluie";
-            if(weatherCode >= 71 && weatherCode <= 77) pType = "neige";
-            if(weatherCode >= 95) pType = "orageux";
+            else if(weatherCode >= 51 && weatherCode <= 67) pType = "pluie";
+            else if(weatherCode >= 71 && weatherCode <= 77) pType = "neige";
+            else if(weatherCode >= 80) pType = "orageux";
             
             let pictoHTML = "";
             if (pType === "ensoleillé") {
@@ -280,19 +281,20 @@
         }
 
         function calculPhaseLune() {
-            var t = new Date(); var y = t.getFullYear(); var m = t.getMonth() + 1; var d = t.getDate();
-            if (m <= 2) { y -= 1; m += 12; }
-            let jd = Math.floor(y / 100) + Math.floor(Math.floor(y / 100) / 4) + d + Math.floor(365.25 * (y + 4716)) + Math.floor(30.6001 * (m + 1)) - 1524.5;
+            var maintenant = new Date();
+            var nouvelleLuneRef = Date.UTC(2026, 7, 12, 17, 35, 0);
+            var msEcoules = maintenant.getTime() - nouvelleLuneRef;
+            var daysSinceNew = (msEcoules / (1000 * 60 * 60 * 24)) % 29.530588853;
+            if (daysSinceNew < 0) daysSinceNew += 29.530588853;
             
-            let daysSinceNew = (jd - 2461265.316) % 29.530588853; if (daysSinceNew < 0) daysSinceNew += 29.530588853;
             document.getElementById('lune-age').textContent = daysSinceNew.toFixed(1);
             
-            let pct = Math.round((1 - Math.cos((daysSinceNew * Math.PI * 2) / 29.530588853)) * 50);
+            let pct = Math.round((1 + Math.cos((daysSinceNew * Math.PI * 2) / 29.530588853)) * 50);
             document.getElementById('lune-ecl').textContent = pct;
             
             let sW = document.getElementById('lune-ombre-widget'); let sC = document.getElementById('lune-cache-vrai-ciel');
             let fn = (s) => { 
-                if(s) { 
+                if(s) {
                     s.style.top = '0%';
                     if(daysSinceNew < 14.765) { 
                         s.style.left = pct + '%'; s.style.width = (100 - pct) + '%'; 
@@ -305,12 +307,12 @@
             
             let nom = "Nouvelle lune"; 
             if(daysSinceNew >= 1.5 && daysSinceNew < 6.5) nom = "Premier croissant"; 
-            if(daysSinceNew >= 6.5 && daysSinceNew < 8.5) nom = "Premier quartier"; 
-            if(daysSinceNew >= 8.5 && daysSinceNew < 13.5) nom = "Gibbeuse croissante"; 
-            if(daysSinceNew >= 13.5 && daysSinceNew < 15.5) nom = "Pleine lune"; 
-            if(daysSinceNew >= 15.5 && daysSinceNew < 20.5) nom = "Gibbeuse décroissante"; 
-            if(daysSinceNew >= 20.5 && daysSinceNew < 22.5) nom = "Dernier quartier"; 
-            if(daysSinceNew >= 22.5 && daysSinceNew < 28.0) nom = "Dernier croissant"; 
+            else if(daysSinceNew >= 6.5 && daysSinceNew < 8.5) nom = "Premier quartier"; 
+            else if(daysSinceNew >= 8.5 && daysSinceNew < 13.5) nom = "Gibbeuse croissante"; 
+            else if(daysSinceNew >= 13.5 && daysSinceNew < 15.5) nom = "Pleine lune"; 
+            else if(daysSinceNew >= 15.5 && daysSinceNew < 22.0) nom = "Gibbeuse décroissante"; 
+            else if(daysSinceNew >= 22.0 && daysSinceNew < 24.0) nom = "Dernier quartier"; 
+            else if(daysSinceNew >= 24.0 && daysSinceNew < 28.0) nom = "Dernier croissant"; 
             document.getElementById('lune-phase-nom').textContent = nom;
         }
 
