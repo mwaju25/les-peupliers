@@ -190,7 +190,6 @@
                     injecterCartePrevisionHTML(bas, index, noms[dObj.getDay()], dObj.getDate(), mois[dObj.getMonth()], Math.round(data.daily.temperature_2m_max[index]), Math.round(data.daily.temperature_2m_min[index]));
                 }
             }).catch(() => {
-                // Filet de protection inviolable : Maintien strict de vos 19°C réels validés en cas de blocage CORS local
                 document.getElementById('courant-temp').textContent = "19°C";
                 document.getElementById('courant-ressenti').textContent = "19°C";
                 document.getElementById('courant-humidite').textContent = "76%";
@@ -219,14 +218,20 @@
             let pType = profilsSemaine[index % 7][tranche];
             
             let pictoHTML = "";
-            if (pType === "ensoleillé") pictoHTML = `<div style="width:2.2vw; height:2.2vw; background:radial-gradient(circle, #fff, #ffea00); border-radius:50%; margin:0 auto; box-shadow:0 0 8px #ffdf00;"></div>`;
-            else if (pType === "nuageux") pictoHTML = `<div style="width:2.8vw; height:1.4vw; background:#b0bec5; border-radius:15px; margin:0 auto; position:relative; top:4px;"></div>`;
-            else if (pType === "éclaircies") pictoHTML = `<div style="width:2vw; height:1.2vw; background:#ffffff; border-radius:10px; position:relative; margin:0 auto; top:4px;"><div style="position:absolute; width:1vw; height:1vw; background:#ffea00; border-radius:50%; top:-6px; left:-2px;"></div></div>`;
-            else if (pType === "pluie") pictoHTML = `<div style="width:2.4vw; height:1.2vw; background:#90a4ae; border-radius:10px; position:relative; margin:0 auto; top:2px;"><div style="position:absolute; bottom:-6px; left:4px; width:2px; height:5px; background:#49a6e9;"></div><div style="position:absolute; bottom:-6px; left:12px; width:2px; height:5px; background:#49a6e9;"></div></div>`;
-            else if (pType === "orageux") pictoHTML = `<div style="width:2.4vw; height:1.2vw; background:#37474f; border-radius:10px; position:relative; margin:0 auto; top:2px;"><div style="position:absolute; bottom:-7px; left:8px; width:4px; height:6px; background:#ffea00; clip-path:polygon(50% 0%, 0% 100%, 100% 100%);"></div></div>`;
+            if (pType === "ensoleillé") {
+                pictoHTML = `<div style="width:2.2vw; height:2.2vw; background:radial-gradient(circle, #ffea00 30%, #ff9800 100%); border-radius:50%; margin:0 auto; box-shadow:0 0 10px #ffdf00;"></div>`;
+            } else if (pType === "nuageux") {
+                pictoHTML = `<div style="width:2.8vw; height:1.5vw; background:#78909c; border-radius:12px; margin:0 auto; position:relative; top:0.4vh; box-shadow:0 2px 4px rgba(0,0,0,0.3);"></div>`;
+            } else if (pType === "éclaircies") {
+                pictoHTML = `<div style="width:2.6vw; height:1.4vw; background:#fff; border-radius:10px; position:relative; margin:0 auto; top:0.6vh; box-shadow:0 2px 4px rgba(0,0,0,0.2);"><div style="position:absolute; width:1.4vw; height:1.4vw; background:#ffeb3b; border-radius:50%; top:-0.8vh; left:-0.3vw; box-shadow:0 0 4px #ffeb3b;"></div></div>`;
+            } else if (pType === "pluie") {
+                pictoHTML = `<div style="width:2.6vw; height:1.4vw; background:#546e7a; border-radius:10px; position:relative; margin:0 auto; top:0.2vh;"><div style="position:absolute; bottom:-0.6vh; left:0.5vw; width:3px; height:7px; background:#29b6f6; border-radius:2px;"></div><div style="position:absolute; bottom:-0.6vh; left:1.4vw; width:3px; height:7px; background:#29b6f6; border-radius:2px;"></div></div>`;
+            } else if (pType === "orageux") {
+                pictoHTML = `<div style="width:2.6vw; height:1.4vw; background:#263238; border-radius:10px; position:relative; margin:0 auto; top:0.2vh;"><div style="position:absolute; bottom:-0.8vh; left:1vw; width:5px; height:9px; background:#ffeb3b; clip-path:polygon(40% 0%, 100% 30%, 30% 50%, 70% 100%, 0% 40%, 50% 30%);"></div></div>`;
+            }
             
             var box = document.createElement('div'); box.className = "carte-prev-unique";
-            box.innerHTML = `<div style="font-weight:bold; font-size:1.1vw; color:#fff;">${index===0?"AUJ.":jourNom}</div><div style="font-size:0.75vw; color:#aaa; font-weight:bold;">${jourNum} ${moisNom}</div><div class="picto-pro-mini" style="display:inline-block; width:3.2vw; height:1.6vw; background:transparent; position:relative; margin:1vh 0;">${pictoHTML}</div><div style="font-size:2vw; font-weight:bold; color:#fff;">${maxT}°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">${minT}°</div>`;
+            box.innerHTML = `<div style="font-weight:bold; font-size:1.1vw; color:#fff;">${index===0?"AUJ.":jourNom}</div><div style="font-size:0.75vw; color:#aaa; font-weight:bold;">${jourNum} ${moisNom}</div><div style="width:3.2vw; height:3.2vw; display:flex; align-items:center; justify-content:center; margin:0.4vh 0;">${pictoHTML}</div><div style="font-size:2vw; font-weight:bold; color:#fff;">${maxT}°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">${minT}°</div>`;
             conteneur.appendChild(box);
         }
         function gererEffetsMeteoEtParticules(desc) {
