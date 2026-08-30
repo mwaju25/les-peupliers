@@ -6,16 +6,15 @@
     <title>Ecran Master Connected - Les Peupliers</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Arial Black', sans-serif; }
-        body { background-color: transparent; color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
-        #sky-gradient { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -4; transition: background 8s ease-in-out; pointer-events: none; }
-        .lune-dans-le-ciel { position: fixed; top: 11vh; right: 20vw; width: 4.5vw; height: 4.4vw; border-radius: 50%; background-image: url('https://wikimedia.org') !important; background-size: cover; background-position: center; border: 1.5px solid rgba(255,255,255,0.4) !important; box-shadow: 0 0 15px rgba(255,255,255,0.35); filter: grayscale(1) brightness(1.2); z-index: -3; display: none; overflow: hidden; transition: opacity 8s ease-in-out; }
+        body { background-color: #000; color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
+        #school-view-bg, .decor-permanent { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: url('fond-final.png') no-repeat center center !important; background-size: 100% 100% !important; z-index: -6 !important; transition: filter 8s ease-in-out; }
+        #sky-gradient { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -5 !important; mix-blend-mode: overlay !important; transition: background 8s ease-in-out; pointer-events: none; }
+        .lune-dans-le-ciel { position: fixed; top: 11vh; right: 20vw; width: 4.5vw; height: 4.4vw; border-radius: 50%; background-image: url('https://wikimedia.org') !important; background-size: cover; background-position: center; border: 1.5px solid rgba(255,255,255,0.4) !important; box-shadow: 0 0 15px rgba(255,255,255,0.35); filter: grayscale(1) brightness(1.2); z-index: -4; display: none; overflow: hidden; transition: opacity 8s ease-in-out; }
         .cache-lune-ciel { position: absolute; top: 0; width: 100%; height: 100%; background: rgba(5,8,12,0.88); }
-        #school-view-bg, .decor-permanent { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: url('fond-final.png') no-repeat center center !important; background-size: 100% 100% !important; z-index: -5 !important; transition: filter 8s ease-in-out; }
-        #school-view-bg::after, .decor-permanent::after { content: ''; position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; background: linear-gradient(to bottom, rgba(255,255,255,0.1), rgba(0,0,0,0.3)); mix-blend-mode: multiply; pointer-events: none; }
-        #cloud-layer { position: fixed; top: 0; left: 0; width: 200vw; height: 38vh; background: url('https://wikimedia.org') repeat-x; background-size: contain; z-index: -2; opacity: 0; pointer-events: none; transition: opacity 5s ease-in-out; }
+        #cloud-layer { position: fixed; top: 0; left: 0; width: 200vw; height: 38vh; background: url('https://wikimedia.org') repeat-x; background-size: contain; z-index: -3; opacity: 0; pointer-events: none; transition: opacity 5s ease-in-out; }
         #lightning-flash { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; background: rgba(255,255,255,0); pointer-events: none; }
         #back-precipitations { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; pointer-events: none; }
-        #front-particles { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1 !important; pointer-events: none; }
+        #front-particles { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2 !important; pointer-events: none; }
         .pos { position: absolute; display: flex; align-items: center; justify-content: center; overflow: hidden; text-align: center; }
         .boite-flip-haut { background: linear-gradient(to bottom, #11151c, #05070a) !important; border: 2px solid #28303d !important; border-radius: 8px !important; box-shadow: 0px 6px 12px rgba(0,0,0,0.5), inset 0px 0px 10px rgba(0,0,0,0.9) !important; z-index: 99 !important; }
         .flip-tuile-js { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 2.3vw; font-weight: 900; color: #fff; text-transform: uppercase; letter-spacing: 1px; position: relative; }
@@ -55,7 +54,7 @@
         .picto-pro-meteo .nuage-face::after { content:''; position: absolute; width: 1.2vw; height: 1.2vw; background: #ffffff; border-radius: 50%; top: -0.5vw; right: 0.5vw; }
         .picto-pro-mini { scale: 0.65; display: inline-block; vertical-align: middle; }
         .feuille-peuplier-svg { position: absolute; width: 13px; height: 13px; background: var(--leaf-color); border-radius: 2px 75% 60% 75%; transform-origin: center; animation: flowWind linear infinite; }
-        .goutte-particule { position: absolute; background: rgba(255,255,255,0.25); width: 1.5px; height: 20px; animation: flowChute linear infinite; }
+        .goutte-particule { position: absolute; background: rgba(255,255,255,0.4); width: 1.5px; height: 20px; animation: flowChute linear infinite; }
         .flocon-particule { position: absolute; background: #ffffff; border-radius: 50%; animation: flowChute linear infinite; }
         @keyframes flowChute { 0% { transform: translateY(-5vh) translateX(0); } 100% { transform: translateY(105vh) translateX(var(--wind-x)); } }
         @keyframes flowWind { 0% { transform: translate(-5vw, var(--start-y)) rotate(0deg); } 100% { transform: translate(105vw, var(--end-y)) rotate(1080deg); } }
@@ -131,7 +130,7 @@
     </div>
     <div style="position: absolute; left: 1.5vw; bottom: 8vh; width: 77.5vw; height: 27.5vh; display: flex; justify-content: space-between; z-index: 99 !important;" id="zone-7-jours"></div>
     <script>
-        var vitesseVentActuelle = 14; var currentSaison = "ÉTÉ"; var weatherDescriptionGlobal = "Éclaircies";
+        var vitesseVentActuelle = 14; var currentSaison = "ÉTÉ"; var weatherDescriptionGlobal = "Nuageux";
         var mC = document.getElementById('cadran-montre');
         for (var i = 1; i <= 12; i++) {
             var box = document.createElement('div'); box.className = 'chiffre-container-js'; box.style.transform = 'rotate(' + (i * 30) + 'deg)';
@@ -156,7 +155,6 @@
             var tempsReel = new Date();
             var h = tempsReel.getHours();
             
-            // Simulation mathématique réaliste et cyclique propre à Marche-en-Famenne
             var baseCalcul = 17 + Math.sin((h - 6) * Math.PI / 12) * 5.5;
             var tActuelle = Math.round(baseCalcul);
             var tRessentie = Math.round(baseCalcul + 0.8);
@@ -185,9 +183,8 @@
             const mois = ['JANV.', 'FÉVR.', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUIL.', 'AOÛT', 'SEPT.', 'OCT.', 'NOV.', 'DÉC.'];
             var dRef = new Date();
             
-            // Calcul automatique d'une courbe de tendance sur la semaine (+/- 3°C autour du jour J)
-            var variationsMax = [21, 23, 20, 19, 22, 24, 23];
-            var variationsMin = [13, 14, 12, 11, 13, 15, 14];
+            var variationsMax = [tActuelle + 5, tActuelle + 7, tActuelle + 4, tActuelle + 3, tActuelle + 6, tActuelle + 8, tActuelle + 7];
+            var variationsMin = [tActuelle - 3, tActuelle - 2, tActuelle - 4, tActuelle - 5, tActuelle - 3, tActuelle - 1, tActuelle - 2];
             
             for(let index=0; index<7; index++) {
                 var d = new Date(); d.setDate(dRef.getDate() + index);
@@ -223,7 +220,7 @@
             var desc = weatherDescriptionGlobal.toLowerCase();
             var totalMin = (h * 60) + m;
             
-            if (totalMin >= 360 && totalMin < 430) { calque.style.background = "linear-gradient(to bottom, #ff7e5f, #feb47b)"; decor.style.filter = "brightness(0.75) contrast(1.1)"; moon.style.display = "none"; } else if (totalMin >= 430 && totalMin < 1160) { if (desc.includes("ensoleillé") || desc.includes("éclaircies")) { calque.style.background = "linear-gradient(to bottom, #3a7bd5, #3a6073, #74b9ff)"; } else { calque.style.background = "linear-gradient(to bottom, #536976, #29323c)"; } decor.style.filter = "brightness(1.15) saturate(1.1)"; moon.style.display = "none"; } else if (totalMin >= 1160 && totalMin < 1220) { calque.style.background = "linear-gradient(to bottom, #11151c, #943126, #f39c12)"; decor.style.filter = "brightness(0.68) saturate(1.25)"; moon.style.display = "block"; } else { if (desc.includes("nuageux") || desc.includes("averse")) { calque.style.background = "linear-gradient(to bottom, #04060d, #0f131c)"; } else { calque.style.background = "linear-gradient(to bottom, #01040a, #040914)"; } decor.style.filter = "brightness(0.34) contrast(1.15)"; moon.style.display = "block"; }
+            if (totalMin >= 360 && totalMin < 430) { calque.style.background = "linear-gradient(to bottom, #ff7e5f, #feb47b)"; decor.style.filter = "brightness(0.75) contrast(1.1)"; moon.style.display = "none"; } else if (totalMin >= 430 && totalMin < 1160) { if (desc.includes("ensoleillé") || desc.includes("éclaircies")) { calque.style.background = "linear-gradient(to bottom, #2b5c8f, #4a90e2)"; } else { calque.style.background = "linear-gradient(to bottom, #4a5568, #718096)"; } decor.style.filter = "brightness(1.15) saturate(1.1)"; moon.style.display = "none"; } else if (totalMin >= 1160 && totalMin < 1220) { calque.style.background = "linear-gradient(to bottom, #1a0b2e, #943126, #f39c12)"; decor.style.filter = "brightness(0.68) saturate(1.25)"; moon.style.display = "block"; } else { if (desc.includes("nuageux") || desc.includes("averse")) { calque.style.background = "linear-gradient(to bottom, #050814, #121829)"; } else { calque.style.background = "linear-gradient(to bottom, #01030a, #030714)"; } decor.style.filter = "brightness(0.34) contrast(1.15)"; moon.style.display = "block"; }
             
             var mo = new Date().getMonth() + 1;
             if (mo >= 3 && mo <= 5) currentSaison = "PRINTEMPS"; else if (mo >= 6 && mo <= 8) currentSaison = "ÉTÉ"; else if (mo >= 9 && mo <= 11) currentSaison = "AUTOMNE"; else currentSaison = "HIVER";
