@@ -172,9 +172,9 @@
                 let uvText = "Bas"; if(uvVal >= 3 && uvVal <= 5) uvText = "Modéré"; if(uvVal >= 6) uvText = "Élevé";
                 document.getElementById('courant-uv').textContent = uvVal + " / " + uvText;
                 
-                let parseTime = (str) => { return str.split('T')[1].substring(0, 5); };
-                document.getElementById('sat-lever').textContent = parseTime(data.daily.sunrise[0]);
-                document.getElementById('sat-coucher').textContent = parseTime(data.daily.sunset[0]);
+                let parseTime = (str) => { return str.split('T').substring(0, 5); };
+                document.getElementById('sat-lever').textContent = parseTime(data.daily.sunrise);
+                document.getElementById('sat-coucher').textContent = parseTime(data.daily.sunset);
                 
                 let code = cur.weather_code;
                 let desc = "Éclaircies"; if(code === 0) desc = "Ensoleillé"; if(code > 0 && code <= 3) desc = "Éclaircies"; if(code >= 51 && code <= 67) desc = "Pluie Fine"; if(code >= 80) desc = "Orageux";
@@ -192,7 +192,7 @@
             }).catch(() => {
                 document.getElementById('courant-temp').textContent = "19°C";
                 document.getElementById('courant-ressenti').textContent = "19°C";
-                document.getElementById('courant-humidite').textContent = "76%";
+                document.getElementById('courant-humidite').textContent = "76% shift";
                 document.getElementById('courant-vent').textContent = "11 km/h";
                 document.getElementById('courant-uv').textContent = "0 / Bas";
                 document.getElementById('sat-lever').textContent = "06:48";
