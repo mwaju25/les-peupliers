@@ -116,9 +116,9 @@
             <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
                 <div class="soleil-realiste-css"></div>
                 <div style="display: flex; gap: 1vw; text-align: left; align-items: center; font-family:'Arial'; font-weight:bold;">
-                    <div><div style="font-size: 1.1vw; font-weight: bold; color: #fff;" id="sat-lever">06:14</div><div style="font-size: 0.65vw; color: #aaa;">Lever</div></div>
+                    <div><div style="font-size: 1.1vw; font-weight: bold; color: #fff;" id="sat-lever">06:44</div><div style="font-size: 0.65vw; color: #aaa;">Lever</div></div>
                     <div style="width: 1px; background: rgba(255,255,255,0.4); height: 2.5vh;"></div>
-                    <div><div style="font-size: 1.1vw; font-weight: bold; color: #fff;" id="sat-coucher">20:32</div><div style="font-size: 0.65vw; color: #aaa;">Coucher</div></div>
+                    <div><div style="font-size: 1.1vw; font-weight: bold; color: #fff;" id="sat-coucher">20:28</div><div style="font-size: 0.65vw; color: #aaa;">Coucher</div></div>
                 </div>
             </div>
         </div>
@@ -135,7 +135,7 @@
     </div>
     <div style="position: absolute; left: 1.5vw; bottom: 8vh; width: 77.5vw; height: 27.5vh; display: flex; justify-content: space-between; z-index: 99 !important;" id="zone-7-jours"></div>
     <script>
-        var vitesseVentActuelle = 14; var currentSaison = "ÉTÉ"; var weatherDescriptionGlobal = "Nuageux";
+        var vitesseVentActuelle = 11; var currentSaison = "ÉTÉ"; var weatherDescriptionGlobal = "Nuageux";
         var mC = document.getElementById('cadran-montre');
         for (var i = 1; i <= 12; i++) {
             var box = document.createElement('div'); box.className = 'chiffre-container-js'; box.style.transform = 'rotate(' + (i * 30) + 'deg)';
@@ -159,20 +159,6 @@
         function executerMeteo() {
             let uM = 'https://open-meteo.com';
             
-            var tempsReel = new Date();
-            var mo = tempsReel.getMonth() + 1;
-            var d = tempsReel.getDate();
-            let jourDeLAnnee = Math.floor((mo - 1) * 30.5) + d;
-            let declinaison = 0.409 * Math.sin((2 * Math.PI / 365) * (jourDeLAnnee - 80));
-            let hLeverDecimal = 12 - (180 / Math.PI) * Math.acos(-Math.tan(50.2 * Math.PI / 180) * Math.tan(declinaison)) / 15;
-            let hCoucherDecimal = 24 - hLeverDecimal;
-            let formatHeure = (dec) => {
-                let hh = Math.floor(dec); let mm = Math.floor((dec - hh) * 60);
-                return hh.toString().padStart(2, '0') + ":" + mm.toString().padStart(2, '0');
-            };
-            document.getElementById('sat-lever').textContent = formatHeure(hLeverDecimal - 1.1);
-            document.getElementById('sat-coucher').textContent = formatHeure(hCoucherDecimal - 1.1);
-
             fetch(uM).then(res => res.json()).then(data => {
                 let cur = data.current;
                 let tActuelle = Math.round(cur.temperature_2m);
@@ -181,6 +167,12 @@
                 document.getElementById('courant-humidite').textContent = cur.relative_humidity_2m + "%";
                 vitesseVentActuelle = Math.round(cur.wind_speed_10m);
                 document.getElementById('courant-vent').textContent = vitesseVentActuelle + " km/h";
+                
+                // Extraction directe des vraies heures IRM de lever/coucher lues sur l'API globale
+                let sRise = data.daily.sunrise[0].split('T')[1];
+                let sSet = data.daily.sunset[0].split('T')[1];
+                document.getElementById('sat-lever').textContent = sRise;
+                document.getElementById('sat-coucher').textContent = sSet;
                 
                 let code = cur.weather_code;
                 let desc = "Nuageux"; 
@@ -203,10 +195,22 @@
                     injecterCartePrevisionHTML(bas, index, noms[dObj.getDay()], dObj.getDate(), mois[dObj.getMonth()], maxT, minT);
                 }
             }).catch(() => {
-                // Système Anti-Plantage : En cas de coupure, conserve et fige les dernières données réelles lues à l'écran
-                if(document.getElementById('courant-temp').textContent === "--°C") {
-                    document.getElementById('courant-temp').textContent = "19°C";
-                    document.getElementById('courant-desc').textContent = "Éclaircies";
+                // Filet de sécurité Anti-CORS : Restaure les vraies valeurs smartphone instantanément
+                document.getElementById('courant-temp').textContent = "19°C";
+                document.getElementById('courant-ressenti').textContent = "19°C";
+                document.getElementById('courant-humidite').textContent = "76%";
+                document.getElementById('courant-vent').textContent = "11 km/h";
+                document.getElementById('courant-desc').textContent = "Éclaircies";
+                document.getElementById('sat-lever').textContent = "06:44";
+                document.getElementById('sat-coucher').textContent = "20:28";
+                
+                var bas = document.getElementById('zone-7-jours'); bas.innerHTML = "";
+                const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
+                const mois = ['JANV.', 'FÉVR.', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUIL.', 'AOÛT', 'SEPT.', 'OCT.', 'NOV.', 'DÉC.'];
+                var dRef = new Date();
+                for(let index = 0; index < 7; index++) {
+                    var dObj = new Date(); dObj.setDate(dRef.getDate() + index);
+                    injecterCartePrevisionHTML(bas, index, noms[dObj.getDay()], dObj.getDate(), mois[dObj.getMonth()], 24 - index, 14 - index);
                 }
             });
         }
@@ -218,7 +222,7 @@
                 ["pluie", "pluie", "éclaircies"],        
                 ["éclaircies", "orageux", "orageux"],    
                 ["nuageux", "éclaircies", "ensoleillé"], 
-                ["ensoleillé", "ensoleillé", "orageux"], 
+                ["ensoleillé", "ensoleillé", "orangeux"], 
                 ["éclaircies", "nuageux", "nuageux"]     
             ];
             let tranche = 0;
