@@ -24,7 +24,7 @@
         .charniere-gauche { left: -6px !important; } .charniere-droite { right: -6px !important; }
         .charniere-gauche::after { content: ''; position: absolute; top: 4px; width: 4px; height: 14px; background: #161a22 !important; left: -3px; border: 1px solid #050505 !important; }
         .charniere-droite::after { content: ''; position: absolute; top: 4px; width: 4px; height: 14px; background: #161a22 !important; right: -3px; border: 1px solid #050505 !important; }
-        .charniere-gauche::before, .charniere-droite::before { content: absolute; left: 0; top: 10px; width: 100%; height: 4px; background: #111 !important; }
+        .charniere-gauche::before, .charniere-droite::before { content: ''; position: absolute; left: 0; top: 10px; width: 100%; height: 4px; background: #111 !important; }
         .montre-retro-cercle { position: absolute; right: 2.2vw; top: 1vh; width: 15.6vw; height: 15.6vw; background: #000000 !important; border: 2px solid #1d2633 !important; border-radius: 50%; box-shadow: 0px 4px 12px rgba(0,0,0,0.5); z-index: 99 !important; }
         .graduation { position: absolute; width: 2px; height: 8px; background: rgba(255,255,255,0.4); left: 50%; top: 2px; margin-left: -1px; transform-origin: 50% 7.6vw; z-index: 11; }
         .graduation.principale { width: 3px; height: 12px; background: #ffffff !important; top: 2px; }
@@ -187,6 +187,7 @@
                 var dRef = new Date();
                 for(let index = 0; index < 7; index++) {
                     var dObj = new Date(); dObj.setDate(dRef.getDate() + index);
+                    // Transmission du vrai paramètre weather_code lu pour chaque jour
                     injecterCartePrevisionHTML(bas, index, noms[dObj.getDay()], dObj.getDate(), mois[dObj.getMonth()], Math.round(data.daily.temperature_2m_max[index]), Math.round(data.daily.temperature_2m_min[index]), data.daily.weather_code[index]);
                 }
             }).catch(() => {
