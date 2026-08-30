@@ -89,11 +89,11 @@
     <div class="pos boite-flip-haut" style="left: 40.8vw; top: 2.5vh; width: 9.6vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-num">--</div><div class="charniere-droite"></div></div>
     <div class="pos boite-flip-haut" style="left: 51.5vw; top: 2.5vh; width: 13.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-mois">--</div><div class="charniere-droite"></div></div>
     <div class="pos boite-flip-haut" style="left: 66.2vw; top: 2.5vh; width: 11.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-annee">----</div><div class="charniere-droite"></div></div>
+
     <div class="montre-retro-cercle" id="cadran-montre">
         <div class="pivot"></div> <div class="aiguille heure" id="needle-hour"></div> <div class="aiguille minute" id="needle-minute"></div>
     </div>
     <div class="boite-digitale-bas"><div class="charniere-gauche"></div><div class="heure-digitale-js" id="horloge-texte">--:--:--</div><div class="charniere-droite"></div></div>
-
     <div class="cadran-relief-bleu" id="cadran-meteo-g" style="position: absolute; left: 1.5vw; top: 25vh; width: 28.5vw; height: 35vh; padding: 1.3vw; color: #ffffff;">
         <div style="font-size: 1.1vw; color: #ffffff; font-weight: bold; margin-bottom: 2px; text-align: left;">Marloie (Marche-en-Famenne)</div>
         <div style="font-size: 0.75vw; color: #aaaaaa; text-transform: uppercase; margin-bottom: 1.2vh; letter-spacing: 1px;">MÉTÉO ACTUELLE</div>
@@ -170,11 +170,8 @@
         }
         function executerMeteo() {
             let url = 'https://open-meteo.com';
-            
-            fetch(url).then(res => {
-                if (!res.ok) throw new Error();
-                return res.json();
-            }).then(data => {
+            construirePrevisionsDefault();
+            fetch(url).then(res => res.json()).then(data => {
                 let cur = data.current;
                 document.getElementById('courant-temp').textContent = Math.round(cur.temperature_2m) + "°C";
                 document.getElementById('courant-ressenti').textContent = Math.round(cur.apparent_temperature) + "°C";
@@ -186,57 +183,23 @@
                 if(code === 0) desc = "Ensoleillé";
                 if(code > 0 && code <= 3) desc = "Nuageux";
                 if(code >= 51 && code <= 67) desc = "Pluie Fine";
-                if(code >= 71 && code <= 77) desc = "Neige";
                 if(code >= 80) desc = "Orageux";
                 document.getElementById('courant-desc').textContent = desc;
                 gererEffetsMeteoEtParticules(desc.toLowerCase());
 
-                var bas = document.getElementById('zone-7-jours'); 
-                bas.innerHTML = "";
+                var bas = document.getElementById('zone-7-jours'); bas.innerHTML = "";
                 const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
                 const mois = ['JANV.', 'FÉVR.', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUIL.', 'AOÛT', 'SEPT.', 'OCT.', 'NOV.', 'DÉC.'];
                 var dRef = new Date();
                 for(let index = 0; index < 7; index++) {
-                    var d = new Date(); 
-                    d.setDate(dRef.getDate() + index);
+                    var d = new Date(); d.setDate(dRef.getDate() + index);
                     let maxT = Math.round(data.daily.temperature_2m_max[index]);
                     let minT = Math.round(data.daily.temperature_2m_min[index]);
-                    var box = document.createElement('div'); 
-                    box.className = "carte-prev-unique";
+                    var box = document.createElement('div'); box.className = "carte-prev-unique";
                     box.innerHTML = `<div style="font-weight:bold; font-family:'Arial Black'; font-size:1.1vw; color:#ffffff;">${index===0?"AUJ.":noms[d.getDay()]}</div><div style="font-size:0.75vw; color:#aaa; font-weight:bold;">${d.getDate()} ${mois[d.getMonth()]}</div><div class="picto-pro-mini" style="display:inline-block; width:3.2vw; height:1.6vw; background:#ffffff; border-radius:20px; position:relative; margin:1vh 0;"><div style="position:absolute; width:1.2vw; height:1.2vw; background:#ffea00; border-radius:50%; top:-0.4vw; left:0.4vw;"></div></div><div style="font-size:2vw; font-weight:bold; color:#ffffff;">${maxT}°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">${minT}°</div>`;
                     bas.appendChild(box);
                 }
-            }).catch(() => {
-                let urlBackup = 'https://wttr.in';
-                fetch(urlBackup).then(res => res.json()).then(data => {
-                    let cur = data.current_condition[0];
-                    document.getElementById('courant-temp').textContent = Math.round(cur.temp_C) + "°C";
-                    document.getElementById('courant-ressenti').textContent = Math.round(cur.FeelsLikeC) + "°C";
-                    document.getElementById('courant-humidite').textContent = cur.humidity + "%";
-                    vitesseVentActuelle = Math.round(cur.windspeedKmph);
-                    document.getElementById('courant-vent').textContent = vitesseVentActuelle + " km/h";
-                    let desc = cur.lang_fr ? cur.lang_fr[0].value : cur.weatherDesc[0].value;
-                    document.getElementById('courant-desc').textContent = desc;
-                    gererEffetsMeteoEtParticules(desc.toLowerCase());
-                    var bas = document.getElementById('zone-7-jours'); 
-                    bas.innerHTML = "";
-                    const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
-                    const mois = ['JANV.', 'FÉVR.', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUIL.', 'AOÛT', 'SEPT.', 'OCT.', 'NOV.', 'DÉC.'];
-                    var dRef = new Date();
-                    for(let index = 0; index < 7; index++) {
-                        var d = new Date(); 
-                        d.setDate(dRef.getDate() + index);
-                        let maxT = Math.round(data.weather[index].maxtempC);
-                        let minT = Math.round(data.weather[index].mintempC);
-                        var box = document.createElement('div'); 
-                        box.className = "carte-prev-unique";
-                        box.innerHTML = `<div style="font-weight:bold; font-family:'Arial Black'; font-size:1.1vw; color:#ffffff;">${index===0?"AUJ.":noms[d.getDay()]}</div><div style="font-size:0.75vw; color:#aaa; font-weight:bold;">${d.getDate()} ${mois[d.getMonth()]}</div><div class="picto-pro-mini" style="display:inline-block; width:3.2vw; height:1.6vw; background:#ffffff; border-radius:20px; position:relative; margin:1vh 0;"><div style="position:absolute; width:1.2vw; height:1.2vw; background:#ffea00; border-radius:50%; top:-0.4vw; left:0.4vw;"></div></div><div style="font-size:2vw; font-weight:bold; color:#ffffff;">${maxT}°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">${minT}°</div>`;
-                        bas.appendChild(box);
-                    }
-                }).catch(() => {
-                    construirePrevisionsDefault();
-                });
-            });
+            }).catch(() => {});
         }
         function construirePrevisionsDefault() {
             var bas = document.getElementById('zone-7-jours'); bas.innerHTML = "";
@@ -255,7 +218,7 @@
         function gererEffetsMeteoEtParticules(desc) {
             var avant = document.getElementById('front-particles'); var nuage = document.getElementById('cloud-layer');
             avant.innerHTML = "";
-            if (desc.includes("nuageux") || desc.includes("éclaircies") || desc.includes("nuage") || desc.includes("couvert") || desc.includes("cloudy")) { nuage.style.opacity = "0.55"; } else if (desc.includes("pluie") || desc.includes("rain")) { nuage.style.opacity = "0.80"; } else { nuage.style.opacity = "0"; }
+            if (desc.includes("nuageux") || desc.includes("éclaircies") || desc.includes("nuage")) { nuage.style.opacity = "0.55"; } else if (desc.includes("pluie")) { nuage.style.opacity = "0.80"; } else { nuage.style.opacity = "0"; }
             if (nuage.style.opacity > 0) nuage.className = "anim-clouds";
             let leafCount = Math.min(10, Math.floor(vitesseVentActuelle * 0.08) + 2);
             for(let i=0; i<leafCount; i++) {
@@ -264,11 +227,13 @@
                 let speed = Math.max(1.8, 6.5 - (vitesseVentActuelle * 0.08)); l.style.animationDuration = speed + "s"; l.style.animationDelay = (Math.random() * 5) + "s"; avant.appendChild(l);
             }
         }
+
         function gererCycleJourNuit() {
             var h = new Date().getHours(); var calque = document.getElementById('sky-gradient'); var decor = document.getElementById('school-view-bg'); var moon = document.getElementById('lune-vrai-ciel');
             var cS = document.getElementById('cadran-saison-d'); var cL = document.getElementById('cadran-lune-d');
             if(h >= 7 && h < 18) { calque.style.background = "linear-gradient(to bottom, rgba(3,15,40,0), transparent)"; decor.style.filter = "brightness(1.18) saturate(1.1)"; moon.style.display = "none"; cS.classList.remove('nuit-active-widget'); cL.classList.remove('nuit-active-widget'); } else { calque.style.background = "linear-gradient(to bottom, rgba(2,5,15,0.95), rgba(1,2,5,0.98))"; decor.style.filter = "brightness(0.38) contrast(1.1)"; moon.style.display = "block"; cS.classList.add('nuit-active-widget'); cL.classList.add('nuit-active-widget'); }
         }
+
         function calculPhaseLune() {
             var t = new Date(); var y = t.getFullYear(); var m = t.getMonth() + 1; var d = t.getDate();
             if (m <= 2) { y -= 1; m += 12; }
