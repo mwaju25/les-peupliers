@@ -53,7 +53,7 @@
         .charniere-gauche::after { content: ''; position: absolute; top: 4px; width: 4px; height: 14px; background: #161a22 !important; left: -3px; border: 1px solid #050505 !important; }
         .charniere-droite::after { content: ''; position: absolute; top: 4px; width: 4px; height: 14px; background: #161a22 !important; right: -3px; border: 1px solid #050505 !important; }
         .charniere-gauche::before, .charniere-droite::before { content: ''; position: absolute; left: 0; top: 10px; width: 100%; height: 4px; background: #111 !important; }
-        /* ARCHITECTURE DU CADRAN ANALOGIQUE DETECTE DE L'HORLOGE RETRO */
+        /* CHRONOLOGIE ET CADRAN DE L'HORLOGE ANALOGIQUE */
         .montre-retro-cercle { position: absolute; right: 2.2vw; top: 1vh; width: 15.6vw; height: 15.6vw; background: #000000 !important; border: 2px solid #1d2633 !important; border-radius: 50%; box-shadow: 0px 4px 12px rgba(0,0,0,0.5); z-index: 10; }
         .graduation { position: absolute; width: 2px; height: 8px; background: rgba(255,255,255,0.4); left: 50%; top: 2px; margin-left: -1px; transform-origin: 50% 7.6vw; z-index: 11; }
         .graduation.principale { width: 3px; height: 12px; background: #ffffff !important; top: 2px; }
@@ -67,14 +67,11 @@
         .boite-digitale-bas { position: absolute; right: 2vw; top: 35.5vh; width: 17vw; height: 8vh; background: #05070a !important; border: none !important; border-radius: 8px; box-shadow: inset 0 0 10px rgba(0,0,0,0.8) !important; }
         .heure-digitale-js { font-size: 2.7vw; font-weight: 900; color: #ffffff !important; letter-spacing: 1px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; }
         .heure-digitale-js::after { content: ''; position: absolute; left: 0; top: 50%; width: 100%; height: 2px; background: #000000; border-bottom: 1px solid rgba(255,255,255,0.15); z-index: 5; }
-        /* PURIFICATION ET DECORATION DES CADRANS DE L'INTERFACE */
+        /* ARCHITECTURE DE DESIGN DES CRATE ET MODULES DROITS/GAUCHES */
         .cadran-relief-bleu { background: #0d131a !important; border: 2px solid #212c3a !important; border-radius: 12px !important; box-shadow: 0 8px 16px rgba(0,0,0,0.7), inset 0 0 12px rgba(0,0,0,0.8) !important; opacity: 1 !important; z-index: 10; transition: border-color 8s ease-in-out, box-shadow 8s ease-in-out; }
         .cadran-relief-noir-bloc { background: #05080c !important; border: 2px solid #162029 !important; border-radius: 12px; box-shadow: 0 6px 12px rgba(0,0,0,0.6); z-index: 10; transition: border-color 8s ease-in-out, box-shadow 8s ease-in-out; }
         
-        .cadre-logo-purete { position: absolute; left: 1.5vw; top: 1.5vh; width: 14vw; height: 21vh; display: flex; align-items: center; justify-content: center; z-index: 10; background: transparent; }
-        .cadre-slogan-purete { position: absolute; left: 1.5vw; bottom: 1.5vh; width: 96.5vw; height: 5vh; display: flex; align-items: center; justify-content: center; z-index: 10; background: transparent; }
-
-        /* EFFET DE SÉLECTION LUMINEUSE SUR LES CADRANS DE DROITE SEULS */
+        /* HALOS DISCRETS DE NUIT STRICTEMENT ASSIGNES AUX COMMANDES COMPOSITES */
         .cadran-relief-bleu.nuit-active-widget { border-color: rgba(255, 255, 255, 0.72) !important; box-shadow: 0 0 14px rgba(255,255,255,0.22), inset 0 0 12px rgba(0,0,0,0.8) !important; }
         .cadran-relief-noir-bloc.nuit-active-widget { border-color: rgba(255, 255, 255, 0.65) !important; box-shadow: 0 0 12px rgba(255,255,255,0.18), 0 6px 12px rgba(0,0,0,0.6) !important; }
 
@@ -82,7 +79,7 @@
         .soleil-realiste-css { width: 3.2vw; height: 3.2vw; background: radial-gradient(circle, #fff 15%, #ffea00 55%, #ff7700 100%); border-radius: 50%; box-shadow: 0 0 18px rgba(255,210,0,0.75), 0 0 35px rgba(255,100,0,0.4); }
         .lune-doree-image { position: relative; width: 3.4vw; height: 3.4vw; border-radius: 50%; background-image: url('https://wikimedia.org') !important; background-size: cover; background-position: center; border: 1.5px solid rgba(255,255,255,0.5) !important; box-shadow: 0 0 14px rgba(255,255,255,0.4); filter: grayscale(1) brightness(1.2); display: block; overflow: hidden; }
         .cache-ombre-lunaire { position: absolute; top: 0; width: 100%; height: 100%; background: rgba(5,8,12,0.88); transition: left 0.5s, width 0.5s; }
-        /* DESSIN VECTORIEL DU ARBRE FRUITIER POMMIER ÉVOLUTIF EN COULEURS REELLES */
+        /* GRAPHISME DU POMMIER EMBLEMATIQUE REEL ET HIGH DEFINITION */
         .case-illustration-pommier { width: 4.8vw; height: 4.8vw; position: relative; display: flex; align-items: center; justify-content: center; background: transparent; }
         .pommier-trunk { position: absolute; width: 4px; background: #5c4033; bottom: 0.2vw; height: 1.8vw; left: 50%; transform: translateX(-50%); border-radius: 2px; }
         .pommier-branch-l { position: absolute; width: 10px; height: 2px; background: #5c4033; bottom: 1.4vw; left: 1.2vw; transform: rotate(-30deg); }
@@ -113,23 +110,18 @@
     <div class="lune-dans-le-ciel" id="lune-vrai-ciel"><div class="cache-lune-ciel" id="lune-ombre-ciel"></div></div>
     <div id="school-view-bg" class="decor-permanent"></div>
     <div id="cloud-layer"></div> <div id="lightning-flash"></div> <div id="back-precipitations"></div> <div id="front-particles"></div>
-    <!-- LOGO DU COIN GAUCHE SANS AUCCUN CONTOUR PARASITE -->
-    <div class="cadre-logo-purete">
-        <img src="logo.png" alt="Les Peupliers" style="max-width:92%; max-height:92%; object-fit:contain;">
-    </div>
-
-    <!-- CALENDRIER HAUT -->
+    <!-- CALENDRIER SUPERIEUR SYNCHRONISE -->
     <div class="pos boite-flip-haut" style="left: 17.5vw; top: 2.5vh; width: 22.3vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-jour">--</div><div class="charniere-droite"></div></div>
     <div class="pos boite-flip-haut" style="left: 40.8vw; top: 2.5vh; width: 9.6vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-num">--</div><div class="charniere-droite"></div></div>
     <div class="pos boite-flip-haut" style="left: 51.5vw; top: 2.5vh; width: 13.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-mois">--</div><div class="charniere-droite"></div></div>
     <div class="pos boite-flip-haut" style="left: 66.2vw; top: 2.5vh; width: 11.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-annee">----</div><div class="charniere-droite"></div></div>
 
-    <!-- HORLOGE ANALOGIQUE COMPLÈTE AVEC GRADUATIONS ET CHIFFRES -->
+    <!-- CERCLE RETRO ANALOGIQUE -->
     <div class="montre-retro-cercle" id="cadran-montre">
         <div class="pivot"></div> <div class="aiguille heure" id="needle-hour"></div> <div class="aiguille minute" id="needle-minute"></div>
     </div>
     <div class="boite-digitale-bas"><div class="charniere-gauche"></div><div class="heure-digitale-js" id="horloge-texte">--:--:--</div><div class="charniere-droite"></div></div>
-    <!-- METEO DE GAUCHE DES PEUPLIERS -->
+    <!-- BLOCK METEO GAUCHE COMPACT -->
     <div class="cadran-relief-bleu" id="cadran-meteo-g" style="position: absolute; left: 1.5vw; top: 25vh; width: 28.5vw; height: 35vh; padding: 1.3vw; color: #ffffff;">
         <div style="font-size: 1.1vw; color: #ffffff; font-weight: bold; margin-bottom: 2px; text-align: left; font-family:'Arial';">Marloie (Marche-en-Famenne)</div>
         <div style="font-size: 0.75vw; color: #aaaaaa; text-transform: uppercase; margin-bottom: 1.2vh; letter-spacing: 1px;">MÉTÉO ACTUELLE</div>
@@ -180,18 +172,13 @@
         <div class="lune-doree-image" id="lune-vrai-photo"><div class="cache-ombre-lunaire" id="lune-ombre-widget"></div></div>
     </div>
 
-    <!-- PREVISIONS D'EN BAS -->
+    <!-- ZONE DE RECEPTION DES 7 PANNEAUX DE BASE SANS SURCHARGE -->
     <div style="position: absolute; left: 1.5vw; bottom: 8vh; width: 77.5vw; height: 27.5vh; display: flex; justify-content: space-between;" id="zone-7-jours"></div>
-
-    <!-- BANDEAU SLOGAN EN FIN DE PAGE TOTALEMENT SÉCURISÉ -->
-    <div class="cadre-slogan-purete">
-        <span style="font-size: 1.1vw; font-style: italic; color: #fff;">Un environnement <span style="color:#8ad400;">stimulant</span> pour un avenir <span style="color:#8ad400;">prometteur</span></span>
-    </div>
 
     <script>
         var vitesseVentActuelle = 12; var currentSaison = "ÉTÉ"; var isNightTime = false; var orageInterval = null;
 
-        /* INJECTION MECANIQUE DU CADRAN DE L'HORLOGE RETRO SANS INTERRUPTION */
+        /* INJECTION MECANIQUE DIRECTE DES GRADUATIONS DE L'HORLOGE */
         var mC = document.getElementById('cadran-montre');
         for (var i = 1; i <= 12; i++) {
             var box = document.createElement('div'); box.className = 'chiffre-container-js'; box.style.transform = 'rotate(' + (i * 30) + 'deg)';
@@ -220,7 +207,6 @@
             
             document.getElementById('sat-saison').textContent = currentSaison; actualiserVegetationBlueprint(); gererCycleJourNuit();
         }
-
         function executerMeteo() {
             fetch('https://wttr.in').then(res => res.json()).then(data => {
                 var current = data.current_condition;
@@ -301,7 +287,7 @@
             } else if(currentSaison === "AUTOMNE") {
                 box.innerHTML = trunk + '<div class="pommier-canopy" style="width:2.4vw; height:2.4vw; background:#ef6c00; opacity:0.9; bottom:1.6vw; left:50%; transform:translateX(-50%); border-radius:40% 60% 40% 60%;"></div><div class="pommier-fruit" style="bottom:0.3vw; left:1.2vw; opacity:1;"></div><div class="pommier-fruit" style="bottom:0.4vw; right:1vw; opacity:1;"></div>';
             } else {
-                box.innerHTML = trunk + '<div class="pommier-canopy" style="width:2.6vw; height:4px; background:#ffffff; opacity:1; bottom:3.6vw; left:50%; transform:translateX(-50%); border-radius:2px; box-shadow:0 2px 4px rgba(255,255,255,0.8);"></div>';
+                box.innerHTML = trunk + '<div class="pommier-canopy" style="width:2.6vw; height:4px; background:#ffffff; opacity:1; bottom:3.6vw; left:50%; transform:translateX(-50%); border-radius:2px; box-shadow:0 2px 4px rgba(255,255,255,0.8);">';
             }
         }
 
