@@ -8,43 +8,42 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Arial Black', sans-serif; }
         body { background-color: #000; color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
         
-        /* DECOR PRINCIPAL ET COUCHES ATMOSPHERIQUES */
+        /* STRUCTURE DES COUCHES ARRIÈRE-PLAN (LUNE DERRIÈRE LES ARBRES) */
+        #sky-gradient { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -6; transition: background 5s ease; pointer-events: none; }
+        
+        .lune-dans-le-ciel {
+            position: fixed; top: 11vh; left: 4vw; width: 4.8vw; height: 4.7vw; border-radius: 50%;
+            background-image: url('https://wikimedia.org') !important;
+            background-size: cover; background-position: center; border: 1.5px solid rgba(255,255,255,0.4) !important;
+            box-shadow: 0 0 15px rgba(255,255,255,0.3); filter: grayscale(1) brightness(1.15);
+            z-index: -5; display: none; overflow: hidden;
+        }
+        .cache-lune-ciel { position: absolute; top: 0; width: 100%; height: 100%; background: rgba(5,8,12,0.88); }
+        
         .decor-permanent { 
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; 
-            background-image: url('fond-final.png'); background-size: 100% 100%; background-position: center; z-index: -6; 
+            background-image: url('fond-final.png'); background-size: 100% 100%; background-position: center; z-index: -4; 
             transition: filter 3s ease;
         }
-        
         .decor-permanent.effet-enneige::after {
             content: ''; position: absolute; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: linear-gradient(to bottom, rgba(255,255,255,0.15), rgba(255,255,255,0.45));
+            background: linear-gradient(to bottom, rgba(255,255,255,0.15), rgba(255,255,255,0.42));
             mix-blend-mode: overlay; pointer-events: none;
         }
         
-        #sky-gradient { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -5; transition: background 5s ease; pointer-events: none; }
-        #cloud-layer { position: fixed; top: 0; left: 0; width: 200vw; height: 40vh; background: url('https://wikimedia.org') repeat-x; background-size: contain; z-index: -4; opacity: 0; pointer-events: none; }
-        #lightning-flash { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3; background: rgba(255,255,255,0); pointer-events: none; }
-        #back-precipitations { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; pointer-events: none; }
+        #cloud-layer { position: fixed; top: 0; left: 0; width: 200vw; height: 40vh; background: url('https://wikimedia.org') repeat-x; background-size: contain; z-index: -3; opacity: 0; pointer-events: none; }
+        #lightning-flash { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; background: rgba(255,255,255,0); pointer-events: none; }
+        #back-precipitations { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; }
         #front-particles { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 2; pointer-events: none; }
 
-        /* LUNE INCORPOREE DANS LE CIEL DERRIÈRE LES ARBRES */
-        .lune-dans-le-ciel {
-            position: fixed; top: 12vh; left: 4vw; width: 4.5vw; height: 4.4vw; border-radius: 50%;
-            background-image: url('https://wikimedia.org') !important;
-            background-size: cover; background-position: center; border: 1.5px solid rgba(255,255,255,0.4) !important;
-            box-shadow: 0 0 15px rgba(255,255,255,0.35); filter: grayscale(1) brightness(1.2);
-            z-index: -4; display: none; overflow: hidden;
-        }
-        .cache-ombre-lunaire { position: absolute; top: 0; width: 100%; height: 100%; background: rgba(5,8,12,0.88); transition: left 0.5s, width 0.5s; }
-
         .pos { position: absolute; display: flex; align-items: center; justify-content: center; overflow: hidden; text-align: center; }
+
         .boite-flip-haut {
             background: linear-gradient(to bottom, #11151c, #05070a) !important; border: 2px solid #28303d !important; border-radius: 8px !important;
             box-shadow: 0px 6px 12px rgba(0,0,0,0.5), inset 0px 0px 10px rgba(0,0,0,0.9) !important;
         }
         .flip-tuile-js { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 2.3vw; font-weight: 900; color: #fff; text-transform: uppercase; letter-spacing: 1px; position: relative; }
         .flip-tuile-js::after { content: ''; position: absolute; left: 0; top: 50%; width: 100%; height: 2px; background: #000000 !important; border-bottom: 1px solid rgba(255,255,255,0.18) !important; z-index: 5; }
-
         .charniere-gauche, .charniere-droite {
             position: absolute; top: 50%; transform: translateY(-50%); width: 12px; height: 24px; z-index: 10;
             background: linear-gradient(to right, #444, #d1d1d1, #fff 40%, #d1d1d1 70%, #333) !important;
@@ -60,10 +59,10 @@
         .graduation.principale { width: 3px; height: 14px; background: #fff; }
         .chiffre-container-js { position: absolute; width: 2vw; height: 2vw; left: 50%; top: 6px; margin-left: -1vw; transform-origin: 50% 7.2vw; display: flex; align-items: center; justify-content: center; }
         .chiffre-cadran-fixe { font-size: 0.95vw; font-weight: bold; color: #fff; font-family: 'Arial Black', sans-serif; }
+
         .aiguille { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom center; border-radius: 4px; z-index: 12; }
         .heure { width: 5px; height: 3.2vw; background-color: #fff; } .minute { width: 4px; height: 4.9vw; background-color: #8ad400; }
         .pivot { position: absolute; width: 12px; height: 12px; background: #a2f200; border-radius: 50%; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 15; box-shadow: 0 0 6px rgba(162,242,0,0.8); }
-
         .boite-digitale-bas { position: absolute; right: 2vw; top: 35.5vh; width: 17vw; height: 8vh; background: #05070a !important; border: none !important; border-radius: 8px; box-shadow: inset 0 0 10px rgba(0,0,0,0.8) !important; }
         .heure-digitale-js { font-size: 2.7vw; font-weight: 900; color: #ffffff !important; letter-spacing: 1px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; }
         .heure-digitale-js::after { content: ''; position: absolute; left: 0; top: 50%; width: 100%; height: 2px; background: #000000; border-bottom: 1px solid rgba(255,255,255,0.15); z-index: 5; }
@@ -73,19 +72,21 @@
         .carte-prev-unique { width: 10.4vw; height: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 1.5vh 0; background: transparent; }
 
         .soleil-realiste-css { width: 3.2vw; height: 3.2vw; background: radial-gradient(circle, #fff 15%, #ffea00 55%, #ff7700 100%); border-radius: 50%; box-shadow: 0 0 18px rgba(255,210,0,0.75), 0 0 35px rgba(255,100,0,0.4); }
+        .lune-doree-image { position: relative; width: 3.4vw; height: 3.4vw; border-radius: 50%; background-image: url('https://wikimedia.org') !important; background-size: cover; background-position: center; border: 1.5px solid rgba(255,255,255,0.5) !important; box-shadow: 0 0 14px rgba(255,255,255,0.4); filter: grayscale(1) brightness(1.2); display: block; overflow: hidden; }
+        .cache-ombre-lunaire { position: absolute; top: 0; width: 100%; height: 100%; background: rgba(5,8,12,0.88); transition: left 0.5s, width 0.5s; }
 
-        /* LOGOS METEO OPACIFIES */
+        /* LOGOS METEO 100% OPACIFIES ET TRÈS VISIBLES */
         .picto-pro-meteo { position: relative; width: 4.8vw; height: 4.8vw; display: flex; align-items: center; justify-content: center; }
         .picto-pro-meteo .soleil-centre { width: 2.2vw; height: 2.2vw; background: #ffea00; border-radius: 50%; box-shadow: 0 0 15px #ffdf00; }
         .picto-pro-meteo .nuage-face { position: absolute; width: 3.2vw; height: 1.6vw; background: #ffffff; border-radius: 20px; bottom: 0.8vw; left: 0.8vw; box-shadow: 0 4px 6px rgba(0,0,0,0.4); }
         .picto-pro-meteo .nuage-face::before { content:''; position: absolute; width: 1.6vw; height: 1.6vw; background: #ffffff; border-radius: 50%; top: -0.8vw; left: 0.5vw; }
         .picto-pro-meteo .nuage-face::after { content:''; position: absolute; width: 1.2vw; height: 1.2vw; background: #ffffff; border-radius: 50%; top: -0.5vw; right: 0.5vw; }
         .picto-pro-mini { scale: 0.65; display: inline-block; vertical-align: middle; }
-        /* MODULE DE LA PLANTE DYNAMIQUE CSS */
+        /* MODULE DE LA PLANTE VECTORIELLE ÉVOLUTIVE ÉPURÉE ET ADULTE */
         .decor-vegetal-pro { width: 4vw; height: 4vw; position: relative; display: flex; align-items: center; justify-content: center; }
-        .vegetal-pot { width: 1.8vw; height: 1.2vw; background: #5a3d28; border-radius: 0 0 4px 4px; position: absolute; bottom: 0.2vh; }
-        .vegetal-stem { width: 4px; background: #8ad400; position: absolute; bottom: 1.4vw; border-radius: 2px; }
-        .vegetal-leaf { position: absolute; background: #a2f200; width: 12px; height: 8px; border-radius: 0 100% 0 100%; }
+        .vegetal-pot { width: 1.8vw; height: 1.2vw; background: #423125; border-radius: 2px; position: absolute; bottom: 0.2vh; border: 1px solid #5a4538; }
+        .vegetal-stem { width: 4px; background: #7cc000; position: absolute; bottom: 1.4vw; border-radius: 2px; }
+        .vegetal-leaf { position: absolute; background: #8ad400; width: 12px; height: 8px; border-radius: 0 100% 0 100%; border-bottom: 1px solid #5d8e00; }
 
         .feuille-peuplier-svg { position: absolute; width: 13px; height: 13px; background: var(--leaf-color); border-radius: 2px 75% 60% 75%; transform-origin: center; animation: flowWind linear infinite; }
         .goutte-particule { position: absolute; background: #ffffff; width: 2px; height: 22px; animation: flowChute linear infinite; }
@@ -98,15 +99,22 @@
     </style>
 </head>
 <body>
+    <div id="sky-gradient"></div>
+    <div class="lune-dans-le-ciel" id="lune-vrai-ciel"><div class="cache-lune-ciel" id="lune-ombre-ciel"></div></div>
     <div id="school-view-bg" class="decor-permanent"></div>
-    <div id="sky-gradient"></div> <div id="cloud-layer"></div> <div id="lightning-flash"></div> <div id="back-precipitations"></div> <div id="front-particles"></div>
-    <div class="lune-dans-le-ciel" id="lune-vrai-ciel"><div class="cache-ombre-lunaire" id="lune-ombre-ciel"></div></div>
-
+    <div id="cloud-layer"></div> <div id="lightning-flash"></div> <div id="back-precipitations"></div> <div id="front-particles"></div>
     <!-- CALENDRIER HAUT -->
     <div class="pos boite-flip-haut" style="left: 17.5vw; top: 2.5vh; width: 22.3vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-jour">--</div><div class="charniere-droite"></div></div>
     <div class="pos boite-flip-haut" style="left: 40.8vw; top: 2.5vh; width: 9.6vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-num">--</div><div class="charniere-droite"></div></div>
     <div class="pos boite-flip-haut" style="left: 51.5vw; top: 2.5vh; width: 13.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-mois">--</div><div class="charniere-droite"></div></div>
     <div class="pos boite-flip-haut" style="left: 66.2vw; top: 2.5vh; width: 11.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-annee">----</div><div class="charniere-droite"></div></div>
+
+    <!-- HORLOGE ANALOGIQUE -->
+    <div class="montre-retro-cercle" id="cadran-montre">
+        <div class="pivot"></div> <div class="aiguille heure" id="needle-hour"></div> <div class="aiguille minute" id="needle-minute"></div>
+    </div>
+    <div class="boite-digitale-bas"><div class="charniere-gauche"></div><div class="heure-digitale-js" id="horloge-texte">--:--:--</div><div class="charniere-droite"></div></div>
+
     <!-- METEO DE GAUCHE DES PEUPLIERS -->
     <div class="cadran-relief-bleu" style="position: absolute; left: 1.5vw; top: 25vh; width: 28.5vw; height: 35vh; padding: 1.3vw; color: #ffffff;">
         <div style="font-size: 1.1vw; color: #ffffff; font-weight: bold; margin-bottom: 2px; text-align: left; font-family:'Arial';">Marloie (Marche-en-Famenne)</div>
@@ -147,13 +155,16 @@
             </div>
         </div>
     </div>
-    <!-- MODULE LUNE PURIFIE -->
-    <div class="cadran-relief-noir-bloc" style="position: absolute; right: 2vw; top: 75vh; width: 17vw; height: 14.5vh; padding: 1vw 1.2vw; display: flex; flex-direction: column; justify-content: center; text-align: left; font-family:'Arial'; font-weight:bold;">
-        <div style="font-size: 1.1vw; color: #8ad400; font-weight: bold; letter-spacing: 0.5px; font-family:'Arial Black'; margin-bottom: 4px;">LUNE</div>
-        <div style="font-size: 0.85vw; line-height: 1.4; color: #ffffff;">
-            <strong style="font-size: 1vw; color: #fff; display: block; margin-bottom: 2px;" id="lune-phase-nom">Calcul...</strong>
-            Âge : <span id="lune-age">--</span> j<br>Éclairement : <span id="lune-ecl">--</span>%
+    <!-- MODULE LUNE DOUBLE CADRAN -->
+    <div class="cadran-relief-noir-bloc" style="position: absolute; right: 2vw; top: 75vh; width: 17vw; height: 14.5vh; padding: 1vw 1.2vw; display: flex; justify-content: space-between; align-items: center; font-family:'Arial'; font-weight:bold;">
+        <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; text-align: left;">
+            <div style="font-size: 1.1vw; color: #8ad400; font-weight: bold; letter-spacing: 0.5px; font-family:'Arial Black';">LUNE</div>
+            <div style="font-size: 0.78vw; line-height: 1.35; color: #ffffff; margin-top: 0.3vh;">
+                <strong style="font-size: 0.95vw; color: #fff; display: block; margin-bottom: 2px;" id="lune-phase-nom">Calcul...</strong>
+                Âge : <span id="lune-age">--</span> j<br>Éclairement : <span id="lune-ecl">--</span>%
+            </div>
         </div>
+        <div class="lune-doree-image" id="lune-vrai-photo"><div class="cache-ombre-lunaire" id="lune-ombre-widget"></div></div>
     </div>
 
     <div style="position: absolute; left: 1.5vw; bottom: 8vh; width: 77.5vw; height: 27.5vh; display: flex; justify-content: space-between;" id="zone-7-jours"></div>
@@ -161,26 +172,18 @@
     <script>
         var vitesseVentActuelle = 12; var currentSaison = "ÉTÉ"; var isNightTime = false; var orageInterval = null;
 
-        /* BLINDAGE DE L'HORLOGE : CRÉATION DU COMPTEUR EMBARQUÉ ET AUTONOME */
         function actualiserHorloge() {
             var tempsReel = new Date(); var h = tempsReel.getHours(); var m = tempsReel.getMinutes(); var s = tempsReel.getSeconds();
             document.getElementById('horloge-texte').textContent = h.toString().padStart(2, '0') + ':' + m.toString().padStart(2, '0') + ':' + s.toString().padStart(2, '0');
             document.getElementById('needle-hour').style.transform = 'translateX(-50%) rotate(' + ((h % 12) * 30 + m * 0.5) + 'deg)';
             document.getElementById('needle-minute').style.transform = 'translateX(-50%) rotate(' + (m * 6) + 'deg)';
-
             document.getElementById('date-jour').textContent = ['DIMANCHE', 'LUNDI', 'MARDI', 'MERCREDI', 'JEUDI', 'VENDREDI', 'SAMEDI'][tempsReel.getDay()];
             document.getElementById('date-num').textContent = tempsReel.getDate();
             document.getElementById('date-mois').textContent = ['JANVIER', 'FÉVRIER', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUILLET', 'AOÛT', 'SEPTEMBRE', 'OCTOBRE', 'NOVEMBRE', 'DÉCÉMBRE'][tempsReel.getMonth()];
             document.getElementById('date-annee').textContent = tempsReel.getFullYear();
-            
             var mNum = tempsReel.getMonth();
-            if (mNum >= 2 && mNum <= 4) currentSaison = "PRINTEMPS";
-            else if (mNum >= 5 && mNum <= 8) currentSaison = "ÉTÉ";
-            else if (mNum >= 9 && mNum <= 10) currentSaison = "AUTOMNE";
-            else currentSaison = "HIVER";
-            
-            document.getElementById('sat-saison').textContent = currentSaison;
-            actualiserVegetationCSS(); gererCycleJourNuit();
+            if (mNum >= 2 && mNum <= 4) currentSaison = "PRINTEMPS"; else if (mNum >= 5 && mNum <= 8) currentSaison = "ÉTÉ"; else if (mNum >= 9 && mNum <= 10) currentSaison = "AUTOMNE"; else currentSaison = "HIVER";
+            document.getElementById('sat-saison').textContent = currentSaison; actualiserVegetationCSS(); gererCycleJourNuit();
         }
         setInterval(actualiserHorloge, 1000);
         function executerMeteo() {
@@ -193,13 +196,8 @@
                 vitesseVentActuelle = Math.round(current.windspeedKmh);
                 document.getElementById('courant-vent').textContent = vitesseVentActuelle + " km/h";
                 document.getElementById('courant-uv').textContent = current.uvIndex + " / Max";
-                document.getElementById('courant-desc').textContent = current.lang_fr ? current.lang_fr[0].value : "Connecté";
                 gererEffetsMeteoEtParticules(current.weatherDesc[0].value.toLowerCase());
-            }).catch(() => {
-                document.getElementById('courant-temp').textContent = "18°C";
-                document.getElementById('courant-desc').textContent = "Éclaircies";
-                gererEffetsMeteoEtParticules("cloudy");
-            });
+            }).catch(() => { gererEffetsMeteoEtParticules("cloudy"); });
         }
 
         function gererEffetsMeteoEtParticules(desc) {
@@ -207,87 +205,48 @@
             var nuage = document.getElementById('cloud-layer'); avant.innerHTML = ""; arriere.innerHTML = ""; clearInterval(orageInterval);
             var windX = (vitesseVentActuelle * 2.5) + "vw";
             nuage.style.setProperty('--cloud-speed', Math.max(10, 60 - vitesseVentActuelle) + "s");
-
             var estPluie = desc.includes("rain") || desc.includes("pluie") || desc.includes("drizzle");
             var estNeige = desc.includes("snow") || desc.includes("neige") || currentSaison === "HIVER";
             var estOrage = desc.includes("thunder") || desc.includes("orage");
-            
             nuage.style.opacity = (estPluie || estOrage || estNeige) ? "0.65" : "0";
             if(estPluie || estOrage || estNeige) nuage.className = "anim-clouds";
-
-            if(estOrage) {
-                orageInterval = setInterval(() => { if(Math.random() > 0.4) { let flash = document.getElementById('lightning-flash'); flash.style.background = "rgba(255,255,255,0.85)"; setTimeout(() => flash.style.background = "rgba(255,255,255,0)", 100); } }, 3000);
-            }
-
+            if(estOrage) { orageInterval = setInterval(() => { if(Math.random() > 0.4) { let flash = document.getElementById('lightning-flash'); flash.style.background = "rgba(255,255,255,0.85)"; setTimeout(() => flash.style.background = "rgba(255,255,255,0)", 100); } }, 3000); }
             if(estPluie || estOrage) {
-                let dFactor = Math.min(100, 30 + vitesseVentActuelle);
-                for(let i=0; i<dFactor; i++) {
-                    let g = document.createElement('div'); g.className = "goutte-particule";
-                    g.style.left = Math.random() * 100 + "vw"; g.style.top = Math.random() * -20 + "vh";
-                    g.style.setProperty('--wind-x', windX); g.style.animationDuration = (Math.random() * 0.3 + 0.4) + "s";
-                    (i % 2 === 0 ? arriere : avant).appendChild(g);
+                for(let i=0; i<Math.min(100, 30 + vitesseVentActuelle); i++) {
+                    let g = document.createElement('div'); g.className = "goutte-particule"; g.style.left = Math.random() * 100 + "vw"; g.style.top = Math.random() * -20 + "vh";
+                    g.style.setProperty('--wind-x', windX); g.style.animationDuration = (Math.random() * 0.3 + 0.4) + "s"; (i % 2 === 0 ? arriere : avant).appendChild(g);
                 }
             }
-
             if(estNeige) {
-                let fFactor = Math.min(80, 25 + vitesseVentActuelle);
-                for(let i=0; i<fFactor; i++) {
-                    let f = document.createElement('div'); f.className = "flocon-particule";
-                    f.style.left = Math.random() * 100 + "vw"; f.style.top = Math.random() * -10 + "vh";
-                    let size = Math.random() * 6 + 3; f.style.width = size + "px"; f.style.height = size + "px";
-                    f.style.setProperty('--wind-x', windX); f.style.animationDuration = (Math.random() * 2 + 2) + "s";
-                    (i % 2 === 0 ? arriere : avant).appendChild(f);
+                for(let i=0; i<Math.min(80, 25 + vitesseVentActuelle); i++) {
+                    let f = document.createElement('div'); f.className = "flocon-particule"; f.style.left = Math.random() * 100 + "vw"; f.style.top = Math.random() * -10 + "vh";
+                    let size = Math.random() * 6 + 3; f.style.width = size + "px"; f.style.height = size + "px"; f.style.setProperty('--wind-x', windX); f.style.animationDuration = (Math.random() * 2 + 2) + "s"; (i % 2 === 0 ? arriere : avant).appendChild(f);
                 }
             }
-
             if(currentSaison !== "HIVER") {
                 let leafCount = Math.min(50, Math.floor(vitesseVentActuelle * 1.2) + (currentSaison === "AUTOMNE" ? 20 : 5));
                 let listColors = currentSaison === "AUTOMNE" ? ["#c45d07", "#b82a06", "#d4a310"] : ["#a3e06b", "#ffc0cb"];
                 for(let i=0; i<leafCount; i++) {
-                    let l = document.createElement('div'); l.className = "feuille-peuplier-svg";
-                    l.style.setProperty('--leaf-color', listColors[Math.floor(Math.random() * listColors.length)]);
-                    l.style.left = "-2vw"; l.style.setProperty('--start-y', (Math.random() * 85) + "vh");
-                    l.style.setProperty('--end-y', (Math.random() * 95) + "vh");
-                    l.style.animationDuration = Math.max(1.2, 5.5 - (vitesseVentActuelle * 0.08)) + "s";
-                    l.style.animationDelay = (Math.random() * 5) + "s"; avant.appendChild(l);
+                    let l = document.createElement('div'); l.className = "feuille-peuplier-svg"; l.style.setProperty('--leaf-color', listColors[Math.floor(Math.random() * listColors.length)]);
+                    l.style.left = "-2vw"; l.style.setProperty('--start-y', (Math.random() * 85) + "vh"); l.style.setProperty('--end-y', (Math.random() * 95) + "vh"); l.style.animationDuration = Math.max(1.2, 5.5 - (vitesseVentActuelle * 0.08)) + "s"; l.style.animationDelay = (Math.random() * 5) + "s"; avant.appendChild(l);
                 }
             }
         }
 
         function gererCycleJourNuit() {
-            var h = new Date().getHours(); var calque = document.getElementById('sky-gradient');
-            var decor = document.getElementById('school-view-bg'); var moon = document.getElementById('lune-vrai-ciel');
-            decor.classList.remove('effet-enneige');
-            if(currentSaison === "HIVER") decor.classList.add('effet-enneige');
-
-            if(h >= 7 && h < 18) {
-                calque.style.background = "linear-gradient(to bottom, rgba(54,162,235,0.1), transparent)";
-                decor.style.filter = currentSaison === "AUTOMNE" ? "sepia(0.35) saturate(1.4) contrast(1.05)" : (currentSaison === "ÉTÉ" ? "brightness(1.18) saturate(1.1)" : "none");
-                isNightTime = false; moon.style.display = "none";
-            } else if(h >= 18 && h < 21) {
-                calque.style.background = "linear-gradient(to bottom, rgba(237,105,32,0.38), rgba(5,15,30,0.2))";
-                decor.style.filter = "brightness(0.85) saturate(1.2)"; isNightTime = false; moon.style.display = "none";
-            } else {
-                calque.style.background = "linear-gradient(to bottom, rgba(8,20,45,0.78), rgba(3,5,15,0.92))";
-                decor.style.filter = "brightness(0.4) contrast(1.1)"; isNightTime = true; moon.style.display = "block";
-            }
+            var h = new Date().getHours(); var calque = document.getElementById('sky-gradient'); var decor = document.getElementById('school-view-bg'); var moon = document.getElementById('lune-vrai-ciel');
+            decor.classList.remove('effet-enneige'); if(currentSaison === "HIVER") decor.classList.add('effet-enneige');
+            if(h >= 7 && h < 18) { calque.style.background = "linear-gradient(to bottom, rgba(54,162,235,0.15), transparent)"; decor.style.filter = currentSaison === "AUTOMNE" ? "sepia(0.35) saturate(1.4) contrast(1.05)" : (currentSaison === "ÉTÉ" ? "brightness(1.18) saturate(1.1)" : "none"); isNightTime = false; moon.style.display = "none"; } 
+            else if(h >= 18 && h < 21) { calque.style.background = "linear-gradient(to bottom, rgba(237,105,32,0.38), rgba(5,15,30,0.2))"; decor.style.filter = "brightness(0.85) saturate(1.2)"; isNightTime = false; moon.style.display = "none"; } 
+            else { calque.style.background = "linear-gradient(to bottom, rgba(8,20,45,0.78), rgba(3,5,15,0.92))"; decor.style.filter = "brightness(0.38) contrast(1.1)"; isNightTime = true; moon.style.display = "block"; }
         }
 
         function actualiserVegetationCSS() {
-            var box = document.getElementById('box-vegetal-dynamique'); box.innerHTML = '<div class="vegetal-pot"></div>';
-            var stem = document.createElement('div'); stem.className = "vegetal-stem";
-            if(currentSaison === "HIVER") {
-                stem.style.height = "6px"; stem.style.background = "#d4a310"; box.appendChild(stem);
-            } else if(currentSaison === "PRINTEMPS") {
-                stem.style.height = "1.2vw"; box.appendChild(stem);
-                let l1 = document.createElement('div'); l1.className = "vegetal-leaf"; l1.style.bottom = "2vw"; l1.style.left = "0.5vw"; box.appendChild(l1);
-            } else if(currentSaison === "ÉTÉ") {
-                stem.style.height = "2.2vw"; box.appendChild(stem);
-                for(let i=0; i<4; i++) { let l = document.createElement('div'); l.className = "vegetal-leaf"; l.style.bottom = (1.4 + (i*0.4)) + "vw"; l.style.left = (i % 2 === 0 ? "0.3vw" : "1.2vw"); box.appendChild(l); }
-            } else if(currentSaison === "AUTOMNE") {
-                stem.style.height = "1.8vw"; stem.style.background = "#c45d07"; box.appendChild(stem);
-                let l1 = document.createElement('div'); l1.className = "vegetal-leaf"; l1.style.bottom = "1.8vw"; l1.style.background = "#b82a06"; box.appendChild(l1);
-            }
+            var box = document.getElementById('box-vegetal-dynamique'); box.innerHTML = '<div class="vegetal-pot"></div>'; var stem = document.createElement('div'); stem.className = "vegetal-stem";
+            if(currentSaison === "HIVER") { stem.style.height = "5px"; stem.style.background = "#d4a310"; box.appendChild(stem); } 
+            else if(currentSaison === "PRINTEMPS") { stem.style.height = "1.2vw"; box.appendChild(stem); let l1 = document.createElement('div'); l1.className = "vegetal-leaf"; l1.style.bottom = "1.9vw"; l1.style.left = "0.5vw"; box.appendChild(l1); } 
+            else if(currentSaison === "ÉTÉ") { stem.style.height = "2.4vw"; box.appendChild(stem); for(let i=0; i<4; i++) { let l = document.createElement('div'); l.className = "vegetal-leaf"; l.style.bottom = (1.4 + (i*0.4)) + "vw"; l.style.left = (i % 2 === 0 ? "0.3vw" : "1.2vw"); box.appendChild(l); } } 
+            else if(currentSaison === "AUTOMNE") { stem.style.height = "1.6vw"; stem.style.background = "#b82a06"; box.appendChild(stem); let l1 = document.createElement('div'); l1.className = "vegetal-leaf"; l1.style.bottom = "1.6vw"; l1.style.background = "#d4a310"; box.appendChild(l1); }
         }
 
         function calculPhaseLune() {
@@ -298,18 +257,10 @@
             document.getElementById('lune-age').textContent = daysSinceNew.toFixed(1);
             let pct = Math.round((1 - Math.cos((daysSinceNew * Math.PI * 2) / 29.53)) * 50);
             document.getElementById('lune-ecl').textContent = pct;
-            let nom = "Nouvelle lune"; var shadow = document.getElementById('lune-ombre-ciel');
-            if(shadow) {
-                if(daysSinceNew < 14.7) { shadow.style.left = pct + '%'; shadow.style.width = (100 - pct) + '%'; } 
-                else { shadow.style.left = '0%'; shadow.style.width = (100 - pct) + '%'; }
-            }
-            if(daysSinceNew >= 1.8 && daysSinceNew < 5.5) nom = "Premier croissant";
-            if(daysSinceNew >= 5.5 && daysSinceNew < 9.2) nom = "Premier quartier";
-            if(daysSinceNew >= 9.2 && daysSinceNew < 13) nom = "Gibbeuse croissante";
-            if(daysSinceNew >= 13 && daysSinceNew < 16.6) nom = "Pleine lune";
-            if(daysSinceNew >= 16.6 && daysSinceNew < 20.3) nom = "Gibbeuse décroissante";
-            if(daysSinceNew >= 20.3 && daysSinceNew < 24) nom = "Dernier quartier";
-            if(daysSinceNew >= 24 && daysSinceNew < 27.7) nom = "Dernier croissant";
+            let nom = "Nouvelle lune"; var sW = document.getElementById('lune-ombre-widget'); var sC = document.getElementById('lune-ombre-ciel');
+            let fn = (s) => { if(s) { if(daysSinceNew < 14.7) { s.style.left = pct + '%'; s.style.width = (100 - pct) + '%'; } else { s.style.left = '0%'; s.style.width = (100 - pct) + '%'; } } };
+            fn(sW); fn(sC);
+            if(daysSinceNew >= 1.8 && daysSinceNew < 5.5) nom = "Premier croissant"; if(daysSinceNew >= 5.5 && daysSinceNew < 9.2) nom = "Premier quartier"; if(daysSinceNew >= 9.2 && daysSinceNew < 13) nom = "Gibbeuse croissante"; if(daysSinceNew >= 13 && daysSinceNew < 16.6) nom = "Pleine lune"; if(daysSinceNew >= 16.6 && daysSinceNew < 20.3) nom = "Gibbeuse décroissante"; if(daysSinceNew >= 20.3 && daysSinceNew < 24) nom = "Dernier quartier"; if(daysSinceNew >= 24 && daysSinceNew < 27.7) nom = "Dernier croissant";
             document.getElementById('lune-phase-nom').textContent = nom;
         }
 
