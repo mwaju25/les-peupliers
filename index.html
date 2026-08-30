@@ -10,8 +10,8 @@
         #sky-gradient { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -4; transition: background 8s ease-in-out; pointer-events: none; }
         .lune-dans-le-ciel { position: fixed; top: 11vh; right: 20vw; width: 4.5vw; height: 4.4vw; border-radius: 50%; background-image: url('https://wikimedia.org') !important; background-size: cover; background-position: center; border: 1.5px solid rgba(255,255,255,0.4) !important; box-shadow: 0 0 15px rgba(255,255,255,0.35); filter: grayscale(1) brightness(1.2); z-index: -3; display: none; overflow: hidden; transition: opacity 8s ease-in-out; }
         .cache-lune-ciel { position: absolute; top: 0; width: 100%; height: 100%; background: rgba(5,8,12,0.88); }
-        .decor-permanent { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-image: url('fond-final.png'); background-size: 100% 100%; background-position: center; z-index: -5; transition: filter 8s ease-in-out; }
-        .decor-permanent.effet-enneige::after { content: ''; position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; background: linear-gradient(to bottom, rgba(255,255,255,0.15), rgba(255,255,255,0.42)); mix-blend-mode: overlay; pointer-events: none; }
+        #school-view-bg, .decor-permanent { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-image: url('fond-final.png') !important; background-size: 100% 100%; background-position: center; z-index: -5; transition: filter 8s ease-in-out; }
+        #school-view-bg::after, .decor-permanent::after { content: ''; position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; background: linear-gradient(to bottom, rgba(255,255,255,0.15), rgba(255,255,255,0.42)); mix-blend-mode: overlay; pointer-events: none; }
         #cloud-layer { position: fixed; top: 0; left: 0; width: 200vw; height: 38vh; background: url('https://wikimedia.org') repeat-x; background-size: contain; z-index: -6; opacity: 0; pointer-events: none; transition: opacity 5s ease-in-out; }
         #lightning-flash { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; background: rgba(255,255,255,0); pointer-events: none; }
         #back-precipitations { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; pointer-events: none; }
@@ -73,11 +73,11 @@
     <div class="pos boite-flip-haut" style="left: 40.8vw; top: 2.5vh; width: 9.6vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-num">--</div><div class="charniere-droite"></div></div>
     <div class="pos boite-flip-haut" style="left: 51.5vw; top: 2.5vh; width: 13.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-mois">--</div><div class="charniere-droite"></div></div>
     <div class="pos boite-flip-haut" style="left: 66.2vw; top: 2.5vh; width: 11.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-annee">----</div><div class="charniere-droite"></div></div>
-
     <div class="montre-retro-cercle" id="cadran-montre">
         <div class="pivot"></div> <div class="aiguille heure" id="needle-hour"></div> <div class="aiguille minute" id="needle-minute"></div>
     </div>
     <div class="boite-digitale-bas"><div class="charniere-gauche"></div><div class="heure-digitale-js" id="horloge-texte">--:--:--</div><div class="charniere-droite"></div></div>
+
     <div class="cadran-relief-bleu" id="cadran-meteo-g" style="position: absolute; left: 1.5vw; top: 25vh; width: 28.5vw; height: 35vh; padding: 1.3vw; color: #ffffff;">
         <div style="font-size: 1.1vw; color: #ffffff; font-weight: bold; margin-bottom: 2px; text-align: left;">Marloie (Marche-en-Famenne)</div>
         <div style="font-size: 0.75vw; color: #aaaaaa; text-transform: uppercase; margin-bottom: 1.2vh; letter-spacing: 1px;">MÉTÉO ACTUELLE</div>
@@ -161,6 +161,7 @@
                 document.getElementById('courant-humidite').textContent = cur.humidity + "%";
                 vitesseVentActuelle = Math.round(cur.windspeedKmph);
                 document.getElementById('courant-vent').textContent = vitesseVentActuelle + " km/h";
+                
                 let desc = cur.lang_fr ? cur.lang_fr[0].value : cur.weatherDesc[0].value;
                 document.getElementById('courant-desc').textContent = desc;
                 gererEffetsMeteoEtParticules(desc.toLowerCase());
@@ -168,6 +169,7 @@
                 const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
                 const mois = ['JANV.', 'FÉVR.', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUIL.', 'AOÛT', 'SEPT.', 'OCT.', 'NOV.', 'DÉC.'];
                 var dRef = new Date();
+                
                 for(let index = 0; index < 7; index++) {
                     var d = new Date(); d.setDate(dRef.getDate() + index);
                     let fDay = data.weather[index];
