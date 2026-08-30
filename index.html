@@ -8,7 +8,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Arial Black', sans-serif; }
         body { background-color: #000; color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
         #school-view-bg, .decor-permanent { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: url('fond-final.png') no-repeat center center !important; background-size: 100% 100% !important; z-index: -6 !important; transition: filter 8s ease-in-out; }
-        #sky-gradient { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -5 !important; mix-blend-mode: overlay !important; clip-path: inset(0 0 35vh 0) !important; transition: background 8s ease-in-out; pointer-events: none; }
+        #sky-gradient { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -5 !important; mix-blend-mode: overlay !important; clip-path: inset(0 0 35vh 15vw) !important; transition: background 8s ease-in-out; pointer-events: none; }
         .lune-dans-le-ciel { position: fixed; top: 11vh; right: 20vw; width: 4.5vw; height: 4.4vw; border-radius: 50%; background-image: url('https://wikimedia.org') !important; background-size: cover; background-position: center; border: 1.5px solid rgba(255,255,255,0.4) !important; box-shadow: 0 0 15px rgba(255,255,255,0.35); filter: grayscale(1) brightness(1.2); z-index: -4; display: none; overflow: hidden; transition: opacity 8s ease-in-out; }
         .cache-lune-ciel { position: absolute; top: 0; width: 100%; height: 100%; background: rgba(5,8,12,0.92); }
         #cloud-layer { position: fixed; top: 0; left: 0; width: 200vw; height: 38vh; background: url('https://wikimedia.org') repeat-x; background-size: contain; z-index: -3; opacity: 0; pointer-events: none; transition: opacity 5s ease-in-out; }
@@ -34,7 +34,7 @@
         .pivot { position: absolute; width: 12px; height: 12px; background: #a2f200; border-radius: 50%; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 15; box-shadow: 0 0 6px rgba(162,242,0,0.8); }
         .boite-digitale-bas { position: absolute; right: 2vw; top: 35.5vh; width: 17vw; height: 8vh; background: #05070a !important; border: none !important; border-radius: 8px; box-shadow: inset 0 0 10px rgba(0,0,0,0.8) !important; z-index: 99 !important; }
         .heure-digitale-js { font-size: 2.7vw; font-weight: 900; color: #ffffff !important; letter-spacing: 1px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; }
-        .heure-digitale-js::after { content: ''; position: absolute; left: 0; top: 50%; width: 100%; height: 0.8px; background: #000000; border-bottom: 1px solid rgba(255,255,255,0.12); z-index: 5; }
+        .heure-digitale-js::after { content: ''; position: absolute; left: 0; top: 50%; width: 100%; height: 0.8px; background: #000000; border-bottom: 1px solid rgba(255,255,255,0.12) !hidden; z-index: 5; }
         .cadran-relief-bleu { background: #0d131a !important; border: 2px solid #212c3a !important; border-radius: 12px !important; box-shadow: 0 8px 16px rgba(0,0,0,0.7), inset 0 0 12px rgba(0,0,0,0.8) !important; opacity: 1 !important; z-index: 99 !important; transition: border-color 8s ease-in-out, box-shadow 8s ease-in-out; }
         .cadran-relief-noir-bloc { background: #05080c !important; border: 2px solid #162029 !important; border-radius: 12px; box-shadow: 0 6px 12px rgba(0,0,0,0.6); z-index: 99 !important; transition: border-color 8s ease-in-out, box-shadow 8s ease-in-out; overflow: hidden; }
         .carte-prev-unique { width: 10.4vw; height: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 1.5vh 0; background: #0d131a !important; border: 2px solid #212c3a !important; border-radius: 12px !important; }
@@ -60,8 +60,8 @@
         @keyframes flowWind { 0% { transform: translate(-5vw, var(--start-y)) rotate(0deg); } 100% { transform: translate(105vw, var(--end-y)) rotate(1080deg); } }
         @keyframes cloudMove { 0% { transform: translateX(0); } 100% { transform: translateX(-100vw); } }
         .anim-clouds { animation: cloudMove linear infinite var(--cloud-speed); }
-        #logo-ecran-principal, .logo-etablissement-peupliers { position: absolute; left: 1.5vw; top: 1vh; width: 14vw; height: 14vw; background: url('logo.png') no-repeat center center; background-size: contain; z-index: 101 !important; filter: none !important; mix-blend-mode: normal !important; }
-        #slogan-ecran-principal, .slogan-peupliers-texte { position: absolute; left: 17.5vw; top: 14vh; width: 60vw; font-size: 1.6vw; color: #8ad400; font-weight: bold; text-align: left; text-transform: uppercase; letter-spacing: 0.5px; z-index: 101 !important; filter: none !important; mix-blend-mode: normal !important; }
+        #logo-ecran-principal, .logo-etablissement-peupliers { position: absolute; left: 1.5vw; top: 1vh; width: 14vw; height: 14vw; background: url('logo.png') no-repeat center center !important; background-size: contain !important; z-index: 101 !important; filter: none !important; mix-blend-mode: normal !important; display: block !important; opacity: 1 !important; }
+        #slogan-ecran-principal, .slogan-peupliers-texte { position: absolute; left: 17.5vw; top: 14vh; width: 60vw; font-size: 1.6vw; color: #8ad400; font-weight: bold; text-align: left; text-transform: uppercase; letter-spacing: 0.5px; z-index: 101 !important; filter: none !important; mix-blend-mode: normal !important; opacity: 1 !important; }
     </style>
 </head>
 <body>
@@ -71,7 +71,6 @@
     <div id="cloud-layer"></div> <div id="lightning-flash"></div> <div id="back-precipitations"></div> <div id="front-particles"></div>
 
     <div id="logo-ecran-principal"></div>
-    <div id="slogan-ecran-principal">NOTRE SLOGAN EN ENTIER ICI</div>
 
     <div class="pos boite-flip-haut" style="left: 17.5vw; top: 2.5vh; width: 22.3vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-jour">--</div><div class="charniere-droite"></div></div>
     <div class="pos boite-flip-haut" style="left: 40.8vw; top: 2.5vh; width: 9.6vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-num">--</div><div class="charniere-droite"></div></div>
@@ -109,7 +108,7 @@
                 <div class="pommier-trunk"></div><div class="pommier-branch-l"></div><div class="pommier-branch-r"></div><div class="pommier-canopy"></div>
                 <div class="pommier-fruit" style="bottom:2.4vw; left:1.3vw;"></div><div class="pommier-fruit" style="bottom:3vw; right:1.6vw;"></div><div class="pommier-fruit" style="bottom:3.4vw; left:2vw;"></div>
             </div>
-            <div style="position: absolute; left: 0; bottom: 0; width: 100%; height: 0.8px; background: #000000; border-bottom: 1px solid rgba(255,255,255,0.12); z-index: 5;"></div>
+            <div style="position: absolute; left: 0; bottom: 0; width: 100%; height: 0.8px; background: #000000; border-bottom: 1px solid rgba(255,255,255,0.12) !important; z-index: 5;"></div>
         </div>
         <div style="display: flex; flex-direction: column; justify-content: space-between; height: 52%; width: 100%; padding: 0.6vw 1.2vw 1vw 1.2vw;">
             <div style="font-size: 1.1vw; color: #8ad400; font-weight: bold; text-align: left; letter-spacing: 0.5px;">SOLEIL</div>
@@ -157,47 +156,50 @@
             gererCycleJourNuit(h, m);
         }
         function executerMeteo() {
-            var tempsReel = new Date();
-            var h = tempsReel.getHours();
-            
-            var baseCalcul = 17 + Math.sin((h - 6) * Math.PI / 12) * 5.5;
-            var tActuelle = Math.round(baseCalcul);
-            var tRessentie = Math.round(baseCalcul + 0.8);
-            var hRelative = Math.round(72 - Math.sin((h - 6) * Math.PI / 12) * 14);
-            var vVent = Math.round(13 + Math.cos(h * Math.PI / 6) * 4);
-            
-            var desc = "Nuageux";
-            if(h >= 9 && h <= 17) desc = "Éclaircies";
-            if(h >= 12 && h <= 15) desc = "Ensoleillé";
-            if(vVent > 16) desc = "Averses de Pluie";
-            
-            document.getElementById('courant-temp').textContent = tActuelle + "°C";
-            document.getElementById('courant-ressenti').textContent = tRessentie + "°C";
-            document.getElementById('courant-humidite').textContent = hRelative + "%";
-            vitesseVentActuelle = vVent;
-            document.getElementById('courant-vent').textContent = vitesseVentActuelle + " km/h";
-            document.getElementById('courant-desc').textContent = desc;
-            weatherDescriptionGlobal = desc;
-            
-            gererEffetsMeteoEtParticules(desc.toLowerCase());
-            construirePrevisionsDefault(tActuelle);
+            let uM = 'https://open-meteo.com';
+            fetch(uM).then(res => res.json()).then(data => {
+                let cur = data.current;
+                let tActuelle = Math.round(cur.temperature_2m);
+                document.getElementById('courant-temp').textContent = tActuelle + "°C";
+                document.getElementById('courant-ressenti').textContent = Math.round(cur.apparent_temperature) + "°C";
+                document.getElementById('courant-humidite').textContent = cur.relative_humidity_2m + "%";
+                vitesseVentActuelle = Math.round(cur.wind_speed_10m);
+                document.getElementById('courant-vent').textContent = vitesseVentActuelle + " km/h";
+                let code = cur.weather_code;
+                let desc = "Nuageux"; 
+                if(code === 0) desc = "Ensoleillé";
+                if(code > 0 && code <= 3) desc = "Nuageux";
+                if(code >= 51 && code <= 67) desc = "Pluie Fine";
+                if(code >= 80) desc = "Orageux";
+                document.getElementById('courant-desc').textContent = desc;
+                weatherDescriptionGlobal = desc;
+                gererEffetsMeteoEtParticules(desc.toLowerCase());
+
+                var bas = document.getElementById('zone-7-jours'); bas.innerHTML = "";
+                const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
+                const mois = ['JANV.', 'FÉVR.', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUIL.', 'AOÛT', 'SEPT.', 'OCT.', 'NOV.', 'DÉC.'];
+                var dRef = new Date();
+                for(let index = 0; index < 7; index++) {
+                    var d = new Date(); d.setDate(dRef.getDate() + index);
+                    let maxT = Math.round(data.daily.temperature_2m_max[index]);
+                    let minT = Math.round(data.daily.temperature_2m_min[index]);
+                    var box = document.createElement('div'); box.className = "carte-prev-unique";
+                    box.innerHTML = `<div style="font-weight:bold; font-family:'Arial Black'; font-size:1.1vw; color:#ffffff;">${index===0?"AUJ.":noms[d.getDay()]}</div><div style="font-size:0.75vw; color:#aaa; font-weight:bold;">${d.getDate()} ${mois[d.getMonth()]}</div><div class="picto-pro-mini" style="display:inline-block; width:3.2vw; height:1.6vw; background:#ffffff; border-radius:20px; position:relative; margin:1vh 0;"><div style="position:absolute; width:1.2vw; height:1.2vw; background:#ffea00; border-radius:50%; top:-0.4vw; left:0.4vw;"></div></div><div style="font-size:2vw; font-weight:bold; color:#ffffff;">${maxT}°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">${minT}°</div>`;
+                    bas.appendChild(box);
+                }
+            }).catch(() => {
+                var bas = document.getElementById('zone-7-jours'); bas.innerHTML = "";
+                const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
+                var dRef = new Date();
+                for(let index=0; index<7; index++) {
+                    var d = new Date(); d.setDate(dRef.getDate() + index);
+                    var box = document.createElement('div'); box.className = "carte-prev-unique";
+                    box.innerHTML = `<div style="font-weight:bold; font-size:1.1vw; color:#fff;">${index===0?"AUJ.":noms[d.getDay()]}</div><div style="font-size:0.75vw; color:#aaa;">${d.getDate()}</div><div class="picto-pro-mini" style="display:inline-block; width:3.2vw; height:1.6vw; background:#fff; border-radius:20px; position:relative; margin:1vh 0;"><div style="position:absolute; width:1.2vw; height:1.2vw; background:#ffea00; border-radius:50%; top:-0.4vw; left:0.4vw;"></div></div><div style="font-size:2vw; font-weight:bold; color:#fff;">21°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">13°</div>`;
+                    bas.appendChild(box);
+                }
+            });
         }
-        function construirePrevisionsDefault(tActuelle) {
-            var bas = document.getElementById('zone-7-jours'); bas.innerHTML = "";
-            const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
-            const mois = ['JANV.', 'FÉVR.', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUIL.', 'AOÛT', 'SEPT.', 'OCT.', 'NOV.', 'DÉC.'];
-            var dRef = new Date();
-            
-            var variationsMax = [tActuelle + 5, tActuelle + 7, tActuelle + 4, tActuelle + 3, tActuelle + 6, tActuelle + 8, tActuelle + 7];
-            var variationsMin = [tActuelle - 3, tActuelle - 2, tActuelle - 4, tActuelle - 5, tActuelle - 3, tActuelle - 1, tActuelle - 2];
-            
-            for(let index=0; index<7; index++) {
-                var d = new Date(); d.setDate(dRef.getDate() + index);
-                var box = document.createElement('div'); box.className = "carte-prev-unique";
-                box.innerHTML = `<div style="font-weight:bold; font-size:1.1vw; color:#fff;">${index===0?"AUJ.":noms[d.getDay()]}</div><div style="font-size:0.75vw; color:#aaa; font-weight:bold;">${d.getDate()} ${mois[d.getMonth()]}</div><div class="picto-pro-mini" style="display:inline-block; width:3.2vw; height:1.6vw; background:#fff; border-radius:20px; position:relative; margin:1vh 0;"><div style="position:absolute; width:1.2vw; height:1.2vw; background:#ffea00; border-radius:50%; top:-0.4vw; left:0.4vw;"></div></div><div style="font-size:2vw; font-weight:bold; color:#fff;">${variationsMax[index]}°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">${variationsMin[index]}°</div>`;
-                bas.appendChild(box);
-            }
-        }
+
         function gererEffetsMeteoEtParticules(desc) {
             var avant = document.getElementById('front-particles'); var nuage = document.getElementById('cloud-layer');
             avant.innerHTML = "";
@@ -219,6 +221,7 @@
                 let speed = Math.max(1.8, 6.5 - (vitesseVentActuelle * 0.08)); l.style.animationDuration = speed + "s"; l.style.animationDelay = (Math.random() * 5) + "s"; avant.appendChild(l);
             }
         }
+
         function gererCycleJourNuit(h, m) {
             var calque = document.getElementById('sky-gradient'); var decor = document.getElementById('school-view-bg'); var moon = document.getElementById('lune-vrai-ciel');
             var desc = weatherDescriptionGlobal.toLowerCase();
