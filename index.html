@@ -8,9 +8,8 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Arial Black', sans-serif; }
         body { background-color: #000; color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
         #school-view-bg, .decor-permanent { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: url('fond-final.png') no-repeat center center !important; background-size: 100% 100% !important; z-index: -6 !important; transition: filter 8s ease-in-out; }
-        #sky-gradient { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -5 !important; mix-blend-mode: overlay !important; transition: background 8s ease-in-out; pointer-events: none; }
-        .lune-dans-le-ciel { position: fixed; top: 11vh; right: 20vw; width: 4.5vw; height: 4.4vw; border-radius: 50%; background-image: url('https://wikimedia.org') !important; background-size: cover; background-position: center; border: 1.5px solid rgba(255,255,255,0.4) !important; box-shadow: 0 0 15px rgba(255,255,255,0.35); filter: grayscale(1) brightness(1.2); z-index: -4; display: none; overflow: hidden; transition: opacity 8s ease-in-out; }
-        .cache-lune-ciel { position: absolute; top: 0; width: 100%; height: 100%; background: rgba(5,8,12,0.88); }
+        #sky-gradient { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -5 !important; mix-blend-mode: overlay !important; clip-path: inset(0 0 35vh 0) !important; transition: background 8s ease-in-out; pointer-events: none; }
+        .lune-dans-le-ciel { position: fixed; top: 11vh; right: 20vw; width: 4.5vw; height: 4.4vw; border-radius: 50%; box-shadow: inset -10px -10px 0px 2px #fff, 0 0 15px rgba(255,255,255,0.4) !important; filter: drop-shadow(0 0 8px rgba(255,255,255,0.6)); z-index: -4; display: none; transition: opacity 8s ease-in-out; }
         #cloud-layer { position: fixed; top: 0; left: 0; width: 200vw; height: 38vh; background: url('https://wikimedia.org') repeat-x; background-size: contain; z-index: -3; opacity: 0; pointer-events: none; transition: opacity 5s ease-in-out; }
         #lightning-flash { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; background: rgba(255,255,255,0); pointer-events: none; }
         #back-precipitations { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; pointer-events: none; }
@@ -64,7 +63,7 @@
 </head>
 <body>
     <div id="sky-gradient"></div>
-    <div class="lune-dans-le-ciel" id="lune-vrai-ciel"><div class="cache-lune-ciel" id="lune-ombre-ciel"></div></div>
+    <div class="lune-dans-le-ciel" id="lune-vrai-ciel"></div>
     <div id="school-view-bg" class="decor-permanent"></div>
     <div id="cloud-layer"></div> <div id="lightning-flash"></div> <div id="back-precipitations"></div> <div id="front-particles"></div>
 
@@ -220,7 +219,7 @@
             var desc = weatherDescriptionGlobal.toLowerCase();
             var totalMin = (h * 60) + m;
             
-            if (totalMin >= 360 && totalMin < 430) { calque.style.background = "linear-gradient(to bottom, #ff7e5f, #feb47b)"; decor.style.filter = "brightness(0.75) contrast(1.1)"; moon.style.display = "none"; } else if (totalMin >= 430 && totalMin < 1160) { if (desc.includes("ensoleillé") || desc.includes("éclaircies")) { calque.style.background = "linear-gradient(to bottom, #2b5c8f, #4a90e2)"; } else { calque.style.background = "linear-gradient(to bottom, #4a5568, #718096)"; } decor.style.filter = "brightness(1.15) saturate(1.1)"; moon.style.display = "none"; } else if (totalMin >= 1160 && totalMin < 1220) { calque.style.background = "linear-gradient(to bottom, #1a0b2e, #943126, #f39c12)"; decor.style.filter = "brightness(0.68) saturate(1.25)"; moon.style.display = "block"; } else { if (desc.includes("nuageux") || desc.includes("averse")) { calque.style.background = "linear-gradient(to bottom, #050814, #121829)"; } else { calque.style.background = "linear-gradient(to bottom, #01030a, #030714)"; } decor.style.filter = "brightness(0.34) contrast(1.15)"; moon.style.display = "block"; }
+            if (totalMin >= 360 && totalMin < 430) { calque.style.background = "linear-gradient(to bottom, #ff7e5f, #feb47b)"; decor.style.filter = "brightness(0.85) contrast(1.05)"; moon.style.display = "none"; } else if (totalMin >= 430 && totalMin < 1160) { if (desc.includes("ensoleillé") || desc.includes("éclaircies")) { calque.style.background = "linear-gradient(to bottom, #2b5c8f, #4a90e2)"; } else { calque.style.background = "linear-gradient(to bottom, #4a5568, #718096)"; } decor.style.filter = "brightness(1.15) saturate(1.1)"; moon.style.display = "none"; } else if (totalMin >= 1160 && totalMin < 1220) { calque.style.background = "linear-gradient(to bottom, #1a0b2e, #943126, #f39c12)"; decor.style.filter = "brightness(0.9) saturate(1.1)"; moon.style.display = "block"; } else { if (desc.includes("nuageux") || desc.includes("averse")) { calque.style.background = "linear-gradient(to bottom, #050814, #121829)"; } else { calque.style.background = "linear-gradient(to bottom, #01030a, #030714)"; } decor.style.filter = "brightness(0.34) contrast(1.15)"; moon.style.display = "block"; }
             
             var mo = new Date().getMonth() + 1;
             if (mo >= 3 && mo <= 5) currentSaison = "PRINTEMPS"; else if (mo >= 6 && mo <= 8) currentSaison = "ÉTÉ"; else if (mo >= 9 && mo <= 11) currentSaison = "AUTOMNE"; else currentSaison = "HIVER";
@@ -234,8 +233,8 @@
             document.getElementById('lune-age').textContent = daysSinceNew.toFixed(1);
             let pct = Math.round((1 - Math.cos((daysSinceNew * Math.PI * 2) / 29.53)) * 50);
             document.getElementById('lune-ecl').textContent = pct;
-            let sW = document.getElementById('lune-ombre-widget'); var sC = document.getElementById('lune-ombre-ciel');
-            let fn = (s) => { if(s) { if(daysSinceNew < 14.7) { s.style.left = pct + '%'; s.style.width = (100 - pct) + '%'; } else { s.style.left = '0%'; s.style.width = (100 - pct) + '%'; } } }; fn(sW); fn(sC);
+            let sW = document.getElementById('lune-ombre-widget');
+            let fn = (s) => { if(s) { if(daysSinceNew < 14.7) { s.style.left = pct + '%'; s.style.width = (100 - pct) + '%'; } else { s.style.left = '0%'; s.style.width = (100 - pct) + '%'; } } }; fn(sW);
             let nom = "Nouvelle lune"; if(daysSinceNew >= 1.8 && daysSinceNew < 5.5) nom = "Premier croissant"; if(daysSinceNew >= 5.5 && daysSinceNew < 9.2) nom = "Premier quartier"; if(daysSinceNew >= 9.2 && daysSinceNew < 13) nom = "Gibbeuse croissante"; if(daysSinceNew >= 13 && daysSinceNew < 16.6) nom = "Pleine lune"; if(daysSinceNew >= 16.6 && daysSinceNew < 20.3) nom = "Gibbeuse décroissante"; if(daysSinceNew >= 20.3 && daysSinceNew < 24) nom = "Dernier quartier"; if(daysSinceNew >= 24 && daysSinceNew < 27.7) nom = "Dernier croissant"; document.getElementById('lune-phase-nom').textContent = nom;
         }
 
