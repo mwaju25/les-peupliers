@@ -89,11 +89,11 @@
     <div class="pos boite-flip-haut" style="left: 40.8vw; top: 2.5vh; width: 9.6vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-num">--</div><div class="charniere-droite"></div></div>
     <div class="pos boite-flip-haut" style="left: 51.5vw; top: 2.5vh; width: 13.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-mois">--</div><div class="charniere-droite"></div></div>
     <div class="pos boite-flip-haut" style="left: 66.2vw; top: 2.5vh; width: 11.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-annee">----</div><div class="charniere-droite"></div></div>
+
     <div class="montre-retro-cercle" id="cadran-montre">
         <div class="pivot"></div> <div class="aiguille heure" id="needle-hour"></div> <div class="aiguille minute" id="needle-minute"></div>
     </div>
     <div class="boite-digitale-bas"><div class="charniere-gauche"></div><div class="heure-digitale-js" id="horloge-texte">--:--:--</div><div class="charniere-droite"></div></div>
-
     <div class="cadran-relief-bleu" id="cadran-meteo-g" style="position: absolute; left: 1.5vw; top: 25vh; width: 28.5vw; height: 35vh; padding: 1.3vw; color: #ffffff;">
         <div style="font-size: 1.1vw; color: #ffffff; font-weight: bold; margin-bottom: 2px; text-align: left;">Marloie (Marche-en-Famenne)</div>
         <div style="font-size: 0.75vw; color: #aaaaaa; text-transform: uppercase; margin-bottom: 1.2vh; letter-spacing: 1px;">MÉTÉO ACTUELLE</div>
@@ -170,15 +170,15 @@
         }
         function executerMeteo() {
             let uM = 'https://open-meteo.com';
-            construirePrevisionsDefault();
+            
             fetch(uM).then(res => res.json()).then(data => {
-                let cur = data.current_weather;
-                document.getElementById('courant-temp').textContent = Math.round(cur.temperature) + "°C";
-                document.getElementById('courant-ressenti').textContent = Math.round(cur.temperature) + "°C";
-                document.getElementById('courant-humidite').textContent = "64%";
-                vitesseVentActuelle = Math.round(cur.windspeed);
+                let cur = data.current;
+                document.getElementById('courant-temp').textContent = Math.round(cur.temperature_2m) + "°C";
+                document.getElementById('courant-ressenti').textContent = Math.round(cur.apparent_temperature) + "°C";
+                document.getElementById('courant-humidite').textContent = cur.relative_humidity_2m + "%";
+                vitesseVentActuelle = Math.round(cur.wind_speed_10m);
                 document.getElementById('courant-vent').textContent = vitesseVentActuelle + " km/h";
-                let code = cur.weathercode;
+                let code = cur.weather_code;
                 let desc = "Nuageux"; if(code===0) desc="Ensoleillé"; if(code>0 && code<=3) desc="Nuageux"; if(code>=51 && code<=67) desc="Pluie Fine"; if(code>=80) desc="Orageux";
                 document.getElementById('courant-desc').textContent = desc;
                 gererEffetsMeteoEtParticules(desc.toLowerCase());
@@ -196,20 +196,6 @@
                     bas.appendChild(box);
                 }
             }).catch(() => {});
-        }
-        function construirePrevisionsDefault() {
-            var bas = document.getElementById('zone-7-jours'); bas.innerHTML = "";
-            const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
-            const mois = ['JANV.', 'FÉVR.', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUIL.', 'AOÛT', 'SEPT.', 'OCT.', 'NOV.', 'DÉC.'];
-            var dRef = new Date();
-            let simMax =;
-            let simMin =;
-            for(let index=0; index<7; index++) {
-                var d = new Date(); d.setDate(dRef.getDate() + index);
-                var box = document.createElement('div'); box.className = "carte-prev-unique";
-                box.innerHTML = `<div style="font-weight:bold; font-size:1.1vw; color:#fff;">${index===0?"AUJ.":noms[d.getDay()]}</div><div style="font-size:0.75vw; color:#aaa; font-weight:bold;">${d.getDate()} ${mois[d.getMonth()]}</div><div class="picto-pro-mini" style="display:inline-block; width:3.2vw; height:1.6vw; background:#fff; border-radius:20px; position:relative; margin:1vh 0;"><div style="position:absolute; width:1.2vw; height:1.2vw; background:#ffea00; border-radius:50%; top:-0.4vw; left:0.4vw;"></div></div><div style="font-size:2vw; font-weight:bold; color:#fff;">${simMax[index]}°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">${simMin[index]}°</div>`;
-                bas.appendChild(box);
-            }
         }
         function gererEffetsMeteoEtParticules(desc) {
             var avant = document.getElementById('front-particles'); var nuage = document.getElementById('cloud-layer');
