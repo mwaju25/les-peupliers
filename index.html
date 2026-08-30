@@ -187,7 +187,7 @@
                 var dRef = new Date();
                 for(let index = 0; index < 7; index++) {
                     var dObj = new Date(); dObj.setDate(dRef.getDate() + index);
-                    // Transmission du vrai paramètre weather_code lu pour chaque jour
+                    // Raccordement direct sur le weather_code de chaque journée distincte
                     injecterCartePrevisionHTML(bas, index, noms[dObj.getDay()], dObj.getDate(), mois[dObj.getMonth()], Math.round(data.daily.temperature_2m_max[index]), Math.round(data.daily.temperature_2m_min[index]), data.daily.weather_code[index]);
                 }
             }).catch(() => {
