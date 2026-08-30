@@ -8,23 +8,23 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Arial Black', sans-serif; }
         body { background-color: #000; color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
         
-        /* STRUCTURE DES COUCHES ARRIÈRE-PLAN (LUNE DERRIÈRE LES ARBRES) */
+        /* DECOR ET CALQUES CELESTES REELS */
         #sky-gradient { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -6; transition: background 5s ease; pointer-events: none; }
         
         .lune-dans-le-ciel {
-            position: fixed; top: 11vh; left: 4vw; width: 4.8vw; height: 4.7vw; border-radius: 50%;
+            position: fixed; top: 11vh; right: 20vw; width: 4.5vw; height: 4.4vw; border-radius: 50%;
             background-image: url('https://wikimedia.org') !important;
             background-size: cover; background-position: center; border: 1.5px solid rgba(255,255,255,0.4) !important;
-            box-shadow: 0 0 15px rgba(255,255,255,0.3); filter: grayscale(1) brightness(1.15);
+            box-shadow: 0 0 15px rgba(255,255,255,0.35); filter: grayscale(1) brightness(1.2);
             z-index: -5; display: none; overflow: hidden;
         }
-        .cache-lune-ciel { position: absolute; top: 0; width: 100%; height: 100%; background: rgba(5,8,12,0.88); }
-        
+        .cache-lune-ciel { position: absolute; top: 0; width: 100%; height: 100%; background: rgba(5,8,12,0.88); transition: left 0.5s, width 0.5s; }
         .decor-permanent { 
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; 
             background-image: url('fond-final.png'); background-size: 100% 100%; background-position: center; z-index: -4; 
             transition: filter 3s ease;
         }
+        
         .decor-permanent.effet-enneige::after {
             content: ''; position: absolute; top: 0; left: 0; width: 100vw; height: 100vh;
             background: linear-gradient(to bottom, rgba(255,255,255,0.15), rgba(255,255,255,0.42));
@@ -37,13 +37,13 @@
         #front-particles { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 2; pointer-events: none; }
 
         .pos { position: absolute; display: flex; align-items: center; justify-content: center; overflow: hidden; text-align: center; }
-
         .boite-flip-haut {
             background: linear-gradient(to bottom, #11151c, #05070a) !important; border: 2px solid #28303d !important; border-radius: 8px !important;
             box-shadow: 0px 6px 12px rgba(0,0,0,0.5), inset 0px 0px 10px rgba(0,0,0,0.9) !important;
         }
         .flip-tuile-js { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 2.3vw; font-weight: 900; color: #fff; text-transform: uppercase; letter-spacing: 1px; position: relative; }
         .flip-tuile-js::after { content: ''; position: absolute; left: 0; top: 50%; width: 100%; height: 2px; background: #000000 !important; border-bottom: 1px solid rgba(255,255,255,0.18) !important; z-index: 5; }
+
         .charniere-gauche, .charniere-droite {
             position: absolute; top: 50%; transform: translateY(-50%); width: 12px; height: 24px; z-index: 10;
             background: linear-gradient(to right, #444, #d1d1d1, #fff 40%, #d1d1d1 70%, #333) !important;
@@ -53,7 +53,6 @@
         .charniere-gauche::after { content: ''; position: absolute; top: 4px; width: 4px; height: 14px; background: #161a22 !important; left: -3px; border: 1px solid #050505 !important; }
         .charniere-droite::after { content: ''; position: absolute; top: 4px; width: 4px; height: 14px; background: #161a22 !important; right: -3px; border: 1px solid #050505 !important; }
         .charniere-gauche::before, .charniere-droite::before { content: ''; position: absolute; left: 0; top: 10px; width: 100%; height: 4px; background: #111 !important; }
-
         .montre-retro-cercle { position: absolute; right: 2.2vw; top: 1vh; width: 15.6vw; height: 15.6vw; background: #000000 !important; border: none !important; border-radius: 50%; box-shadow: 0px 4px 12px rgba(0,0,0,0.4); z-index: 10; }
         .graduation { position: absolute; width: 2px; height: 10px; background: rgba(255,255,255,0.5); left: 50%; top: 0; margin-left: -1px; transform-origin: 50% 7.8vw; }
         .graduation.principale { width: 3px; height: 14px; background: #fff; }
@@ -63,30 +62,32 @@
         .aiguille { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom center; border-radius: 4px; z-index: 12; }
         .heure { width: 5px; height: 3.2vw; background-color: #fff; } .minute { width: 4px; height: 4.9vw; background-color: #8ad400; }
         .pivot { position: absolute; width: 12px; height: 12px; background: #a2f200; border-radius: 50%; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 15; box-shadow: 0 0 6px rgba(162,242,0,0.8); }
+
         .boite-digitale-bas { position: absolute; right: 2vw; top: 35.5vh; width: 17vw; height: 8vh; background: #05070a !important; border: none !important; border-radius: 8px; box-shadow: inset 0 0 10px rgba(0,0,0,0.8) !important; }
         .heure-digitale-js { font-size: 2.7vw; font-weight: 900; color: #ffffff !important; letter-spacing: 1px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; }
         .heure-digitale-js::after { content: ''; position: absolute; left: 0; top: 50%; width: 100%; height: 2px; background: #000000; border-bottom: 1px solid rgba(255,255,255,0.15); z-index: 5; }
+        /* EFFETS CADRES BLANCS EN MODE NUIT SUR LES VOLETS COPIES */
+        .cadran-relief-bleu { background: #0d131a !important; border: 2px solid #212c3a !important; border-radius: 12px !important; box-shadow: 0 8px 16px rgba(0,0,0,0.7), inset 0 0 12px rgba(0,0,0,0.8) !important; opacity: 1 !important; z-index: 10; transition: border-color 4s, box-shadow 4s; }
+        .cadran-relief-noir-bloc { background: #05080c !important; border: 2px solid #162029 !important; border-radius: 12px; box-shadow: 0 6px 12px rgba(0,0,0,0.6); z-index: 10; transition: border-color 4s, box-shadow 4s; }
+        
+        .cadran-relief-bleu.nuit-active { border-color: rgba(255, 255, 255, 0.72) !important; box-shadow: 0 0 14px rgba(255,255,255,0.22), inset 0 0 12px rgba(0,0,0,0.8) !important; }
+        .cadran-relief-noir-bloc.nuit-active { border-color: rgba(255, 255, 255, 0.65) !important; box-shadow: 0 0 12px rgba(255,255,255,0.18), 0 6px 12px rgba(0,0,0,0.6) !important; }
 
-        .cadran-relief-bleu { background: #0d131a !important; border: 2px solid #212c3a !important; border-radius: 12px !important; box-shadow: 0 8px 16px rgba(0,0,0,0.7), inset 0 0 12px rgba(0,0,0,0.8) !important; opacity: 1 !important; z-index: 10; }
-        .cadran-relief-noir-bloc { background: #05080c !important; border: 2px solid #162029 !important; border-radius: 12px; box-shadow: 0 6px 12px rgba(0,0,0,0.6); z-index: 10; }
         .carte-prev-unique { width: 10.4vw; height: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 1.5vh 0; background: transparent; }
-
         .soleil-realiste-css { width: 3.2vw; height: 3.2vw; background: radial-gradient(circle, #fff 15%, #ffea00 55%, #ff7700 100%); border-radius: 50%; box-shadow: 0 0 18px rgba(255,210,0,0.75), 0 0 35px rgba(255,100,0,0.4); }
         .lune-doree-image { position: relative; width: 3.4vw; height: 3.4vw; border-radius: 50%; background-image: url('https://wikimedia.org') !important; background-size: cover; background-position: center; border: 1.5px solid rgba(255,255,255,0.5) !important; box-shadow: 0 0 14px rgba(255,255,255,0.4); filter: grayscale(1) brightness(1.2); display: block; overflow: hidden; }
         .cache-ombre-lunaire { position: absolute; top: 0; width: 100%; height: 100%; background: rgba(5,8,12,0.88); transition: left 0.5s, width 0.5s; }
 
-        /* LOGOS METEO 100% OPACIFIES ET TRÈS VISIBLES */
         .picto-pro-meteo { position: relative; width: 4.8vw; height: 4.8vw; display: flex; align-items: center; justify-content: center; }
         .picto-pro-meteo .soleil-centre { width: 2.2vw; height: 2.2vw; background: #ffea00; border-radius: 50%; box-shadow: 0 0 15px #ffdf00; }
         .picto-pro-meteo .nuage-face { position: absolute; width: 3.2vw; height: 1.6vw; background: #ffffff; border-radius: 20px; bottom: 0.8vw; left: 0.8vw; box-shadow: 0 4px 6px rgba(0,0,0,0.4); }
         .picto-pro-meteo .nuage-face::before { content:''; position: absolute; width: 1.6vw; height: 1.6vw; background: #ffffff; border-radius: 50%; top: -0.8vw; left: 0.5vw; }
         .picto-pro-meteo .nuage-face::after { content:''; position: absolute; width: 1.2vw; height: 1.2vw; background: #ffffff; border-radius: 50%; top: -0.5vw; right: 0.5vw; }
         .picto-pro-mini { scale: 0.65; display: inline-block; vertical-align: middle; }
-        /* MODULE DE LA PLANTE VECTORIELLE ÉVOLUTIVE ÉPURÉE ET ADULTE */
-        .decor-vegetal-pro { width: 4vw; height: 4vw; position: relative; display: flex; align-items: center; justify-content: center; }
-        .vegetal-pot { width: 1.8vw; height: 1.2vw; background: #423125; border-radius: 2px; position: absolute; bottom: 0.2vh; border: 1px solid #5a4538; }
-        .vegetal-stem { width: 4px; background: #7cc000; position: absolute; bottom: 1.4vw; border-radius: 2px; }
-        .vegetal-leaf { position: absolute; background: #8ad400; width: 12px; height: 8px; border-radius: 0 100% 0 100%; border-bottom: 1px solid #5d8e00; }
+        /* BLUEPRINT FIN ARCHITECTURAL INDUS CHIC POUR LES SAISONS */
+        .cadre-blueprint-saison { width: 3.8vw; height: 3.8vw; border: 1px dashed rgba(255,255,255,0.3); border-radius: 4px; position: relative; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.02); }
+        .bp-line { position: absolute; background: #ffffff; }
+        .bp-circle { position: absolute; border: 1.5px solid #ffffff; border-radius: 50%; }
 
         .feuille-peuplier-svg { position: absolute; width: 13px; height: 13px; background: var(--leaf-color); border-radius: 2px 75% 60% 75%; transform-origin: center; animation: flowWind linear infinite; }
         .goutte-particule { position: absolute; background: #ffffff; width: 2px; height: 22px; animation: flowChute linear infinite; }
@@ -109,14 +110,14 @@
     <div class="pos boite-flip-haut" style="left: 51.5vw; top: 2.5vh; width: 13.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-mois">--</div><div class="charniere-droite"></div></div>
     <div class="pos boite-flip-haut" style="left: 66.2vw; top: 2.5vh; width: 11.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-annee">----</div><div class="charniere-droite"></div></div>
 
-    <!-- HORLOGE ANALOGIQUE -->
+    <!-- HORLOGE ANALOGIQUE SANS DÉFAUT -->
     <div class="montre-retro-cercle" id="cadran-montre">
         <div class="pivot"></div> <div class="aiguille heure" id="needle-hour"></div> <div class="aiguille minute" id="needle-minute"></div>
     </div>
     <div class="boite-digitale-bas"><div class="charniere-gauche"></div><div class="heure-digitale-js" id="horloge-texte">--:--:--</div><div class="charniere-droite"></div></div>
 
     <!-- METEO DE GAUCHE DES PEUPLIERS -->
-    <div class="cadran-relief-bleu" style="position: absolute; left: 1.5vw; top: 25vh; width: 28.5vw; height: 35vh; padding: 1.3vw; color: #ffffff;">
+    <div class="cadran-relief-bleu" id="cadran-meteo-g" style="position: absolute; left: 1.5vw; top: 25vh; width: 28.5vw; height: 35vh; padding: 1.3vw; color: #ffffff;">
         <div style="font-size: 1.1vw; color: #ffffff; font-weight: bold; margin-bottom: 2px; text-align: left; font-family:'Arial';">Marloie (Marche-en-Famenne)</div>
         <div style="font-size: 0.75vw; color: #aaaaaa; text-transform: uppercase; margin-bottom: 1.2vh; letter-spacing: 1px;">MÉTÉO ACTUELLE</div>
         <div style="display: flex; align-items: center; gap: 2vw; margin-bottom: 2.5vh;">
@@ -135,13 +136,13 @@
     </div>
 
     <!-- MODULE CENTRAL DROIT SOLEIL REEL -->
-    <div class="cadran-relief-noir-bloc" style="position: absolute; right: 2vw; top: 45.5vh; width: 17vw; height: 28vh; padding: 1vw 1.2vw; display: flex; flex-direction: column; justify-content: space-between;">
+    <div class="cadran-relief-noir-bloc" id="cadran-saison-d" style="position: absolute; right: 2vw; top: 45.5vh; width: 17vw; height: 28vh; padding: 1vw 1.2vw; display: flex; flex-direction: column; justify-content: space-between;">
         <div style="display: flex; justify-content: space-between; align-items: center; height: 45%; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 0.5vh; width: 100%;">
             <div style="text-align: left;">
                 <div style="font-size: 1.1vw; color: #8ad400; font-weight: bold; letter-spacing: 0.5px;">SAISON</div>
                 <div style="font-size: 2vw; font-weight: bold; color: #ffffff; margin-top: 0.2vh;" id="sat-saison">--</div>
             </div>
-            <div class="decor-vegetal-pro" id="box-vegetal-dynamique"></div>
+            <div class="cadre-blueprint-saison" id="box-blueprint-dynamique"></div>
         </div>
         <div style="display: flex; flex-direction: column; justify-content: space-between; height: 50%; width: 100%; padding-top: 0.5vh;">
             <div style="font-size: 1.1vw; color: #8ad400; font-weight: bold; text-align: left; letter-spacing: 0.5px;">SOLEIL</div>
@@ -155,8 +156,8 @@
             </div>
         </div>
     </div>
-    <!-- MODULE LUNE DOUBLE CADRAN -->
-    <div class="cadran-relief-noir-bloc" style="position: absolute; right: 2vw; top: 75vh; width: 17vw; height: 14.5vh; padding: 1vw 1.2vw; display: flex; justify-content: space-between; align-items: center; font-family:'Arial'; font-weight:bold;">
+    <!-- MODULE LUNE REMODELÉ -->
+    <div class="cadran-relief-noir-bloc" id="cadran-lune-d" style="position: absolute; right: 2vw; top: 75vh; width: 17vw; height: 14.5vh; padding: 1vw 1.2vw; display: flex; justify-content: space-between; align-items: center; font-family:'Arial'; font-weight:bold;">
         <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; text-align: left;">
             <div style="font-size: 1.1vw; color: #8ad400; font-weight: bold; letter-spacing: 0.5px; font-family:'Arial Black';">LUNE</div>
             <div style="font-size: 0.78vw; line-height: 1.35; color: #ffffff; margin-top: 0.3vh;">
@@ -172,6 +173,7 @@
     <script>
         var vitesseVentActuelle = 12; var currentSaison = "ÉTÉ"; var isNightTime = false; var orageInterval = null;
 
+        /* BLINDAGE DE L'HORLOGE ININTERROMPUE */
         function actualiserHorloge() {
             var tempsReel = new Date(); var h = tempsReel.getHours(); var m = tempsReel.getMinutes(); var s = tempsReel.getSeconds();
             document.getElementById('horloge-texte').textContent = h.toString().padStart(2, '0') + ':' + m.toString().padStart(2, '0') + ':' + s.toString().padStart(2, '0');
@@ -183,21 +185,32 @@
             document.getElementById('date-annee').textContent = tempsReel.getFullYear();
             var mNum = tempsReel.getMonth();
             if (mNum >= 2 && mNum <= 4) currentSaison = "PRINTEMPS"; else if (mNum >= 5 && mNum <= 8) currentSaison = "ÉTÉ"; else if (mNum >= 9 && mNum <= 10) currentSaison = "AUTOMNE"; else currentSaison = "HIVER";
-            document.getElementById('sat-saison').textContent = currentSaison; actualiserVegetationCSS(); gererCycleJourNuit();
+            document.getElementById('sat-saison').textContent = currentSaison; actualiserVegetationBlueprint(); gererCycleJourNuit();
         }
         setInterval(actualiserHorloge, 1000);
         function executerMeteo() {
             fetch('https://wttr.in')
             .then(res => res.json()).then(data => {
-                var current = data.current_condition[0];
+                var current = data.current_condition;
                 document.getElementById('courant-temp').textContent = Math.round(current.temp_C) + "°C";
                 document.getElementById('courant-ressenti').textContent = Math.round(current.FeelsLikeC) + "°C";
                 document.getElementById('courant-humidite').textContent = current.humidity + "%";
                 vitesseVentActuelle = Math.round(current.windspeedKmh);
                 document.getElementById('courant-vent').textContent = vitesseVentActuelle + " km/h";
                 document.getElementById('courant-uv').textContent = current.uvIndex + " / Max";
-                gererEffetsMeteoEtParticules(current.weatherDesc[0].value.toLowerCase());
+                gererEffetsMeteoEtParticules(current.weatherDesc.value.toLowerCase());
             }).catch(() => { gererEffetsMeteoEtParticules("cloudy"); });
+
+            var bas = document.getElementById('zone-7-jours'); bas.innerHTML = "";
+            const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
+            const mois = ['JANV.', 'FÉVR.', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUIL.', 'AOÛT', 'SEPT.', 'OCT.', 'NOV.', 'DÉC.'];
+            var dRef = new Date();
+            for(let index=0; index<7; index++) {
+                var d = new Date(); d.setDate(dRef.getDate() + index);
+                var box = document.createElement('div'); box.className = "carte-prev-unique cadran-relief-bleu";
+                box.innerHTML = `<div style="font-weight:bold; font-family:'Arial Black'; font-size:1.1vw; color:#ffffff;">${index===0?"AUJ.":noms[d.getDay()]}</div><div style="font-size:0.75vw; color:#aaa; font-weight:bold;">${d.getDate()} ${mois[d.getMonth()]}</div><div class="picto-pro-meteo picto-pro-mini"><div class="soleil-centre"></div><div class="nuage-face"></div></div><div style="font-size:2vw; font-weight:bold; color:#ffffff;">22°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">13°</div>`;
+                bas.appendChild(box);
+            }
         }
 
         function gererEffetsMeteoEtParticules(desc) {
@@ -224,29 +237,37 @@
                 }
             }
             if(currentSaison !== "HIVER") {
-                let leafCount = Math.min(50, Math.floor(vitesseVentActuelle * 1.2) + (currentSaison === "AUTOMNE" ? 20 : 5));
-                let listColors = currentSaison === "AUTOMNE" ? ["#c45d07", "#b82a06", "#d4a310"] : ["#a3e06b", "#ffc0cb"];
+                let leafCount = Math.min(12, Math.floor(vitesseVentActuelle * 0.3) + (currentSaison === "AUTOMNE" ? 15 : 2));
+                let listColors = currentSaison === "AUTOMNE" ? ["#c45d07", "#b82a06", "#d4a310"] : ["#48a316", "#5cb81b"];
                 for(let i=0; i<leafCount; i++) {
                     let l = document.createElement('div'); l.className = "feuille-peuplier-svg"; l.style.setProperty('--leaf-color', listColors[Math.floor(Math.random() * listColors.length)]);
-                    l.style.left = "-2vw"; l.style.setProperty('--start-y', (Math.random() * 85) + "vh"); l.style.setProperty('--end-y', (Math.random() * 95) + "vh"); l.style.animationDuration = Math.max(1.2, 5.5 - (vitesseVentActuelle * 0.08)) + "s"; l.style.animationDelay = (Math.random() * 5) + "s"; avant.appendChild(l);
+                    l.style.left = "-2vw"; l.style.setProperty('--start-y', (Math.random() * 85) + "vh"); l.style.setProperty('--end-y', (Math.random() * 95) + "vh"); l.style.animationDuration = Math.max(1.8, 6.5 - (vitesseVentActuelle * 0.08)) + "s"; l.style.animationDelay = (Math.random() * 5) + "s"; avant.appendChild(l);
                 }
             }
         }
 
         function gererCycleJourNuit() {
             var h = new Date().getHours(); var calque = document.getElementById('sky-gradient'); var decor = document.getElementById('school-view-bg'); var moon = document.getElementById('lune-vrai-ciel');
+            var cM = document.getElementById('cadran-meteo-g'); var cS = document.getElementById('cadran-saison-d'); var cL = document.getElementById('cadran-lune-d');
             decor.classList.remove('effet-enneige'); if(currentSaison === "HIVER") decor.classList.add('effet-enneige');
-            if(h >= 7 && h < 18) { calque.style.background = "linear-gradient(to bottom, rgba(54,162,235,0.15), transparent)"; decor.style.filter = currentSaison === "AUTOMNE" ? "sepia(0.35) saturate(1.4) contrast(1.05)" : (currentSaison === "ÉTÉ" ? "brightness(1.18) saturate(1.1)" : "none"); isNightTime = false; moon.style.display = "none"; } 
-            else if(h >= 18 && h < 21) { calque.style.background = "linear-gradient(to bottom, rgba(237,105,32,0.38), rgba(5,15,30,0.2))"; decor.style.filter = "brightness(0.85) saturate(1.2)"; isNightTime = false; moon.style.display = "none"; } 
-            else { calque.style.background = "linear-gradient(to bottom, rgba(8,20,45,0.78), rgba(3,5,15,0.92))"; decor.style.filter = "brightness(0.38) contrast(1.1)"; isNightTime = true; moon.style.display = "block"; }
+            if(h >= 7 && h < 18) { 
+                calque.style.background = "linear-gradient(to bottom, rgba(54,162,235,0.15), transparent)"; decor.style.filter = currentSaison === "AUTOMNE" ? "sepia(0.35) saturate(1.4) contrast(1.05)" : (currentSaison === "ÉTÉ" ? "brightness(1.18) saturate(1.1)" : "none"); isNightTime = false; moon.style.display = "none";
+                cM.classList.remove('nuit-active'); cS.classList.remove('nuit-active'); cL.classList.remove('nuit-active');
+            } else if(h >= 18 && h < 21) { 
+                calque.style.background = "linear-gradient(to bottom, rgba(237,105,32,0.38), rgba(5,15,30,0.2))"; decor.style.filter = "brightness(0.85) saturate(1.2)"; isNightTime = false; moon.style.display = "none";
+                cM.classList.remove('nuit-active'); cS.classList.remove('nuit-active'); cL.classList.remove('nuit-active');
+            } else { 
+                calque.style.background = "linear-gradient(to bottom, rgba(8,20,45,0.85), rgba(3,5,15,0.96))"; decor.style.filter = "brightness(0.35) contrast(1.15)"; isNightTime = true; moon.style.display = "block";
+                cM.classList.add('nuit-active'); cS.classList.add('nuit-active'); cL.classList.add('nuit-active');
+            }
         }
 
-        function actualiserVegetationCSS() {
-            var box = document.getElementById('box-vegetal-dynamique'); box.innerHTML = '<div class="vegetal-pot"></div>'; var stem = document.createElement('div'); stem.className = "vegetal-stem";
-            if(currentSaison === "HIVER") { stem.style.height = "5px"; stem.style.background = "#d4a310"; box.appendChild(stem); } 
-            else if(currentSaison === "PRINTEMPS") { stem.style.height = "1.2vw"; box.appendChild(stem); let l1 = document.createElement('div'); l1.className = "vegetal-leaf"; l1.style.bottom = "1.9vw"; l1.style.left = "0.5vw"; box.appendChild(l1); } 
-            else if(currentSaison === "ÉTÉ") { stem.style.height = "2.4vw"; box.appendChild(stem); for(let i=0; i<4; i++) { let l = document.createElement('div'); l.className = "vegetal-leaf"; l.style.bottom = (1.4 + (i*0.4)) + "vw"; l.style.left = (i % 2 === 0 ? "0.3vw" : "1.2vw"); box.appendChild(l); } } 
-            else if(currentSaison === "AUTOMNE") { stem.style.height = "1.6vw"; stem.style.background = "#b82a06"; box.appendChild(stem); let l1 = document.createElement('div'); l1.className = "vegetal-leaf"; l1.style.bottom = "1.6vw"; l1.style.background = "#d4a310"; box.appendChild(l1); }
+        function actualiserVegetationBlueprint() {
+            var box = document.getElementById('box-blueprint-dynamique');
+            if(currentSaison === "HIVER") { box.innerHTML = '<div class="bp-circle" style="width:1.2vw; height:1.2vw; bottom:0.4vw; border-style:dashed;"></div><div class="bp-line" style="width:2px; height:10px; bottom:1.6vw;"></div>'; } 
+            else if(currentSaison === "PRINTEMPS") { box.innerHTML = '<div class="bp-line" style="width:2px; height:1.6vw; bottom:0.4vw;"></div><div class="bp-line" style="width:14px; height:2px; bottom:1.4vw; transform:rotate(25deg); left:1.8vw;"></div>'; } 
+            else if(currentSaison === "ÉTÉ") { box.innerHTML = '<div class="bp-line" style="width:3px; height:2.2vw; bottom:0.4vw;"></div><div class="bp-circle" style="width:1.8vw; height:1.8vw; bottom:1.6vw; background:rgba(255,255,255,0.05);"></div>'; } 
+            else if(currentSaison === "AUTOMNE") { box.innerHTML = '<div class="bp-line" style="width:2px; height:1.8vw; bottom:0.4vw; transform:rotate(-10deg);"></div><div class="bp-line" style="width:10px; height:2px; bottom:1.2vw; transform:rotate(-45deg); left:1vw;"></div>'; }
         }
 
         function calculPhaseLune() {
@@ -257,10 +278,10 @@
             document.getElementById('lune-age').textContent = daysSinceNew.toFixed(1);
             let pct = Math.round((1 - Math.cos((daysSinceNew * Math.PI * 2) / 29.53)) * 50);
             document.getElementById('lune-ecl').textContent = pct;
-            let nom = "Nouvelle lune"; var sW = document.getElementById('lune-ombre-widget'); var sC = document.getElementById('lune-ombre-ciel');
+            let sW = document.getElementById('lune-ombre-widget'); var sC = document.getElementById('lune-ombre-ciel');
             let fn = (s) => { if(s) { if(daysSinceNew < 14.7) { s.style.left = pct + '%'; s.style.width = (100 - pct) + '%'; } else { s.style.left = '0%'; s.style.width = (100 - pct) + '%'; } } };
             fn(sW); fn(sC);
-            if(daysSinceNew >= 1.8 && daysSinceNew < 5.5) nom = "Premier croissant"; if(daysSinceNew >= 5.5 && daysSinceNew < 9.2) nom = "Premier quartier"; if(daysSinceNew >= 9.2 && daysSinceNew < 13) nom = "Gibbeuse croissante"; if(daysSinceNew >= 13 && daysSinceNew < 16.6) nom = "Pleine lune"; if(daysSinceNew >= 16.6 && daysSinceNew < 20.3) nom = "Gibbeuse décroissante"; if(daysSinceNew >= 20.3 && daysSinceNew < 24) nom = "Dernier quartier"; if(daysSinceNew >= 24 && daysSinceNew < 27.7) nom = "Dernier croissant";
+            let nom = "Nouvelle lune"; if(daysSinceNew >= 1.8 && daysSinceNew < 5.5) nom = "Premier croissant"; if(daysSinceNew >= 5.5 && daysSinceNew < 9.2) nom = "Premier quartier"; if(daysSinceNew >= 9.2 && daysSinceNew < 13) nom = "Gibbeuse croissante"; if(daysSinceNew >= 13 && daysSinceNew < 16.6) nom = "Pleine lune"; if(daysSinceNew >= 16.6 && daysSinceNew < 20.3) nom = "Gibbeuse décroissante"; if(daysSinceNew >= 20.3 && daysSinceNew < 24) nom = "Dernier quartier"; if(daysSinceNew >= 24 && daysSinceNew < 27.7) nom = "Dernier croissant";
             document.getElementById('lune-phase-nom').textContent = nom;
         }
 
