@@ -13,9 +13,7 @@
         
         .lune-dans-le-ciel {
             position: fixed; top: 11vh; right: 20vw; width: 4.5vw; height: 4.4vw; border-radius: 50%;
-            background-image: url('https://wikimedia.org' + 
-            'wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/' +
-            '640px-FullMoon2010.jpg') !important;
+            background-image: url('https://wikimedia.org') !important;
             background-size: cover; background-position: center; border: 1.5px solid rgba(255,255,255,0.4) !important;
             box-shadow: 0 0 15px rgba(255,255,255,0.35); filter: grayscale(1) brightness(1.2);
             z-index: -3; display: none; overflow: hidden; transition: opacity 8s ease-in-out;
@@ -33,19 +31,18 @@
             mix-blend-mode: overlay; pointer-events: none;
         }
         
-        /* GESTION DU PLAN DES NUAGES DERRIERE LE FOND */
         #cloud-layer { position: fixed; top: 0; left: 0; width: 200vw; height: 38vh; background: url('https://wikimedia.org') repeat-x; background-size: contain; z-index: -6; opacity: 0; pointer-events: none; transition: opacity 5s ease-in-out; }
         #lightning-flash { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; background: rgba(255,255,255,0); pointer-events: none; }
         
-        #back-precipitations { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; }
-        #front-particles { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 2; pointer-events: none; }
+        /* REGLAGE CRUCIAL DU Z-INDEX EN ARRIERE-PLAN POUR LES FEUILLES ET LA PLUIE */
+        #back-precipitations { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; pointer-events: none; }
+        #front-particles { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1 !important; pointer-events: none; }
 
         .pos { position: absolute; display: flex; align-items: center; justify-content: center; overflow: hidden; text-align: center; }
         .boite-flip-haut {
             background: linear-gradient(to bottom, #11151c, #05070a) !important; border: 2px solid #28303d !important; border-radius: 8px !important;
-            box-shadow: 0px 6px 12px rgba(0,0,0,0.5), inset 0px 0px 10px rgba(0,0,0,0.9) !important;
+            box-shadow: 0px 6px 12px rgba(0,0,0,0.5), inset 0px 0px 10px rgba(0,0,0,0.9) !important; z-index: 99 !important;
         }
-        /* LIGNE FLIP-FLAP AFFINEE A 0.8PX */
         .flip-tuile-js { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 2.3vw; font-weight: 900; color: #fff; text-transform: uppercase; letter-spacing: 1px; position: relative; }
         .flip-tuile-js::after { content: ''; position: absolute; left: 0; top: 50%; width: 100%; height: 0.8px; background: #000000 !important; border-bottom: 1px solid rgba(255,255,255,0.12) !important; z-index: 5; }
 
@@ -60,7 +57,7 @@
         .charniere-gauche::before, .charniere-droite::before { content: ''; position: absolute; left: 0; top: 10px; width: 100%; height: 4px; background: #111 !important; }
 
         /* HORLOGE RETRO */
-        .montre-retro-cercle { position: absolute; right: 2.2vw; top: 1vh; width: 15.6vw; height: 15.6vw; background: #000000 !important; border: 2px solid #1d2633 !important; border-radius: 50%; box-shadow: 0px 4px 12px rgba(0,0,0,0.5); z-index: 10; }
+        .montre-retro-cercle { position: absolute; right: 2.2vw; top: 1vh; width: 15.6vw; height: 15.6vw; background: #000000 !important; border: 2px solid #1d2633 !important; border-radius: 50%; box-shadow: 0px 4px 12px rgba(0,0,0,0.5); z-index: 99 !important; }
         .graduation { position: absolute; width: 2px; height: 8px; background: rgba(255,255,255,0.4); left: 50%; top: 2px; margin-left: -1px; transform-origin: 50% 7.6vw; z-index: 11; }
         .graduation.principale { width: 3px; height: 12px; background: #ffffff !important; top: 2px; }
         .chiffre-container-js { position: absolute; width: 2vw; height: 2vw; left: 50%; top: 12px; margin-left: -1vw; transform-origin: 50% 6.6vw; display: flex; align-items: center; justify-content: center; z-index: 12; }
@@ -69,13 +66,13 @@
         .heure { width: 5px; height: 3.2vw; background-color: #fff; } .minute { width: 4px; height: 4.9vw; background-color: #8ad400; }
         .pivot { position: absolute; width: 12px; height: 12px; background: #a2f200; border-radius: 50%; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 15; box-shadow: 0 0 6px rgba(162,242,0,0.8); }
 
-        .boite-digitale-bas { position: absolute; right: 2vw; top: 35.5vh; width: 17vw; height: 8vh; background: #05070a !important; border: none !important; border-radius: 8px; box-shadow: inset 0 0 10px rgba(0,0,0,0.8) !important; }
+        .boite-digitale-bas { position: absolute; right: 2vw; top: 35.5vh; width: 17vw; height: 8vh; background: #05070a !important; border: none !important; border-radius: 8px; box-shadow: inset 0 0 10px rgba(0,0,0,0.8) !important; z-index: 99 !important; }
         .heure-digitale-js { font-size: 2.7vw; font-weight: 900; color: #ffffff !important; letter-spacing: 1px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; }
         .heure-digitale-js::after { content: ''; position: absolute; left: 0; top: 50%; width: 100%; height: 0.8px; background: #000000; border-bottom: 1px solid rgba(255,255,255,0.12); z-index: 5; }
 
-        /* RELIEFS EN COUCHES (Z-INDEX 10) */
-        .cadran-relief-bleu { background: #0d131a !important; border: 2px solid #212c3a !important; border-radius: 12px !important; box-shadow: 0 8px 16px rgba(0,0,0,0.7), inset 0 0 12px rgba(0,0,0,0.8) !important; opacity: 1 !important; z-index: 10; transition: border-color 8s ease-in-out, box-shadow 8s ease-in-out; }
-        .cadran-relief-noir-bloc { background: #05080c !important; border: 2px solid #162029 !important; border-radius: 12px; box-shadow: 0 6px 12px rgba(0,0,0,0.6); z-index: 10; transition: border-color 8s ease-in-out, box-shadow 8s ease-in-out; }
+        /* PRIORITY CRUCIALE Z-INDEX 99 POUR INTERDIRE LE PASSAGE DES FEUILLES DEVANT */
+        .cadran-relief-bleu { background: #0d131a !important; border: 2px solid #212c3a !important; border-radius: 12px !important; box-shadow: 0 8px 16px rgba(0,0,0,0.7), inset 0 0 12px rgba(0,0,0,0.8) !important; opacity: 1 !important; z-index: 99 !important; transition: border-color 8s ease-in-out, box-shadow 8s ease-in-out; }
+        .cadran-relief-noir-bloc { background: #05080c !important; border: 2px solid #162029 !important; border-radius: 12px; box-shadow: 0 6px 12px rgba(0,0,0,0.6); z-index: 99 !important; transition: border-color 8s ease-in-out, box-shadow 8s ease-in-out; }
         .cadran-relief-bleu.nuit-active-widget { border-color: rgba(255, 255, 255, 0.72) !important; box-shadow: 0 0 14px rgba(255,255,255,0.22), inset 0 0 12px rgba(0,0,0,0.8) !important; }
         .cadran-relief-noir-bloc.nuit-active-widget { border-color: rgba(255, 255, 255, 0.65) !important; box-shadow: 0 0 12px rgba(255,255,255,0.18), 0 6px 12px rgba(0,0,0,0.6) !important; }
 
@@ -83,7 +80,7 @@
         .soleil-realiste-css { width: 3.2vw; height: 3.2vw; background: radial-gradient(circle, #fff 15%, #ffea00 55%, #ff7700 100%); border-radius: 50%; box-shadow: 0 0 18px rgba(255,210,0,0.75), 0 0 35px rgba(255,100,0,0.4); }
         .lune-doree-image { position: relative; width: 3.4vw; height: 3.4vw; border-radius: 50%; background-image: url('https://wikimedia.org') !important; background-size: cover; background-position: center; border: 1.5px solid rgba(255,255,255,0.5) !important; box-shadow: 0 0 14px rgba(255,255,255,0.4); filter: grayscale(1) brightness(1.2); display: block; overflow: hidden; }
         .cache-ombre-lunaire { position: absolute; top: 0; width: 100%; height: 100%; background: rgba(5,8,12,0.88); transition: left 0.5s, width 0.5s; }
-        /* VISUEL DU POMMIER D'ÉTÉ COLORÉ */
+        /* SAISON COLORÉE POMMIER */
         .case-illustration-pommier { width: 4.8vw; height: 4.8vw; position: relative; display: flex; align-items: center; justify-content: center; background: transparent; }
         .pommier-trunk { position: absolute; width: 4px; background: #5c4033; bottom: 0.2vw; height: 1.8vw; left: 50%; transform: translateX(-50%); border-radius: 2px; }
         .pommier-branch-l { position: absolute; width: 10px; height: 2px; background: #5c4033; bottom: 1.4vw; left: 1.2vw; transform: rotate(-30deg); }
@@ -114,13 +111,13 @@
     <div id="school-view-bg" class="decor-permanent"></div>
     <div id="cloud-layer"></div> <div id="lightning-flash"></div> <div id="back-precipitations"></div> <div id="front-particles"></div>
 
-    <!-- CALENDRIER -->
+    <!-- CALENDRIER HAUT SÉCURISÉ -->
     <div class="pos boite-flip-haut" style="left: 17.5vw; top: 2.5vh; width: 22.3vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-jour">--</div><div class="charniere-droite"></div></div>
     <div class="pos boite-flip-haut" style="left: 40.8vw; top: 2.5vh; width: 9.6vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-num">--</div><div class="charniere-droite"></div></div>
     <div class="pos boite-flip-haut" style="left: 51.5vw; top: 2.5vh; width: 13.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-mois">--</div><div class="charniere-droite"></div></div>
     <div class="pos boite-flip-haut" style="left: 66.2vw; top: 2.5vh; width: 11.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-annee">----</div><div class="charniere-droite"></div></div>
 
-    <!-- HORLOGE ANALOGIQUE -->
+    <!-- HORLOGE RETRO SÉCURISÉE -->
     <div class="montre-retro-cercle" id="cadran-montre">
         <div class="pivot"></div> <div class="aiguille heure" id="needle-hour"></div> <div class="aiguille minute" id="needle-minute"></div>
     </div>
@@ -178,8 +175,8 @@
         </div>
         <div class="lune-doree-image" id="lune-vrai-photo"><div class="cache-ombre-lunaire" id="lune-ombre-widget"></div></div>
     </div>
-    <!-- PREVISIONS D'EN BAS -->
-    <div style="position: absolute; left: 1.5vw; bottom: 8vh; width: 77.5vw; height: 27.5vh; display: flex; justify-content: space-between;" id="zone-7-jours"></div>
+    <!-- PREVISIONS D'EN BAS (AVEC UN Z-INDEX ULTRA-HAUT POUR CRÉER L'ÉCRAN TOTAL D'ÉTANCHÉITÉ DU PASSAGE DES FEUILLES) -->
+    <div style="position: absolute; left: 1.5vw; bottom: 8vh; width: 77.5vw; height: 27.5vh; display: flex; justify-content: space-between; z-index: 99 !important;" id="zone-7-jours"></div>
 
     <script>
         var vitesseVentActuelle = 12; var currentSaison = "ÉTÉ"; var isNightTime = false; var orageInterval = null;
@@ -213,7 +210,6 @@
             document.getElementById('sat-saison').textContent = currentSaison; actualiserVegetationBlueprint(); gererCycleJourNuit();
         }
         function executerMeteo() {
-            /* INTEGRATION SÉCURISÉE AVEC TIMESTAMP UNIQUE */
             let uM = 'https://wttr.in' + new Date().getTime();
             fetch(uM).then(res => res.json()).then(data => {
                 var current = data.current_condition;
@@ -262,7 +258,9 @@
                 }
             }
             if(currentSaison !== "HIVER") {
-                let leafCount = Math.min(10, Math.floor(vitesseVentActuelle * 0.3) + (currentSaison === "AUTOMNE" ? 15 : 2));
+                /* CORRECTION CHIRURGICALE : DIVISION PAR TROIS DES FEUILLES EN ETE POUR METTRE EN VALEUR LA PHOTO DE L'ÉCOLE */
+                let baseCount = currentSaison === "AUTOMNE" ? 15 : 2;
+                let leafCount = Math.min(10, Math.floor(vitesseVentActuelle * (currentSaison === "ÉTÉ" ? 0.08 : 0.3)) + baseCount);
                 let listColors = currentSaison === "AUTOMNE" ? ["#c45d07", "#b82a06", "#d4a310"] : ["#48a316", "#5cb81b"];
                 for(let i=0; i<leafCount; i++) {
                     let l = document.createElement('div'); l.className = "feuille-peuplier-svg"; l.style.setProperty('--leaf-color', listColors[Math.floor(Math.random() * listColors.length)]);
