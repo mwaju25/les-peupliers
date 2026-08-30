@@ -11,7 +11,7 @@
         .lune-dans-le-ciel { position: fixed; top: 11vh; right: 20vw; width: 4.5vw; height: 4.4vw; border-radius: 50%; background-image: url('https://wikimedia.org') !important; background-size: cover; background-position: center; border: 1.5px solid rgba(255,255,255,0.4) !important; box-shadow: 0 0 15px rgba(255,255,255,0.35); filter: grayscale(1) brightness(1.2); z-index: -3; display: none; overflow: hidden; transition: opacity 8s ease-in-out; }
         .cache-lune-ciel { position: absolute; top: 0; width: 100%; height: 100%; background: rgba(5,8,12,0.88); }
         #school-view-bg, .decor-permanent { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-image: url('fond-final.png') !important; background-size: 100% 100%; background-position: center; z-index: -5; transition: filter 8s ease-in-out; }
-        #school-view-bg::after, .decor-permanent::after { content: ''; position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; background: linear-gradient(to bottom, rgba(255,255,255,0.15), rgba(255,255,255,0.42)); mix-blend-mode: overlay; pointer-events: none; }
+        #school-view-bg::after, .decor-permanent::after { content: ''; position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; background: linear-gradient(to bottom, rgba(255,255,255,0.1), rgba(0,0,0,0.4)); mix-blend-mode: multiply; pointer-events: none; }
         #cloud-layer { position: fixed; top: 0; left: 0; width: 200vw; height: 38vh; background: url('https://wikimedia.org') repeat-x; background-size: contain; z-index: -6; opacity: 0; pointer-events: none; transition: opacity 5s ease-in-out; }
         #lightning-flash { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; background: rgba(255,255,255,0); pointer-events: none; }
         #back-precipitations { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; pointer-events: none; }
@@ -150,31 +150,35 @@
             document.getElementById('date-num').textContent = tempsReel.getDate();
             document.getElementById('date-mois').textContent = ['JANVIER', 'FÉVRIER', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUILLET', 'AOÛT', 'SEPTEMBRE', 'OCTOBRE', 'NOVEMBRE', 'DÉCÉMBRE'][tempsReel.getMonth()];
             document.getElementById('date-annee').textContent = tempsReel.getFullYear();
-            gererCycleJourNuit();
+            gererCycleJourNuit(h, m);
         }
         function executerMeteo() {
-            let uM = 'https://wttr.in';
+            let uM = 'https://open-meteo.com';
             fetch(uM).then(res => res.json()).then(data => {
-                let cur = data.current_condition[0];
-                document.getElementById('courant-temp').textContent = Math.round(cur.temp_C) + "°C";
-                document.getElementById('courant-ressenti').textContent = Math.round(cur.FeelsLikeC) + "°C";
-                document.getElementById('courant-humidite').textContent = cur.humidity + "%";
-                vitesseVentActuelle = Math.round(cur.windspeedKmph);
+                let cur = data.current;
+                document.getElementById('courant-temp').textContent = Math.round(cur.temperature_2m) + "°C";
+                document.getElementById('courant-ressenti').textContent = Math.round(cur.apparent_temperature) + "°C";
+                document.getElementById('courant-humidite').textContent = cur.relative_humidity_2m + "%";
+                vitesseVentActuelle = Math.round(cur.wind_speed_10m);
                 document.getElementById('courant-vent').textContent = vitesseVentActuelle + " km/h";
-                
-                let desc = cur.lang_fr ? cur.lang_fr[0].value : cur.weatherDesc[0].value;
+                let code = cur.weather_code;
+                let desc = "Nuageux"; 
+                if (code === 0) desc = "Ensoleillé";
+                if (code > 0 && code <= 3) desc = "Nuageux";
+                if (code >= 51 && code <= 67) desc = "Pluie Fine";
+                if (code >= 71 && code <= 77) desc = "Neige";
+                if (code >= 80) desc = "Orageux";
                 document.getElementById('courant-desc').textContent = desc;
                 gererEffetsMeteoEtParticules(desc.toLowerCase());
+
                 var bas = document.getElementById('zone-7-jours'); bas.innerHTML = "";
                 const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
                 const mois = ['JANV.', 'FÉVR.', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUIL.', 'AOÛT', 'SEPT.', 'OCT.', 'NOV.', 'DÉC.'];
                 var dRef = new Date();
-                
                 for(let index = 0; index < 7; index++) {
                     var d = new Date(); d.setDate(dRef.getDate() + index);
-                    let fDay = data.weather[index];
-                    let maxT = Math.round(fDay.maxtempC);
-                    let minT = Math.round(fDay.mintempC);
+                    let maxT = Math.round(data.daily.temperature_2m_max[index]);
+                    let minT = Math.round(data.daily.temperature_2m_min[index]);
                     var box = document.createElement('div'); box.className = "carte-prev-unique";
                     box.innerHTML = `<div style="font-weight:bold; font-family:'Arial Black'; font-size:1.1vw; color:#ffffff;">${index===0?"AUJ.":noms[d.getDay()]}</div><div style="font-size:0.75vw; color:#aaa; font-weight:bold;">${d.getDate()} ${mois[d.getMonth()]}</div><div class="picto-pro-mini" style="display:inline-block; width:3.2vw; height:1.6vw; background:#ffffff; border-radius:20px; position:relative; margin:1vh 0;"><div style="position:absolute; width:1.2vw; height:1.2vw; background:#ffea00; border-radius:50%; top:-0.4vw; left:0.4vw;"></div></div><div style="font-size:2vw; font-weight:bold; color:#ffffff;">${maxT}°</div><div style="color:#49a6e9; font-weight:bold; font-size:1.4vw;">${minT}°</div>`;
                     bas.appendChild(box);
@@ -194,7 +198,7 @@
         function gererEffetsMeteoEtParticules(desc) {
             var avant = document.getElementById('front-particles'); var nuage = document.getElementById('cloud-layer');
             avant.innerHTML = "";
-            if (desc.includes("nuageux") || desc.includes("couvert") || desc.includes("brouillard") || desc.includes("cloudy")) { nuage.style.opacity = "0.55"; } else if (desc.includes("pluie") || desc.includes("averse") || desc.includes("rain")) { nuage.style.opacity = "0.80"; } else { nuage.style.opacity = "0"; }
+            if (desc.includes("nuageux") || desc.includes("éclaircies") || desc.includes("nuage")) { nuage.style.opacity = "0.55"; } else if (desc.includes("pluie")) { nuage.style.opacity = "0.80"; } else { nuage.style.opacity = "0"; }
             if (nuage.style.opacity > 0) nuage.className = "anim-clouds";
             let leafCount = Math.min(10, Math.floor(vitesseVentActuelle * 0.08) + 2);
             for(let i=0; i<leafCount; i++) {
@@ -203,10 +207,11 @@
                 let speed = Math.max(1.8, 6.5 - (vitesseVentActuelle * 0.08)); l.style.animationDuration = speed + "s"; l.style.animationDelay = (Math.random() * 5) + "s"; avant.appendChild(l);
             }
         }
-        function gererCycleJourNuit() {
-            var h = new Date().getHours(); var calque = document.getElementById('sky-gradient'); var decor = document.getElementById('school-view-bg'); var moon = document.getElementById('lune-vrai-ciel');
-            var cS = document.getElementById('cadran-saison-d'); var cL = document.getElementById('cadran-lune-d');
-            if(h >= 7 && h < 18) { calque.style.background = "linear-gradient(to bottom, rgba(3,15,40,0), transparent)"; decor.style.filter = "brightness(1.18) saturate(1.1)"; moon.style.display = "none"; cS.classList.remove('nuit-active-widget'); cL.classList.remove('nuit-active-widget'); } else { calque.style.background = "linear-gradient(to bottom, rgba(2,5,15,0.95), rgba(1,2,5,0.98))"; decor.style.filter = "brightness(0.38) contrast(1.1)"; moon.style.display = "block"; cS.classList.add('nuit-active-widget'); cL.classList.add('nuit-active-widget'); }
+
+        function gererCycleJourNuit(h, m) {
+            var calque = document.getElementById('sky-gradient'); var decor = document.getElementById('school-view-bg'); var moon = document.getElementById('lune-vrai-ciel');
+            var totalMin = (h * 60) + m;
+            if (totalMin >= 360 && totalMin < 420) { calque.style.background = "linear-gradient(to bottom, #ff7e5f, #feb47b)"; decor.style.filter = "brightness(0.8) contrast(1.1)"; moon.style.display = "none"; } else if (totalMin >= 420 && totalMin < 1170) { calque.style.background = "linear-gradient(to bottom, #1a2a6c, #b21f1f, #fdbb2d)"; calque.style.background = "linear-gradient(to bottom, #4a90e2, #b2e2fc)"; decor.style.filter = "brightness(1.15) saturate(1.1)"; moon.style.display = "none"; } else if (totalMin >= 1170 && totalMin < 1230) { calque.style.background = "linear-gradient(to bottom, #11151c, #943126, #f39c12)"; decor.style.filter = "brightness(0.7) saturate(1.2)"; moon.style.display = "block"; } else { calque.style.background = "linear-gradient(to bottom, #02050f, #010205)"; decor.style.filter = "brightness(0.35) contrast(1.15)"; moon.style.display = "block"; }
         }
         function calculPhaseLune() {
             var t = new Date(); var y = t.getFullYear(); var m = t.getMonth() + 1; var d = t.getDate();
