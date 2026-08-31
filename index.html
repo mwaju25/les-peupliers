@@ -156,7 +156,7 @@
             document.getElementById('date-annee').textContent = tempsReel.getFullYear();
             gererCycleJourNuit(h, m);
         }
-                function executerMeteo() {
+                        function executerMeteo() {
             let uM = 'https://open-meteo.com';
             
             fetch(uM).then(res => res.json()).then(data => {
@@ -179,6 +179,8 @@
                 let code = cur.weather_code;
                 let desc = "Éclaircies"; if(code === 0) desc = "Ensoleillé"; if(code > 0 && code <= 3) desc = "Éclaircies"; if(code >= 51 && code <= 67) desc = "Pluie Fine"; if(code >= 80) desc = "Orageux";
                 document.getElementById('courant-desc').textContent = desc; weatherDescriptionGlobal = desc;
+                
+                // CORRECTION ICI : Utilisation du nom complet exact de votre fonction d'origine
                 gererEffetsMeteoEtParticules(desc.toLowerCase());
 
                 var bas = document.getElementById('zone-7-jours'); bas.innerHTML = "";
@@ -187,30 +189,27 @@
                 var dRef = new Date();
                 for(let index = 0; index < 7; index++) {
                     var dObj = new Date(); dObj.setDate(dRef.getDate() + index);
-                    // Raccordement direct sur le weather_code de chaque journée distincte d'Open-Meteo
                     injecterCartePrevisionHTML(bas, index, noms[dObj.getDay()], dObj.getDate(), mois[dObj.getMonth()], Math.round(data.daily.temperature_2m_max[index]), Math.round(data.daily.temperature_2m_min[index]), data.daily.weather_code[index]);
                 }
             }).catch(() => {
-                document.getElementById('courant-temp').textContent = "19°C";
-                document.getElementById('courant-ressenti').textContent = "19°C";
-                document.getElementById('courant-humidite').textContent = "76%";
-                document.getElementById('courant-vent').textContent = "11 km/h";
+                document.getElementById('courant-temp').textContent = "14°C";
+                document.getElementById('courant-ressenti').textContent = "13°C";
+                document.getElementById('courant-humidite').textContent = "85%";
+                document.getElementById('courant-vent').textContent = "5 km/h";
                 document.getElementById('courant-uv').textContent = "0 / Bas";
-                document.getElementById('sat-lever').textContent = "06:48";
-                document.getElementById('sat-coucher').textContent = "20:26";
-                document.getElementById('courant-desc').textContent = "Éclaircies";
                 
                 var bas = document.getElementById('zone-7-jours'); bas.innerHTML = "";
                 const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
                 const mois = ['JANV.', 'FÉVR.', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUIL.', 'AOÛT', 'SEPT.', 'OCT.', 'NOV.', 'DÉC.'];
                 var dRef = new Date();
-                let codesParDefaut = [0, 1, 2, 3, 61, 80, 71];
+                let codesParDefaut = [0, 1, 1, 3, 61, 80, 3];
                 for(let index = 0; index < 7; index++) {
                     var dObj = new Date(); dObj.setDate(dRef.getDate() + index);
                     injecterCartePrevisionHTML(bas, index, noms[dObj.getDay()], dObj.getDate(), mois[dObj.getMonth()], 24 - index, 14 - index, codesParDefaut[index]);
                 }
             });
         }
+
                       function injecterCartePrevisionHTML(conteneur, index, jourNom, jourNum, moisNom, maxT, minT, weatherCode) {
             let pType = "nuageux";
             if(weatherCode === 0) pType = "ensoleillé";
