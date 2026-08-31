@@ -156,60 +156,70 @@
             document.getElementById('date-annee').textContent = tempsReel.getFullYear();
             gererCycleJourNuit(h, m);
         }
-                        function executerMeteo() {
-            let uM = 'https://open-meteo.com';
-            
-            fetch(uM).then(res => res.json()).then(data => {
-                let cur = data.current;
-                let tActuelle = Math.round(cur.temperature_2m);
-                document.getElementById('courant-temp').textContent = tActuelle + "°C";
-                document.getElementById('courant-ressenti').textContent = Math.round(cur.apparent_temperature) + "°C";
-                document.getElementById('courant-humidite').textContent = cur.relative_humidity_2m + "%";
-                vitesseVentActuelle = Math.round(cur.wind_speed_10m);
-                document.getElementById('courant-vent').textContent = vitesseVentActuelle + " km/h";
-                
-                let uvVal = Math.round(cur.uv_index || 0);
-                let uvText = "Bas"; if(uvVal >= 3 && uvVal <= 5) uvText = "Modéré"; if(uvVal >= 6) uvText = "Élevé";
-                document.getElementById('courant-uv').textContent = uvVal + " / " + uvText;
-                
-                let parseTime = (str) => { return str.split('T')[1].substring(0, 5); };
-                document.getElementById('sat-lever').textContent = data.daily.sunrise[0].substring(11, 16);
-                document.getElementById('sat-coucher').textContent = data.daily.sunset[0].substring(11, 16);
+                      function executerMeteo() {
+    // URL corrigée avec les coordonnées de Marloie et toutes les variables requises
+    let uM = 'https://open-meteo.com';
+    
+    fetch(uM).then(res => res.json()).then(data => {
+        let cur = data.current;
+        let tActuelle = Math.round(cur.temperature_2m);
+        document.getElementById('courant-temp').textContent = tActuelle + "°C";
+        document.getElementById('courant-ressenti').textContent = Math.round(cur.apparent_temperature) + "°C";
+        document.getElementById('courant-humidite').textContent = cur.relative_humidity_2m + "%";
+        vitesseVentActuelle = Math.round(cur.wind_speed_10m);
+        document.getElementById('courant-vent').textContent = vitesseVentActuelle + " km/h";
+        
+        let uvVal = Math.round(cur.uv_index || 0);
+        let uvText = "Bas"; if(uvVal >= 3 && uvVal <= 5) uvText = "Modéré"; if(uvVal >= 6) uvText = "Élevé";
+        document.getElementById('courant-uv').textContent = uvVal + " / " + uvText;
+        
+        // Extraction correcte des heures de lever et coucher du soleil
+        document.getElementById('sat-lever').textContent = data.daily.sunrise[0].substring(11, 16);
+        document.getElementById('sat-coucher').textContent = data.daily.sunset[0].substring(11, 16);
 
+        let code = cur.weather_code;
+        let desc = "Éclaircies"; 
+        if(code === 0) desc = "Ensoleillé"; 
+        if(code > 0 && code <= 3) desc = "Éclaircies"; 
+        if(code >= 51 && code <= 67) desc = "Pluie Fine"; 
+        if(code >= 80) desc = "Orageux";
+        
+        document.getElementById('courant-desc').textContent = desc; 
+        weatherDescriptionGlobal = desc;
+        
+        gererEffetsMeteoEtParticules(desc.toLowerCase());
 
-                let code = cur.weather_code;
-                let desc = "Éclaircies"; if(code === 0) desc = "Ensoleillé"; if(code > 0 && code <= 3) desc = "Éclaircies"; if(code >= 51 && code <= 67) desc = "Pluie Fine"; if(code >= 80) desc = "Orageux";
-                document.getElementById('courant-desc').textContent = desc; weatherDescriptionGlobal = desc;
-                
-                // CORRECTION ICI : Utilisation du nom complet exact de votre fonction d'origine
-                gererEffetsMeteoEtParticules(desc.toLowerCase());
-
-                var bas = document.getElementById('zone-7-jours'); bas.innerHTML = "";
-                const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
-                const mois = ['JANV.', 'FÉVR.', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUIL.', 'AOÛT', 'SEPT.', 'OCT.', 'NOV.', 'DÉC.'];
-                var dRef = new Date();
-                for(let index = 0; index < 7; index++) {
-                    var dObj = new Date(); dObj.setDate(dRef.getDate() + index);
-                    injecterCartePrevisionHTML(bas, index, noms[dObj.getDay()], dObj.getDate(), mois[dObj.getMonth()], Math.round(data.daily.temperature_2m_max[index]), Math.round(data.daily.temperature_2m_min[index]), data.daily.weather_code[index]);
-                }
-            }).catch(() => {
-                document.getElementById('courant-temp').textContent = "14°C";
-                document.getElementById('courant-ressenti').textContent = "13°C";
-                document.getElementById('courant-humidite').textContent = "85%";
-                document.getElementById('courant-vent').textContent = "5 km/h";
-                document.getElementById('courant-uv').textContent = "0 / Bas";
-                
-                var bas = document.getElementById('zone-7-jours'); bas.innerHTML = "";
-                const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
-                const mois = ['JANV.', 'FÉVR.', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUIL.', 'AOÛT', 'SEPT.', 'OCT.', 'NOV.', 'DÉC.'];
-                var dRef = new Date();
-                let codesParDefaut = [0, 1, 1, 3, 61, 80, 3];
-                for(let index = 0; index < 7; index++) {
-                    var dObj = new Date(); dObj.setDate(dRef.getDate() + index);
-                    injecterCartePrevisionHTML(bas, index, noms[dObj.getDay()], dObj.getDate(), mois[dObj.getMonth()], 24 - index, 14 - index, codesParDefaut[index]);
-                }
-            });
+        var bas = document.getElementById('zone-7-jours'); 
+        bas.innerHTML = "";
+        const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
+        const mois = ['JANV.', 'FÉVR.', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUIL.', 'AOÛT', 'SEPT.', 'OCT.', 'NOV.', 'DÉC.'];
+        var dRef = new Date();
+        for(let index = 0; index < 7; index++) {
+            var dObj = new Date(); 
+            dObj.setDate(dRef.getDate() + index);
+            injecterCartePrevisionHTML(bas, index, noms[dObj.getDay()], dObj.getDate(), mois[dObj.getMonth()], Math.round(data.daily.temperature_2m_max[index]), Math.round(data.daily.temperature_2m_min[index]), data.daily.weather_code[index]);
         }
+    }).catch((error) => {
+        console.error("Erreur lors de la récupération météo :", error);
+        document.getElementById('courant-temp').textContent = "14°C";
+        document.getElementById('courant-ressenti').textContent = "13°C";
+        document.getElementById('courant-humidite').textContent = "85%";
+        document.getElementById('courant-vent').textContent = "5 km/h";
+        document.getElementById('courant-uv').textContent = "0 / Bas";
+        
+        var bas = document.getElementById('zone-7-jours'); 
+        bas.innerHTML = "";
+        const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
+        const mois = ['JANV.', 'FÉVR.', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUIL.', 'AOÛT', 'SEPT.', 'OCT.', 'NOV.', 'DÉC.'];
+        var dRef = new Date();
+        let codesParDefaut =;
+        for(let index = 0; index < 7; index++) {
+            var dObj = new Date(); 
+            dObj.setDate(dRef.getDate() + index);
+            injecterCartePrevisionHTML(bas, index, noms[dObj.getDay()], dObj.getDate(), mois[dObj.getMonth()], 24 - index, 14 - index, codesParDefaut[index]);
+        }
+    });
+}
 
                       function injecterCartePrevisionHTML(conteneur, index, jourNom, jourNum, moisNom, maxT, minT, weatherCode) {
             let pType = "nuageux";
