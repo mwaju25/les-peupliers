@@ -173,10 +173,10 @@
                 document.getElementById('courant-uv').textContent = uvVal + " / " + uvText;
                 
                 let parseTime = (arr) => { return arr[0].split('T')[1].substring(0, 5); };
-                document.getElementById('sat-lever').textContent = data.daily.sunrise[0].split('T')[1].substring(0, 5);
-                document.getElementById('sat-coucher').textContent = data.daily.sunset[0].split('T')[1].substring(0, 5);
+                document.getElementById('sat-lever').textContent = parseTime(data.daily.sunrise);
+                document.getElementById('sat-coucher').textContent = parseTime(data.daily.sunset);
 
-                
+
                 let code = cur.weather_code;
                 let desc = "Éclaircies"; if(code === 0) desc = "Ensoleillé"; if(code > 0 && code <= 3) desc = "Éclaircies"; if(code >= 51 && code <= 67) desc = "Pluie Fine"; if(code >= 80) desc = "Orageux";
                 document.getElementById('courant-desc').textContent = desc; weatherDescriptionGlobal = desc;
