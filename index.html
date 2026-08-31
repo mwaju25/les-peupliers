@@ -281,7 +281,7 @@
             document.getElementById('sat-saison').textContent = currentSaison;
         }
 
-                        function calculPhaseLune() {
+                               function calculPhaseLune() {
             var maintenant = new Date();
             var nouvelleLuneRef = Date.UTC(2026, 7, 12, 17, 35, 0);
             var msEcoules = maintenant.getTime() - nouvelleLuneRef;
@@ -296,26 +296,21 @@
             let sW = document.getElementById('lune-ombre-widget');
             let sC = document.getElementById('lune-cache-vrai-ciel');
             
-            // Activation de l'affichage de la photo réelle de la lune
-            let conteneurLune = document.getElementById('lune-vrai-photo');
-            if (conteneurLune) {
-                conteneurLune.style.backgroundImage = "url('https://wikimedia.org')";
-                conteneurLune.style.backgroundSize = 'cover';
-                conteneurLune.style.backgroundPosition = 'center';
+            // Injection de la photo réelle de la lune autorisée
+            let pPhoto = document.getElementById('lune-vrai-photo');
+            if (pPhoto) {
+                pPhoto.style.backgroundImage = "url('https://wikimedia.org')";
+                pPhoto.style.backgroundSize = 'cover'; pPhoto.style.backgroundPosition = 'center';
+            }
+            let cCiel = document.getElementById('lune-vrai-ciel');
+            if (cCiel) {
+                cCiel.style.backgroundImage = "url('https://wikimedia.org')";
+                cCiel.style.backgroundSize = 'cover'; cCiel.style.backgroundPosition = 'center';
             }
             
-            let conteneurCiel = document.getElementById('lune-vrai-ciel');
-            if (conteneurCiel) {
-                conteneurCiel.style.backgroundImage = "url('https://wikimedia.org')";
-                conteneurCiel.style.backgroundSize = 'cover';
-                conteneurCiel.style.backgroundPosition = 'center';
-            }
-
-            // Application du masque astronomique elliptique pour dessiner la vraie phase (croissant, demi, gibbeuse...)
             let appliquerVraieOmbreCurvee = (element) => {
                 if (!element) return;
-                element.style.display = "block";
-                element.style.left = "0%"; element.style.width = "100%"; element.style.background = "#05080c"; element.style.opacity = "0.88";
+                element.style.left = "0%"; element.style.width = "100%"; element.style.background = "#05080c";
                 
                 if (daysSinceNew < 14.765) {
                     let doublePct = Math.max(0, 100 - (pct * 2));
