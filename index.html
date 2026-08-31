@@ -173,8 +173,8 @@
                 document.getElementById('courant-uv').textContent = uvVal + " / " + uvText;
                 
                 let parseTime = (arr) => { return arr[0].split('T')[1].substring(0, 5); };
-                document.getElementById('sat-lever').textContent = parseTime(data.daily.sunrise[0]);
-                document.getElementById('sat-coucher').textContent = parseTime(data.daily.sunset[0]);
+                document.getElementById('sat-lever').textContent = data.daily.sunrise[0].split('T')[1].substring(0, 5);
+                document.getElementById('sat-coucher').textContent = data.daily.sunset[0].split('T')[1].substring(0, 5);
 
                 
                 let code = cur.weather_code;
@@ -281,7 +281,7 @@
             document.getElementById('sat-saison').textContent = currentSaison;
         }
 
-                   function calculPhaseLune() {
+                    function calculPhaseLune() {
             var maintenant = new Date();
             var nouvelleLuneRef = Date.UTC(2026, 7, 12, 17, 35, 0);
             var msEcoules = maintenant.getTime() - nouvelleLuneRef;
@@ -293,7 +293,6 @@
             let pct = Math.round((1 + Math.cos((daysSinceNew * Math.PI * 2) / 29.530588853)) * 50);
             document.getElementById('lune-ecl').textContent = pct;
             
-            // 1. Injection et forçage de la photo HD de la Lune
             let pPhoto = document.getElementById('lune-vrai-photo');
             if (pPhoto) {
                 pPhoto.style.setProperty('background-image', "url('https://wikimedia.org')", 'important');
@@ -301,28 +300,24 @@
                 pPhoto.style.backgroundPosition = 'center';
             }
             
-            // 2. Neutralisation totale et forcée du calque noir parasite qui provoquait le bug
             let sW = document.getElementById('lune-ombre-widget');
-            if (sW) { 
-                sW.style.setProperty('background', 'transparent', 'important');
-                sW.style.setProperty('display', 'none', 'important');
-            }
+            if (sW) { sW.style.setProperty('background', '#05080c', 'important'); }
             let sC = document.getElementById('lune-cache-vrai-ciel');
-            if (sC) { 
-                sC.style.setProperty('background', 'transparent', 'important');
-                sC.style.setProperty('display', 'none', 'important');
-            }
+            if (sC) { sC.style.setProperty('background', '#05080c', 'important'); }
             
-            // 3. Application de la découpe de phase elliptique réelle directement sur l'image
-            if (pPhoto) {
+            let appliquerVraieOmbreCurvee = (element) => {
+                if (!element) return;
+                element.style.left = "0%"; element.style.width = "100%";
                 if (daysSinceNew < 14.765) {
                     let doublePct = Math.max(0, 100 - (pct * 2));
-                    pPhoto.style.setProperty('clip-path', `ellipse(100% 100% at ${100 - doublePct}% 50%)`, 'important');
+                    element.style.setProperty('clip-path', `ellipse(${doublePct}% 100% at 100% 50%)`, 'important');
                 } else {
                     let doublePct = Math.max(0, 100 - (pct * 2));
-                    pPhoto.style.setProperty('clip-path', `ellipse(100% 100% at ${doublePct}% 50%)`, 'important');
+                    element.style.setProperty('clip-path', `ellipse(${doublePct}% 100% at 0% 50%)`, 'important');
                 }
-            }
+            };
+            
+            appliquerVraieOmbreCurvee(sW); appliquerVraieOmbreCurvee(sC);
             
             let nom = "Nouvelle lune"; 
             if(daysSinceNew >= 1.5 && daysSinceNew < 6.5) nom = "Premier croissant"; 
