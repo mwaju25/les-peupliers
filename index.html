@@ -281,7 +281,7 @@
             document.getElementById('sat-saison').textContent = currentSaison;
         }
 
-                               function calculPhaseLune() {
+            function calculPhaseLune() {
             var maintenant = new Date();
             var nouvelleLuneRef = Date.UTC(2026, 7, 12, 17, 35, 0);
             var msEcoules = maintenant.getTime() - nouvelleLuneRef;
@@ -293,35 +293,30 @@
             let pct = Math.round((1 + Math.cos((daysSinceNew * Math.PI * 2) / 29.530588853)) * 50);
             document.getElementById('lune-ecl').textContent = pct;
             
-            let sW = document.getElementById('lune-ombre-widget');
-            let sC = document.getElementById('lune-cache-vrai-ciel');
-            
-            // Injection de la photo réelle de la lune autorisée
+            // 1. Force l'affichage de la photo réelle de la lune
             let pPhoto = document.getElementById('lune-vrai-photo');
             if (pPhoto) {
                 pPhoto.style.backgroundImage = "url('https://wikimedia.org')";
-                pPhoto.style.backgroundSize = 'cover'; pPhoto.style.backgroundPosition = 'center';
-            }
-            let cCiel = document.getElementById('lune-vrai-ciel');
-            if (cCiel) {
-                cCiel.style.backgroundImage = "url('https://wikimedia.org')";
-                cCiel.style.backgroundSize = 'cover'; cCiel.style.backgroundPosition = 'center';
+                pPhoto.style.backgroundSize = 'cover';
+                pPhoto.style.backgroundPosition = 'center';
             }
             
-            let appliquerVraieOmbreCurvee = (element) => {
-                if (!element) return;
-                element.style.left = "0%"; element.style.width = "100%"; element.style.background = "#05080c";
-                
+            // 2. Supprime définitivement le calque noir de code qui provoquait le bug de l'écran noir
+            let sW = document.getElementById('lune-ombre-widget');
+            if (sW) { sW.style.display = "none"; }
+            let sC = document.getElementById('lune-cache-vrai-ciel');
+            if (sC) { sC.style.display = "none"; }
+            
+            // 3. Applique la découpe de phase arrondie directement sur le conteneur de l'image
+            if (pPhoto) {
                 if (daysSinceNew < 14.765) {
                     let doublePct = Math.max(0, 100 - (pct * 2));
-                    element.style.clipPath = `ellipse(${doublePct}% 100% at 100% 50%)`;
+                    pPhoto.style.clipPath = `ellipse(100% 100% at ${100 - doublePct}% 50%)`;
                 } else {
                     let doublePct = Math.max(0, 100 - (pct * 2));
-                    element.style.clipPath = `ellipse(${doublePct}% 100% at 0% 50%)`;
+                    pPhoto.style.clipPath = `ellipse(100% 100% at ${doublePct}% 50%)`;
                 }
-            };
-            
-            appliquerVraieOmbreCurvee(sW); appliquerVraieOmbreCurvee(sC);
+            }
             
             let nom = "Nouvelle lune"; 
             if(daysSinceNew >= 1.5 && daysSinceNew < 6.5) nom = "Premier croissant"; 
