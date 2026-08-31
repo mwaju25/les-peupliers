@@ -9,12 +9,10 @@
         body { background-color: #000; color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
         #school-view-bg, .decor-permanent { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: url('fond-final.png') no-repeat center center !important; background-size: 100% 100% !important; z-index: -6 !important; transition: filter 8s ease-in-out; }
         #school-view-bg::after, .decor-permanent::after { content: ''; position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.45) !important; pointer-events: none; }
-        #sky-gradient, .masque-ciel-strict { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -5 !important; mix-blend-mode: overlay !important; clip-path: inset(0 0 35vh 15vw) !important; transition: background 8s ease-in-out; pointer-events: none; }
+        #sky-gradient { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -5 !important; mix-blend-mode: overlay !important; clip-path: inset(0 0 35vh 15vw) !important; transition: background 8s ease-in-out; pointer-events: none; }
         .lune-dans-le-ciel { position: fixed; top: 11vh; right: 20vw; width: 4.5vw; height: 4.4vw; border-radius: 50%; background-image: url('https://wikimedia.org') !important; background-size: cover; background-position: center; border: 1.5px solid rgba(255,255,255,0.4) !important; box-shadow: 0 0 15px rgba(255,255,255,0.35); filter: grayscale(1) brightness(1.2); z-index: -4; display: none; overflow: hidden; transition: opacity 8s ease-in-out; }
         .cache-lune-ciel { position: absolute; top: 0; width: 100%; height: 100%; background: rgba(5,8,12,0.92); }
-        #cloud-layer { position: fixed; top: 0; left: 0; width: 200vw; height: 38vh; background: url('https://wikimedia.org') repeat-x; background-size: contain; z-index: -5 !important; opacity: 0; pointer-events: none; transition: opacity 5s ease-in-out; }
-        #ciel-soleil-direct { position: fixed; top: 8vh; left: 22vw; width: 6vw; height: 6vw; border-radius: 50%; background: radial-gradient(circle, #fff 20%, #ffea00 60%, rgba(255,145,0,0) 100%); opacity: 0; z-index: -5 !important; transition: opacity 6s ease-in-out; pointer-events: none; }
-        #tapis-feuilles-automne { position: fixed; bottom: 0; left: 0; width: 100vw; height: 25vh; background: url('https://wikimedia.org') repeat-x; background-size: contain; z-index: -4; opacity: 0; pointer-events: none; transition: opacity 5s ease-in-out; clip-path: polygon(0% 60%, 100% 40%, 100% 100%, 0% 100%); }
+        #cloud-layer { position: fixed; top: 0; left: 0; width: 200vw; height: 38vh; background: url('https://wikimedia.org') repeat-x; background-size: contain; z-index: -3; opacity: 0; pointer-events: none; transition: opacity 5s ease-in-out; }
         #lightning-flash { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; background: rgba(255,255,255,0); pointer-events: none; }
         #back-precipitations { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; pointer-events: none; }
         #front-particles { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2 !important; pointer-events: none; }
@@ -68,16 +66,13 @@
     </style>
 </head>
 <body>
-    <div class="masque-ciel-strict">
-        <div id="sky-gradient"></div>
-        <div id="ciel-soleil-direct"></div>
-        <div id="cloud-layer"></div>
-    </div>
+    <div id="sky-gradient"></div>
     <div class="lune-dans-le-ciel" id="lune-vrai-ciel"><div class="cache-lune-ciel" id="lune-cache-vrai-ciel"></div></div>
     <div id="school-view-bg" class="decor-permanent"></div>
-    <div id="tapis-feuilles-automne"></div>
-    <div id="lightning-flash"></div> <div id="back-precipitations"></div> <div id="front-particles"></div>
+    <div id="cloud-layer"></div> <div id="lightning-flash"></div> <div id="back-precipitations"></div> <div id="front-particles"></div>
+
     <div id="logo-ecran-principal"></div>
+
     <div class="pos boite-flip-haut" style="left: 17.5vw; top: 2.5vh; width: 22.3vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-jour">--</div><div class="charniere-droite"></div></div>
     <div class="pos boite-flip-haut" style="left: 40.8vw; top: 2.5vh; width: 9.6vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-num">--</div><div class="charniere-droite"></div></div>
     <div class="pos boite-flip-haut" style="left: 51.5vw; top: 2.5vh; width: 13.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-mois">--</div><div class="charniere-droite"></div></div>
@@ -183,18 +178,7 @@
                 let code = cur.weather_code;
                 let desc = "Éclaircies"; if(code === 0) desc = "Ensoleillé"; if(code > 0 && code <= 3) desc = "Éclaircies"; if(code >= 51 && code <= 67) desc = "Pluie Fine"; if(code >= 80) desc = "Orageux";
                 document.getElementById('courant-desc').textContent = desc; weatherDescriptionGlobal = desc;
-                let sCiel = document.getElementById('ciel-soleil-direct');
-                let hActuelle = new Date().getHours();
-                if (sCiel) {
-                    if ((desc === "Ensoleillé" || desc === "Éclaircies") && (hActuelle >= 7 && hActuelle <= 19)) {
-                        sCiel.style.opacity = "1";
-                    } else {
-                        sCiel.style.opacity = "0";
-                    }
-                }
-                
                 gererEffetsMeteoEtParticules(desc.toLowerCase());
-
                 var bas = document.getElementById('zone-7-jours'); bas.innerHTML = "";
                 const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
                 const mois = ['JANV.', 'FÉVR.', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUIL.', 'AOÛT', 'SEPT.', 'OCT.', 'NOV.', 'DÉC.'];
@@ -212,7 +196,6 @@
                 document.getElementById('sat-lever').textContent = "06:48";
                 document.getElementById('sat-coucher').textContent = "20:26";
                 document.getElementById('courant-desc').textContent = "Éclaircies";
-                
                 var bas = document.getElementById('zone-7-jours'); bas.innerHTML = "";
                 const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
                 const mois = ['JANV.', 'FÉVR.', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUIL.', 'AOÛT', 'SEPT.', 'OCT.', 'NOV.', 'DÉC.'];
@@ -231,7 +214,6 @@
             else if(weatherCode >= 51 && weatherCode <= 67) pType = "pluie";
             else if(weatherCode >= 71 && weatherCode <= 77) pType = "neige";
             else if(weatherCode >= 80) pType = "orageux";
-            
             let pictoHTML = "";
             if (pType === "ensoleillé") {
                 pictoHTML = `<svg viewBox="0 0 24 24" style="width:2.5vw; height:2.5vw; display:block; margin:0 auto;"><circle cx="12" cy="12" r="5" fill="#ffa726"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="#ffa726" stroke-width="2" stroke-linecap="round"/></svg>`;
@@ -256,6 +238,10 @@
             var avant = document.getElementById('front-particles'); var nuage = document.getElementById('cloud-layer');
             avant.innerHTML = "";
             if (desc.includes("nuageux") || desc.includes("éclaircies") || desc.includes("nuage") || desc.includes("averse")) { nuage.style.opacity = "0.55"; } else { nuage.style.opacity = "0"; }
+            
+            // EXTENSION SCELLÉE : Masque automatiquement les nuages derrière le sommet des grands arbres
+            let masqueCiel = document.querySelector('.masque-ciel-strict');
+            if (masqueCiel && nuage && !masqueCiel.contains(nuage)) { masqueCiel.appendChild(nuage); }
             if (nuage.style.opacity > 0) nuage.className = "anim-clouds";
             
             if (desc.includes("pluie") || desc.includes("averse")) {
@@ -272,38 +258,22 @@
             var desc = weatherDescriptionGlobal.toLowerCase();
             var totalMin = (h * 60) + m;
             
+            if (totalMin >= 360 && totalMin < 430) { calque.style.background = "linear-gradient(to bottom, #ff7e5f, #feb47b)"; decor.style.filter = "brightness(0.75) contrast(1.05)"; moon.style.display = "none"; } else if (totalMin >= 430 && totalMin < 1160) { if (desc.includes("ensoleillé") || desc.includes("éclaircies")) { calque.style.background = "linear-gradient(to bottom, #2b5c8f, #4a90e2)"; } else { calque.style.background = "linear-gradient(to bottom, #4a5568, #718096)"; } decor.style.filter = "brightness(1.15) saturate(1.1)"; moon.style.display = "none"; } else if (totalMin >= 1160 && totalMin < 1220) { calque.style.background = "linear-gradient(to bottom, #1a0b2e, #943126, #f39c12)"; decor.style.filter = "brightness(0.9) saturate(1.1)"; moon.style.display = "block"; } else { if (desc.includes("nuageux") || desc.includes("averse")) { calque.style.background = "linear-gradient(to bottom, #050814, #121829)"; } else { calque.style.background = "linear-gradient(to bottom, #01030a, #030714)"; } decor.style.filter = "brightness(0.34) contrast(1.15)"; moon.style.display = "block"; }
+            
             var mo = new Date().getMonth() + 1;
             if (mo >= 3 && mo <= 5) currentSaison = "PRINTEMPS"; else if (mo >= 6 && mo <= 8) currentSaison = "ÉTÉ"; else if (mo >= 9 && mo <= 11) currentSaison = "AUTOMNE"; else currentSaison = "HIVER";
             document.getElementById('sat-saison').textContent = currentSaison;
             
-            let filtreSaisonCSS = "";
+            // EXTENSION SCELLÉE : Activation autonome des teintes automnales et hivernales intenses sur l'école
             let tapisFeuilles = document.getElementById('tapis-feuilles-automne');
             if (currentSaison === "AUTOMNE") {
-                filtreSaisonCSS = "hue-rotate(35deg) saturate(1.2)";
+                decor.style.filter += " hue-rotate(35deg) saturate(1.2)";
                 if (tapisFeuilles) tapisFeuilles.style.opacity = "1";
             } else if (currentSaison === "HIVER") {
-                filtreSaisonCSS = "brightness(1.45) contrast(0.85) grayscale(0.3)";
+                decor.style.filter += " brightness(1.45) contrast(0.85) grayscale(0.3)";
                 if (tapisFeuilles) tapisFeuilles.style.opacity = "0";
             } else {
-                filtreSaisonCSS = "";
                 if (tapisFeuilles) tapisFeuilles.style.opacity = "0";
-            }
-            if (totalMin >= 360 && totalMin < 430) { 
-                calque.style.background = "linear-gradient(to bottom, #ff7e5f, #feb47b)"; 
-                decor.style.setProperty('filter', `brightness(0.75) contrast(1.05) ${filtreSaisonCSS}`, 'important'); 
-                moon.style.display = "none"; 
-            } else if (totalMin >= 430 && totalMin < 1160) { 
-                if (desc.includes("ensoleillé") || desc.includes("éclaircies")) { calque.style.background = "linear-gradient(to bottom, #2b5c8f, #4a90e2)"; } else { calque.style.background = "linear-gradient(to bottom, #4a5568, #718096)"; } 
-                decor.style.setProperty('filter', `brightness(1.15) saturate(1.1) ${filtreSaisonCSS}`, 'important'); 
-                moon.style.display = "none"; 
-            } else if (totalMin >= 1160 && totalMin < 1220) { 
-                calque.style.background = "linear-gradient(to bottom, #1a0b2e, #943126, #f39c12)"; 
-                decor.style.setProperty('filter', `brightness(0.9) saturate(1.1) ${filtreSaisonCSS}`, 'important'); 
-                moon.style.display = "block"; 
-            } else { 
-                if (desc.includes("nuageux") || desc.includes("averse")) { calque.style.background = "linear-gradient(to bottom, #050814, #121829)"; } else { calque.style.background = "linear-gradient(to bottom, #01030a, #030714)"; } 
-                decor.style.setProperty('filter', `brightness(0.34) contrast(1.15) ${filtreSaisonCSS}`, 'important'); 
-                moon.style.display = "block"; 
             }
         }
         function calculPhaseLune() {
