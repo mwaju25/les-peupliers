@@ -173,8 +173,8 @@
                 document.getElementById('courant-uv').textContent = uvVal + " / " + uvText;
                 
                 let parseTime = (str) => { return str.split('T')[1].substring(0, 5); };
-                document.getElementById('sat-lever').textContent = parseTime(data.daily.sunrise);
-                document.getElementById('sat-coucher').textContent = parseTime(data.daily.sunset);
+                document.getElementById('sat-lever').textContent = parseTime(data.daily.sunrise[0]);
+                document.getElementById('sat-coucher').textContent = parseTime(data.daily.sunset[0]);
 
                 
                 let code = cur.weather_code;
