@@ -172,7 +172,7 @@
                 let uvText = "Bas"; if(uvVal >= 3 && uvVal <= 5) uvText = "Modéré"; if(uvVal >= 6) uvText = "Élevé";
                 document.getElementById('courant-uv').textContent = uvVal + " / " + uvText;
                 
-                let parseTime = (arr) => { return arr[0].split('T')[1].substring(0, 5); };
+                let parseTime = (arr) => { return arr[0].split('T')[1]; };
                 document.getElementById('sat-lever').textContent = parseTime(data.daily.sunrise);
                 document.getElementById('sat-coucher').textContent = parseTime(data.daily.sunset);
 
