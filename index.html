@@ -158,7 +158,7 @@
             document.getElementById('date-annee').textContent = tempsReel.getFullYear();
             gererCycleJourNuit(h, m);
         }
-        function executerMeteo() {
+                function executerMeteo() {
             let uM = 'https://open-meteo.com';
             
             fetch(uM).then(res => res.json()).then(data => {
@@ -174,7 +174,7 @@
                 let uvText = "Bas"; if(uvVal >= 3 && uvVal <= 5) uvText = "Modéré"; if(uvVal >= 6) uvText = "Élevé";
                 document.getElementById('courant-uv').textContent = uvVal + " / " + uvText;
                 
-                // Extraction chirurgicale directe indexée [0] sans crash de sous-chaîne
+                // CORRECTION TECHNIQUE ICI : Ajout du [0] pour lire la donnée réelle sans crash
                 document.getElementById('sat-lever').textContent = data.daily.sunrise[0].substring(11, 16);
                 document.getElementById('sat-coucher').textContent = data.daily.sunset[0].substring(11, 16);
                 
