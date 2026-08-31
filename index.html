@@ -158,7 +158,7 @@
             gererCycleJourNuit(h, m);
         }
         function executerMeteo() {
-                    let uM = 'https://open-meteo.com';
+            let uM = 'https://open-meteo.com';
             fetch(uM).then(res => res.json()).then(data => {
                 let cur = data.current;
                 document.getElementById('courant-temp').textContent = Math.round(cur.temperature_2m) + "°C";
@@ -222,8 +222,14 @@
         }
         function gererCycleJourNuit(h, m) {
             var calque = document.getElementById('sky-gradient'); var decor = document.getElementById('school-view-bg'); var moon = document.getElementById('lune-vrai-ciel'); var desc = weatherDescriptionGlobal.toLowerCase(); var totalMin = (h * 60) + m;
-            var mo = new Date().getMonth() + 1;
-            if (mo >= 3 && mo <= 5) currentSaison = "PRINTEMPS"; else if (mo >= 6 && mo <= 8) currentSaison = "ÉTÉ"; else if (mo >= 9 && mo <= 11) currentSaison = "AUTOMNE"; else currentSaison = "HIVER";
+        var dateAujourdhui = new Date();
+        var mo = dateAujourdhui.getMonth() + 1;
+        var jour = dateAujourdhui.getDate();
+        if (mo >= 3 && mo <= 5) currentSaison = "PRINTEMPS";
+        else if (mo >= 6 && mo <= 8) currentSaison = "ÉTÉ";
+        else if (mo === 9) { if (jour < 22) currentSaison = "ÉTÉ"; else currentSaison = "AUTOMNE"; }
+        else if (mo >= 10 && mo <= 11) currentSaison = "AUTOMNE";
+        else currentSaison = "HIVER";
             document.getElementById('sat-saison').textContent = currentSaison;
             let filtreSaisonCSS = ""; let tapisFeuilles = document.getElementById('tapis-feuilles-automne');
             if (currentSaison === "AUTOMNE") { decor.style.filter = "brightness(0.34) contrast(1.15) hue-rotate(35deg) saturate(1.2)"; if (tapisFeuilles) tapisFeuilles.style.opacity = "1"; }
