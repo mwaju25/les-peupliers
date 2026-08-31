@@ -183,7 +183,7 @@
                     var dObj = new Date(); dObj.setDate(dRef.getDate() + index);
                     injecterCartePrevisionHTML(bas, index, noms[dObj.getDay()], dObj.getDate(), mois[dObj.getMonth()], Math.round(data.daily.temperature_2m_max[index]), Math.round(data.daily.temperature_2m_min[index]), data.daily.weather_code[index]);
                 }
-            }).catch(() => {
+        }).catch(() => {
                 document.getElementById('courant-temp').textContent = "14°C"; document.getElementById('courant-ressenti').textContent = "13°C"; document.getElementById('courant-humidite').textContent = "85%"; document.getElementById('courant-vent').textContent = "5 km/h";
                 document.getElementById('sat-lever').textContent = "06:48"; document.getElementById('sat-coucher').textContent = "20:26"; document.getElementById('courant-desc').textContent = "Éclaircies";
             });
