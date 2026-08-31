@@ -181,8 +181,9 @@
                 let uvText = "Bas"; if(uvVal >= 3 && uvVal <= 5) uvText = "Modéré"; if(uvVal >= 6) uvText = "Élevé";
                 document.getElementById('courant-uv').textContent = uvVal + " / " + uvText;
                 
-                document.getElementById('sat-lever').textContent = data.daily.sunrise.substring(11, 16);
-                document.getElementById('sat-coucher').textContent = data.daily.sunset.substring(11, 16);
+                // Extraction stable via index de tableau pour éviter le crash JavaScript
+                document.getElementById('sat-lever').textContent = data.daily.sunrise[0].split('T')[1].substring(0, 5);
+                document.getElementById('sat-coucher').textContent = data.daily.sunset[0].split('T')[1].substring(0, 5);
                 
                 let code = cur.weather_code;
                 let desc = "Éclaircies"; if(code === 0) desc = "Ensoleillé"; if(code > 0 && code <= 3) desc = "Éclaircies"; if(code >= 51 && code <= 67) desc = "Pluie Fine"; if(code >= 80) desc = "Orageux";
@@ -294,7 +295,6 @@
                 filtreSaisonCSS = "hue-rotate(35deg) saturate(1.2)";
                 if (tapisFeuilles) tapisFeuilles.style.opacity = "1";
             } else if (currentSaison === "HIVER") {
-                // Modification : passage d'un simple givre à un vrai décor enneigé (blanchiment artificiel intense de la pelouse et du toit)
                 filtreSaisonCSS = "brightness(1.45) contrast(0.85) grayscale(0.3)";
                 if (tapisFeuilles) tapisFeuilles.style.opacity = "0";
             } else {
