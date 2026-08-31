@@ -158,7 +158,7 @@
             document.getElementById('date-annee').textContent = tempsReel.getFullYear();
             gererCycleJourNuit(h, m);
         }
-                function executerMeteo() {
+        function executerMeteo() {
             let uM = 'https://open-meteo.com';
             
             fetch(uM).then(res => res.json()).then(data => {
@@ -174,7 +174,7 @@
                 let uvText = "Bas"; if(uvVal >= 3 && uvVal <= 5) uvText = "Modéré"; if(uvVal >= 6) uvText = "Élevé";
                 document.getElementById('courant-uv').textContent = uvVal + " / " + uvText;
                 
-                // CORRECTION TECHNIQUE ICI : Ajout du [0] pour lire la donnée réelle sans crash
+                // Extraction directe sans crash
                 document.getElementById('sat-lever').textContent = data.daily.sunrise[0].substring(11, 16);
                 document.getElementById('sat-coucher').textContent = data.daily.sunset[0].substring(11, 16);
                 
@@ -205,7 +205,7 @@
                 const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
                 const mois = ['JANV.', 'FÉVR.', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUIL.', 'AOÛT', 'SEPT.', 'OCT.', 'NOV.', 'DÉC.'];
                 var dRef = new Date();
-                let codesParDefaut =;
+                let codesParDefaut = [0, 1, 2, 3, 51, 61, 80];
                 for(let index = 0; index < 7; index++) {
                     var dObj = new Date(); dObj.setDate(dRef.getDate() + index);
                     injecterCartePrevisionHTML(bas, index, noms[dObj.getDay()], dObj.getDate(), mois[dObj.getMonth()], 24 - index, 14 - index, codesParDefaut[index]);
@@ -255,12 +255,6 @@
                     avant.appendChild(g);
                 }
             }
-            let leafCount = Math.min(10, Math.floor(vitesseVentActuelle * 0.08) + 2);
-            for(let i=0; i<leafCount; i++) {
-                let l = document.createElement('div'); l.className = "feuille-peuplier-svg"; l.style.setProperty('--leaf-color', "#5cb81b");
-                l.style.left = "-2vw"; l.style.setProperty('--start-y', (Math.random() * 85) + "vh"); l.style.setProperty('--end-y', (Math.random() * 95) + "vh"); 
-                let speed = Math.max(1.8, 6.5 - (vitesseVentActuelle * 0.08)); l.style.animationDuration = speed + "s"; l.style.animationDelay = (Math.random() * 5) + "s"; avant.appendChild(l);
-            }
         }
         function gererCycleJourNuit(h, m) {
             var calque = document.getElementById('sky-gradient'); var decor = document.getElementById('school-view-bg'); var moon = document.getElementById('lune-vrai-ciel');
@@ -288,6 +282,7 @@
             
             let pPhoto = document.getElementById('lune-vrai-photo');
             if (pPhoto) {
+                // Correction de syntaxe ici : utilisation du format de propriété valide
                 pPhoto.style.setProperty('background-image', "url('https://wikimedia.org')", 'important');
                 pPhoto.style.backgroundSize = 'cover'; pPhoto.style.backgroundPosition = 'center';
             }
