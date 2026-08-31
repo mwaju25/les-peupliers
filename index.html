@@ -176,7 +176,8 @@
                 document.getElementById('courant-desc').textContent = desc; weatherDescriptionGlobal = desc;
                 gererEffetsMeteoEtParticules(desc.toLowerCase());
                 var bas = document.getElementById('zone-7-jours'); bas.innerHTML = "";
-                const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.']; const mois = ['JANV.', 'FÉVR.', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUIL.', 'AOÛT', 'SEPT.', 'OCT.', 'NOV.', 'DÉC.'];
+                const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
+                const mois = ['JANV.', 'FÉVR.', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUIL.', 'AOÛT', 'SEPT.', 'OCT.', 'NOV.', 'DÉC.'];
                 var dRef = new Date();
                 for(let index = 0; index < 7; index++) {
                     var dObj = new Date(); dObj.setDate(dRef.getDate() + index);
