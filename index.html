@@ -6,23 +6,23 @@
     <title>Ecran Master Connected - Les Peupliers</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Arial Black', sans-serif; }
-        body { background-color: #000; color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
-        #school-view-bg, .decor-permanent { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: url('fond-final.png') no-repeat center center !important; background-size: 100% 100% !important; z-index: -6 !important; transition: filter 8s ease-in-out; }
+        body { background-color: #000; background-image:url('fond-final.png'); background-size:100vw 100vh; background-position:center; background-repeat:no-repeat; color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
+        #school-view-bg, .decor-permanent { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: url('fond-final.png') no-repeat center center !important; background-size: 100% 100% !important; z-index: 0 !important; transition: filter 8s ease-in-out; }
         #school-view-bg::after, .decor-permanent::after { content: ''; position: absolute; inset: 0; background: transparent; pointer-events: none; }
-        #sky-gradient { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: -5 !important; mix-blend-mode: normal !important; opacity: .58; transition: background 8s ease-in-out, opacity 8s ease-in-out; pointer-events: none; }
+        #sky-gradient { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 1 !important; mix-blend-mode: normal !important; opacity: .58; transition: background 8s ease-in-out, opacity 8s ease-in-out; pointer-events: none; }
         .lune-dans-le-ciel { position: fixed; top: 11vh; right: 20vw; width: 4.5vw; height: 4.4vw; border-radius: 50%; background-image: radial-gradient(circle at 35% 35%,#fff 0 12%,#d8dbe0 42%,#8f9399 100%) !important; background-size: cover; background-position: center; border: 1.5px solid rgba(255,255,255,0.4) !important; box-shadow: 0 0 15px rgba(255,255,255,0.35); filter: grayscale(1) brightness(1.2); z-index: -4; display: none; overflow: hidden; transition: opacity 8s ease-in-out; }
         .cache-lune-ciel { position: absolute; top: 0; width: 100%; height: 100%; background: rgba(5,8,12,0.92); }
-        #cloud-layer { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: -4; opacity: 0; pointer-events: none; transition: opacity 4s ease-in-out; overflow:hidden; }
+        #cloud-layer { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 5 !important; opacity: 0; pointer-events: none; transition: opacity 4s ease-in-out; overflow:hidden; }
         #cloud-layer::before,#cloud-layer::after{content:'';position:absolute;top:4vh;left:-30vw;width:160vw;height:28vh;background:radial-gradient(ellipse at 15% 55%,rgba(255,255,255,.48) 0 8%,transparent 20%),radial-gradient(ellipse at 35% 45%,rgba(255,255,255,.36) 0 10%,transparent 24%),radial-gradient(ellipse at 58% 55%,rgba(255,255,255,.42) 0 9%,transparent 22%),radial-gradient(ellipse at 80% 45%,rgba(255,255,255,.30) 0 8%,transparent 20%);filter:blur(12px);animation:cloudMove 70s linear infinite;}
         #cloud-layer::after{top:10vh;opacity:.45;animation-duration:105s;animation-direction:reverse;filter:blur(18px);}
-        #lightning-flash { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events:none; overflow:hidden; }
+        #lightning-flash { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 6 !important; pointer-events:none; overflow:hidden; }
         .lightning-bolt{position:absolute;top:3vh;left:var(--lx);width:var(--lw);height:var(--lh);filter:drop-shadow(0 0 7px rgba(220,245,255,.95));opacity:0;transform-origin:top center;}
         .lightning-bolt svg{width:100%;height:100%;overflow:visible;}
         .lightning-bolt path{fill:none;stroke:#f7fdff;stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round;}
         .lightning-bolt .branch{stroke-width:1.25;opacity:.88;}
         .lightning-bolt.strike{animation:boltStrike .42s steps(3,end) forwards;}
         @keyframes boltStrike{0%,10%{opacity:0}12%{opacity:1}22%{opacity:.1}30%{opacity:1}43%{opacity:0}100%{opacity:0}}
-        #back-precipitations { position: fixed; inset:0; width:100vw; height:100vh; z-index: -3; pointer-events:none; }
+        #back-precipitations { position: fixed; inset:0; width:100vw; height:100vh; z-index: 7 !important; pointer-events:none; }
         #front-particles { position: fixed; inset:0; width:100vw; height:100vh; z-index: 40 !important; pointer-events:none; overflow:hidden; }
         .pos { position: absolute; display: flex; align-items: center; justify-content: center; overflow: hidden; text-align: center; }
         .boite-flip-haut { background: linear-gradient(to bottom, #11151c, #05070a) !important; border: 2px solid #28303d !important; border-radius: 8px !important; box-shadow: 0px 6px 12px rgba(0,0,0,0.5), inset 0px 0px 10px rgba(0,0,0,0.9) !important; z-index: 99 !important; }
@@ -34,9 +34,9 @@
         .charniere-droite::after { content: ''; position: absolute; top: 4px; width: 4px; height: 14px; background: #161a22 !important; right: -3px; border: 1px solid #050505 !important; }
         .charniere-gauche::before, .charniere-droite::before { content: ''; position: absolute; left: 0; top: 10px; width: 100%; height: 4px; background: #111 !important; }
         .montre-retro-cercle { position: absolute; right: 2.2vw; top: 1vh; width: 15.6vw; height: 15.6vw; background: #000000 !important; border: 2px solid #1d2633 !important; border-radius: 50%; box-shadow: 0px 4px 12px rgba(0,0,0,0.5); z-index: 99 !important; }
-        .graduation { position: absolute; width: 2px; height: 8px; background: rgba(255,255,255,0.4); left: 50%; top: 2px; margin-left: -1px; transform-origin: 50% 7.6vw; z-index: 11; }
+        .graduation { position: absolute; width: 2px; height: 8px; background: rgba(255,255,255,0.4); left: 50%; top: 2px; margin-left: -1px; transform-origin: 50% 5.85vw; z-index: 11; }
         .graduation.principale { width: 3px; height: 12px; background: #ffffff !important; top: 2px; }
-        .chiffre-container-js { position: absolute; width: 2vw; height: 2vw; left: 50%; top: 12px; margin-left: -1vw; transform-origin: 50% 6.6vw; display: flex; align-items: center; justify-content: center; z-index: 12; }
+        .chiffre-container-js { position: absolute; width: 2vw; height: 2vw; left: 50%; top: 12px; margin-left: -1vw; transform-origin: 50% 5.05vw; display: flex; align-items: center; justify-content: center; z-index: 12; }
         .chiffre-cadran-fixe { font-size: 0.95vw; font-weight: bold; color: #ffffff !important; font-family: 'Arial Black', sans-serif; }
         .aiguille { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom center; border-radius: 4px; z-index: 13; }
         .heure { width: 5px; height: 3.2vw; background-color: #fff; } .minute { width: 4px; height: 4.9vw; background-color: #8ad400; }
@@ -71,7 +71,7 @@
         .anim-clouds { animation: cloudMove linear infinite var(--cloud-speed); }
         #season-layer{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden;transition:opacity 6s ease;}
         #season-layer::before{content:'';position:absolute;inset:0;background:transparent;transition:background 6s ease,opacity 6s ease;}
-        .stars{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(circle,rgba(255,255,255,.8) 0 1px,transparent 1.5px);background-size:57px 53px;opacity:.45;}
+        .stars{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(circle,rgba(255,255,255,.82) 0 1px,transparent 1.5px);background-size:57px 53px;opacity:.48;-webkit-mask-image:url("assets/sky-mask.png");mask-image:url("assets/sky-mask.png");-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;}
         #season-ground{position:absolute;left:0;right:0;bottom:0;height:27vh;opacity:0;transition:opacity 6s ease;pointer-events:none;}
         .autumn-leaf-ground{position:absolute;width:8px;height:5px;border-radius:75% 10% 75% 10%;transform:rotate(var(--r));background:var(--c);box-shadow:0 1px 2px rgba(0,0,0,.3);}
         #winter-snow{position:absolute;inset:0;opacity:0;transition:opacity 6s ease;pointer-events:none;}
@@ -96,16 +96,29 @@
     
         /* --- CALQUES DYNAMIQUES : fond original toujours visible --- */
         #school-view-bg, .decor-permanent { z-index:0 !important; filter:none !important; background-size:100% 100% !important; }
+        /* V12 : fond original toujours visible, logo et slogan protégés */
+        #brand-logo-protect, #brand-slogan-protect{position:fixed;z-index:50;pointer-events:none;background-image:url('fond-final.png');background-repeat:no-repeat;background-size:100vw 100vh;}
+        #brand-logo-protect{left:0;top:0;width:14.0vw;height:24.5vh;background-position:0 0;}
+        #brand-slogan-protect{left:8.0vw;bottom:0;width:78vw;height:10.0vh;background-position:calc(-8.0vw) calc(100vh - 10.0vh);}
+        #night-lights{position:fixed;inset:0;z-index:12;pointer-events:none;opacity:0;transition:opacity 8s ease-in-out;background:
+          radial-gradient(ellipse 2.0vw 3.0vh at 67.4% 48.5%,rgba(255,205,104,.72),transparent 72%),
+          radial-gradient(ellipse 1.7vw 2.5vh at 71.2% 47.0%,rgba(255,197,92,.68),transparent 72%),
+          radial-gradient(ellipse 1.5vw 2.4vh at 74.6% 49.0%,rgba(255,214,120,.62),transparent 72%),
+          radial-gradient(ellipse 1.8vw 2.7vh at 80.1% 45.5%,rgba(255,198,90,.65),transparent 72%),
+          radial-gradient(ellipse 1.5vw 2.2vh at 84.8% 47.0%,rgba(255,214,120,.60),transparent 72%),
+          radial-gradient(ellipse 1.8vw 3.0vh at 72.0% 57.0%,rgba(255,178,64,.55),transparent 72%);
+          mix-blend-mode:screen;}
+        #lamp-glow{position:fixed;inset:0;z-index:13;pointer-events:none;opacity:0;transition:opacity 8s ease-in-out;background:radial-gradient(ellipse 4vw 9vh at 72.3% 48.5%,rgba(255,191,76,.34),transparent 70%);mix-blend-mode:screen;}
         #sky-gradient { z-index:1 !important; opacity:.72; mix-blend-mode:normal !important; clip-path:none !important; -webkit-mask-image:url('assets/sky-mask.png'); mask-image:url('assets/sky-mask.png'); -webkit-mask-size:100% 100%; mask-size:100% 100%; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; }
-        #night-dimmer { position:fixed; inset:0; z-index:6.5 !important; background:rgba(0,4,12,0); pointer-events:none; transition:background 10s ease-in-out; }
+        #night-dimmer { position:fixed; inset:0; z-index:20 !important; background:rgba(0,4,12,0); pointer-events:none; transition:background 8s ease-in-out; }
         #season-layer { z-index:2 !important; }
         #season-weather-overlay { position:absolute; inset:0; width:100%; height:100%; object-fit:fill; opacity:0; transition:opacity 6s ease; pointer-events:none; }
         #winter-snow { z-index:3; }
-        .lune-dans-le-ciel { z-index:4 !important; background-image:url('assets/lune/phases/p00.png') !important; filter:none !important; }
-        #cloud-layer { z-index:5 !important; -webkit-mask-image:url('assets/sky-mask.png'); mask-image:url('assets/sky-mask.png'); -webkit-mask-size:100% 100%; mask-size:100% 100%; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; }
-        #back-precipitations { z-index:6 !important; }
-        #lightning-flash { z-index:7 !important; }
-        #front-particles { z-index:8 !important; }
+        .lune-dans-le-ciel { z-index:35 !important; filter:none !important; background-size:cover !important; background-position:center !important; background-repeat:no-repeat !important; }
+        #cloud-layer { z-index:15 !important; -webkit-mask-image:url('assets/sky-mask.png'); mask-image:url('assets/sky-mask.png'); -webkit-mask-size:100% 100%; mask-size:100% 100%; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; }
+        #back-precipitations { z-index:25 !important; }
+        #lightning-flash { z-index:40 !important; }
+        #front-particles { z-index:40 !important; }
         #logo-ecran-principal { display:none !important; }
         #season-tree-icon { width:6.2vw !important; height:7.8vw !important; }
         #season-tree-icon img { width:6.2vw; height:7.8vw; object-fit:contain; display:block; filter:drop-shadow(0 3px 5px rgba(0,0,0,.5)); }
@@ -122,27 +135,679 @@
         @keyframes lightningGlow { 0%,100%{opacity:0} 12%{opacity:.95} 25%{opacity:.08} 34%{opacity:.75} 48%{opacity:0} }
         .lightning-halo { position:absolute; inset:0; background:radial-gradient(circle at var(--strike-x) var(--strike-y),rgba(220,245,255,.48),rgba(220,245,255,.12) 18%,transparent 48%); opacity:0; pointer-events:none; }
         .lightning-halo.strike { animation:lightningGlow .48s steps(4,end) forwards; }
-    </style>
+    
+        /* Prévisions : toutes les informations restent strictement dans les cadres */
+        #zone-7-jours{bottom:10vh;height:22vh;overflow:visible !important;}
+        .carte-prev-unique{height:100%;min-height:0;box-sizing:border-box;padding:1vh .35vw !important;justify-content:space-around !important;overflow:hidden !important;}
+        .prev-jour{font-size:1.02vw;font-weight:900;color:#fff;line-height:1;white-space:nowrap;}
+        .prev-date{font-size:.66vw;color:#aaa;font-weight:bold;line-height:1;white-space:nowrap;}
+        .prev-icon{height:5.1vh;display:flex;align-items:center;justify-content:center;flex:0 0 5.1vh;}
+        .prev-icon svg{width:2.65vw !important;height:2.65vw !important;max-height:5.1vh;}
+        .prev-max{font-size:1.65vw;font-weight:900;color:#fff;line-height:1;white-space:nowrap;}
+        .prev-min{font-size:1.05vw;font-weight:900;color:#49a6e9;line-height:1;white-space:nowrap;}
+
+        /* Le même rendu lunaire est utilisé dans le cadre et dans le ciel */
+        #lune-vrai-photo,#lune-vrai-ciel{background-size:cover !important;background-position:center !important;background-repeat:no-repeat !important;}
+
+        /* --- V8 : date et horloge digitale, style panneau moderne (sans flipflap) --- */
+        .boite-flip-haut {
+            background: linear-gradient(180deg, #111a24 0%, #05090e 100%) !important;
+            border: 1.5px solid rgba(49,184,255,.82) !important;
+            border-radius: 10px !important;
+            box-shadow: 0 6px 16px rgba(0,0,0,.62), inset 0 0 12px rgba(0,0,0,.82), 0 0 5px rgba(20,160,230,.16) !important;
+            overflow: hidden !important;
+        }
+        .boite-flip-haut::after {
+            content: ''; position:absolute; left:0; right:0; bottom:0; height:2.2vh;
+            background: rgba(0,0,0,.22); border-top:1px solid rgba(255,255,255,.06);
+            pointer-events:none;
+        }
+        .boite-flip-haut .flip-tuile-js {
+            height: 100% !important; padding-bottom: 1.9vh;
+            font-family: 'Arial Narrow', 'Arial Black', sans-serif !important;
+            font-size: 2.15vw !important; font-weight: 900 !important;
+            letter-spacing: .8px !important; text-shadow: 0 2px 2px rgba(0,0,0,.9);
+        }
+        .boite-flip-haut .flip-tuile-js::after,
+        .boite-flip-haut .charniere-gauche,
+        .boite-flip-haut .charniere-droite { display:none !important; }
+        #date-jour::after, #date-num::after, #date-mois::after, #date-annee::after {
+            display:block !important; position:absolute; left:0; right:0; top:auto; bottom:.45vh;
+            width:auto; height:auto; border:0 !important; background:none !important;
+            color:#aeb8c2; font-family:Arial,sans-serif; font-size:.52vw; font-weight:700;
+            letter-spacing:.9px; text-shadow:none; z-index:7;
+        }
+        #date-jour::after { content:'JOUR'; }
+        #date-num::after { content:'DATE'; }
+        #date-mois::after { content:'MOIS'; }
+        #date-annee::after { content:'ANNÉE'; }
+        .boite-digitale-bas {
+            position:absolute; right:2vw; top:35.5vh; width:17vw; height:8vh;
+            background:linear-gradient(180deg,#111a24 0%,#05090e 100%) !important;
+            border:1.5px solid rgba(49,184,255,.82) !important;
+            border-radius:10px !important;
+            box-shadow:0 6px 16px rgba(0,0,0,.62), inset 0 0 12px rgba(0,0,0,.82), 0 0 5px rgba(20,160,230,.16) !important;
+            overflow:hidden !important;
+        }
+        .boite-digitale-bas .charniere-gauche, .boite-digitale-bas .charniere-droite { display:none !important; }
+        .heure-digitale-js {
+            height:5.8vh !important; padding:0 .45vw .7vh !important; align-items:flex-end !important;
+            font-family:'Arial Narrow','Arial Black',sans-serif !important;
+            font-size:2.55vw !important; font-weight:900 !important; letter-spacing:1px !important;
+            text-shadow:0 2px 2px rgba(0,0,0,.9);
+        }
+        .heure-digitale-js::after { display:none !important; }
+        .heure-digitale-labels {
+            position:absolute; left:0; right:0; bottom:.45vh; height:1.15vh;
+            display:grid; grid-template-columns:1fr 1fr 1fr; align-items:center;
+            color:#aeb8c2; font-family:Arial,sans-serif; font-size:.42vw; font-weight:700;
+            letter-spacing:.65px; text-align:center; z-index:6;
+        }
+        .heure-digitale-labels span { white-space:nowrap; }
+    
+        /* --- V9 : finition des horloges et panneaux de date, inspirée de la maquette --- */
+        .boite-flip-haut {
+            background: linear-gradient(180deg,#111820 0%,#05080d 72%,#030507 100%) !important;
+            border: 1.5px solid rgba(43,177,245,.92) !important;
+            border-radius: 9px !important;
+            box-shadow: 0 7px 18px rgba(0,0,0,.72), inset 0 0 11px rgba(0,0,0,.9), 0 0 7px rgba(22,164,230,.22) !important;
+        }
+        .boite-flip-haut .flip-tuile-js {
+            font-family:'Arial Narrow','Arial Black',Arial,sans-serif !important;
+            font-size:2.08vw !important; letter-spacing:.65px !important;
+            padding-bottom:2.05vh !important;
+            text-shadow:0 2px 2px rgba(0,0,0,.95),0 0 1px rgba(255,255,255,.35);
+        }
+        #date-jour::after,#date-num::after,#date-mois::after,#date-annee::after {
+            bottom:.38vh !important; font-size:.50vw !important; color:#d5dbe0 !important;
+            letter-spacing:.8px !important;
+        }
+        .boite-flip-haut::after { height:2.25vh !important; background:linear-gradient(180deg,rgba(0,0,0,.12),rgba(0,0,0,.45)) !important; border-top:1px solid rgba(255,255,255,.08) !important; }
+        .boite-digitale-bas {
+            background:linear-gradient(180deg,#111820 0%,#05080d 72%,#030507 100%) !important;
+            border:1.5px solid rgba(43,177,245,.92) !important;
+            border-radius:9px !important;
+            box-shadow:0 7px 18px rgba(0,0,0,.72), inset 0 0 11px rgba(0,0,0,.9), 0 0 7px rgba(22,164,230,.22) !important;
+        }
+        .heure-digitale-js { font-size:2.50vw !important; padding-bottom:.72vh !important; text-shadow:0 2px 2px rgba(0,0,0,.95),0 0 1px rgba(255,255,255,.35) !important; }
+        .heure-digitale-labels { color:#d5dbe0 !important; font-size:.40vw !important; letter-spacing:.6px !important; }
+        .montre-retro-cercle {
+            background:radial-gradient(circle at 50% 45%,#080a0d 0%,#000 72%,#000 100%) !important;
+            border:1.8px solid #1f2a36 !important;
+            box-shadow:0 6px 16px rgba(0,0,0,.78), inset 0 0 0 1px rgba(255,255,255,.08), 0 0 6px rgba(20,150,220,.12) !important;
+        }
+        .graduation { background:#aeb6bd !important; opacity:.68; }
+        .graduation.principale { background:#fff !important; opacity:1; }
+        .chiffre-cadran-fixe { font-family:'Arial Black',Arial,sans-serif !important; font-size:.91vw !important; text-shadow:0 1px 1px #000; }
+        .heure { width:4px !important; height:3.0vw !important; background:#f4f7fa !important; }
+        .minute { width:3px !important; height:4.75vw !important; background:#f4f7fa !important; }
+        .seconde { width:1.5px !important; height:5.15vw !important; background:#b8ff00 !important; box-shadow:0 0 4px rgba(184,255,0,.55); }
+        .pivot { width:10px !important; height:10px !important; background:#b8ff00 !important; box-shadow:0 0 7px rgba(184,255,0,.75) !important; }
+    
+        /* ================= V10 : nouvelle composition complète, inspirée de la maquette ================= */
+        :root{--cyan:#25b8f4;--panel:#071018;--panel2:#0d1821;--line:rgba(48,190,255,.78);--muted:#cbd4da;}
+        /* Date : quatre panneaux larges, même composition que la maquette */
+        .boite-flip-haut{top:3.1vh !important;background:linear-gradient(180deg,#111820 0%,#070b10 68%,#030507 100%) !important;border:1.5px solid var(--line) !important;border-radius:9px !important;box-shadow:0 7px 18px rgba(0,0,0,.72),inset 0 0 12px rgba(0,0,0,.88),0 0 7px rgba(20,165,230,.22) !important;}
+        .boite-flip-haut#date-panel-jour{left:14.0vw !important;width:14.0vw !important;height:12.0vh !important;}
+        .boite-flip-haut#date-panel-num{left:28.6vw !important;width:7.7vw !important;height:12.0vh !important;}
+        .boite-flip-haut#date-panel-mois{left:36.7vw !important;width:15.0vw !important;height:12.0vh !important;}
+        .boite-flip-haut#date-panel-annee{left:52.7vw !important;width:7.8vw !important;height:12.0vh !important;}
+        .boite-flip-haut .flip-tuile-js{font-size:2.05vw !important;padding-bottom:2.35vh !important;font-family:'Arial Narrow','Arial Black',Arial,sans-serif !important;text-shadow:0 2px 2px #000,0 0 1px rgba(255,255,255,.4) !important;}
+        #date-jour::after,#date-num::after,#date-mois::after,#date-annee::after{bottom:.52vh !important;font-size:.47vw !important;color:#d8dee3 !important;letter-spacing:.85px !important;}
+        .boite-flip-haut::after{height:2.65vh !important;background:linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.48)) !important;border-top:1px solid rgba(255,255,255,.08) !important;}
+        /* Horloge analogique : même taille et zone que le projet actuel, mais finition maquette */
+        .montre-retro-cercle{right:18.2vw !important;top:1.0vh !important;width:12.0vw !important;height:12.0vw !important;background:radial-gradient(circle at 50% 45%,#080b0e 0%,#000 72%,#000 100%) !important;border:1.8px solid #263340 !important;box-shadow:0 7px 18px rgba(0,0,0,.78),inset 0 0 0 1px rgba(255,255,255,.09),0 0 8px rgba(20,155,220,.15) !important;}
+        .graduation{background:#c1c8ce !important;opacity:.72 !important;height:7px !important;width:2px !important;}
+        .graduation.principale{background:#fff !important;opacity:1 !important;width:3px !important;height:12px !important;}
+        .chiffre-container-js{transform-origin:50% 6.6vw !important;}
+        .chiffre-cadran-fixe{font-family:'Arial Black',Arial,sans-serif !important;font-size:.91vw !important;color:#fff !important;text-shadow:0 1px 1px #000 !important;}
+        .heure{width:4px !important;height:3.0vw !important;background:#f4f7fa !important;box-shadow:0 0 2px rgba(255,255,255,.35);}
+        .minute{width:3px !important;height:4.75vw !important;background:#f4f7fa !important;box-shadow:0 0 2px rgba(255,255,255,.35);}
+        .seconde{width:1.5px !important;height:5.15vw !important;background:#b8ff00 !important;box-shadow:0 0 5px rgba(184,255,0,.6) !important;}
+        .pivot{width:10px !important;height:10px !important;background:#b8ff00 !important;box-shadow:0 0 8px rgba(184,255,0,.8) !important;}
+        /* Horloge digitale : panneau assorti */
+        .boite-digitale-bas{right:1.65vw !important;top:3.2vh !important;width:15.6vw !important;height:9.5vh !important;background:linear-gradient(180deg,#111820 0%,#070b10 68%,#030507 100%) !important;border:1.5px solid var(--line) !important;border-radius:9px !important;box-shadow:0 7px 18px rgba(0,0,0,.72),inset 0 0 11px rgba(0,0,0,.88),0 0 7px rgba(20,165,230,.22) !important;}
+        .heure-digitale-js{font-size:2.38vw !important;height:6.8vh !important;padding:0 .35vw .7vh !important;align-items:flex-end !important;font-family:'Arial Narrow','Arial Black',Arial,sans-serif !important;text-shadow:0 2px 2px #000,0 0 1px rgba(255,255,255,.4) !important;}
+        .heure-digitale-labels{bottom:.52vh !important;font-size:.39vw !important;color:#d8dee3 !important;letter-spacing:.55px !important;}
+        /* Panneau météo actuel : dimensions et hiérarchie de la maquette */
+        #cadran-meteo-g{left:1.25vw !important;top:23.2vh !important;width:28.5vw !important;height:34.8vh !important;padding:1.1vw !important;background:linear-gradient(180deg,#08131d,#061019) !important;border:1.5px solid rgba(35,180,240,.78) !important;border-radius:12px !important;box-shadow:0 8px 18px rgba(0,0,0,.72),inset 0 0 13px rgba(0,0,0,.82),0 0 7px rgba(20,160,230,.12) !important;}
+        #cadran-meteo-g>div:first-child{font-size:1.05vw !important;text-align:center !important;}
+        #cadran-meteo-g>div:nth-child(2){font-size:.72vw !important;text-align:center !important;margin-bottom:1.0vh !important;}
+        #cadran-meteo-g .current-weather-icon{width:6.0vw !important;height:6.0vw !important;}
+        #cadran-meteo-g .current-weather-icon svg{width:6.0vw !important;height:6.0vw !important;}
+        #cadran-meteo-g #courant-temp{font-size:4.0vw !important;}
+        #cadran-meteo-g #courant-ressenti{font-size:.95vw !important;}
+        #cadran-meteo-g #courant-desc{font-size:1.0vw !important;}
+        #cadran-meteo-g .meteo-label{font-size:.52vw !important;}
+        #cadran-meteo-g .meteo-value{font-size:.92vw !important;}
+        /* SAISON : grand arbre réaliste, contenu identique mais composition maquette */
+        #cadran-saison-d{right:1.65vw !important;top:20.0vh !important;width:18.4vw !important;height:40.2vh !important;background:linear-gradient(180deg,#07111a,#050b11) !important;border:1.5px solid rgba(35,180,240,.78) !important;border-radius:12px !important;box-shadow:0 8px 18px rgba(0,0,0,.72),inset 0 0 13px rgba(0,0,0,.82),0 0 7px rgba(20,160,230,.12) !important;overflow:hidden !important;}
+        #cadran-saison-d>div:first-child{height:64% !important;background:linear-gradient(180deg,#0c1822,#071018) !important;padding:.65vw .9vw !important;align-items:center !important;}
+        #cadran-saison-d>div:first-child>div:first-child{position:absolute !important;left:1vw !important;top:.9vh !important;z-index:4 !important;}
+        #cadran-saison-d>div:first-child>div:first-child div:first-child{font-size:1.05vw !important;}
+        #cadran-saison-d>div:first-child>div:first-child div:last-child{font-size:1.65vw !important;margin-top:.35vh !important;}
+        .case-illustration-pommier{position:absolute !important;left:2.2vw !important;right:2.2vw !important;bottom:.4vh !important;width:auto !important;height:28vh !important;background:transparent !important;border:0 !important;box-shadow:none !important;border-radius:0 !important;align-items:flex-end !important;}
+        #season-tree-icon{width:100% !important;height:100% !important;}
+        #cadran-saison-d>div:nth-child(2){height:35% !important;padding:.45vw .9vw .75vw !important;}
+        #cadran-saison-d>div:nth-child(2)>div:first-child{font-size:1.0vw !important;}
+        #cadran-saison-d .soleil-realiste-css{width:3.5vw !important;height:3.5vw !important;}
+        #cadran-saison-d>div:nth-child(2)>div:nth-child(2)>div:last-child{gap:.65vw !important;}
+        #cadran-saison-d>div:nth-child(2)>div:nth-child(2)>div:last-child div div{font-size:.9vw !important;}
+        /* LUNE : grand panneau, même lune que dans le ciel */
+        #cadran-lune-d{right:1.65vw !important;top:62.2vh !important;width:18.4vw !important;height:25.8vh !important;padding:1.0vw 1.15vw !important;background:linear-gradient(180deg,#07111a,#050b11) !important;border:1.5px solid rgba(35,180,240,.78) !important;border-radius:12px !important;box-shadow:0 8px 18px rgba(0,0,0,.72),inset 0 0 13px rgba(0,0,0,.82),0 0 7px rgba(20,160,230,.12) !important;}
+        #cadran-lune-d>div:first-child>div:first-child{font-size:1.0vw !important;color:#fff !important;text-align:center !important;width:100%;}
+        #cadran-lune-d>div:first-child>div:nth-child(2){font-size:.72vw !important;line-height:1.45 !important;margin-top:.7vh !important;}
+        #cadran-lune-d>div:first-child>div:nth-child(2) strong{font-size:.85vw !important;color:#ffb000 !important;}
+        .lune-doree-image{width:6.8vw !important;height:6.8vw !important;flex:0 0 6.8vw !important;background-color:transparent !important;border:0 !important;box-shadow:0 0 18px rgba(255,255,255,.32) !important;}
+        /* Prévisions : large bande basse comme dans la maquette */
+        #zone-7-jours{left:1.25vw !important;bottom:4.1vh !important;width:63.5vw !important;height:31.5vh !important;padding:.9vh .55vw .85vh !important;display:flex !important;gap:.35vw !important;justify-content:space-between !important;background:linear-gradient(180deg,rgba(5,14,21,.94),rgba(3,9,14,.96)) !important;border:1.5px solid rgba(35,180,240,.78) !important;border-radius:12px !important;box-shadow:0 8px 18px rgba(0,0,0,.72),inset 0 0 13px rgba(0,0,0,.82),0 0 7px rgba(20,160,230,.12) !important;}
+        #zone-7-jours::before{content:'PRÉVISIONS SUR 7 JOURS';position:absolute;left:0;right:0;top:.55vh;text-align:center;color:#fff;font-size:1.0vw;font-weight:900;letter-spacing:.2px;pointer-events:none;}
+        .carte-prev-unique{width:calc((100% - 2.1vw)/7) !important;height:27.0vh !important;margin-top:2.35vh !important;padding:.95vh .25vw !important;background:linear-gradient(180deg,#0b151e,#071019) !important;border:1px solid rgba(133,171,194,.38) !important;border-radius:6px !important;justify-content:space-between !important;}
+        .prev-jour{font-size:.92vw !important;}
+        .prev-date{font-size:.60vw !important;color:#d2d8dc !important;}
+        .prev-icon{height:6.2vh !important;flex:0 0 6.2vh !important;}
+        .prev-icon svg{width:3.15vw !important;height:3.15vw !important;max-height:6.2vh !important;}
+        .prev-max{font-size:1.42vw !important;}
+        .prev-min{font-size:1.02vw !important;color:#35b9ff !important;}
+        /* couches de fond : la photo reste intacte ; les effets restent derrière les panneaux */
+        #school-view-bg{z-index:0 !important;}
+        #sky-gradient{z-index:1 !important;}
+        #season-layer{z-index:2 !important;}
+        #night-dimmer{z-index:20 !important;}
+        .lune-dans-le-ciel{z-index:35 !important;}
+        #cloud-layer{z-index:15 !important;}
+        #back-precipitations{z-index:25 !important;}
+        #front-particles{z-index:30 !important;}
+        #lightning-flash{z-index:40 !important;}
+        /* à partir de V10, la lune du ciel garde exactement le même atlas que le cadre */
+        #lune-vrai-photo,#lune-vrai-ciel{background-color:transparent !important;background-repeat:no-repeat !important;}
+
+            #zone-7-jours .carte-prev-unique{padding:1.0vh .2vw !important;border-radius:8px !important;}
+        #zone-7-jours .prev-jour{font-size:.90vw !important;}
+        #zone-7-jours .prev-date{font-size:.58vw !important;}
+        #zone-7-jours .prev-icon svg{width:3.1vw !important;height:3.1vw !important;}
+        #zone-7-jours .prev-max{font-size:1.15vw !important;}
+        #zone-7-jours .prev-min{font-size:1.02vw !important;color:#25b8f4 !important;}
+        #zone-7-jours .prev-wind{font-size:.48vw !important;color:#e5edf2 !important;white-space:nowrap;}
+        
+/* ================= V13 : composition maquette + fond Les Peupliers ================= */
+#school-view-bg{
+ position:fixed !important; inset:0 !important; width:100vw !important; height:100vh !important;
+ display:block !important; z-index:0 !important; filter:none !important;
+ background-image:url("fond-final.png") !important;
+ background-repeat:no-repeat !important; background-position:center center !important;
+ background-size:100% 100% !important;
+}
+#night-grade{
+ position:fixed !important; inset:0 !important; width:100vw !important; height:100vh !important;
+ object-fit:fill !important; z-index:0.6 !important; opacity:0 !important; mix-blend-mode:multiply !important;
+ transition:opacity 8s ease-in-out !important; pointer-events:none !important;
+}
+#night-lights{
+ position:fixed !important; inset:0 !important; width:100vw !important; height:100vh !important;
+ object-fit:fill !important; z-index:0.7 !important; opacity:0 !important;
+ transition:opacity 8s ease-in-out !important; pointer-events:none !important;
+}
+#brand-logo-protect,#brand-slogan-protect,#logo-ecran-principal,#slogan-ecran-principal{display:none !important;visibility:hidden !important;}
+#sky-gradient{z-index:1 !important;}
+#season-layer{z-index:2 !important;}
+#lune-vrai-ciel{z-index:4 !important;}
+#cloud-layer{z-index:5 !important;}
+#back-precipitations{z-index:7 !important;}
+#night-dimmer{z-index:8 !important;background:transparent !important;}
+#lightning-flash{z-index:9 !important;}
+#front-particles{z-index:40 !important;}
+
+/* Date : exactement la famille visuelle de la maquette */
+.boite-flip-haut{
+ top:3.1vh !important;height:12vh !important;
+ background:linear-gradient(180deg,#111820 0%,#070b10 68%,#030507 100%) !important;
+ border:1.5px solid rgba(43,177,245,.92) !important;border-radius:9px !important;
+ box-shadow:0 7px 18px rgba(0,0,0,.72),inset 0 0 11px rgba(0,0,0,.9),0 0 7px rgba(22,164,230,.22) !important;
+}
+#date-panel-jour{left:13.2vw !important;width:14.0vw !important;}
+#date-panel-num{left:27.5vw !important;width:7.3vw !important;}
+#date-panel-mois{left:35.0vw !important;width:15.0vw !important;}
+#date-panel-annee{left:50.4vw !important;width:7.6vw !important;}
+.boite-flip-haut .flip-tuile-js{
+ font-size:2.05vw !important;padding-bottom:2.35vh !important;
+ font-family:'Arial Narrow','Arial Black',Arial,sans-serif !important;
+ text-shadow:0 2px 2px #000,0 0 1px rgba(255,255,255,.4) !important;
+}
+#date-jour::after,#date-num::after,#date-mois::after,#date-annee::after{
+ bottom:.52vh !important;font-size:.47vw !important;color:#d8dee3 !important;letter-spacing:.85px !important;
+}
+.boite-flip-haut::after{height:2.65vh !important;}
+
+/* Analogique : taille de la maquette, pas la grosse horloge V12 */
+.montre-retro-cercle{
+ right:19.0vw !important;top:1.0vh !important;width:12.1vw !important;height:12.1vw !important;
+}
+.graduation{transform-origin:50% 5.85vw !important;}
+.chiffre-container-js{transform-origin:50% 5.05vw !important;}
+.heure{height:2.25vw !important;}
+.minute{height:3.65vw !important;}
+.seconde{height:4.0vw !important;}
+
+/* Digitale : position/volume de la maquette */
+.boite-digitale-bas{
+ right:1.65vw !important;top:3.2vh !important;width:13.9vw !important;height:9.5vh !important;
+}
+.heure-digitale-js{font-size:2.18vw !important;height:6.0vh !important;padding-bottom:.65vh !important;}
+.heure-digitale-labels{font-size:.40vw !important;}
+
+/* Météo actuelle : un peu moins haute pour dégager le bas */
+#cadran-meteo-g{
+ left:1.1vw !important;top:19.4vh !important;width:27.8vw !important;height:37.0vh !important;
+ padding:1.05vw !important;
+}
+
+/* Saison */
+#cadran-saison-d{
+ right:1.9vw !important;top:20.4vh !important;width:18.2vw !important;height:40.0vh !important;
+ overflow:hidden !important;
+}
+#cadran-saison-d > div:first-child{
+ height:64% !important; min-height:64% !important; display:block !important;
+ padding:.9vh 1.0vw !important; background:#071018 !important;
+}
+#cadran-saison-d > div:first-child > div:first-child{position:absolute !important;left:1.0vw !important;top:1.0vh !important;z-index:4 !important;}
+#cadran-saison-d > div:first-child > div:first-child > div:first-child{font-size:1.1vw !important;}
+#cadran-saison-d > div:first-child > div:first-child > div:last-child{font-size:1.75vw !important;margin-top:.3vh !important;}
+#cadran-saison-d .case-illustration-pommier{
+ position:absolute !important;left:50% !important;top:7.2vh !important;transform:translateX(-50%) !important;
+ width:13.8vw !important;height:19.5vh !important;background:transparent !important;border:0 !important;box-shadow:none !important;z-index:2 !important;
+}
+#season-tree-icon{width:100% !important;height:100% !important;background-size:contain !important;background-position:center !important;background-repeat:no-repeat !important;background-color:transparent !important;border:0 !important;box-shadow:none !important;}
+#cadran-saison-d > div:last-child{height:36% !important;min-height:36% !important;padding:.7vw 1.0vw .8vw !important;}
+#cadran-saison-d > div:last-child > div:first-child{font-size:1.0vw !important;}
+#cadran-saison-d .soleil-realiste-css{width:3.0vw !important;height:3.0vw !important;}
+#cadran-saison-d > div:last-child > div:nth-child(2){gap:1.2vw !important;}
+#cadran-saison-d > div:last-child > div:nth-child(2) > div:last-child{font-size:1vw !important;}
+
+/* Lune */
+#cadran-lune-d{
+ right:1.9vw !important;bottom:13.8vh !important;width:18.2vw !important;height:24.0vh !important;
+}
+#lune-vrai-photo{width:6.5vw !important;height:6.5vw !important;background-color:transparent !important;}
+#lune-ombre-widget{display:none !important;}
+
+/* Prévisions : remontées et légèrement réduites pour préserver le slogan */
+#zone-7-jours{
+ left:1.1vw !important;bottom:10.8vh !important;width:63.3vw !important;height:29.0vh !important;
+ padding:2.7vh .55vw .7vh !important; box-sizing:border-box !important; overflow:hidden !important;
+}
+#zone-7-jours::before{top:.45vh !important;font-size:1.0vw !important;}
+#zone-7-jours .carte-prev-unique{padding:.75vh .2vw !important;height:calc(100% - 2.0vh) !important;min-height:0 !important;box-sizing:border-box !important;}
+#zone-7-jours .prev-icon svg{width:3.0vw !important;height:3.0vw !important;}
+#zone-7-jours .prev-max{font-size:1.15vw !important;}
+#zone-7-jours .prev-min{font-size:1.02vw !important;}
+#zone-7-jours .prev-wind{font-size:.48vw !important;}
+
+/* Protection du slogan : aucun effet décoratif ne doit le recouvrir */
+#brand-slogan-protect{display:none !important;}
+
+
+/* V13 : éclairage nocturne doux, sans voile noir */
+#night-grade,#night-lights{will-change:opacity;}
+#night-lights{mix-blend-mode:screen !important;}
+#lamp-glow{z-index:0.8 !important;pointer-events:none !important;opacity:0;}
+
+/* V15 FINAL FIXES */
+#school-view-bg{background:url("fond-final.png") center center / 100% 100% no-repeat !important;z-index:0 !important;}
+#night-grade{z-index:.6 !important;pointer-events:none !important;}
+#night-lights{z-index:.7 !important;pointer-events:none !important;}
+#lune-vrai-ciel{display:none;overflow:hidden;}
+#lune-vrai-photo{overflow:hidden;}
+#zone-7-jours{box-sizing:border-box !important;overflow:hidden !important;}
+#zone-7-jours .carte-prev-unique{box-sizing:border-box !important;overflow:hidden !important;}
+
+/* ================= V17 : fond réel + maquette strictement reprise ================= */
+html,body{background:#000 !important;}
+body{background-image:none !important;}
+
+/* Le fond de l'école est une vraie image, jamais une image de remplacement opaque. */
+#school-view-bg{
+  position:fixed !important; inset:0 !important;
+  width:100vw !important; height:100vh !important;
+  display:block !important;
+  object-fit:fill !important;
+  z-index:0 !important;
+  background:none !important;
+  filter:none !important;
+}
+
+/* Effet nuit naturel : simple ambiance colorimétrique semi-transparente,
+   laissant visibles bâtiment, arbres, logo et slogan. */
+#night-atmosphere{
+  position:fixed !important; inset:0 !important;
+  width:100vw !important; height:100vh !important;
+  z-index:.6 !important; pointer-events:none !important;
+  opacity:0 !important;
+  background:
+    radial-gradient(ellipse at 50% 28%,rgba(16,42,78,.10),transparent 52%),
+    linear-gradient(to bottom,rgba(2,13,32,.42),rgba(3,17,31,.20) 58%,rgba(0,7,15,.16) 100%) !important;
+  mix-blend-mode:multiply !important;
+  transition:opacity 8s ease-in-out !important;
+}
+
+/* Lumières chaudes des fenêtres : couche transparente, jamais de fond noir. */
+#night-lights{
+  position:fixed !important; inset:0 !important;
+  width:100vw !important; height:100vh !important;
+  z-index:.75 !important; pointer-events:none !important;
+  opacity:0 !important;
+  background:
+    radial-gradient(ellipse 5vw 3vh at 73.8% 48.7%,rgba(255,190,70,.55),transparent 70%),
+    radial-gradient(ellipse 4vw 2.5vh at 78.8% 48.9%,rgba(255,174,55,.48),transparent 70%),
+    radial-gradient(ellipse 3vw 2vh at 69.2% 48.8%,rgba(255,204,100,.38),transparent 70%) !important;
+  mix-blend-mode:screen !important;
+  transition:opacity 8s ease-in-out !important;
+}
+
+/* ciel : le masque ne touche qu'au ciel */
+#sky-gradient{
+  z-index:1 !important;
+  -webkit-mask-image:url("assets/sky-mask.png") !important;
+  mask-image:url("assets/sky-mask.png") !important;
+  -webkit-mask-size:100% 100% !important;
+  mask-size:100% 100% !important;
+  -webkit-mask-repeat:no-repeat !important;
+  mask-repeat:no-repeat !important;
+}
+
+/* Tous les effets restent derrière les cadres et le branding intégré au fond. */
+#season-layer{z-index:2 !important;}
+#lune-vrai-ciel{z-index:4 !important;}
+#cloud-layer{z-index:5 !important;}
+#back-precipitations{z-index:7 !important;}
+#lightning-flash{z-index:9 !important;}
+#front-particles{z-index:40 !important;}
+#logo-ecran-principal,#slogan-ecran-principal{display:none !important;}
+
+/* DATE : mêmes proportions/encadrements que la maquette */
+.boite-flip-haut{
+  top:3.0vh !important;height:12.0vh !important;
+  background:linear-gradient(180deg,#111820 0%,#070b10 68%,#030507 100%) !important;
+  border:1.5px solid rgba(43,177,245,.92) !important;
+  border-radius:9px !important;
+  box-shadow:0 7px 18px rgba(0,0,0,.72),inset 0 0 11px rgba(0,0,0,.90),0 0 7px rgba(22,164,230,.22) !important;
+}
+#date-panel-jour{left:13.2vw !important;width:14.0vw !important;}
+#date-panel-num{left:27.5vw !important;width:7.3vw !important;}
+#date-panel-mois{left:35.0vw !important;width:15.0vw !important;}
+#date-panel-annee{left:50.4vw !important;width:7.6vw !important;}
+.boite-flip-haut .flip-tuile-js{
+  font-size:2.05vw !important;padding-bottom:2.35vh !important;
+  font-family:'Arial Narrow','Arial Black',Arial,sans-serif !important;
+  text-shadow:0 2px 2px #000,0 0 1px rgba(255,255,255,.4) !important;
+}
+#date-jour::after,#date-num::after,#date-mois::after,#date-annee::after{
+  bottom:.52vh !important;font-size:.47vw !important;color:#d8dee3 !important;letter-spacing:.85px !important;
+}
+
+/* HORLOGE ANALOGIQUE : taille de la maquette */
+.montre-retro-cercle{
+  right:18.8vw !important;top:1.0vh !important;
+  width:12.0vw !important;height:12.0vw !important;
+  background:radial-gradient(circle at 50% 45%,#080b0e 0%,#000 72%,#000 100%) !important;
+  border:1.8px solid #263340 !important;
+}
+.graduation{background:#c1c8ce !important;opacity:.72 !important;}
+.graduation.principale{background:#fff !important;opacity:1 !important;}
+.chiffre-container-js{transform-origin:50% 6.0vw !important;}
+.chiffre-cadran-fixe{font-size:.91vw !important;color:#fff !important;}
+.heure{width:4px !important;height:3.0vw !important;background:#f4f7fa !important;}
+.minute{width:3px !important;height:4.75vw !important;background:#f4f7fa !important;}
+.seconde{width:1.5px !important;height:5.15vw !important;background:#b8ff00 !important;}
+.pivot{width:10px !important;height:10px !important;background:#b8ff00 !important;}
+
+/* HORLOGE DIGITALE : même panneau que la maquette */
+.boite-digitale-bas{
+  right:1.65vw !important;top:3.2vh !important;
+  width:13.9vw !important;height:9.5vh !important;
+  background:linear-gradient(180deg,#111820 0%,#070b10 68%,#030507 100%) !important;
+  border:1.5px solid rgba(43,177,245,.92) !important;border-radius:9px !important;
+}
+.heure-digitale-js{
+  font-size:2.18vw !important;height:6.0vh !important;padding-bottom:.65vh !important;
+  font-family:'Arial Narrow','Arial Black',Arial,sans-serif !important;
+}
+.heure-digitale-labels{font-size:.40vw !important;}
+
+/* METEO : format maquette */
+#cadran-meteo-g{
+  left:1.1vw !important;top:19.4vh !important;
+  width:27.8vw !important;height:35.6vh !important;
+  padding:1.05vw !important;
+  background:linear-gradient(180deg,#08131d,#061019) !important;
+  border:1.5px solid rgba(35,180,240,.78) !important;border-radius:12px !important;
+  overflow:hidden !important;
+}
+#cadran-meteo-g .current-weather-icon{width:6.0vw !important;height:6.0vw !important;flex:0 0 6.0vw !important;}
+#cadran-meteo-g .current-weather-icon svg{width:6.0vw !important;height:6.0vw !important;}
+#cadran-meteo-g #courant-temp{font-size:4.0vw !important;}
+#cadran-meteo-g #courant-ressenti{font-size:.95vw !important;}
+#cadran-meteo-g #courant-desc{font-size:1.0vw !important;}
+
+/* SAISON : vrai arbre local, grande illustration */
+#cadran-saison-d{
+  right:1.9vw !important;top:20.4vh !important;
+  width:18.2vw !important;height:40.0vh !important;
+  background:linear-gradient(180deg,#07111a,#050b11) !important;
+  overflow:hidden !important;
+}
+#cadran-saison-d>div:first-child{
+  height:64% !important;min-height:64% !important;display:block !important;
+  padding:.9vh 1.0vw !important;background:#071018 !important;
+}
+#cadran-saison-d>div:first-child>div:first-child{
+  position:absolute !important;left:1.0vw !important;top:1.0vh !important;z-index:4 !important;
+}
+#cadran-saison-d>div:first-child>div:first-child>div:first-child{font-size:1.1vw !important;}
+#cadran-saison-d>div:first-child>div:first-child>div:last-child{font-size:1.75vw !important;}
+.case-illustration-pommier{
+  position:absolute !important;left:2.0vw !important;top:7.0vh !important;
+  width:14.2vw !important;height:19.5vh !important;
+  display:flex !important;align-items:flex-end !important;justify-content:center !important;
+  background:transparent !important;border:0 !important;box-shadow:none !important;z-index:2 !important;
+}
+#season-tree-icon{
+  display:block !important;width:100% !important;height:100% !important;
+  object-fit:contain !important;object-position:center bottom !important;
+  background:transparent !important;border:0 !important;
+}
+#cadran-saison-d>div:last-child{height:36% !important;min-height:36% !important;padding:.7vw 1.0vw .8vw !important;}
+#cadran-saison-d .soleil-realiste-css{width:3.0vw !important;height:3.0vw !important;}
+
+/* LUNE : même phase réaliste que dans le ciel */
+#cadran-lune-d{
+  right:1.9vw !important;bottom:13.8vh !important;
+  width:18.2vw !important;height:24.0vh !important;
+  padding:1.0vw 1.15vw !important;
+}
+#lune-vrai-photo{
+  width:6.7vw !important;height:6.7vw !important;flex:0 0 6.7vw !important;
+  background-color:transparent !important;background-repeat:no-repeat !important;
+  background-size:contain !important;background-position:center !important;
+  border:0 !important;box-shadow:0 0 18px rgba(255,255,255,.30) !important;
+}
+#lune-ombre-widget{display:none !important;}
+#lune-vrai-ciel{
+  width:5.3vw !important;height:5.3vw !important;
+  border-radius:50% !important;background-color:transparent !important;
+  background-repeat:no-repeat !important;background-size:contain !important;background-position:center !important;
+  border:0 !important;box-shadow:0 0 18px rgba(255,255,255,.34) !important;
+}
+
+/* PREVISIONS : 7 cartes strictement contenues dans le grand cadre */
+#zone-7-jours{
+  left:1.1vw !important;bottom:10.8vh !important;
+  width:63.3vw !important;height:29.0vh !important;
+  padding:2.7vh .55vw .7vh !important;
+  display:flex !important;gap:.35vw !important;
+  justify-content:space-between !important;align-items:stretch !important;
+  box-sizing:border-box !important;overflow:hidden !important;
+}
+#zone-7-jours::before{top:.45vh !important;font-size:1.0vw !important;}
+#zone-7-jours .carte-prev-unique{
+  flex:1 1 0 !important;width:auto !important;min-width:0 !important;
+  height:calc(100% - 2.0vh) !important;margin-top:2.0vh !important;
+  padding:.75vh .15vw !important;box-sizing:border-box !important;
+  overflow:hidden !important;
+}
+#zone-7-jours .prev-icon{height:6.2vh !important;flex:0 0 6.2vh !important;}
+#zone-7-jours .prev-icon svg{width:3.15vw !important;height:3.15vw !important;max-height:6.2vh !important;}
+#zone-7-jours .prev-max{font-size:1.15vw !important;}
+#zone-7-jours .prev-min{font-size:1.02vw !important;color:#25b8f4 !important;}
+#zone-7-jours .prev-wind{font-size:.48vw !important;white-space:nowrap !important;}
+
+/* aucun texte de description météo sous les pictogrammes */
+#zone-7-jours .prev-desc,#zone-7-jours .prev-description{display:none !important;}
+
+
+/* ================= V18 : REFERENCE MAQUETTE + FOND LES PEUPLIERS ================= */
+html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#000 !important;}
+body{background-image:url("fond-final.png") !important;background-position:center center !important;background-repeat:no-repeat !important;background-size:100% 100% !important;}
+#school-view-bg{position:fixed !important;inset:0 !important;width:100vw !important;height:100vh !important;z-index:0 !important;background:url("fond-final.png") center center / 100% 100% no-repeat !important;display:block !important;pointer-events:none !important;}
+#night-atmosphere{z-index:.6 !important;mix-blend-mode:multiply !important;}
+#night-lights{z-index:.7 !important;mix-blend-mode:screen !important;}
+#sky-gradient{z-index:1 !important;}
+#season-layer{z-index:2 !important;}
+#lune-vrai-ciel{z-index:4 !important;}
+#cloud-layer{z-index:5 !important;}
+#back-precipitations{z-index:7 !important;}
+#lightning-flash{z-index:9 !important;}
+#front-particles{z-index:40 !important;}
+#logo-ecran-principal,#slogan-ecran-principal,#brand-logo-protect,#brand-slogan-protect{display:none !important;visibility:hidden !important;}
+/* Date : proportions de la maquette */
+.boite-flip-haut{top:3.0vh !important;height:12.0vh !important;background:linear-gradient(180deg,#101820 0%,#05080d 72%,#020406 100%) !important;border:1.5px solid rgba(43,177,245,.92) !important;border-radius:9px !important;box-shadow:0 7px 18px rgba(0,0,0,.72),inset 0 0 11px rgba(0,0,0,.9),0 0 7px rgba(22,164,230,.22) !important;overflow:hidden !important;}
+#date-panel-jour{left:13.1vw !important;width:14.0vw !important;}
+#date-panel-num{left:27.5vw !important;width:7.4vw !important;}
+#date-panel-mois{left:35.0vw !important;width:15.2vw !important;}
+#date-panel-annee{left:50.4vw !important;width:7.7vw !important;}
+.boite-flip-haut .flip-tuile-js{font-family:'Arial Narrow','Arial Black',Arial,sans-serif !important;font-size:2.08vw !important;font-weight:900 !important;padding-bottom:2.25vh !important;color:#fff !important;text-shadow:0 2px 2px #000 !important;}
+#date-jour::after,#date-num::after,#date-mois::after,#date-annee::after{bottom:.5vh !important;color:#dce2e6 !important;font-size:.47vw !important;}
+/* Analog clock */
+.montre-retro-cercle{right:17.9vw !important;top:1.0vh !important;width:13.0vw !important;height:13.0vw !important;background:#000 !important;border:1.8px solid #303b46 !important;border-radius:50% !important;box-shadow:0 7px 18px rgba(0,0,0,.8),inset 0 0 0 1px rgba(255,255,255,.08) !important;}
+.graduation{width:2px !important;height:7px !important;background:#d9e0e5 !important;opacity:.75 !important;top:3px !important;transform-origin:50% 6.2vw !important;}
+.graduation.principale{width:3px !important;height:11px !important;background:#fff !important;}
+.chiffre-container-js{width:1.8vw !important;height:1.8vw !important;top:10px !important;margin-left:-.9vw !important;transform-origin:50% 5.6vw !important;}
+.chiffre-cadran-fixe{font-size:.88vw !important;color:#fff !important;font-family:'Arial Black',Arial,sans-serif !important;}
+.aiguille.heure{width:4px !important;height:3.1vw !important;background:#f4f7fa !important;}
+.aiguille.minute{width:3px !important;height:4.7vw !important;background:#f4f7fa !important;}
+.aiguille.seconde{width:1.6px !important;height:5.05vw !important;background:#b7ff00 !important;}
+.pivot{width:10px !important;height:10px !important;background:#b7ff00 !important;box-shadow:0 0 7px rgba(183,255,0,.75) !important;}
+/* Digital */
+.boite-digitale-bas{right:1.9vw !important;top:3.2vh !important;width:14.1vw !important;height:9.7vh !important;background:linear-gradient(180deg,#101820,#05080d) !important;border:1.5px solid rgba(43,177,245,.92) !important;border-radius:9px !important;box-shadow:0 7px 18px rgba(0,0,0,.72),inset 0 0 11px rgba(0,0,0,.9),0 0 7px rgba(22,164,230,.22) !important;}
+.heure-digitale-js{font-size:2.18vw !important;height:6.1vh !important;padding-bottom:.65vh !important;font-family:'Arial Narrow','Arial Black',Arial,sans-serif !important;font-weight:900 !important;}
+.heure-digitale-labels{font-size:.40vw !important;color:#d0d8de !important;}
+/* Current weather */
+#cadran-meteo-g{left:1.1vw !important;top:19.5vh !important;width:28.4vw !important;height:36.2vh !important;padding:1.05vw !important;background:linear-gradient(180deg,#07131e,#051019) !important;border:1.5px solid rgba(35,180,240,.82) !important;border-radius:12px !important;box-shadow:0 8px 18px rgba(0,0,0,.72),inset 0 0 13px rgba(0,0,0,.82),0 0 7px rgba(20,160,230,.12) !important;overflow:hidden !important;}
+#cadran-meteo-g>div:first-child{text-align:center !important;font-size:1.04vw !important;}
+#cadran-meteo-g>div:nth-child(2){text-align:center !important;font-size:.72vw !important;margin-bottom:1vh !important;}
+#cadran-meteo-g .current-weather-icon{width:7.2vw !important;height:6.4vw !important;flex:0 0 7.2vw !important;display:flex !important;align-items:center !important;justify-content:center !important;overflow:visible !important;}
+#cadran-meteo-g .weather-art-large{width:7.2vw !important;height:6.4vw !important;object-fit:contain !important;display:block !important;}
+#cadran-meteo-g #courant-temp{font-size:3.9vw !important;}
+#cadran-meteo-g #courant-ressenti{font-size:.92vw !important;}
+#cadran-meteo-g #courant-desc{font-size:.98vw !important;}
+#cadran-meteo-g .meteo-label{font-size:.51vw !important;}
+#cadran-meteo-g .meteo-value{font-size:.92vw !important;}
+/* Season */
+#cadran-saison-d{right:1.9vw !important;top:19.6vh !important;width:18.1vw !important;height:40.5vh !important;background:linear-gradient(180deg,#07131e,#050b10) !important;border:1.5px solid rgba(35,180,240,.82) !important;border-radius:12px !important;overflow:hidden !important;}
+#cadran-saison-d>div:first-child{height:65% !important;background:#07131e !important;padding:.8vh 1vw !important;position:relative !important;display:block !important;}
+#cadran-saison-d>div:first-child>div:first-child{position:absolute !important;left:1vw !important;top:.8vh !important;z-index:5 !important;}
+#cadran-saison-d>div:first-child>div:first-child>div:first-child{font-size:1.05vw !important;}
+#cadran-saison-d>div:first-child>div:first-child>div:last-child{font-size:1.72vw !important;margin-top:.25vh !important;}
+#cadran-saison-d .case-illustration-pommier{position:absolute !important;left:50% !important;top:5.7vh !important;transform:translateX(-50%) !important;width:15.0vw !important;height:21vh !important;z-index:2 !important;background:transparent !important;}
+#season-tree-icon{display:block !important;width:100% !important;height:100% !important;background-repeat:no-repeat !important;background-position:center !important;background-size:contain !important;}
+#cadran-saison-d>div:last-child{height:35% !important;padding:.75vw 1vw !important;background:#061018 !important;}
+#cadran-saison-d .soleil-realiste-css{width:3.2vw !important;height:3.2vw !important;background:url('assets/reference/sun.png') center/contain no-repeat !important;box-shadow:none !important;}
+/* Moon */
+#cadran-lune-d{right:1.9vw !important;bottom:13.8vh !important;width:18.1vw !important;height:24.0vh !important;background:linear-gradient(180deg,#07131e,#050b10) !important;border:1.5px solid rgba(35,180,240,.82) !important;border-radius:12px !important;overflow:hidden !important;}
+#lune-vrai-photo{width:7.0vw !important;height:7.0vw !important;background-color:transparent !important;background-size:contain !important;background-position:center !important;background-repeat:no-repeat !important;border-radius:50% !important;box-shadow:0 0 18px rgba(210,225,240,.18) !important;}
+/* Forecast */
+#zone-7-jours{left:1.1vw !important;bottom:4.0vh !important;width:63.4vw !important;height:31.5vh !important;padding:2.75vh .55vw .65vh !important;display:flex !important;gap:.35vw !important;justify-content:space-between !important;align-items:stretch !important;background:linear-gradient(180deg,rgba(5,14,21,.96),rgba(3,9,14,.98)) !important;border:1.5px solid rgba(35,180,240,.82) !important;border-radius:12px !important;box-shadow:0 8px 18px rgba(0,0,0,.72),inset 0 0 13px rgba(0,0,0,.82),0 0 7px rgba(20,160,230,.12) !important;box-sizing:border-box !important;overflow:hidden !important;}
+#zone-7-jours::before{content:'PRÉVISIONS SUR 7 JOURS' !important;position:absolute !important;left:0 !important;right:0 !important;top:.45vh !important;text-align:center !important;color:#fff !important;font-size:1.0vw !important;font-weight:900 !important;}
+#zone-7-jours .carte-prev-unique{width:calc((100% - 2.1vw)/7) !important;height:100% !important;min-width:0 !important;padding:1vh .15vw !important;display:flex !important;flex-direction:column !important;justify-content:space-around !important;align-items:center !important;background:#07131c !important;border:1px solid #294355 !important;border-radius:8px !important;box-sizing:border-box !important;overflow:hidden !important;}
+#zone-7-jours .prev-jour{font-size:.94vw !important;}
+#zone-7-jours .prev-date{font-size:.58vw !important;}
+#zone-7-jours .prev-icon{height:7.0vh !important;flex:0 0 7.0vh !important;width:100% !important;display:flex !important;align-items:center !important;justify-content:center !important;}
+#zone-7-jours .prev-icon .weather-art{width:6.0vw !important;height:5.7vh !important;object-fit:contain !important;display:block !important;}
+#zone-7-jours .prev-max{font-size:1.18vw !important;color:#fff !important;}
+#zone-7-jours .prev-min{font-size:1.02vw !important;color:#20b7f5 !important;}
+#zone-7-jours .prev-wind{font-size:.48vw !important;color:#e7eef3 !important;}
+#zone-7-jours .prev-desc,#zone-7-jours .prev-description{display:none !important;}
+/* No decorative stars over the logo/slogan: mask strictly to sky */
+.stars{-webkit-mask-image:url('assets/sky-mask.png') !important;mask-image:url('assets/sky-mask.png') !important;-webkit-mask-size:100% 100% !important;mask-size:100% 100% !important;}
+
+
+/* V19.1 : lune réellement graphique, issue des phases lunaires réalistes locales. */
+#lune-vrai-photo, #lune-vrai-ciel{
+  background-image:none !important;
+  background-color:transparent !important;
+  background-repeat:no-repeat !important;
+  background-position:center !important;
+  background-size:contain !important;
+}
+#lune-vrai-photo{overflow:visible !important;}
+#lune-vrai-ciel{overflow:visible !important;}
+/* V19 : cadran analogique basé sur le cadran graphique de la maquette de référence. */
+.montre-retro-cercle{
+  right:17.9vw !important; top:1.0vh !important;
+  width:12.0vw !important; height:12.0vw !important;
+  background:#000 url('assets/reference/clock-face-clean.png') center/contain no-repeat !important;
+  border:0 !important; box-shadow:none !important;
+  overflow:visible !important;
+}
+.montre-retro-cercle .graduation,.montre-retro-cercle .chiffre-container-js{display:none !important;}
+.montre-retro-cercle .aiguille.heure{width:3px !important;height:3.0vw !important;background:#f4f7fa !important;box-shadow:0 0 2px rgba(255,255,255,.55);}
+.montre-retro-cercle .aiguille.minute{width:2.5px !important;height:4.35vw !important;background:#f4f7fa !important;box-shadow:0 0 2px rgba(255,255,255,.55);}
+.montre-retro-cercle .aiguille.seconde{width:1.4px !important;height:4.65vw !important;background:#b7ff00 !important;box-shadow:0 0 3px rgba(183,255,0,.65);}
+.montre-retro-cercle .pivot{width:9px !important;height:9px !important;background:#b7ff00 !important;box-shadow:0 0 7px rgba(183,255,0,.8) !important;}
+/* Le fond reste identique : ces deux copies transparentes ne font que protéger les pixels du logo/slogan pendant la nuit. */
+#brand-logo-protect,#brand-slogan-protect{position:fixed !important;pointer-events:none !important;background-image:url('fond-final.png') !important;background-repeat:no-repeat !important;background-size:100vw 100vh !important;z-index:0.65 !important;display:block !important;}
+#brand-logo-protect{left:0 !important;top:0 !important;width:14.2vw !important;height:24.5vh !important;background-position:0 0 !important;}
+#brand-slogan-protect{left:7.2vw !important;bottom:0 !important;width:80vw !important;height:11.5vh !important;background-position:calc(-7.2vw) calc(100vh - 11.5vh) !important;}
+
+
+/* V20 : illustrations locales explicites — aucune image météo/lune/arbre ne dépend d'un SVG ou d'un background CSS. */
+#season-tree-img{display:block !important;width:100% !important;height:100% !important;object-fit:contain !important;object-position:center bottom !important;filter:drop-shadow(0 3px 5px rgba(0,0,0,.45)) !important;}
+#lune-vrai-photo{display:flex !important;align-items:center !important;justify-content:center !important;background:transparent !important;}
+#lune-panel-img{display:block !important;width:100% !important;height:100% !important;object-fit:contain !important;object-position:center !important;}
+#lune-vrai-ciel{display:none;align-items:center !important;justify-content:center !important;background:transparent !important;overflow:visible !important;border:0 !important;box-shadow:none !important;}
+#lune-ciel-img{display:block !important;width:100% !important;height:100% !important;object-fit:contain !important;object-position:center !important;}
+.current-weather-icon img.weather-art-large{display:block !important;width:100% !important;height:100% !important;object-fit:contain !important;}
+.prev-icon img.weather-art{display:block !important;width:6vw !important;height:5.7vh !important;object-fit:contain !important;}
+/* La vraie image de cadran reste visible si le navigateur applique les règles précédentes. */
+.montre-retro-cercle{background:#000 url('assets/reference/clock-face-clean.png') center/contain no-repeat !important;}
+
+</style>
 </head>
 <body>
     <div id="season-layer"><img id="season-weather-overlay" alt=""><div id="season-ground"></div><div id="winter-snow"></div></div>
     <div id="sky-gradient"></div>
     <div id="night-dimmer"></div>
-    <div class="lune-dans-le-ciel" id="lune-vrai-ciel"><div class="cache-lune-ciel" id="lune-cache-vrai-ciel"></div></div>
-    <div id="school-view-bg" class="decor-permanent"></div>
+    <div id="lamp-glow"></div>
+    <div class="lune-dans-le-ciel" id="lune-vrai-ciel"><img id="lune-ciel-img" alt="Phase de la Lune" decoding="async"></div>
+    <div id="school-view-bg" aria-hidden="true"></div>
+    <div id="brand-logo-protect" aria-hidden="true"></div>
+    <div id="brand-slogan-protect" aria-hidden="true"></div>
+    <div id="night-atmosphere" aria-hidden="true"></div>
+    <div id="night-lights" aria-hidden="true"></div>
     <div id="cloud-layer"></div> <div id="lightning-flash"></div> <div id="back-precipitations"></div> <div id="front-particles"></div>
     
     <div id="logo-ecran-principal"></div>
 
-    <div class="pos boite-flip-haut" style="left: 17.5vw; top: 2.5vh; width: 15.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-jour">--</div><div class="charniere-droite"></div></div>
-    <div class="pos boite-flip-haut" style="left: 34.5vw; top: 2.5vh; width: 7.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-num">--</div><div class="charniere-droite"></div></div>
-    <div class="pos boite-flip-haut" style="left: 43.5vw; top: 2.5vh; width: 23.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-mois">--</div><div class="charniere-droite"></div></div>
-    <div class="pos boite-flip-haut" style="left: 68.5vw; top: 2.5vh; width: 11.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-annee">----</div><div class="charniere-droite"></div></div>
+    <div class="pos boite-flip-haut" id="date-panel-jour" style="left: 17.5vw; top: 2.5vh; width: 15.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-jour">--</div><div class="charniere-droite"></div></div>
+    <div class="pos boite-flip-haut" id="date-panel-num" style="left: 34.5vw; top: 2.5vh; width: 7.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-num">--</div><div class="charniere-droite"></div></div>
+    <div class="pos boite-flip-haut" id="date-panel-mois" style="left: 43.5vw; top: 2.5vh; width: 23.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-mois">--</div><div class="charniere-droite"></div></div>
+    <div class="pos boite-flip-haut" id="date-panel-annee" style="left: 51.9vw; top: 2.5vh; width: 7.8vw; height: 12vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-annee">----</div><div class="charniere-droite"></div></div>
 
     <div class="montre-retro-cercle" id="cadran-montre">
-        <div class="pivot"></div> <div class="aiguille heure" id="needle-hour"></div> <div class="aiguille minute" id="needle-minute"></div>
+        <div class="pivot"></div> <div class="aiguille heure" id="needle-hour"></div> <div class="aiguille minute" id="needle-minute"></div> <div class="aiguille seconde" id="needle-second"></div>
     </div>
-    <div class="boite-digitale-bas"><div class="charniere-gauche"></div><div class="heure-digitale-js" id="horloge-texte">--:--:--</div><div class="charniere-droite"></div></div>
+    <div class="boite-digitale-bas"><div class="charniere-gauche"></div><div class="heure-digitale-js" id="horloge-texte">--:--:--</div><div class="heure-digitale-labels"><span>HEURES</span><span>MINUTES</span><span>SECONDES</span></div><div class="charniere-droite"></div></div>
     
     <div class="cadran-relief-bleu" id="cadran-meteo-g" style="position: absolute; left: 1.5vw; top: 25vh; width: 28.5vw; height: 35vh; padding: 1.3vw; color: #ffffff;">
         <div style="font-size: 1.1vw; color: #ffffff; font-weight: bold; margin-bottom: 2px; text-align: left;">Marloie (Marche-en-Famenne)</div>
@@ -170,7 +835,7 @@
                 <div style="font-size: 1.1vw; color: #8ad400; font-weight: bold; letter-spacing: 0.5px;">SAISON</div>
                 <div style="font-size: 2vw; font-weight: bold; color: #ffffff; margin-top: 0.2vh;" id="sat-saison">ÉTÉ</div>
             </div>
-            <div class="case-illustration-pommier"><div id="season-tree-icon">🌳</div></div>
+            <div class="case-illustration-pommier"><img id="season-tree-img" alt="Arbre de saison" decoding="async"></div>
             <div style="position: absolute; left: 0; bottom: 0; width: 100%; height: 0.8px; background: #000000; border-bottom: 1px solid rgba(255,255,255,0.12) !important; z-index: 5;"></div>
         </div>
         <div style="display: flex; flex-direction: column; justify-content: space-between; height: 52%; width: 100%; padding: 0.6vw 1.2vw 1vw 1.2vw;">
@@ -194,69 +859,105 @@
                 Âge : <span id="lune-age">--</span> j<br>Éclairement : <span id="lune-ecl">--</span>%
             </div>
         </div>
-        <div class="lune-doree-image" id="lune-vrai-photo"><div class="cache-ombre-lunaire" id="lune-ombre-widget"></div></div>
+        <div class="lune-doree-image" id="lune-vrai-photo"><img id="lune-panel-img" alt="Phase de la Lune" decoding="async"></div>
     </div>
     
-    <div style="position: absolute; left: 1.5vw; bottom: 10vh; width: 77.5vw; height: 22vh; display: flex !important; justify-content: space-between !important; z-index: 99999 !important; overflow: visible !important;" id="zone-7-jours"></div>
+    <div style="position: absolute; left: 1.5vw; bottom: 10.2vh; width: 77.5vw; height: 20.5vh; display: flex !important; justify-content: space-between !important; z-index: 99999 !important; overflow: visible !important;" id="zone-7-jours"></div>
 
     <script>
         let vitesseVentActuelle=11, windDirectionActuelle=0, currentSaison="ÉTÉ", weatherDescriptionGlobal="Ciel dégagé", currentWeatherCode=0, isDay=true, weatherData=null;
         const $=id=>document.getElementById(id);
         const WMO={
           0:['Ciel dégagé','clear'],1:['Plutôt dégagé','partly'],2:['Partiellement nuageux','partly'],3:['Couvert','cloud'],45:['Brouillard','fog'],48:['Brouillard givrant','fog'],
-          51:['Bruine faible','drizzle'],53:['Bruine modérée','drizzle'],55:['Bruine forte','drizzle'],56:['Bruine verglaçante','drizzle'],57:['Bruine verglaçante forte','drizzle'],
-          61:['Pluie faible','rain'],63:['Pluie modérée','rain'],65:['Forte pluie','rain'],66:['Pluie verglaçante','rain'],67:['Forte pluie verglaçante','rain'],
-          71:['Neige faible','snow'],73:['Neige modérée','snow'],75:['Forte neige','snow'],77:['Grains de neige','snow'],85:['Averses de neige','snow'],86:['Fortes averses de neige','snow'],
-          80:['Averses faibles','rain'],81:['Averses modérées','rain'],82:['Fortes averses','rain'],95:['Orage','storm'],96:['Orage avec grêle','storm'],99:['Orage avec forte grêle','storm']
+          51:['Bruine faible','drizzle'],53:['Bruine modérée','drizzle'],55:['Bruine forte','drizzle'],56:['Bruine verglaçante','freezing-drizzle'],57:['Bruine verglaçante forte','freezing-drizzle'],
+          61:['Pluie faible','rain'],63:['Pluie modérée','rain'],65:['Forte pluie','heavy-rain'],66:['Pluie verglaçante','freezing-rain'],67:['Forte pluie verglaçante','freezing-rain'],
+          71:['Neige faible','snow'],73:['Neige modérée','snow'],75:['Forte neige','snow'],77:['Grains de neige','snow-grains'],85:['Averses de neige','snow-showers'],86:['Fortes averses de neige','snow-showers'],
+          80:['Averses faibles','showers'],81:['Averses modérées','showers'],82:['Fortes averses','showers'],95:['Orage','storm'],96:['Orage avec grêle','storm-hail'],99:['Orage avec forte grêle','storm-hail']
         };
         const dayNames=['DIM.','LUN.','MAR.','MER.','JEU.','VEN.','SAM.'];
         const monthNames=['JANV.','FÉVR.','MARS','AVRIL','MAI','JUIN','JUIL.','AOÛT','SEPT.','OCT.','NOV.','DÉC.'];
-        function weatherInfo(code){return WMO[code]||['Conditions variables','cloud'];}
-        function iconSvg(type,large=false){
-          const common=`viewBox="0 0 64 64" style="width:${large?'5.4vw':'3.2vw'};height:${large?'5.4vw':'3.2vw'};display:block"`;
-          if(type==='clear') return `<svg ${common}><circle cx="32" cy="32" r="13" fill="#ffd54a"/><g stroke="#ffd54a" stroke-width="4" stroke-linecap="round">${[0,45,90,135].map(a=>{let r=a*Math.PI/180,x1=32+21*Math.cos(r),y1=32+21*Math.sin(r),x2=32+28*Math.cos(r),y2=32+28*Math.sin(r);return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`}).join('')}${[180,225,270,315].map(a=>{let r=a*Math.PI/180,x1=32+21*Math.cos(r),y1=32+21*Math.sin(r),x2=32+28*Math.cos(r),y2=32+28*Math.sin(r);return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`}).join('')}</g></svg>`;
-          if(type==='snow') return `<svg ${common}><path d="M17 40c0-8 7-14 15-14 2 0 4 .4 6 1.2C40 21 46 17 53 19c7 2 10 8 9 15H17z" fill="#dbe7ef"/><g stroke="#72c7ff" stroke-width="2.5" stroke-linecap="round"><path d="M23 47l-4 4m4-4l4 4m-4-4v7"/><path d="M39 47l-4 4m4-4l4 4m-4-4v7"/><path d="M53 47l-4 4m4-4l4 4m-4-4v7"/></g></svg>`;
-          if(type==='storm') return `<svg ${common}><path d="M13 37c0-8 7-14 15-14 2 0 4 .4 6 1.2C36 18 43 14 50 16c7 2 11 8 10 15H13z" fill="#4b5867"/><path d="M35 37l-8 14h7l-4 10 12-16h-7l7-8z" fill="#ffd54a"/></svg>`;
-          if(type==='rain'||type==='drizzle') return `<svg ${common}><path d="M13 35c0-8 7-14 15-14 2 0 4 .4 6 1.2C36 16 43 12 50 14c7 2 11 8 10 15H13z" fill="#8b9aa7"/><g stroke="#4db8ff" stroke-width="3" stroke-linecap="round"><path d="M23 43l-4 10"/><path d="M34 43l-4 10"/><path d="M45 43l-4 10"/><path d="M56 43l-4 10"/></g></svg>`;
-          if(type==='fog') return `<svg ${common}><path d="M10 24h44M7 33h50M12 42h40" stroke="#b8c4ce" stroke-width="5" stroke-linecap="round"/></svg>`;
-          return `<svg ${common}><path d="M13 38c0-8 7-14 15-14 2 0 4 .4 6 1.2C36 19 43 15 50 17c7 2 11 8 10 15H13z" fill="#9aa7b1"/></svg>`;
-        }
         function actualiserHorloge(){
           const d=new Date(),h=d.getHours(),m=d.getMinutes(),s=d.getSeconds();
-          $('horloge-texte').textContent=`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-          $('needle-hour').style.transform=`translateX(-50%) rotate(${((h%12)*30+m*.5)}deg)`;
-          $('needle-minute').style.transform=`translateX(-50%) rotate(${m*6}deg)`;
-          $('date-jour').textContent=['DIMANCHE','LUNDI','MARDI','MERCREDI','JEUDI','VENDREDI','SAMEDI'][d.getDay()];
-          $('date-num').textContent=d.getDate(); $('date-mois').textContent=['JANVIER','FÉVRIER','MARS','AVRIL','MAI','JUIN','JUILLET','AOÛT','SEPTEMBRE','OCTOBRE','NOVEMBRE','DÉCEMBRE'][d.getMonth()]; $('date-annee').textContent=d.getFullYear();
+          const t=$('horloge-texte'); if(t)t.textContent=`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+          const nh=$('needle-hour'), nm=$('needle-minute'), ns=$('needle-second');
+          if(nh)nh.style.transform=`translateX(-50%) rotate(${((h%12)*30+m*.5)}deg)`;
+          if(nm)nm.style.transform=`translateX(-50%) rotate(${m*6}deg)`;
+          if(ns)ns.style.transform=`translateX(-50%) rotate(${s*6}deg)`;
+          const jours=['DIMANCHE','LUNDI','MARDI','MERCREDI','JEUDI','VENDREDI','SAMEDI'];
+          const mois=['JANVIER','FÉVRIER','MARS','AVRIL','MAI','JUIN','JUILLET','AOÛT','SEPTEMBRE','OCTOBRE','NOVEMBRE','DÉCEMBRE'];
+          if($('date-jour'))$('date-jour').textContent=jours[d.getDay()];
+          if($('date-num'))$('date-num').textContent=String(d.getDate()).padStart(2,'0');
+          if($('date-mois'))$('date-mois').textContent=mois[d.getMonth()];
+          if($('date-annee'))$('date-annee').textContent=d.getFullYear();
           gererCycleJourNuit(h,m);
         }
         let lastRenderedSeason='';
+        function firstWorkingAsset(primary,fallback,onReady){
+          const test=new Image();
+          test.onload=()=>onReady(primary);
+          test.onerror=()=>onReady(fallback);
+          test.src=primary;
+        }
+        function applySkyMask(){
+          const mask=$('sky-gradient'),cloud=$('cloud-layer');
+          const src='assets/sky-mask.png';
+          if(mask){mask.style.webkitMaskImage=`url("${src}")`;mask.style.maskImage=`url("${src}")`;}
+          if(cloud){cloud.style.webkitMaskImage=`url("${src}")`;cloud.style.maskImage=`url("${src}")`;}
+        }
+        function setTreeAsset(seasonKey){
+          const host=$('season-tree-img'); if(!host)return;
+          const files={PRINTEMPS:'assets/saisons/arbre-printemps.png',ÉTÉ:'assets/saisons/arbre-ete.png',AUTOMNE:'assets/saisons/arbre-automne.png',HIVER:'assets/saisons/arbre-hiver.png'};
+          const file=files[seasonKey]||files.ÉTÉ;
+          host.src=file;
+          host.onerror=()=>{host.removeAttribute('src'); host.alt='Illustration saison indisponible';};
+        }
         function setSeason(d){
           const mo=d.getMonth()+1,day=d.getDate();
           if((mo===3&&day>=20)||(mo>3&&mo<6))currentSaison='PRINTEMPS';
-          else if(mo>=6&&mo<9||(mo===9&&day<22))currentSaison='ÉTÉ';
+          else if((mo>=6&&mo<9)||(mo===9&&day<22))currentSaison='ÉTÉ';
           else if((mo===9&&day>=22)||mo===10||mo===11)currentSaison='AUTOMNE';
           else currentSaison='HIVER';
-          $('sat-saison').textContent=currentSaison;
+          if($('sat-saison'))$('sat-saison').textContent=currentSaison;
+          setTreeAsset(currentSaison);
           if(lastRenderedSeason===currentSaison)return;
           lastRenderedSeason=currentSaison;
-          const map={
-            'PRINTEMPS':['assets/saisons/arbre-printemps.png','assets/saisons/printemps-overlay.png','season-tree-spring'],
-            'ÉTÉ':['assets/saisons/arbre-ete.png',null,'season-tree-summer'],
-            'AUTOMNE':['assets/saisons/arbre-automne.png','assets/saisons/automne-overlay.png','season-tree-autumn'],
-            'HIVER':['assets/saisons/arbre-hiver.png','assets/saisons/hiver-overlay.png','season-tree-winter']
-          };
-          const cfg=map[currentSaison];
-          $('season-tree-icon').innerHTML=`<img src="${cfg[0]}" class="${cfg[2]}" alt="Arbre ${currentSaison.toLowerCase()}">`;
           const overlay=$('season-weather-overlay');
-          overlay.src=cfg[1]||''; overlay.style.opacity=cfg[1]?'0.38':'0';
-          $('season-layer').dataset.season=currentSaison;
-          $('season-ground').innerHTML='';
-          if(currentSaison==='AUTOMNE'){
-            $('season-ground').style.opacity='.9'; const cols=['#d97706','#f59e0b','#b45309','#dc2626','#92400e'];
-            for(let i=0;i<180;i++){let e=document.createElement('i');e.className='autumn-leaf-ground';e.style.left=(Math.random()*100)+'vw';e.style.bottom=(Math.random()*11+1)+'vh';e.style.setProperty('--c',cols[Math.floor(Math.random()*cols.length)]);e.style.setProperty('--r',(Math.random()*180-90)+'deg');$('season-ground').appendChild(e)}
-          } else $('season-ground').style.opacity='0';
-          $('winter-snow').style.opacity=currentSaison==='HIVER'?'1':'0';
+          const files={PRINTEMPS:'assets/saisons/printemps-overlay.png',AUTOMNE:'assets/saisons/automne-overlay.png',HIVER:'assets/saisons/hiver-overlay.png'};
+          if(overlay){
+            if(files[currentSaison]){overlay.src=files[currentSaison];overlay.style.opacity='0.34';}
+            else{overlay.removeAttribute('src');overlay.style.opacity='0';}
+          }
+          const ground=$('season-ground');
+          if(ground){ground.innerHTML='';ground.style.opacity='0';}
+          if(currentSaison==='AUTOMNE'&&ground){
+            ground.style.opacity='.78';
+            const cols=['#d97706','#f59e0b','#b45309','#dc2626','#92400e'];
+            for(let i=0;i<140;i++){const e=document.createElement('i');e.className='autumn-leaf-ground';e.style.left=Math.random()*100+'vw';e.style.bottom=(Math.random()*10+1)+'vh';e.style.setProperty('--c',cols[Math.floor(Math.random()*cols.length)]);e.style.setProperty('--r',(Math.random()*180-90)+'deg');ground.appendChild(e);}
+          }
+          const snow=$('winter-snow'); if(snow)snow.style.opacity=currentSaison==='HIVER'?'1':'0';
+        }
+        function weatherInfo(code){return WMO[code]||['Conditions variables','cloud'];}
+        function iconSvg(type,large=false,night=false){
+          const map={
+            clear:'assets/reference/clean-weather-clear.png',
+            partly:large?'assets/reference/clean-weather-current.png':'assets/reference/clean-weather-partly.png',
+            cloud:'assets/reference/clean-weather-cloud.png',
+            fog:'assets/reference/clean-weather-cloud.png',
+            drizzle:'assets/reference/clean-weather-rain.png',
+            'freezing-drizzle':'assets/reference/clean-weather-rain.png',
+            rain:'assets/reference/clean-weather-rain.png',
+            'heavy-rain':'assets/reference/clean-weather-rain.png',
+            'freezing-rain':'assets/reference/clean-weather-rain.png',
+            snow:'assets/reference/clean-weather-cloud.png',
+            'snow-grains':'assets/reference/clean-weather-cloud.png',
+            showers:'assets/reference/clean-weather-partly-rain.png',
+            'snow-showers':'assets/reference/clean-weather-partly-rain.png',
+            storm:'assets/reference/clean-weather-rain.png',
+            'storm-hail':'assets/reference/clean-weather-rain.png'
+          };
+          const file=map[type]||map.cloud;
+          const cls=large?'weather-art-large':'weather-art';
+          return `<img class="${cls}" src="${file}" alt="" aria-hidden="true" loading="eager" decoding="async" onerror="this.style.display='none'">`;
         }
         function dirText(deg){const dirs=['N','NE','E','SE','S','SO','O','NO'];return dirs[Math.round(deg/45)%8]}
         function executerMeteo(){
@@ -271,13 +972,18 @@
         }
         function appliquerDonneesMeteo(data,ancienne){
           weatherData=data; const c=data.current,info=weatherInfo(c.weather_code); currentWeatherCode=c.weather_code; isDay=!!c.is_day; currentCloudCover=Number(c.cloud_cover||0); weatherDescriptionGlobal=info[0]; vitesseVentActuelle=Math.round(c.wind_speed_10m||0); windDirectionActuelle=c.wind_direction_10m||0; currentSunrise=parseLocalWeatherTime(data.daily.sunrise[0]); currentSunset=parseLocalWeatherTime(data.daily.sunset[0]);
-          $('courant-temp').textContent=Number(c.temperature_2m).toFixed(1)+'°C'; $('courant-ressenti').textContent='Ressentie '+Math.round(c.apparent_temperature)+'°C'; $('courant-humidite').textContent=Math.round(c.relative_humidity_2m)+'%'; $('courant-vent').textContent=`${vitesseVentActuelle} km/h ${dirText(windDirectionActuelle)}`; const uv=Math.round(c.uv_index??0); $('courant-uv').textContent=`${uv} / ${uv<3?'Bas':uv<6?'Modéré':uv<8?'Élevé':'Très élevé'}`; $('courant-desc').textContent=info[0]; $('courant-precip').textContent=`${Number(c.precipitation||0).toFixed(1)} mm`; $('weather-updated').textContent=(ancienne?'Dernières données valides — ':'')+`Actualisé à ${new Date().toLocaleTimeString('fr-BE',{hour:'2-digit',minute:'2-digit'})}`; $('current-weather-icon').innerHTML=iconSvg(info[1],true);
+          $('courant-temp').textContent=Number(c.temperature_2m).toFixed(1)+'°C'; $('courant-ressenti').textContent='Ressentie '+Math.round(c.apparent_temperature)+'°C'; $('courant-humidite').textContent=Math.round(c.relative_humidity_2m)+'%'; $('courant-vent').textContent=`${vitesseVentActuelle} km/h ${dirText(windDirectionActuelle)}`; const uv=Math.round(c.uv_index??0); $('courant-uv').textContent=`${uv} / ${uv<3?'Bas':uv<6?'Modéré':uv<8?'Élevé':'Très élevé'}`; $('courant-desc').textContent=info[0]; $('courant-precip').textContent=`${Number(c.precipitation||0).toFixed(1)} mm`; $('weather-updated').textContent=(ancienne?'Dernières données valides — ':'')+`Actualisé à ${new Date().toLocaleTimeString('fr-BE',{hour:'2-digit',minute:'2-digit'})}`; $('current-weather-icon').innerHTML=iconSvg(info[1],true,!isDay);
           $('sat-lever').textContent=data.daily.sunrise[0].substring(11,16); $('sat-coucher').textContent=data.daily.sunset[0].substring(11,16);
           injecterPrevisions(data.daily); gererEffetsMeteoEtParticules(info[1]); calculPhaseLune(); gererCycleJourNuit(new Date().getHours(),new Date().getMinutes());
         }
         function injecterPrevisions(d){
           const bas=$('zone-7-jours');bas.innerHTML='';
-          for(let i=0;i<7;i++){const date=new Date(d.time[i]+'T12:00:00');const code=d.weather_code[i],info=weatherInfo(code),box=document.createElement('div');box.className='carte-prev-unique';box.innerHTML=`<div style="font-weight:bold;font-size:1.05vw;color:#fff">${i===0?'AUJ.':dayNames[date.getDay()]}</div><div style="font-size:.72vw;color:#aaa;font-weight:bold">${date.getDate()} ${monthNames[date.getMonth()]}</div><div>${iconSvg(info[1])}</div><div style="font-size:.62vw;color:#c7d0d8;min-height:2.4vh;line-height:1.1">${info[0]}</div><div style="font-size:1.9vw;font-weight:bold;color:#fff">${Math.round(d.temperature_2m_max[i])}°</div><div style="color:#49a6e9;font-weight:bold;font-size:1.25vw">${Math.round(d.temperature_2m_min[i])}°</div>`;bas.appendChild(box)}
+          for(let i=0;i<7;i++){
+            const date=new Date(d.time[i]+'T12:00:00'),code=d.weather_code[i],info=weatherInfo(code),box=document.createElement('div');
+            box.className='carte-prev-unique';
+            box.innerHTML=`<div class="prev-jour">${i===0?'AUJ.':dayNames[date.getDay()]}</div><div class="prev-date">${date.getDate()} ${monthNames[date.getMonth()]}</div><div class="prev-icon">${iconSvg(info[1])}</div><div class="prev-max">${Math.round(d.temperature_2m_max[i])}°</div><div class="prev-min">${Math.round(d.temperature_2m_min[i])}°</div><div class="prev-wind">↗ ${Math.round(d.wind_speed_10m_max?.[i]||0)} km/h</div>`;
+            bas.appendChild(box);
+          }
         }
         let lightningTimer=null;
         function gererEffetsMeteoEtParticules(type){
@@ -338,24 +1044,26 @@
           const layer=$('season-layer'); let old=layer.querySelector('.stars');
           if(show){
             if(old)return;
-            const s=document.createElement('div'); s.className='stars'; s.style.cssText='position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(circle,rgba(255,255,255,.82) 0 1px,transparent 1.5px);background-size:57px 53px;opacity:.48;'; layer.appendChild(s);
+            const s=document.createElement('div'); s.className='stars'; s.style.cssText='position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(circle,rgba(255,255,255,.82) 0 1px,transparent 1.5px);background-size:57px 53px;opacity:.48;-webkit-mask-image:url(\"assets/sky-mask.png\");mask-image:url(\"assets/sky-mask.png\");-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;'; layer.appendChild(s);
           } else if(old) old.remove();
         }
         function gererCycleJourNuit(h,m){
-          const calque=$('sky-gradient'),decor=$('school-view-bg'),moon=$('lune-vrai-ciel'),dimmer=$('night-dimmer');
+          const calque=$('sky-gradient'),decor=$('school-view-bg'),moon=$('lune-vrai-ciel'),dimmer=$('night-dimmer'),nightGrade=$('night-atmosphere'),nightLights=$('night-lights');
           setSeason(new Date());
           const now=new Date(), phase=getDayPhase(now), code=currentWeatherCode;
           const night=(phase==='night'||phase==='crepuscule');
           calque.style.background=skyForPhase(phase,code);
           calque.style.opacity=(phase==='day')?'.58':(phase==='night'?'.82':'.72');
-          if(phase==='night') dimmer.style.background='rgba(0,5,14,.34)';
-          else if(phase==='crepuscule') dimmer.style.background='rgba(0,4,12,.20)';
-          else if(phase==='aube') dimmer.style.background='rgba(0,4,12,.05)';
-          else dimmer.style.background='rgba(0,0,0,0)';
+          dimmer.style.background='transparent';
+          decor.style.filter='none';
+          if(nightGrade) nightGrade.style.opacity = phase==='night' ? '.72' : (phase==='crepuscule' ? '.34' : (phase==='aube' ? '.12' : '0'));
+          if(nightLights) nightLights.style.opacity = phase==='night' ? '.75' : (phase==='crepuscule' ? '.30' : '0');
           const starsAllowed=night && currentCloudCover<35 && code<51;
           setStars(starsAllowed);
           moon.style.display=night?'block':'none';
-          decor.style.filter='none';
+          const nl=$('night-lights'),lg=$('lamp-glow');
+          if(nl) nl.style.opacity=phase==='night'?'0.90':(phase==='crepuscule'?'0.45':'0');
+          if(lg) lg.style.opacity=phase==='night'?'0.95':(phase==='crepuscule'?'0.38':'0');
         }
         function calculPhaseLune(){
           const ref=Date.UTC(2000,0,6,18,14),syn=29.530588853;
@@ -364,9 +1072,14 @@
           let nom='Nouvelle lune';
           if(a<1.5||a>=28)nom='Nouvelle lune'; else if(a<6.5)nom='Premier croissant'; else if(a<8.5)nom='Premier quartier'; else if(a<13.5)nom='Gibbeuse croissante'; else if(a<15.5)nom='Pleine lune'; else if(a<22)nom='Gibbeuse décroissante'; else if(a<24)nom='Dernier quartier'; else nom='Dernier croissant';
           $('lune-age').textContent=a.toFixed(1); $('lune-ecl').textContent=illum; $('lune-phase-nom').textContent=nom;
-          const idx=Math.min(31,Math.floor((a/syn)*32+0.5)%32); const src=`assets/lune/phases/p${String(idx).padStart(2,'0')}.png`;
-          const p=$('lune-vrai-photo'), c=$('lune-vrai-ciel');
-          [p,c].forEach(el=>{ if(!el)return; el.style.backgroundImage=`url("${src}")`; el.style.backgroundColor='transparent'; });
+          const idx=Math.min(31,Math.floor((a/syn)*32+0.5)%32);
+          const file=`assets/lune/phases/p${String(idx).padStart(2,'0')}.png`;
+          const panelImg=$('lune-panel-img'), skyImg=$('lune-ciel-img');
+          [panelImg,skyImg].forEach(img=>{
+            if(!img)return;
+            img.src=file;
+            img.onerror=()=>{img.removeAttribute('src');};
+          });
         }
         function lancerEclair(){
           const host=$('lightning-flash'); if(!host)return; host.innerHTML='';
@@ -382,7 +1095,8 @@
         }
         // Horloge analogique
         const mC=$('cadran-montre'); for(let i=1;i<=12;i++){let box=document.createElement('div');box.className='chiffre-container-js';box.style.transform=`rotate(${i*30}deg)`;let n=document.createElement('div');n.className='chiffre-cadran-fixe';n.textContent=i;n.style.transform=`rotate(${-i*30}deg)`;box.appendChild(n);mC.appendChild(box)} for(let j=0;j<60;j++){let g=document.createElement('div');g.className=j%5===0?'graduation principale':'graduation';g.style.transform=`rotate(${j*6}deg)`;mC.appendChild(g)}
-        setInterval(actualiserHorloge,1000); actualiserHorloge(); calculPhaseLune(); executerMeteo(); setInterval(executerMeteo,300000); setInterval(calculPhaseLune,300000);
+        const bg=$('school-view-bg'); if(bg){bg.onerror=()=>{document.body.style.backgroundImage='url("fond-final.png")';document.body.style.backgroundSize='100% 100%';};}
+        applySkyMask(); setInterval(actualiserHorloge,1000); actualiserHorloge(); calculPhaseLune(); executerMeteo(); setInterval(executerMeteo,300000); setInterval(calculPhaseLune,300000);
     </script>
 </body>
 </html>

@@ -1,40 +1,21 @@
-LES PEUPLIERS — WIDGET DYNAMIQUE FINAL
+LES PEUPLIERS — WIDGET DYNAMIQUE V20
 
-CONTENU À ENVOYER SUR GITHUB
---------------------------------
-index.html
-fond-final.png
-assets/
+IMPORTANT : conserver exactement l'arborescence du dossier assets.
 
-IMPORTANT
---------------------------------
-Le dossier assets doit rester exactement à côté de index.html.
-Ne renommez aucun fichier ni aucun sous-dossier.
+RACINE
+- index.html
+- fond-final.png
+- .nojekyll
+- README.txt
 
-Le fond fond-final.png est le fond original de l'école.
-Le ciel est isolé par assets/sky-mask.png afin de permettre les changements
-jour / aube / lever / journée / coucher / crépuscule / nuit sans remplacer le fond.
+DOSSIER assets/
+- sky-mask.png
+- reference/ : illustrations météo, soleil et cadran analogique
+- saisons/   : arbres et overlays saisonniers
+- lune/phases/ : 32 phases lunaires réalistes p00.png à p31.png
 
-Les arbres saisonniers et les phases lunaires sont des ressources locales.
-Aucune image météo/lune/saison n'est chargée depuis un site externe.
+Le fond fond-final.png est le fond exact fourni pour Les Peupliers.
+Les illustrations météo, l'arbre saisonnier, la Lune et le cadran sont des fichiers locaux réellement utilisés par index.html.
+La météo est récupérée en temps réel depuis Open-Meteo. Si le service est indisponible, aucune fausse météo n'est générée.
 
-DONNÉES MÉTÉO
---------------------------------
-Les données météo réelles sont récupérées en ligne depuis Open-Meteo.
-Une connexion Internet est donc nécessaire pour les données météo.
-En cas d'indisponibilité temporaire, la dernière donnée météo valide est conservée
-si elle existe dans le stockage local du navigateur.
-
-GITHUB PAGES
---------------------------------
-La racine du dépôt doit contenir directement index.html et fond-final.png.
-Le dossier assets doit être au même niveau.
-
-PI-SIGNAGE
---------------------------------
-Les deux boîtiers peuvent afficher la même URL GitHub Pages.
-Le widget utilise l'heure locale du navigateur/Raspberry Pi pour l'horloge et la date.
-
-VERSION
---------------------------------
-Version finale dynamique — 01/09/2026
+Publication GitHub Pages : index.html doit rester à la racine et le dossier assets doit rester intact avec ses sous-dossiers.
