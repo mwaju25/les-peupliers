@@ -265,12 +265,14 @@ function gererCycleJourNuit(h, m) {
     var dateAujourdhui = new Date();
     var mo = dateAujourdhui.getMonth() + 1;
     var jour = dateAujourdhui.getDate();
+    
     if (mo >= 3 && mo <= 5) currentSaison = "PRINTEMPS";
     else if (mo >= 6 && mo <= 8) currentSaison = "ÉTÉ";
     else if (mo === 9) { if (jour < 22) currentSaison = "ÉTÉ"; else currentSaison = "AUTOMNE"; }
     else if (mo >= 10 && mo <= 11) currentSaison = "AUTOMNE";
     else currentSaison = "HIVER";
     document.getElementById('sat-saison').textContent = currentSaison;
+    
     let filtreSaisonCSS = "";
     let tapisFeuilles = document.getElementById('tapis-feuilles-automne');
     if (currentSaison === "AUTOMNE") {
@@ -282,10 +284,11 @@ function gererCycleJourNuit(h, m) {
     } else {
         if (tapisFeuilles) tapisFeuilles.style.opacity = "0";
     }
+    
     if (totalMin >= 360 && totalMin < 430) {
         calque.style.background = "linear-gradient(to bottom, #ff7e5f, #feb47b)";
-        decor.style.setProperty('filter', `brightness(0.75) contrast(1.05) ${filtreSaisonCSS}`, 'important');
-        moon.style.display = "none";
+        decor.style.setProperty('filter', filtreSaisonCSS ? filtreSaisonCSS : 'none', 'important');
+        if(moon) moon.style.display = "none";
     } else if (totalMin >= 430 && totalMin < 1160) {
         if (desc.includes("ensoleillé") || desc.includes("éclaircies")) {
             calque.style.background = "linear-gradient(to bottom, #2b5c8f, #4a90e2)";
@@ -293,11 +296,11 @@ function gererCycleJourNuit(h, m) {
             calque.style.background = "linear-gradient(to bottom, #4a5568, #718096)";
         }
         decor.style.setProperty('filter', filtreSaisonCSS ? filtreSaisonCSS : 'none', 'important');
-        moon.style.display = "none";
+        if(moon) moon.style.display = "none";
     } else if (totalMin >= 1160 && totalMin < 1220) {
         calque.style.background = "linear-gradient(to bottom, #1a0b2e, #943126, #f39c12)";
         decor.style.setProperty('filter', `brightness(0.9) saturate(1.1) ${filtreSaisonCSS}`, 'important');
-        moon.style.display = "block";
+        if(moon) moon.style.display = "block";
     } else {
         if (desc.includes("nuageux") || desc.includes("averse")) {
             calque.style.background = "linear-gradient(to bottom, #050814, #121829)";
@@ -305,7 +308,7 @@ function gererCycleJourNuit(h, m) {
             calque.style.background = "linear-gradient(to bottom, #01030a, #030714)";
         }
         decor.style.setProperty('filter', `brightness(0.34) contrast(1.15) ${filtreSaisonCSS}`, 'important');
-        moon.style.display = "block";
+        if(moon) moon.style.display = "block";
     }
 }
 function calculPhaseLune() {
