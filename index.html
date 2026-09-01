@@ -195,9 +195,10 @@
                 const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
                 const mois = ['JANV.', 'FÉVR.', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUIL.', 'AOÛT', 'SEPT.', 'OCT.', 'NOV.', 'DÉC.'];
                 var dRef = new Date();
-                        for (let index = 0; index < 7; index++) {
-            var dObj = new Date();
-            dObj.setDate(dRef.getDate() + index);
+                                   for (let index = 0; index < 7; index++) {
+                    var dObj = new Date();
+                    dObj.setDate(dRef.getDate() + index);
+                    var jourNom = noms[dObj.getDay()];
             var jourNom = noms[dObj.getDay()];
             var jourNum = dObj.getDate();
             var moisNom = mois[dObj.getMonth()];
@@ -207,11 +208,16 @@
             injecterCartePrevisionHTML(bas, index, jourNom, jourNum, moisNom, maxT, minT, wCode);
         }
 
-        }).catch(() => {
-                document.getElementById('courant-temp').textContent = "14°C"; document.getElementById('courant-ressenti').textContent = "13°C"; document.getElementById('courant-humidite').textContent = "85%"; document.getElementById('courant-vent').textContent = "5 km/h";
-                document.getElementById('sat-lever').textContent = "06:48"; document.getElementById('sat-coucher').textContent = "20:26"; document.getElementById('courant-desc').textContent = "Éclaircies";
-            });
-        }
+             }).catch(() => {
+            document.getElementById('courant-temp').textContent = "14°C";
+            document.getElementById('courant-ressenti').textContent = "13°C";
+            document.getElementById('courant-humidite').textContent = "85%";
+            document.getElementById('courant-vent').textContent = "5 km/h";
+            document.getElementById('sat-lever').textContent = "06:48";
+            document.getElementById('sat-coucher').textContent = "20:26";
+            document.getElementById('courant-desc').textContent = "Éclaircies";
+        });
+
                 function injecterCartePrevisionHTML(conteneur, index, jourNom, jourNum, moisNom, maxT, minT, wCode) {
             let pType = "nuageux";
             if(wCode === 0) pType = "ensoleillé";
