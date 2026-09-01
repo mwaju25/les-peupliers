@@ -170,7 +170,11 @@
             gererCycleJourNuit(h, m);
         }
         function executerMeteo() {
-            let uM = 'https://open-meteo.com';
+            let uM = 'https://open-meteo.com'
+                + '?latitude=50.20&longitude=5.31'
+                + '&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,uv_index'
+                + '&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset'
+                + '&timezone=Europe%2FBerlin';
             fetch(uM).then(res => res.json()).then(data => {
                 let cur = data.current;
                 document.getElementById('courant-temp').textContent = Math.round(cur.temperature_2m) + "°C";
