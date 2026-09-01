@@ -285,17 +285,20 @@ function gererCycleJourNuit(h, m) {
         if (tapisFeuilles) tapisFeuilles.style.opacity = "0";
     }
     
+    // JOURNÉE ET INTEMPÉRIES : Seul le calque du ciel change de couleur, l'image reste intacte
     if (totalMin >= 360 && totalMin < 430) {
         calque.style.background = "linear-gradient(to bottom, #ff7e5f, #feb47b)";
         decor.style.setProperty('filter', filtreSaisonCSS ? filtreSaisonCSS : 'none', 'important');
         if(moon) moon.style.display = "none";
     } else if (totalMin >= 430 && totalMin < 1160) {
-        if (desc.includes("ensoleillé") || desc.includes("éclaircies")) {
-            calque.style.background = "linear-gradient(to bottom, #2b5c8f, #4a90e2)";
+        if (desc.includes("ensoleillé")) {
+            calque.style.background = "linear-gradient(to bottom, #2b5c8f, #4a90e2)"; // Ciel bleu clair
+        } else if (desc.includes("nuageux") || desc.includes("éclaircies") || desc.includes("orageux")) {
+            calque.style.background = "linear-gradient(to bottom, #3a4454, #5a697f)"; // Ciel assombri
         } else {
             calque.style.background = "linear-gradient(to bottom, #4a5568, #718096)";
         }
-        decor.style.setProperty('filter', filtreSaisonCSS ? filtreSaisonCSS : 'none', 'important');
+        decor.style.setProperty('filter', filtreSaisonCSS ? filtreSaisonCSS : 'none', 'important'); // Image 100% lumineuse
         if(moon) moon.style.display = "none";
     } else if (totalMin >= 1160 && totalMin < 1220) {
         calque.style.background = "linear-gradient(to bottom, #1a0b2e, #943126, #f39c12)";
