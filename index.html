@@ -71,7 +71,7 @@
         .anim-clouds { animation: cloudMove linear infinite var(--cloud-speed); }
         #season-layer{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden;transition:opacity 6s ease;}
         #season-layer::before{content:'';position:absolute;inset:0;background:transparent;transition:background 6s ease,opacity 6s ease;}
-        .stars{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(circle,rgba(255,255,255,.82) 0 1px,transparent 1.5px);background-size:57px 53px;opacity:.48;-webkit-mask-image:url("assets/sky-mask.png");mask-image:url("assets/sky-mask.png");-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;}
+        .stars{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(circle,rgba(255,255,255,.82) 0 1px,transparent 1.5px);background-size:57px 53px;opacity:.48;-webkit-mask-image:url("assets/sky-mask-v21.png");mask-image:url("assets/sky-mask-v21.png");-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;}
         #season-ground{position:absolute;left:0;right:0;bottom:0;height:27vh;opacity:0;transition:opacity 6s ease;pointer-events:none;}
         .autumn-leaf-ground{position:absolute;width:8px;height:5px;border-radius:75% 10% 75% 10%;transform:rotate(var(--r));background:var(--c);box-shadow:0 1px 2px rgba(0,0,0,.3);}
         #winter-snow{position:absolute;inset:0;opacity:0;transition:opacity 6s ease;pointer-events:none;}
@@ -109,13 +109,13 @@
           radial-gradient(ellipse 1.8vw 3.0vh at 72.0% 57.0%,rgba(255,178,64,.55),transparent 72%);
           mix-blend-mode:screen;}
         #lamp-glow{position:fixed;inset:0;z-index:13;pointer-events:none;opacity:0;transition:opacity 8s ease-in-out;background:radial-gradient(ellipse 4vw 9vh at 72.3% 48.5%,rgba(255,191,76,.34),transparent 70%);mix-blend-mode:screen;}
-        #sky-gradient { z-index:1 !important; opacity:.72; mix-blend-mode:normal !important; clip-path:none !important; -webkit-mask-image:url('assets/sky-mask.png'); mask-image:url('assets/sky-mask.png'); -webkit-mask-size:100% 100%; mask-size:100% 100%; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; }
+        #sky-gradient { z-index:1 !important; opacity:.72; mix-blend-mode:normal !important; clip-path:none !important; -webkit-mask-image:url('assets/sky-mask-v21.png'); mask-image:url('assets/sky-mask-v21.png'); -webkit-mask-size:100% 100%; mask-size:100% 100%; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; }
         #night-dimmer { position:fixed; inset:0; z-index:20 !important; background:rgba(0,4,12,0); pointer-events:none; transition:background 8s ease-in-out; }
         #season-layer { z-index:2 !important; }
         #season-weather-overlay { position:absolute; inset:0; width:100%; height:100%; object-fit:fill; opacity:0; transition:opacity 6s ease; pointer-events:none; }
         #winter-snow { z-index:3; }
         .lune-dans-le-ciel { z-index:35 !important; filter:none !important; background-size:cover !important; background-position:center !important; background-repeat:no-repeat !important; }
-        #cloud-layer { z-index:15 !important; -webkit-mask-image:url('assets/sky-mask.png'); mask-image:url('assets/sky-mask.png'); -webkit-mask-size:100% 100%; mask-size:100% 100%; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; }
+        #cloud-layer { z-index:15 !important; -webkit-mask-image:url('assets/sky-mask-v21.png'); mask-image:url('assets/sky-mask-v21.png'); -webkit-mask-size:100% 100%; mask-size:100% 100%; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; }
         #back-precipitations { z-index:25 !important; }
         #lightning-flash { z-index:40 !important; }
         #front-particles { z-index:40 !important; }
@@ -508,8 +508,8 @@ body{background-image:none !important;}
 /* ciel : le masque ne touche qu'au ciel */
 #sky-gradient{
   z-index:1 !important;
-  -webkit-mask-image:url("assets/sky-mask.png") !important;
-  mask-image:url("assets/sky-mask.png") !important;
+  -webkit-mask-image:url("assets/sky-mask-v21.png") !important;
+  mask-image:url("assets/sky-mask-v21.png") !important;
   -webkit-mask-size:100% 100% !important;
   mask-size:100% 100% !important;
   -webkit-mask-repeat:no-repeat !important;
@@ -739,7 +739,7 @@ body{background-image:url("fond-final.png") !important;background-position:cente
 #zone-7-jours .prev-wind{font-size:.48vw !important;color:#e7eef3 !important;}
 #zone-7-jours .prev-desc,#zone-7-jours .prev-description{display:none !important;}
 /* No decorative stars over the logo/slogan: mask strictly to sky */
-.stars{-webkit-mask-image:url('assets/sky-mask.png') !important;mask-image:url('assets/sky-mask.png') !important;-webkit-mask-size:100% 100% !important;mask-size:100% 100% !important;}
+.stars{-webkit-mask-image:url('assets/sky-mask-v21.png') !important;mask-image:url('assets/sky-mask-v21.png') !important;-webkit-mask-size:100% 100% !important;mask-size:100% 100% !important;}
 
 
 /* V19.1 : lune réellement graphique, issue des phases lunaires réalistes locales. */
@@ -781,6 +781,42 @@ body{background-image:url("fond-final.png") !important;background-position:cente
 .prev-icon img.weather-art{display:block !important;width:6vw !important;height:5.7vh !important;object-fit:contain !important;}
 /* La vraie image de cadran reste visible si le navigateur applique les règles précédentes. */
 .montre-retro-cercle{background:#000 url('assets/reference/clock-face-clean.png') center/contain no-repeat !important;}
+
+
+/* ================= V21 : finition visuelle fidèle à la maquette ================= */
+/* Le ciel doit aussi recouvrir les petites ouvertures bleues entre les arbres. */
+#sky-gradient,#cloud-layer,.stars{
+  -webkit-mask-image:url("assets/sky-mask-v21.png") !important;
+  mask-image:url("assets/sky-mask-v21.png") !important;
+  -webkit-mask-size:100% 100% !important; mask-size:100% 100% !important;
+  -webkit-mask-repeat:no-repeat !important; mask-repeat:no-repeat !important;
+}
+/* Logo et slogan intégrés du fond : copies au-dessus des effets nocturnes. */
+#brand-logo-protect,#brand-slogan-protect{z-index:50 !important;display:block !important;visibility:visible !important;background-repeat:no-repeat !important;background-size:100% 100% !important;}
+#brand-logo-protect{left:0 !important;top:0 !important;width:14.0vw !important;height:24.7vh !important;background-image:url("assets/reference/logo-protect.png") !important;background-position:center !important;}
+#brand-slogan-protect{left:7.8vw !important;bottom:0 !important;width:82.8vw !important;height:8.0vh !important;background-image:url("assets/reference/slogan-protect.png") !important;background-position:center !important;}
+/* Date : même famille de cadres, légèrement décalée pour ne jamais rogner le logo. */
+#date-panel-jour{left:14.2vw !important;width:13.9vw !important;}
+#date-panel-num{left:28.35vw !important;width:7.4vw !important;}
+#date-panel-mois{left:35.9vw !important;width:15.2vw !important;}
+#date-panel-annee{left:51.35vw !important;width:7.7vw !important;}
+/* Horloge : une seule image de cadran, sans les anciennes aiguilles imprimées. */
+.montre-retro-cercle{
+  right:17.9vw !important;top:1.0vh !important;width:12.0vw !important;height:12.0vw !important;
+  background:#000 url("assets/reference/clock-face-dynamic.png") center/contain no-repeat !important;
+  border:0 !important;box-shadow:none !important;overflow:visible !important;
+}
+.montre-retro-cercle .graduation,.montre-retro-cercle .chiffre-container-js{display:none !important;}
+/* Aiguilles uniques et centrées sur le cadran de référence. */
+.montre-retro-cercle .aiguille.heure{width:3px !important;height:2.95vw !important;}
+.montre-retro-cercle .aiguille.minute{width:2.5px !important;height:4.25vw !important;}
+.montre-retro-cercle .aiguille.seconde{width:1.4px !important;height:4.55vw !important;}
+/* Arbres : conserver leurs couleurs natives, sans fausses rotations de teinte. */
+.season-tree-spring,.season-tree-summer,.season-tree-autumn,.season-tree-winter{filter:drop-shadow(0 3px 5px rgba(0,0,0,.45)) !important;}
+#season-tree-img{filter:drop-shadow(0 3px 5px rgba(0,0,0,.45)) !important;}
+/* Lune du panneau plus proche de la maquette. */
+#lune-vrai-photo{width:7.0vw !important;height:7.0vw !important;flex:0 0 7.0vw !important;box-shadow:0 0 18px rgba(255,255,255,.24) !important;}
+#lune-panel-img{width:100% !important;height:100% !important;object-fit:contain !important;}
 
 </style>
 </head>
@@ -900,7 +936,7 @@ body{background-image:url("fond-final.png") !important;background-position:cente
         }
         function applySkyMask(){
           const mask=$('sky-gradient'),cloud=$('cloud-layer');
-          const src='assets/sky-mask.png';
+          const src='assets/sky-mask-v21.png';
           if(mask){mask.style.webkitMaskImage=`url("${src}")`;mask.style.maskImage=`url("${src}")`;}
           if(cloud){cloud.style.webkitMaskImage=`url("${src}")`;cloud.style.maskImage=`url("${src}")`;}
         }
@@ -1044,7 +1080,7 @@ body{background-image:url("fond-final.png") !important;background-position:cente
           const layer=$('season-layer'); let old=layer.querySelector('.stars');
           if(show){
             if(old)return;
-            const s=document.createElement('div'); s.className='stars'; s.style.cssText='position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(circle,rgba(255,255,255,.82) 0 1px,transparent 1.5px);background-size:57px 53px;opacity:.48;-webkit-mask-image:url(\"assets/sky-mask.png\");mask-image:url(\"assets/sky-mask.png\");-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;'; layer.appendChild(s);
+            const s=document.createElement('div'); s.className='stars'; s.style.cssText='position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(circle,rgba(255,255,255,.82) 0 1px,transparent 1.5px);background-size:57px 53px;opacity:.48;-webkit-mask-image:url(\"assets/sky-mask-v21.png\");mask-image:url(\"assets/sky-mask-v21.png\");-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;'; layer.appendChild(s);
           } else if(old) old.remove();
         }
         function gererCycleJourNuit(h,m){
