@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Ecran Les Peupliers - Version Finale Maquette Pure</title>
+    <title>Ecran Les Peupliers - Version Finale Stable</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background-color: #000; color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; font-family: 'Arial Black', sans-serif; }
-        
-        /* Arrière-plan permanent de l'école */
         #school-view-bg { position: fixed; inset: 0 !important; width: 100vw !important; height: 100vh !important; background: url('fond-final.png') no-repeat center center / 100% 100% !important; z-index: 0 !important; }
         #sky-gradient { position: fixed; inset: 0 !important; width: 100vw !important; height: 100vh !important; z-index: 1 !important; mix-blend-mode: overlay !important; opacity: 0.45 !important; -webkit-mask-image: url("assets/sky-mask-v21.png") !important; mask-image: url("assets/sky-mask-v21.png") !important; -webkit-mask-size: 100% 100% !important; mask-size: 100% 100% !important; pointer-events: none; }
         .lune-dans-le-ciel { position: fixed; top: 3.5vh; right: 34vw; width: 5.5vw; height: 5.5vw; z-index: 35 !important; pointer-events: none; }
@@ -16,8 +14,6 @@
         #cloud-layer { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 15 !important; opacity: 0; pointer-events: none; }
         #front-particles { position: fixed; inset:0; width:100vw; height:100vh; z-index: 30 !important; pointer-events:none; overflow:hidden; }
         .pos { position: absolute; display: flex; align-items: center; justify-content: center; overflow: hidden; text-align: center; }
-
-        /* Style unifié Bleu Cyan sans aucune annotation en dessous */
         .boite-flip-haut, .boite-digitale-bas {
             background: #000000 !important;
             border: 1.5px solid rgba(43,177,245,.92) !important;
@@ -30,41 +26,30 @@
             height: 6.2vh !important; line-height: 6.2vh !important; display: flex !important; align-items: center !important; justify-content: center !important; text-transform: uppercase !important;
         }
         .heure-digitale-js { font-size: 2.38vw !important; }
-        /* Alignement parfait de la Date en haut à gauche */
         .boite-flip-haut#date-panel-jour { left: 18.2vw !important; top: 3.1vh !important; width: 15.5vw !important; height: 6.2vh !important; }
         .boite-flip-haut#date-panel-num { left: 34.2vw !important; top: 3.1vh !important; width: 4.8vw !important; height: 6.2vh !important; }
         .boite-flip-haut#date-panel-mois { left: 39.5vw !important; top: 3.1vh !important; width: 17.5vw !important; height: 6.2vh !important; }
         .boite-flip-haut#date-panel-annee { left: 57.5vw !important; top: 3.1vh !important; width: 7.6vw !important; height: 6.2vh !important; }
         
-        /* Disposition fidèle : Horloge ronde en haut à droite, Heure Digitale juste en dessous */
         .montre-retro-cercle { position: absolute; right: 1.65vw !important; top: 2.5vh !important; width: 11.5vw !important; height: 11.5vw !important; background: #000000 !important; border: 2px solid #1d2633 !important; border-radius: 50%; box-shadow: 0px 4px 12px rgba(0,0,0,0.6); z-index: 99 !important; }
         .boite-digitale-bas { position: absolute !important; right: 1.65vw !important; top: 27.5vh !important; width: 11.5vw !important; height: 6.2vh !important; z-index: 99 !important; }
-        
         .graduation { position: absolute; width: 1.5px; height: 6px; background: rgba(255,255,255,0.35); left: 50%; top: 2px; margin-left: -0.75px; transform-origin: 50% 5.75vw; z-index: 11; }
         .graduation.principale { width: 2.5px; height: 10px; background: #ffffff !important; }
         .chiffre-container-js { position: absolute; width: 1.8vw; height: 1.8vw; left: 50%; top: 8px; margin-left: -0.9vw; transform-origin: 50% 5.15vw; display: flex; align-items: center; justify-content: center; z-index: 12; }
         .chiffre-cadran-fixe { font-size: 0.85vw; font-weight: bold; color: #ffffff !important; font-family: 'Arial', sans-serif; }
         .aiguille { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom center; border-radius: 4px; z-index: 13; }
-        .heure { width: 4px; height: 2.6vw; background-color: #fff; }
-        .minute { width: 3px; height: 3.9vw; background-color: #8ad400; }
-        .seconde { width: 1.2px; height: 4.2vw; background-color: #ff3b30; }
+        .heure { width: 4px; height: 2.6vw; background-color: #fff; } .minute { width: 3px; height: 3.9vw; background-color: #8ad400; } .seconde { width: 1.2px; height: 4.2vw; background-color: #ff3b30; }
         .pivot { position: absolute; width: 10px; height: 10px; background: #a2f200; border-radius: 50%; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 15; }
-        /* Styles des Cadrans Maquette de Gauche et Droite */
         .cadran-relief-bleu { position: absolute; left: 1.5vw !important; top: 20vh !important; width: 28.5vw !important; height: 37vh !important; background: #071018 !important; border: 1.5px solid rgba(48,190,255,.78) !important; border-radius: 12px !important; box-shadow: 0 8px 18px rgba(0,0,0,0.7), inset 0 0 12px rgba(0,0,0,0.8) !important; z-index: 99 !important; }
         .cadran-relief-noir-bloc { background: #071018 !important; border: 1.5px solid rgba(48,190,255,.78) !important; border-radius: 12px; box-shadow: 0 6px 12px rgba(0,0,0,0.6); z-index: 99 !important; overflow: hidden; }
         
-        /* Frise des 7 Jours surélevée au pixel près pour le slogan du fond */
         #zone-7-jours { position: absolute; left: 1.5vw !important; bottom: 11vh !important; width: 77.5vw !important; height: 26vh !important; display: flex !important; justify-content: space-between !important; padding: 3vh 0.8vw 1vh 0.8vw !important; background: linear-gradient(180deg, rgba(5,14,21,.94), rgba(3,9,14,.96)) !important; border: 1.5px solid rgba(48,190,255,.78) !important; border-radius: 12px !important; box-shadow: 0 8px 18px rgba(0,0,0,0.7), inset 0 0 12px rgba(0,0,0,0.8) !important; z-index: 99999 !important; }
         #zone-7-jours::before { content: 'PRÉVISIONS SUR 7 JOURS'; position: absolute; left: 0; right: 0; top: 0.8vh; text-align: center; color: #fff; font-size: 1.0vw; font-weight: 900; letter-spacing: 0.5px; }
         .carte-prev-unique { width: calc((100% - 2.4vw)/7) !important; height: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 1vh 0.2vw !important; background: linear-gradient(180deg, #0b151e, #071019) !important; border: 1px solid rgba(133,171,194,.38) !important; border-radius: 8px !important; }
         
-        /* Classes des véritables icônes d'images HD */
         .weather-art-large { width: 5.5vw; height: 5.5vw; object-fit: contain; }
         .weather-art-mini { width: 3.1vw; height: 3.1vw; object-fit: contain; }
-        .meteo-stat { flex: 1; text-align: center; }
-        .meteo-label { font-size: 0.55vw; color: #aeb8c1; }
-        .meteo-value { font-size: 0.95vw; margin-top: 2px; color: #fff; font-weight: bold; }
-        
+        .meteo-stat { flex: 1; text-align: center; } .meteo-label { font-size: 0.55vw; color: #aeb8c1; } .meteo-value { font-size: 0.95vw; margin-top: 2px; color: #fff; font-weight: bold; }
         .lune-doree-image { width: 5.5vw; height: 5.5vw; display: flex; align-items: center; justify-content: center; }
         .lune-doree-image img { width: 100%; height: 100%; object-fit: contain; }
     </style>
@@ -75,7 +60,6 @@
     <div id="school-view-bg"></div>
     <div id="cloud-layer"></div> <div id="front-particles"></div>
 
-    <!-- Écrans Flip-Flap épurés sans annotations -->
     <div class="pos boite-flip-haut" id="date-panel-jour"><span id="date-jour">--</span></div>
     <div class="pos boite-flip-haut" id="date-panel-num"><span id="date-num">--</span></div>
     <div class="pos boite-flip-haut" id="date-panel-mois"><span id="date-mois">--</span></div>
@@ -86,7 +70,6 @@
     </div>
     <div class="boite-digitale-bas"><div class="heure-digitale-js" id="horloge-texte">--:--:--</div></div>
     
-    <!-- Cadran de Météo Courante Réaliste -->
     <div class="cadran-relief-bleu" id="cadran-meteo-g" style="padding: 1.1vw; color: #ffffff;">
         <div style="font-size: 1.05vw; font-weight: bold; text-align: center;">Marloie (Marche-en-Famenne)</div>
         <div style="font-size: 0.72vw; color: #aaaaaa; text-transform: uppercase; text-align: center; margin-bottom: 1vh; letter-spacing: 0.5px;">MÉTÉO ACTUELLE</div>
@@ -105,7 +88,6 @@
             <div class="meteo-stat" style="border-left: 1px solid rgba(255,255,255,0.1);"><div class="meteo-label">💧 PRÉCIP.</div><div class="meteo-value" id="courant-precip">0.0 mm</div></div>
         </div>
     </div>
-    <!-- Blocs Droite Abaissés comme sur le modèle maquette -->
     <div class="cadran-relief-noir-bloc" id="cadran-saison-d" style="position: absolute; right: 1.65vw; top: 37vh; width: 18.4vw; height: 29vh; display: flex; flex-direction: column; justify-content: space-between;">
         <div style="display: flex; justify-content: space-between; align-items: center; height: 55%; background: linear-gradient(180deg,#0c1822,#071018); padding: 0.5vw 0.9vw; position: relative;">
             <div style="text-align: left; position: absolute; left: 1vw; top: 0.6vh; z-index: 4;">
@@ -116,7 +98,7 @@
                 <img id="season-tree-img" alt="" style="width: 100%; height: 100%; object-fit: contain;">
             </div>
         </div>
-        <div style="display: flex; flex-direction: column; justify-content: space-between; height: 42%; padding: 0.4vh 0.9vw 0.6vh 0.9vw; border-top: 1px solid rgba(255,255,255,0.1);">
+        <div style="display: flex; flex-direction: column; justify-content: space-between; height: 42%; padding: 0.4vh 0.9vw 0.6vh 0.9vw; border-top: 1px solid rgba(255,255,255,0.1); border-radius: 0 !important; background: transparent !important;">
             <div style="font-size: 0.9vw; color: #ffb000; font-weight: bold; text-align: left;">SOLEIL</div>
             <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
                 <div class="soleil-realiste-css" style="width: 2.8vw; height: 2.8vw;"></div>
@@ -189,7 +171,6 @@
             if (code >= 95) return 'storm';
             return 'cloud';
         }
-
         function executerMeteo() {
             let uM = 'https://open-meteo.com';
             fetch(uM).then(res => res.json()).then(data => {
@@ -239,7 +220,7 @@
 
         function calculPhaseLune() {
             let ref = Date.UTC(2000, 0, 6, 18, 14), syn = 29.530588853;
-            let raw = ((Date.now() - ref) / 86400000) % syn; let a = raw < 0 ? raw + syn : raw;
+            let raw = ((Date.now() - ref) / 86400000) % syn; let a = raw < 0 ? raw+syn : raw;
             let illum = Math.round((1 - Math.cos(2 * Math.PI * a / syn)) * 50);
             let nom = 'Nouvelle lune';
             if (a < 1.5 || a >= 28) nom = 'Nouvelle lune'; else if (a < 6.5) nom = 'Premier croissant'; else if (a < 8.5) nom = 'Premier quartier'; else if (a < 13.5) nom = 'Gibbeuse croissante'; else if (a < 15.5) nom = 'Pleine lune'; else if (a < 22) nom = 'Gibbeuse décroissante'; else if (a < 24) nom = 'Dernier quartier'; else nom = 'Dernier croissant';
