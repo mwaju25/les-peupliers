@@ -25,23 +25,39 @@
         #back-precipitations { position: fixed; inset:0; width:100vw; height:100vh; z-index: 7 !important; pointer-events:none; }
         #front-particles { position: fixed; inset:0; width:100vw; height:100vh; z-index: 40 !important; pointer-events:none; overflow:hidden; }
         .pos { position: absolute; display: flex; align-items: center; justify-content: center; overflow: hidden; text-align: center; }
-    .boite-flip-haut {
-    background: linear-gradient(180deg,#111820 0%,#05080d 72%,#030507 100%) !important;
-    border: 1.5px solid rgba(43,177,245,.92) !important;
+  .boite-flip-haut {
+    background: #000000 !important;
+    border: 1.8px solid #ffffff !important;
     border-radius: 9px !important;
-    box-shadow: 0 7px 18px rgba(0,0,0,.72), inset 0 0 12px rgba(0,0,0,.88), 0 0 7px rgba(20,165,230,.22) !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.6) !important;
 }
 .boite-flip-haut .flip-tuile-js {
-    font-family: 'Arial Narrow','Arial Black',Arial,sans-serif !important;
-    font-size: 2.08vw !important;
-    letter-spacing: .65px !important;
+    font-family: 'Arial Black', sans-serif !important;
+    font-size: 2.10vw !important;
+    font-weight: 900 !important;
+    color: #ffffff !important;
+    letter-spacing: .5px !important;
     padding-bottom: 0vh !important;
     height: 6.2vh !important;
     line-height: 6.2vh !important;
-    text-shadow: 0 2px 2px rgba(0,0,0,.95),0 0 1px rgba(255,255,255,.35);
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+    text-transform: uppercase !important;
+}
+#date-jour::after,#date-num::after,#date-mois::after,#date-annee::after { display: none !important; }
+.boite-flip-haut::after { display: none !important; }
+.boite-digitale-bas {
+    position: absolute !important;
+    right: 1.65vw !important;
+    top: 3.1vh !important;
+    width: 11.8vw !important;
+    height: 6.2vh !important;
+    background: #000000 !important;
+    border: 1.8px solid #ffffff !important;
+    border-radius: 9px !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.6) !important;
+    z-index: 99 !important;
 }
 #date-jour::after,#date-num::after,#date-mois::after,#date-annee::after { display: none !important; }
 .boite-flip-haut::after { display: none !important; }
