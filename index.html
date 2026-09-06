@@ -223,14 +223,19 @@
             letter-spacing:.8px !important;
         }
         .boite-flip-haut::after { height:2.25vh !important; background:linear-gradient(180deg,rgba(0,0,0,.12),rgba(0,0,0,.45)) !important; border-top:1px solid rgba(255,255,255,.08) !important; }
-        .boite-digitale-bas {
-            background:linear-gradient(180deg,#111820 0%,#05080d 72%,#030507 100%) !important;
-            border:1.5px solid rgba(43,177,245,.92) !important;
-            border-radius:9px !important;
-            box-shadow:0 7px 18px rgba(0,0,0,.72), inset 0 0 11px rgba(0,0,0,.9), 0 0 7px rgba(22,164,230,.22) !important;
-        }
-        .heure-digitale-js { font-size:2.50vw !important; padding-bottom:.72vh !important; text-shadow:0 2px 2px rgba(0,0,0,.95),0 0 1px rgba(255,255,255,.35) !important; }
-        .heure-digitale-labels { color:#d5dbe0 !important; font-size:.40vw !important; letter-spacing:.6px !important; }
+    .boite-digitale-bas {
+    position: absolute !important;
+    right: 1.65vw !important;
+    top: 3.1vh !important;
+    width: 11.8vw !important;
+    height: 6.2vh !important;
+    background: linear-gradient(180deg,#111820 0%,#05080d 72%,#030507 100%) !important;
+    border: 1.5px solid rgba(43,177,245,.92) !important;
+    border-radius: 9px !important;
+    box-shadow: 0 7px 18px rgba(0,0,0,.72), inset 0 0 11px rgba(0,0,0,.9), 0 0 7px rgba(22,164,230,.22) !important;
+}
+       .heure-digitale-js { font-size: 2.38vw !important; height: 6.2vh !important; line-height: 6.2vh !important; padding-bottom: 0vh !important; display: flex !important; align-items: center !important; justify-content: center !important; font-family: 'Arial Narrow','Arial Black',Arial,sans-serif !important; font-weight: 900 !important; text-shadow: 0 2px 2px #000, 0 0 1px rgba(255,255,255,.4) !important; }
+.heure-digitale-labels { display: none !important; }
         .montre-retro-cercle {
             background:radial-gradient(circle at 50% 45%,#080a0d 0%,#000 72%,#000 100%) !important;
             border:1.8px solid #1f2a36 !important;
