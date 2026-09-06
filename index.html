@@ -190,12 +190,19 @@
             overflow:hidden !important;
         }
         .boite-digitale-bas .charniere-gauche, .boite-digitale-bas .charniere-droite { display:none !important; }
-        .heure-digitale-js {
-            height:5.8vh !important; padding:0 .45vw .7vh !important; align-items:flex-end !important;
-            font-family:'Arial Narrow','Arial Black',sans-serif !important;
-            font-size:2.55vw !important; font-weight:900 !important; letter-spacing:1px !important;
-            text-shadow:0 2px 2px rgba(0,0,0,.9);
-        }
+       .heure-digitale-js {
+    height: 6.2vh !important;
+    line-height: 6.2vh !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-family: 'Arial Narrow', 'Arial Black', sans-serif !important;
+    font-size: 2.38vw !important;
+    font-weight: 900 !important;
+    text-shadow: 0 2px 2px #000, 0 0 1px rgba(255, 255, 255, .4) !important;
+}
         .heure-digitale-js::after { display:none !important; }
         .heure-digitale-labels {
             position:absolute; left:0; right:0; bottom:.45vh; height:1.15vh;
