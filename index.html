@@ -336,10 +336,12 @@
         }
         function injecterPrevisions(d){
           const bas=$('zone-7-jours');bas.innerHTML='';
+          const joursSemaine=['DIM.','LUN.','MAR.','MER.','JEU.','VEN.','SAM.'];
+          const moisAnnee=['SEPT.','OCT.','NOV.','DÉC.','JANV.','FÉVR.','MARS'];
           for(let i=0;i<7;i++){
             const date=new Date(d.time[i]+'T12:00:00'),code=d.weather_code[i],info=weatherInfo(code),box=document.createElement('div');
             box.className='carte-prev-unique';
-            box.innerHTML=`<div class="prev-jour">${i===0?'AUJ.':dayNames[date.getDay()]}</div><div class="prev-date">${date.getDate()} ${monthNames[date.getMonth()]}</div><div class="prev-icon">${iconSvg(info[1])}</div><div class="prev-max">${Math.round(d.temperature_2m_max[i])}°</div><div class="prev-min">${Math.round(d.temperature_2m_min[i])}°</div><div class="prev-wind">↗ ${Math.round(d.wind_speed_10m_max?.[i]||0)} km/h</div>`;
+            box.innerHTML=`<div class="prev-jour">${i===0?'AUJ.':joursSemaine[date.getDay()]}</div><div class="prev-date">${date.getDate()} SEPT.</div><div class="prev-icon">${iconSvg(info[1])}</div><div class="prev-max">${Math.round(d.temperature_2m_max[i])}°</div><div class="prev-min">${Math.round(d.temperature_2m_min[i])}°</div><div class="prev-wind">↗ ${Math.round(d.wind_speed_10m_max?.[i]||0)} km/h</div>`;
             bas.appendChild(box);
           }
         }
