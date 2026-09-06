@@ -1152,3 +1152,33 @@ body{background-image:url("fond-final.png") !important;background-position:cente
     </script>
 </body>
 </html>
+
+/* ================= MODIFICATION 06/09/2026 =================
+   1) Météo : descendre légèrement le cadre pour dégager le logo.
+   2) Prévisions : remonter légèrement le grand cadre pour dégager
+      le slogan, sans modifier sa largeur/hauteur.
+   3) Cartes journalières : les rendre légèrement plus compactes
+      et supprimer complètement le vent des prévisions.
+   ============================================================ */
+
+#cadran-meteo-g{
+  top:21.5vh !important;
+}
+
+#zone-7-jours{
+  bottom:12.0vh !important;
+  height:29.0vh !important;
+  overflow:hidden !important;
+}
+
+#zone-7-jours .carte-prev-unique{
+  height:calc(100% - 2.0vh) !important;
+  margin-top:2.0vh !important;
+  padding:.75vh .15vw !important;
+  box-sizing:border-box !important;
+  overflow:hidden !important;
+}
+
+#zone-7-jours .prev-wind{
+  display:none !important;
+}
