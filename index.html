@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Ecran Les Peupliers - Version Finale Scellee</title>
+    <title>Ecran Les Peupliers - Version Finale Operationnelle</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background-color: #000; color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; font-family: 'Arial Black', sans-serif; }
@@ -32,7 +32,7 @@
         .boite-flip-haut#date-panel-mois { left: 39.5vw !important; top: 3.1vh !important; width: 17.5vw !important; height: 6.2vh !important; }
         .boite-flip-haut#date-panel-annee { left: 57.5vw !important; top: 3.1vh !important; width: 7.6vw !important; height: 6.2vh !important; }
         
-        .montre-retro-cercle { position: absolute; right: 1.65vw !important; top: 2.5vh !important; width: 11.5vw !important; height: 11.5vw !important; background: #000000 !important; border: 2px solid #1d2633 !important; border-radius: 50%; box-shadow: 0px 4px 12px rgba(0,0,0,0.6); z-index: 99 !important; }
+        .montre-retro-cercle { position: absolute; right: 1.65vw !important; top: 2.5vh !important; width: 11.5vw !important; height: 11.5vw !important; background: #000000 !important; border: 2px solid #1d2633 !important; border-radius: 50%; box-shadow: 0px 4px 12px rgba(0,0,0,0.5); z-index: 99 !important; }
         .boite-digitale-bas { position: absolute !important; right: 1.65vw !important; top: 27.5vh !important; width: 11.5vw !important; height: 6.2vh !important; z-index: 99 !important; }
         .graduation { position: absolute; width: 1.5px; height: 6px; background: rgba(255,255,255,0.35); left: 50%; top: 2px; margin-left: -0.75px; transform-origin: 50% 5.75vw; z-index: 11; }
         .graduation.principale { width: 2.5px; height: 10px; background: #ffffff !important; }
@@ -165,7 +165,7 @@
             let ref = Date.UTC(2000, 0, 6, 18, 14), syn = 29.530588853; let raw = ((Date.now() - ref) / 86400000) % syn; let a = raw < 0 ? raw + syn : raw; let illum = Math.round((1 - Math.cos(2 * Math.PI * a / syn)) * 50); let nom = 'Nouvelle lune'; if (a < 1.5 || a >= 28) nom = 'Nouvelle lune'; else if (a < 6.5) nom = 'Premier croissant'; else if (a < 8.5) nom = 'Premier quartier'; else if (a < 13.5) nom = 'Gibbeuse croissante'; else if (a < 15.5) nom = 'Pleine lune'; else if (a < 22) nom = 'Gibbeuse décroissante'; else if (a < 24) nom = 'Dernier quartier'; else nom = 'Dernier croissant';
             document.getElementById('lune-age').textContent = a.toFixed(1); document.getElementById('lune-ecl').textContent = illum; document.getElementById('lune-phase-nom').textContent = nom;
             let file = `assets/lune/phases/p${String(Math.min(31, Math.floor((a / syn) * 32 + 0.5) % 32)).padStart(2, '0')}.png`;
-            document.getElementById('lune-ciel-img').src = file; document.getElementById('lune-panel-img').src = file;
+            document.getElementById('lune-panel-img').src = file;
         }
         setInterval(actualiserHorloge, 1000); actualiserHorloge(); calculPhaseLune(); executerMeteo(); setInterval(executerMeteo, 900000);
     </script>
