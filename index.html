@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Ecran Les Peupliers - Version Finale Stable</title>
+    <title>Ecran Les Peupliers - Version Finale Scellee</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background-color: #000; color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; font-family: 'Arial Black', sans-serif; }
@@ -24,6 +24,7 @@
             font-family: 'Arial Black', sans-serif !important;
             font-size: 2.10vw !important; font-weight: 900 !important; color: #ffffff !important; opacity: 1 !important;
             height: 6.2vh !important; line-height: 6.2vh !important; display: flex !important; align-items: center !important; justify-content: center !important; text-transform: uppercase !important;
+            padding-bottom: 0vh !important; margin: 0 !important; text-shadow: 0 2px 2px #000, 0 0 1px rgba(255,255,255,.4) !important;
         }
         .heure-digitale-js { font-size: 2.38vw !important; }
         .boite-flip-haut#date-panel-jour { left: 18.2vw !important; top: 3.1vh !important; width: 15.5vw !important; height: 6.2vh !important; }
@@ -69,7 +70,6 @@
         <div class="pivot"></div> <div class="aiguille heure" id="needle-hour"></div> <div class="aiguille minute" id="needle-minute"></div> <div class="aiguille seconde" id="needle-second"></div>
     </div>
     <div class="boite-digitale-bas"><div class="heure-digitale-js" id="horloge-texte">--:--:--</div></div>
-    
     <div class="cadran-relief-bleu" id="cadran-meteo-g" style="padding: 1.1vw; color: #ffffff;">
         <div style="font-size: 1.05vw; font-weight: bold; text-align: center;">Marloie (Marche-en-Famenne)</div>
         <div style="font-size: 0.72vw; color: #aaaaaa; text-transform: uppercase; text-align: center; margin-bottom: 1vh; letter-spacing: 0.5px;">MÉTÉO ACTUELLE</div>
@@ -98,7 +98,7 @@
                 <img id="season-tree-img" alt="" style="width: 100%; height: 100%; object-fit: contain;">
             </div>
         </div>
-        <div style="display: flex; flex-direction: column; justify-content: space-between; height: 42%; padding: 0.4vh 0.9vw 0.6vh 0.9vw; border-top: 1px solid rgba(255,255,255,0.1); border-radius: 0 !important; background: transparent !important;">
+        <div style="display: flex; flex-direction: column; justify-content: space-between; height: 42%; padding: 0.4vh 0.9vw 0.6vh 0.9vw; border-top: 1px solid rgba(255,255,255,0.1);">
             <div style="font-size: 0.9vw; color: #ffb000; font-weight: bold; text-align: left;">SOLEIL</div>
             <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
                 <div class="soleil-realiste-css" style="width: 2.8vw; height: 2.8vw;"></div>
@@ -110,7 +110,6 @@
             </div>
         </div>
     </div>
-
     <div class="cadran-relief-noir-bloc" id="cadran-lune-d" style="position: absolute; right: 1.65vw; top: 68vh; width: 18.4vw; height: 20vh; padding: 0.8vw 1.15vw; display: flex; justify-content: space-between; align-items: center;">
         <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; text-align: left; width: 60%; font-family:'Arial'; font-weight:bold;">
             <div style="font-size: 0.9vw; color: #ffb000; font-weight: bold; font-family:'Arial Black';">LUNE</div>
@@ -121,115 +120,53 @@
         </div>
         <div class="lune-doree-image"><img id="lune-panel-img" alt=""></div>
     </div>
-    
     <div id="zone-7-jours"></div>
     <script>
         let vitesseVentActuelle = 0; let currentWeatherCode = 0; let currentCloudCover = 0;
         let currentSunrise = ""; let currentSunset = ""; let currentSaison = "";
         const WMO = { 0: 'Ciel dégagé', 1: 'Plutôt dégagé', 2: 'Partiellement nuageux', 3: 'Couvert', 45: 'Brouillard', 48: 'Brouillard givrant', 61: 'Pluie faible', 63: 'Pluie modérée', 65: 'Forte pluie', 80: 'Averses faibles', 81: 'Averses modérées', 95: 'Orage' };
-
         const mC = document.getElementById('cadran-montre');
-        for (let i = 1; i <= 12; i++) {
-            let box = document.createElement('div'); box.className = 'chiffre-container-js'; box.style.transform = 'rotate(' + (i * 30) + 'deg)';
-            let n = document.createElement('div'); n.className = 'chiffre-cadran-fixe'; n.textContent = i; n.style.transform = 'rotate(' + (-i * 30) + 'deg)';
-            box.appendChild(n); mC.appendChild(box);
-        }
-        for (let j = 0; j < 60; j++) {
-            let g = document.createElement('div'); g.className = (j % 5 === 0) ? 'graduation principale' : 'graduation'; g.style.transform = 'rotate(' + (j * 6) + 'deg)'; mC.appendChild(g);
-        }
-
+        for (let i = 1; i <= 12; i++) { let box = document.createElement('div'); box.className = 'chiffre-container-js'; box.style.transform = 'rotate(' + (i * 30) + 'deg)'; let n = document.createElement('div'); n.className = 'chiffre-cadran-fixe'; n.textContent = i; n.style.transform = 'rotate(' + (-i * 30) + 'deg)'; box.appendChild(n); mC.appendChild(box); }
+        for (let j = 0; j < 60; j++) { let g = document.createElement('div'); g.className = (j % 5 === 0) ? 'graduation principale' : 'graduation'; g.style.transform = 'rotate(' + (j * 6) + 'deg)'; mC.appendChild(g); }
         function actualiserHorloge() {
             let tempsReel = new Date(); let h = tempsReel.getHours(); let m = tempsReel.getMinutes(); let s = tempsReel.getSeconds();
             document.getElementById('horloge-texte').textContent = h.toString().padStart(2, '0') + ':' + m.toString().padStart(2, '0') + ':' + s.toString().padStart(2, '0');
             document.getElementById('needle-hour').style.transform = 'translateX(-50%) rotate(' + ((h % 12) * 30 + m * 0.5) + 'deg)';
             document.getElementById('needle-minute').style.transform = 'translateX(-50%) rotate(' + (m * 6) + 'deg)';
             document.getElementById('needle-second').style.transform = 'translateX(-50%) rotate(' + (s * 6) + 'deg)';
-            
             document.getElementById('date-jour').textContent = ['DIMANCHE', 'LUNDI', 'MARDI', 'MERCREDI', 'JEUDI', 'VENDREDI', 'SAMEDI'][tempsReel.getDay()];
             document.getElementById('date-num').textContent = String(tempsReel.getDate()).padStart(2, '0');
             document.getElementById('date-mois').textContent = ['JANVIER', 'FÉVRIER', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUILLET', 'AOÛT', 'SEPTEMBRE', 'OCTOBRE', 'NOVEMBRE', 'DÉCÉMBRE'][tempsReel.getMonth()];
             document.getElementById('date-annee').textContent = tempsReel.getFullYear();
-            
             let mo = tempsReel.getMonth() + 1, day = tempsReel.getDate();
-            if ((mo === 3 && day >= 20) || (mo > 3 && mo < 6)) currentSaison = 'Printemps';
-            else if ((mo >= 6 && mo < 9) || (mo === 9 && day < 22)) currentSaison = 'Été';
-            else if ((mo === 9 && day >= 22) || mo === 10 || mo === 11) currentSaison = 'Automne';
-            else currentSaison = 'Hiver';
-            document.getElementById('sat-saison').textContent = currentSaison.toUpperCase();
-            
-            let treeFile = currentSaison === 'Printemps' ? 'arbre-printemps.png' : (currentSaison === 'Été' ? 'arbre-ete.png' : (currentSaison === 'Automne' ? 'arbre-automne.png' : 'arbre-hiver.png'));
-            document.getElementById('season-tree-img').src = 'assets/saisons/' + treeFile;
-            
-            gererCycleJourNuit(h, m);
+            if ((mo === 3 && day >= 20) || (mo > 3 && mo < 6)) currentSaison = 'Printemps'; else if ((mo >= 6 && mo < 9) || (mo === 9 && day < 22)) currentSaison = 'Été'; else if ((mo === 9 && day >= 22) || mo === 10 || mo === 11) currentSaison = 'Automne'; else currentSaison = 'Hiver';
+            document.getElementById('sat-saison').textContent = currentSaison.toUpperCase(); gererCycleJourNuit(h, m);
         }
-
-        function weatherFile(code) {
-            if (code === 0) return 'clear';
-            if (code > 0 && code <= 3) return 'partly';
-            if (code >= 51 && code <= 67) return 'rain';
-            if (code >= 80 && code <= 82) return 'partly-rain';
-            if (code >= 95) return 'storm';
-            return 'cloud';
-        }
+        function weatherFile(code) { if (code === 0) return 'clear'; if (code > 0 && code <= 3) return 'partly'; if (code >= 51 && code <= 67) return 'rain'; if (code >= 80 && code <= 82) return 'partly-rain'; if (code >= 95) return 'storm'; return 'cloud'; }
         function executerMeteo() {
             let uM = 'https://open-meteo.com';
             fetch(uM).then(res => res.json()).then(data => {
                 let cur = data.current; currentWeatherCode = cur.weather_code; currentCloudCover = cur.cloud_cover;
-                document.getElementById('courant-temp').textContent = Number(cur.temperature_2m).toFixed(1) + "°C";
-                document.getElementById('courant-ressenti').textContent = "Ressantie " + Math.round(cur.apparent_temperature) + "°C";
-                document.getElementById('courant-humidite').textContent = Math.round(cur.relative_humidity_2m) + "%";
-                vitesseVentActuelle = Math.round(cur.wind_speed_10m);
-                document.getElementById('courant-vent').textContent = vitesseVentActuelle + " km/h";
-                let uv = Math.round(cur.uv_index || 0);
-                document.getElementById('courant-uv').textContent = uv + " / " + (uv < 3 ? 'Bas' : (uv < 6 ? 'Modéré' : 'Élevé'));
-                document.getElementById('courant-precip').textContent = Number(cur.precipitation || 0).toFixed(1) + " mm";
-                
-                let desc = WMO[currentWeatherCode] || 'Nuageux';
-                document.getElementById('courant-desc').textContent = desc;
-                
-                let iconF = weatherFile(currentWeatherCode);
-                document.getElementById('current-weather-icon').innerHTML = `<img class="weather-art-large" src="assets/reference/clean-weather-${iconF}.png" alt="">`;
-                
-                currentSunrise = data.daily.sunrise; currentSunset = data.daily.sunset;
-                document.getElementById('sat-lever').textContent = currentSunrise.substring(11, 16);
-                document.getElementById('sat-coucher').textContent = currentSunset.substring(11, 16);
-                
-                let bas = document.getElementById('zone-7-jours'); bas.innerHTML = "";
-                const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.'];
-                const mois = ['JANV.', 'FÉVR.', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUIL.', 'AOÛT', 'SEPT.', 'OCT.', 'NOV.', 'DÉC.'];
-                let dRef = new Date();
+                document.getElementById('courant-temp').textContent = Number(cur.temperature_2m).toFixed(1) + "°C"; document.getElementById('courant-ressenti').textContent = "Ressantie " + Math.round(cur.apparent_temperature) + "°C"; document.getElementById('courant-humidite').textContent = Math.round(cur.relative_humidity_2m) + "%";
+                vitesseVentActuelle = Math.round(cur.wind_speed_10m); document.getElementById('courant-vent').textContent = vitesseVentActuelle + " km/h";
+                let uv = Math.round(cur.uv_index || 0); document.getElementById('courant-uv').textContent = uv + " / " + (uv < 3 ? 'Bas' : (uv < 6 ? 'Modéré' : 'Élevé')); document.getElementById('courant-precip').textContent = Number(cur.precipitation || 0).toFixed(1) + " mm";
+                let desc = WMO[currentWeatherCode] || 'Nuageux'; document.getElementById('courant-desc').textContent = desc;
+                let iconF = weatherFile(currentWeatherCode); document.getElementById('current-weather-icon').innerHTML = `<img class="weather-art-large" src="assets/reference/clean-weather-${iconF}.png" alt="">`;
+                currentSunrise = data.daily.sunrise; currentSunset = data.daily.sunset; document.getElementById('sat-lever').textContent = currentSunrise.substring(11, 16); document.getElementById('sat-coucher').textContent = currentSunset.substring(11, 16);
+                let bas = document.getElementById('zone-7-jours'); bas.innerHTML = ""; const noms = ['DIM.', 'LUN.', 'MAR.', 'MER.', 'JEU.', 'VEN.', 'SAM.']; const mois = ['JANV.', 'FÉVR.', 'MARS', 'AVRIL', 'MAI', 'JUIN', 'JUIL.', 'AOÛT', 'SEPT.', 'OCT.', 'NOV.', 'DÉC.']; let dRef = new Date();
                 for (let index = 0; index < 7; index++) {
-                    let dObj = new Date(); dObj.setDate(dRef.getDate() + index);
-                    let cCode = data.daily.weather_code[index];
-                    let cIcon = weatherFile(cCode);
-                    let card = document.createElement('div'); card.className = "carte-prev-unique";
-                    card.innerHTML = `<div class="prev-jour" style="font-weight:bold;font-size:0.90vw;">${index===0?"AUJ.":noms[dObj.getDay()]}</div><div class="prev-date" style="font-size:0.58vw;color:#d2d8dc;">${dObj.getDate()} ${mois[dObj.getMonth()]}</div><div class="prev-icon" style="height:6.2vh;display:flex;align-items:center;"><img class="weather-art-mini" src="assets/reference/clean-weather-${cIcon}.png" alt=""></div><div class="prev-max" style="font-size:1.15vw;font-weight:bold;">${Math.round(data.daily.temperature_2m_max[index])}°</div><div class="prev-min" style="color:#25b8f4;font-size:1.02vw;font-weight:bold;">${Math.round(data.daily.temperature_2m_min[index])}°</div>`;
-                    bas.appendChild(card);
+                    let dObj = new Date(); dObj.setDate(dRef.getDate() + index); let cCode = data.daily.weather_code[index]; let cIcon = weatherFile(cCode); let card = document.createElement('div'); card.className = "carte-prev-unique";
+                    card.innerHTML = `<div class="prev-jour" style="font-weight:bold;font-size:0.90vw;">${index===0?"AUJ.":noms[dObj.getDay()]}</div><div class="prev-date" style="font-size:0.58vw;color:#d2d8dc;">${dObj.getDate()} ${mois[dObj.getMonth()]}</div><div class="prev-icon" style="height:6.2vh;display:flex;align-items:center;"><img class="weather-art-mini" src="assets/reference/clean-weather-${cIcon}.png" alt=""></div><div class="prev-max" style="font-size:1.15vw;font-weight:bold;">${Math.round(data.daily.temperature_2m_max[index])}°</div><div class="prev-min" style="color:#25b8f4;font-size:1.02vw;font-weight:bold;">${Math.round(data.daily.temperature_2m_min[index])}°</div>`; bas.appendChild(card);
                 }
             }).catch(e => console.log(e));
         }
-
-        function gererCycleJourNuit(h, m) {
-            let calque = document.getElementById('sky-gradient'); let moon = document.getElementById('lune-vrai-ciel');
-            let n = h * 60 + m;
-            let sr = currentSunrise ? (parseInt(currentSunrise.substring(11, 13)) * 60 + parseInt(currentSunrise.substring(14, 16))) : 360;
-            let ss = currentSunset ? (parseInt(currentSunset.substring(11, 13)) * 60 + parseInt(currentSunset.substring(14, 16))) : 1200;
-            if (n >= sr && n < ss) { calque.style.background = "transparent"; moon.style.display = "none"; }
-            else { calque.style.background = "rgba(2, 6, 17, 0.40)"; moon.style.display = "block"; }
-        }
-
+        function gererCycleJourNuit(h, m) { let calque = document.getElementById('sky-gradient'); let n = h * 60 + m; let sr = currentSunrise ? (parseInt(currentSunrise.substring(11, 13)) * 60 + parseInt(currentSunrise.substring(14, 16))) : 360; let ss = currentSunset ? (parseInt(currentSunset.substring(11, 13)) * 60 + parseInt(currentSunset.substring(14, 16))) : 1200; if (n >= sr && n < ss) { calque.style.background = "transparent"; } else { calque.style.background = "rgba(2, 6, 17, 0.40)"; } }
         function calculPhaseLune() {
-            let ref = Date.UTC(2000, 0, 6, 18, 14), syn = 29.530588853;
-            let raw = ((Date.now() - ref) / 86400000) % syn; let a = raw < 0 ? raw+syn : raw;
-            let illum = Math.round((1 - Math.cos(2 * Math.PI * a / syn)) * 50);
-            let nom = 'Nouvelle lune';
-            if (a < 1.5 || a >= 28) nom = 'Nouvelle lune'; else if (a < 6.5) nom = 'Premier croissant'; else if (a < 8.5) nom = 'Premier quartier'; else if (a < 13.5) nom = 'Gibbeuse croissante'; else if (a < 15.5) nom = 'Pleine lune'; else if (a < 22) nom = 'Gibbeuse décroissante'; else if (a < 24) nom = 'Dernier quartier'; else nom = 'Dernier croissant';
+            let ref = Date.UTC(2000, 0, 6, 18, 14), syn = 29.530588853; let raw = ((Date.now() - ref) / 86400000) % syn; let a = raw < 0 ? raw + syn : raw; let illum = Math.round((1 - Math.cos(2 * Math.PI * a / syn)) * 50); let nom = 'Nouvelle lune'; if (a < 1.5 || a >= 28) nom = 'Nouvelle lune'; else if (a < 6.5) nom = 'Premier croissant'; else if (a < 8.5) nom = 'Premier quartier'; else if (a < 13.5) nom = 'Gibbeuse croissante'; else if (a < 15.5) nom = 'Pleine lune'; else if (a < 22) nom = 'Gibbeuse décroissante'; else if (a < 24) nom = 'Dernier quartier'; else nom = 'Dernier croissant';
             document.getElementById('lune-age').textContent = a.toFixed(1); document.getElementById('lune-ecl').textContent = illum; document.getElementById('lune-phase-nom').textContent = nom;
-            let idx = Math.min(31, Math.floor((a / syn) * 32 + 0.5) % 32);
-            let file = `assets/lune/phases/p${String(idx).padStart(2, '0')}.png`;
+            let file = `assets/lune/phases/p${String(Math.min(31, Math.floor((a / syn) * 32 + 0.5) % 32)).padStart(2, '0')}.png`;
             document.getElementById('lune-ciel-img').src = file; document.getElementById('lune-panel-img').src = file;
         }
-
         setInterval(actualiserHorloge, 1000); actualiserHorloge(); calculPhaseLune(); executerMeteo(); setInterval(executerMeteo, 900000);
     </script>
 </body>
