@@ -16,33 +16,41 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('chemin/vers/fond-decran.jpg'); /* Image de fond */
+            background-image: url('chemin/vers/votre-image-de-fond.jpg'); /* Remplacez par le bon chemin */
             background-size: cover;
             z-index: 1;
         }
         .frame {
             position: absolute;
-            border: 2px solid #fff;
-            padding: 10px;
-            border-radius: 5px;
-            background: rgba(255, 255, 255, 0.8);
+            border: 3px solid #fff;
+            padding: 15px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.7);
             z-index: 2;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
-        /* Exemples de positions pour les cadres */
+        /* Positions des cadres */
         #clock {
-            top: 20px;
-            left: 20px;
-        }
-        #weather {
             top: 20px;
             right: 20px;
         }
-        /* Ajustez les positions des autres cadres ici */
+        #weather {
+            top: 70px;
+            right: 20px;
+        }
+        #date {
+            top: 140px;
+            right: 20px;
+        }
+        #season {
+            top: 220px;
+            right: 20px;
+        }
+        /* Ajoutez d'autres cadres si nécessaire */
     </style>
 </head>
 <body>
-    <div class="background" id="background"></div>
+    <div class="background"></div>
 
     <div class="frame" id="clock">
         <h2>Heure actuelle</h2>
@@ -50,57 +58,58 @@
     </div>
 
     <div class="frame" id="weather">
-        <h2>Météo</h2>
-        <p id="weather-info"></p>
+        <h2>Météo actuelle</h2>
+        <p id="weather-info">Température : 16.8°C</p>
+    </div>
+
+    <div class="frame" id="date">
+        <h2>Date</h2>
+        <p id="current-date"></p>
+    </div>
+
+    <div class="frame" id="season">
+        <h2>Saison</h2>
+        <p id="season-info"></p>
     </div>
 
     <script>
         // Fonction pour mettre à jour l'heure
         function updateClock() {
             const now = new Date();
-            const options = { hour: '2-digit', minute: '2-digit' };
+            const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
             document.getElementById('time').innerText = now.toLocaleTimeString('fr-FR', options);
         }
 
-        // Fonction pour récupérer les données météo (simulé ici)
-        function updateWeather() {
-            const weatherData = "Soleil, 25°C"; // Exemple
-            document.getElementById('weather-info').innerText = weatherData;
+        // Fonction pour afficher la date actuelle
+        function updateDate() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('current-date').innerText = now.toLocaleDateString('fr-FR', options);
         }
 
-        // Mettre à jour l'arrière-plan en fonction de la météo et du moment de la journée
-        function updateBackground() {
+        // Fonction pour gérer la saison
+        function updateSeason() {
             const now = new Date();
-            const hour = now.getHours();
-            const season = (month => {
-                if (month >= 3 && month < 6) return 'printemps';
-                if (month >= 6 && month < 9) return 'été';
-                if (month >= 9 && month < 12) return 'automne';
-                return 'hiver';
-            })(now.getMonth());
+            const month = now.getMonth();
+            let season;
 
-            // Modifier l'arrière-plan selon l'heure
-            let backgroundUrl;
-            if (hour >= 6 && hour < 18) {
-                backgroundUrl = 'chemin/vers/sun-background.jpg'; // Ciel bleu
+            if (month >= 2 && month < 5) {
+                season = 'Printemps';
+            } else if (month >= 5 && month < 8) {
+                season = 'Été';
+            } else if (month >= 8 && month < 11) {
+                season = 'Automne';
             } else {
-                backgroundUrl = 'chemin/vers/night-background.jpg'; // Ciel nocturne
+                season = 'Hiver';
             }
 
-            // Pouvoir gérer la saison
-            if (season === 'automne') {
-                backgroundUrl = 'chemin/vers/autumn-background.jpg'; 
-            } else if (season === 'hiver') {
-                backgroundUrl = 'chemin/vers/winter-background.jpg'; 
-            }
-
-            document.getElementById('background').style.backgroundImage = `url('${backgroundUrl}')`;
+            document.getElementById('season-info').innerText = season;
         }
 
         // Initialisation
         setInterval(updateClock, 1000);
-        updateWeather();
-        updateBackground();
+        updateDate();
+        updateSeason();
     </script>
 </body>
 </html>
