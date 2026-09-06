@@ -247,14 +247,15 @@
         /* ================= V10 : nouvelle composition complète, inspirée de la maquette ================= */
         :root{--cyan:#25b8f4;--panel:#071018;--panel2:#0d1821;--line:rgba(48,190,255,.78);--muted:#cbd4da;}
         /* Date : quatre panneaux larges, même composition que la maquette */
-       .boite-flip-haut{top:3.1vh !important;background:linear-gradient(180deg,#111820 0%,#070b10 68%,#030507 100%) !important;border:1.5px solid var(--line) !important;border-radius:9px !important;box-shadow:0 7px 18px rgba(0,0,0,.72),inset 0 0 12px rgba(0,0,0,.88),0 0 7px rgba(20,165,230,.22) !important;}
-.boite-flip-haut#date-panel-jour{left:14.2vw !important;width:15.5vw !important;height:12.0vh !important;}
-.boite-flip-haut#date-panel-num{left:30.3vw !important;width:7.5vw !important;height:12.0vh !important;}
-.boite-flip-haut#date-panel-mois{left:38.4vw !important;width:23.5vw !important;height:12.0vh !important;}
-.boite-flip-haut#date-panel-annee{left:62.5vw !important;width:7.8vw !important;height:12.0vh !important;}
-.boite-flip-haut .flip-tuile-js{font-size:1.85vw !important;padding-bottom:2.35vh !important;font-family:'Arial Narrow','Arial Black',Arial,sans-serif !important;text-shadow:0 2px 2px #000,0 0 1px rgba(255,255,255,.4) !important;}
-#date-jour::after,#date-num::after,#date-mois::after,#date-annee::after{bottom:.52vh !important;font-size:.47vw !important;color:#d8dee3 !important;letter-spacing:.85px !important;}
+.boite-flip-haut{top:3.1vh !important;background:linear-gradient(180deg,#111820 0%,#070b10 68%,#030507 100%) !important;border:1.5px solid var(--line) !important;border-radius:9px !important;box-shadow:0 7px 18px rgba(0,0,0,.72),inset 0 0 12px rgba(0,0,0,.88),0 0 7px rgba(20,165,230,.22) !important;}
+.boite-flip-haut#date-panel-jour{left:14.2vw !important;width:13.5vw !important;height:12.0vh !important;}
+.boite-flip-haut#date-panel-num{left:28.3vw !important;width:5.5vw !important;height:12.0vh !important;}
+.boite-flip-haut#date-panel-mois{left:34.4vw !important;width:19.5vw !important;height:12.0vh !important;}
+.boite-flip-haut#date-panel-annee{left:54.5vw !important;width:7.0vw !important;height:12.0vh !important;}
+.boite-flip-haut .flip-tuile-js{font-size:2.05vw !important;padding-bottom:0vh !important;font-family:'Arial Narrow','Arial Black',Arial,sans-serif !important;text-shadow:0 2px 2px #000,0 0 1px rgba(255,255,255,.4) !important;}
+#date-jour::after,#date-num::after,#date-mois::after,#date-annee::after{display:none !important;}
 .boite-flip-haut::after{height:2.65vh !important;background:linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.48)) !important;border-top:1px solid rgba(255,255,255,.08) !important;}
+
         /* Horloge analogique : même taille et zone que le projet actuel, mais finition maquette */
         .montre-retro-cercle{right:18.2vw !important;top:1.0vh !important;width:12.0vw !important;height:12.0vw !important;background:radial-gradient(circle at 50% 45%,#080b0e 0%,#000 72%,#000 100%) !important;border:1.8px solid #263340 !important;box-shadow:0 7px 18px rgba(0,0,0,.78),inset 0 0 0 1px rgba(255,255,255,.09),0 0 8px rgba(20,155,220,.15) !important;}
         .graduation{background:#c1c8ce !important;opacity:.72 !important;height:7px !important;width:2px !important;}
@@ -268,7 +269,7 @@
         /* Horloge digitale : panneau assorti */
         .boite-digitale-bas{right:1.65vw !important;top:3.2vh !important;width:15.6vw !important;height:9.5vh !important;background:linear-gradient(180deg,#111820 0%,#070b10 68%,#030507 100%) !important;border:1.5px solid var(--line) !important;border-radius:9px !important;box-shadow:0 7px 18px rgba(0,0,0,.72),inset 0 0 11px rgba(0,0,0,.88),0 0 7px rgba(20,165,230,.22) !important;}
         .heure-digitale-js{font-size:2.38vw !important;height:6.8vh !important;padding:0 .35vw .7vh !important;align-items:flex-end !important;font-family:'Arial Narrow','Arial Black',Arial,sans-serif !important;text-shadow:0 2px 2px #000,0 0 1px rgba(255,255,255,.4) !important;}
-        .heure-digitale-labels{bottom:.52vh !important;font-size:.39vw !important;color:#d8dee3 !important;letter-spacing:.55px !important;}
+.heure-digitale-labels{display:none !important;}
         /* Panneau météo actuel : dimensions et hiérarchie de la maquette */
         #cadran-meteo-g{left:1.25vw !important;top:23.2vh !important;width:28.5vw !important;height:34.8vh !important;padding:1.1vw !important;background:linear-gradient(180deg,#08131d,#061019) !important;border:1.5px solid rgba(35,180,240,.78) !important;border-radius:12px !important;box-shadow:0 8px 18px rgba(0,0,0,.72),inset 0 0 13px rgba(0,0,0,.82),0 0 7px rgba(20,160,230,.12) !important;}
         #cadran-meteo-g>div:first-child{font-size:1.05vw !important;text-align:center !important;}
