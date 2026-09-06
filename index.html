@@ -25,9 +25,9 @@
         #back-precipitations { position: fixed; inset:0; width:100vw; height:100vh; z-index: 7 !important; pointer-events:none; }
         #front-particles { position: fixed; inset:0; width:100vw; height:100vh; z-index: 40 !important; pointer-events:none; overflow:hidden; }
         .pos { position: absolute; display: flex; align-items: center; justify-content: center; overflow: hidden; text-align: center; }
-  .boite-flip-haut {
+ .boite-flip-haut {
     background: #000000 !important;
-    border: 1.8px solid #ffffff !important;
+    border: 2px solid #ffffff !important;
     border-radius: 9px !important;
     box-shadow: 0 4px 10px rgba(0,0,0,0.6) !important;
 }
@@ -36,6 +36,7 @@
     font-size: 2.10vw !important;
     font-weight: 900 !important;
     color: #ffffff !important;
+    opacity: 1 !important;
     letter-spacing: .5px !important;
     padding-bottom: 0vh !important;
     height: 6.2vh !important;
@@ -44,6 +45,20 @@
     align-items: center !important;
     justify-content: center !important;
     text-transform: uppercase !important;
+}
+#date-jour::after,#date-num::after,#date-mois::after,#date-annee::after { display: none !important; }
+.boite-flip-haut::after { display: none !important; }
+.boite-digitale-bas {
+    position: absolute !important;
+    right: 1.65vw !important;
+    top: 3.1vh !important;
+    width: 11.8vw !important;
+    height: 6.2vh !important;
+    background: #000000 !important;
+    border: 2px solid #ffffff !important;
+    border-radius: 9px !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.6) !important;
+    z-index: 99 !important;
 }
 #date-jour::after,#date-num::after,#date-mois::after,#date-annee::after { display: none !important; }
 .boite-flip-haut::after { display: none !important; }
