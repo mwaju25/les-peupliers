@@ -25,194 +25,6 @@
         #back-precipitations { position: fixed; inset:0; width:100vw; height:100vh; z-index: 7 !important; pointer-events:none; }
         #front-particles { position: fixed; inset:0; width:100vw; height:100vh; z-index: 40 !important; pointer-events:none; overflow:hidden; }
         .pos { position: absolute; display: flex; align-items: center; justify-content: center; overflow: hidden; text-align: center; }
-        .boite-flip-haut { background: linear-gradient(to bottom, #11151c, #05070a) !important; border: 2px solid #28303d !important; border-radius: 8px !important; box-shadow: 0px 6px 12px rgba(0,0,0,0.5), inset 0px 0px 10px rgba(0,0,0,0.9) !important; z-index: 99 !important; }
-        .flip-tuile-js { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 2.3vw; font-weight: 900; color: #fff; text-transform: uppercase; letter-spacing: 1px; position: relative; }
-        .flip-tuile-js::after { content: ''; position: absolute; left: 0; top: 50%; width: 100%; height: 0.8px; background: #000000 !important; border-bottom: 1px solid rgba(255,255,255,0.12) !important; z-index: 5; }
-        .charniere-gauche, .charniere-droite { position: absolute; top: 50%; transform: translateY(-50%); width: 12px; height: 24px; z-index: 10; background: linear-gradient(to right, #444, #d1d1d1, #fff 40%, #d1d1d1 70%, #333) !important; border-radius: 3px !important; border: 1px solid #111 !important; box-shadow: 0 3px 5px rgba(0,0,0,0.4) !important; }
-        .charniere-gauche { left: -6px !important; } .charniere-droite { right: -6px !important; }
-        .charniere-gauche::after { content: ''; position: absolute; top: 4px; width: 4px; height: 14px; background: #161a22 !important; left: -3px; border: 1px solid #050505 !important; }
-        .charniere-droite::after { content: ''; position: absolute; top: 4px; width: 4px; height: 14px; background: #161a22 !important; right: -3px; border: 1px solid #050505 !important; }
-        .charniere-gauche::before, .charniere-droite::before { content: ''; position: absolute; left: 0; top: 10px; width: 100%; height: 4px; background: #111 !important; }
-        .montre-retro-cercle { position: absolute; right: 2.2vw; top: 1vh; width: 15.6vw; height: 15.6vw; background: #000000 !important; border: 2px solid #1d2633 !important; border-radius: 50%; box-shadow: 0px 4px 12px rgba(0,0,0,0.5); z-index: 99 !important; }
-        .graduation { position: absolute; width: 2px; height: 8px; background: rgba(255,255,255,0.4); left: 50%; top: 2px; margin-left: -1px; transform-origin: 50% 5.85vw; z-index: 11; }
-        .graduation.principale { width: 3px; height: 12px; background: #ffffff !important; top: 2px; }
-        .chiffre-container-js { position: absolute; width: 2vw; height: 2vw; left: 50%; top: 12px; margin-left: -1vw; transform-origin: 50% 5.05vw; display: flex; align-items: center; justify-content: center; z-index: 12; }
-        .chiffre-cadran-fixe { font-size: 0.95vw; font-weight: bold; color: #ffffff !important; font-family: 'Arial Black', sans-serif; }
-        .aiguille { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom center; border-radius: 4px; z-index: 13; }
-        .heure { width: 5px; height: 3.2vw; background-color: #fff; } .minute { width: 4px; height: 4.9vw; background-color: #8ad400; }
-        .pivot { position: absolute; width: 12px; height: 12px; background: #a2f200; border-radius: 50%; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 15; box-shadow: 0 0 6px rgba(162,242,0,0.8); }
-        .boite-digitale-bas { position: absolute; right: 1.65vw !important; top: 3.1vh !important; width: 11.8vw !important; height: 6.2vh !important; background: linear-gradient(180deg,#111820 0%,#05070d 72%,#030507 100%) !important; border: 1.5px solid rgba(43,177,245,.92) !important; border-radius: 9px; box-shadow: 0 7px 18px rgba(0,0,0,.72), inset 0 0 11px rgba(0,0,0,.9), 0 0 7px rgba(22,164,230,.22) !important; z-index: 99 !important; }
-        .heure-digitale-js { font-size: 2.7vw; font-weight: 900; color: #ffffff !important; letter-spacing: 1px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; }
-        .heure-digitale-js::after { content: ''; position: absolute; left: 0; top: 50%; width: 100%; height: 0.8px; background: #000000; border-bottom: 1px solid rgba(255,255,255,0.12); z-index: 5; }
-        .cadran-relief-bleu { position:relative;  background: #0d131a !important; border: 2px solid #212c3a !important; border-radius: 12px !important; box-shadow: 0 8px 16px rgba(0,0,0,0.7), inset 0 0 12px rgba(0,0,0,0.8) !important; opacity: 1 !important; z-index: 99 !important; transition: border-color 8s ease-in-out, box-shadow 8s ease-in-out; }
-        .cadran-relief-noir-bloc { position:relative;  background: #05080c !important; border: 2px solid #162029 !important; border-radius: 12px; box-shadow: 0 6px 12px rgba(0,0,0,0.6); z-index: 99 !important; transition: border-color 8s ease-in-out, box-shadow 8s ease-in-out; overflow: hidden; }
-        .carte-prev-unique { position:relative; z-index:100; width: 10.4vw; height: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 1.5vh 0; background: #0d131a !important; border: 2px solid #212c3a !important; border-radius: 12px !important; }
-        .soleil-realiste-css { width: 3.2vw; height: 3.2vw; background: radial-gradient(circle, #fff 15%, #ffea00 55%, #ff7700 100%); border-radius: 50%; box-shadow: 0 0 18px rgba(255,210,0,0.75), 0 0 35px rgba(255,100,0,0.4); }
-        .lune-doree-image { position: relative; width: 4.4vw; height: 4.4vw; border-radius: 50%; background-image: radial-gradient(circle at 35% 35%,#fff 0 12%,#d8dbe0 42%,#8f9399 100%) !important; background-size: cover; background-position: center; border: 1.5px solid rgba(255,255,255,0.4) !important; box-shadow: 0 0 14px rgba(255,255,255,0.35); filter: grayscale(1) brightness(1.2); display: block; overflow: hidden; }
-        .cache-ombre-lunaire { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #05080c; border-radius: 50%; opacity: 0.85; transition: all 0.5s ease-in-out; }
-        .case-illustration-pommier { width: 4.8vw; height: 4.8vw; position: relative; display: flex; align-items: center; justify-content: center; background: #121b24 !important; border-radius: 8px; border: 1px solid rgba(255,255,255,0.08); box-shadow: inset 0 0 6px rgba(0,0,0,0.6); }
-        .pommier-trunk { position: absolute; width: 4px; background: #5c4033; bottom: 0.2vw; height: 1.8vw; left: 50%; transform: translateX(-50%); border-radius: 2px; }
-        .pommier-branch-l { position: absolute; width: 10px; height: 2px; background: #5c4033; bottom: 1.4vw; left: 1.2vw; transform: rotate(-30deg); }
-        .pommier-branch-r { position: absolute; width: 10px; height: 2px; background: #5c4033; bottom: 1.6vw; right: 1.2vw; transform: rotate(30deg); }
-        .pommier-canopy { position: absolute; border-radius: 50%; background: #2e7d32; width: 2.8vw; height: 2.8vw; bottom: 1.6vw; left: 50%; transform: translateX(-50%); }
-        .pommier-fruit { position: absolute; width: 5px; height: 5px; background: #d32f2f; border-radius: 50%; box-shadow: 0 1px 2px rgba(0,0,0,0.4); }
-        .picto-pro-meteo { position: relative; width: 4.8vw; height: 4.8vw; display: flex; align-items: center; justify-content: center; }
-        .picto-pro-meteo .soleil-centre { width: 2.2vw; height: 2.2vw; background: #ffea00; border-radius: 50%; box-shadow: 0 0 15px #ffdf00; }
-        .picto-pro-meteo .nuage-face { position: absolute; width: 3.2vw; height: 1.6vw; background: #ffffff; border-radius: 20px; bottom: 0.8vw; left: 0.8vw; box-shadow: 0 4px 6px rgba(0,0,0,0.4); }
-        .picto-pro-meteo .nuage-face::before { content:''; position: absolute; width: 1.6vw; height: 1.6vw; background: #ffffff; border-radius: 50%; top: -0.8vw; left: 0.5vw; }
-        .picto-pro-meteo .nuage-face::after { content:''; position: absolute; width: 1.2vw; height: 1.2vw; background: #ffffff; border-radius: 50%; top: -0.5vw; right: 0.5vw; }
-        .picto-pro-mini { scale: 0.65; display: inline-block; vertical-align: middle; }
-        .feuille-peuplier-svg { position:absolute; width:13px; height:13px; background:var(--leaf-color); border-radius:2px 75% 60% 75%; transform-origin:center; animation:flowWind linear infinite; box-shadow:0 1px 2px rgba(0,0,0,.35); }
-        .goutte-particule { position:absolute; background:linear-gradient(to bottom,rgba(210,240,255,.12),rgba(160,220,255,.78)); width:1.4px; height:24px; animation:flowChute linear infinite; filter:drop-shadow(0 0 2px rgba(100,190,255,.25)); }
-        .flocon-particule { position:absolute; color:#fff; animation:flowChute linear infinite; width:9px; height:9px; font-size:10px; text-shadow:0 0 5px #fff; }
-        @keyframes flowChute { 0% { transform: translateY(-5vh) translateX(0); } 100% { transform: translateY(105vh) translateX(var(--wind-x)); } }
-        @keyframes flowWind { 0% { transform: translate(-5vw, var(--start-y)) rotate(0deg); } 100% { transform: translate(105vw, var(--end-y)) rotate(1080deg); } }
-        @keyframes cloudMove { 0% { transform: translateX(0); } 100% { transform: translateX(-100vw); } }
-        .anim-clouds { animation: cloudMove linear infinite var(--cloud-speed); }
-        #season-layer{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden;transition:opacity 6s ease;}
-        #season-layer::before{content:'';position:absolute;inset:0;background:transparent;transition:background 6s ease,opacity 6s ease;}
-        .stars{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(circle,rgba(255,255,255,.82) 0 1px,transparent 1.5px);background-size:57px 53px;opacity:.48;-webkit-mask-image:url("assets/sky-mask-v21.png");mask-image:url("assets/sky-mask-v21.png");-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;}
-        #season-ground{position:absolute;left:0;right:0;bottom:0;height:27vh;opacity:0;transition:opacity 6s ease;pointer-events:none;}
-        .autumn-leaf-ground{position:absolute;width:8px;height:5px;border-radius:75% 10% 75% 10%;transform:rotate(var(--r));background:var(--c);box-shadow:0 1px 2px rgba(0,0,0,.3);}
-        #winter-snow{position:absolute;inset:0;opacity:0;transition:opacity 6s ease;pointer-events:none;}
-        #winter-snow::before{content:'';position:absolute;left:0;right:0;bottom:0;height:24vh;background:linear-gradient(to top,rgba(245,249,255,.78),rgba(255,255,255,.25) 48%,transparent);clip-path:polygon(0 38%,8% 31%,16% 44%,25% 35%,35% 48%,45% 36%,56% 46%,66% 32%,77% 43%,88% 34%,100% 42%,100% 100%,0 100%);}
-        #winter-snow::after{content:'';position:absolute;left:0;right:0;top:17vh;height:17vh;background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.38),rgba(255,255,255,0));opacity:.5;}
-        #season-tree-icon{width:4.8vw;height:4.8vw;position:relative;display:flex;align-items:center;justify-content:center;font-size:3.5vw;line-height:1;filter:drop-shadow(0 2px 2px rgba(0,0,0,.35));}
-        #weather-updated{font-size:.55vw;color:#8f9aa7;margin-top:.5vh;text-align:right;}
-        .weather-detail-line{display:flex;justify-content:space-between;gap:.8vw;font-size:.62vw;color:#b8c1ca;margin-top:.35vh;}
-        .weather-detail-line strong{color:#fff;font-size:.68vw;}
-        .current-weather-icon{width:5.5vw;height:5.5vw;display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 4px 7px rgba(0,0,0,.35));flex:0 0 auto;}
-        .current-weather-icon svg{width:5.4vw;height:5.4vw;display:block;}
-        .meteo-stat{flex:1;min-width:0;}
-        .meteo-stat+.meteo-stat{border-left:1px solid rgba(255,255,255,.1);}
-        .meteo-label{font-size:.58vw;color:#aeb8c1;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:3px;white-space:nowrap;}
-        .meteo-value{font-size:1.02vw;margin-top:.35vh;color:#fff;white-space:nowrap;}
-        #season-tree-icon{width:4.8vw;height:4.8vw;display:flex;align-items:center;justify-content:center;}
-        #season-tree-icon svg{width:4.8vw;height:4.8vw;display:block;filter:drop-shadow(0 2px 2px rgba(0,0,0,.38));}
-        #sky-gradient{clip-path:polygon(0 0,100% 0,100% 48%,92% 46%,84% 49%,76% 45%,68% 48%,60% 44%,52% 48%,44% 45%,36% 48%,28% 44%,20% 47%,12% 44%,0 48%) !important;}
-        #cloud-layer{clip-path:polygon(0 0,100% 0,100% 46%,92% 44%,84% 47%,76% 43%,68% 46%,60% 42%,52% 46%,44% 43%,36% 46%,28% 42%,20% 45%,12% 42%,0 46%);}
-                #logo-ecran-principal, .logo-etablissement-peupliers { position: absolute; left: 1.1vw; top: 1vh; width: 14vw; height: 14vw; background:none !important; z-index:101 !important; display:none !important; opacity:0 !important; }
-        #slogan-ecran-principal, .slogan-peupliers-texte { position: absolute; left: 17.5vw; top: 14vh; width: 60vw; font-size: 1.6vw; color: #8ad400; font-weight: bold; text-align: left; text-transform: uppercase; letter-spacing: 0.5px; z-index: 101 !important; filter: none !important; mix-blend-mode: normal !important; opacity: 1 !important; }
-    
-        /* --- CALQUES DYNAMIQUES : fond original toujours visible --- */
-        #school-view-bg, .decor-permanent { z-index:0 !important; filter:none !important; background-size:100% 100% !important; }
-        /* V12 : fond original toujours visible, logo et slogan protégés */
-        #brand-logo-protect, #brand-slogan-protect{position:fixed;z-index:50;pointer-events:none;background-image:url('fond-final.png');background-repeat:no-repeat;background-size:100vw 100vh;}
-        #brand-logo-protect{left:0;top:0;width:14.0vw;height:24.5vh;background-position:0 0;}
-        #brand-slogan-protect{left:8.0vw;bottom:0;width:78vw;height:10.0vh;background-position:calc(-8.0vw) calc(100vh - 10.0vh);}
-        #night-lights{position:fixed;inset:0;z-index:12;pointer-events:none;opacity:0;transition:opacity 8s ease-in-out;background:
-          radial-gradient(ellipse 2.0vw 3.0vh at 67.4% 48.5%,rgba(255,205,104,.72),transparent 72%),
-          radial-gradient(ellipse 1.7vw 2.5vh at 71.2% 47.0%,rgba(255,197,92,.68),transparent 72%),
-          radial-gradient(ellipse 1.5vw 2.4vh at 74.6% 49.0%,rgba(255,214,120,.62),transparent 72%),
-          radial-gradient(ellipse 1.8vw 2.7vh at 80.1% 45.5%,rgba(255,198,90,.65),transparent 72%),
-          radial-gradient(ellipse 1.5vw 2.2vh at 84.8% 47.0%,rgba(255,214,120,.60),transparent 72%),
-          radial-gradient(ellipse 1.8vw 3.0vh at 72.0% 57.0%,rgba(255,178,64,.55),transparent 72%);
-          mix-blend-mode:screen;}
-        #lamp-glow{position:fixed;inset:0;z-index:13;pointer-events:none;opacity:0;transition:opacity 8s ease-in-out;background:radial-gradient(ellipse 4vw 9vh at 72.3% 48.5%,rgba(255,191,76,.34),transparent 70%);mix-blend-mode:screen;}
-        #sky-gradient { z-index:1 !important; opacity:.72; mix-blend-mode:normal !important; clip-path:none !important; -webkit-mask-image:url('assets/sky-mask-v21.png'); mask-image:url('assets/sky-mask-v21.png'); -webkit-mask-size:100% 100%; mask-size:100% 100%; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; }
-        #night-dimmer { position:fixed; inset:0; z-index:20 !important; background:rgba(0,4,12,0); pointer-events:none; transition:background 8s ease-in-out; }
-        #season-layer { z-index:2 !important; }
-        #season-weather-overlay { position:absolute; inset:0; width:100%; height:100%; object-fit:fill; opacity:0; transition:opacity 6s ease; pointer-events:none; }
-        #winter-snow { z-index:3; }
-        .lune-dans-le-ciel { z-index:35 !important; filter:none !important; background-size:cover !important; background-position:center !important; background-repeat:no-repeat !important; }
-        #cloud-layer { z-index:15 !important; -webkit-mask-image:url('assets/sky-mask-v21.png'); mask-image:url('assets/sky-mask-v21.png'); -webkit-mask-size:100% 100%; mask-size:100% 100%; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; }
-        #back-precipitations { z-index:25 !important; }
-        #lightning-flash { z-index:40 !important; }
-        #front-particles { z-index:40 !important; }
-        #logo-ecran-principal { display:none !important; }
-        #season-tree-icon { width:6.2vw !important; height:7.8vw !important; }
-        #season-tree-icon img { width:6.2vw; height:7.8vw; object-fit:contain; display:block; filter:drop-shadow(0 3px 5px rgba(0,0,0,.5)); }
-        .season-tree-spring { filter:hue-rotate(80deg) saturate(1.05) brightness(1.05) drop-shadow(0 3px 5px rgba(0,0,0,.5)) !important; }
-        .season-tree-summer { filter:hue-rotate(65deg) saturate(1.18) brightness(1.02) drop-shadow(0 3px 5px rgba(0,0,0,.5)) !important; }
-        .season-tree-autumn { filter:none !important; }
-        .season-tree-winter { filter:grayscale(1) brightness(1.55) contrast(.9) drop-shadow(0 3px 5px rgba(0,0,0,.55)) !important; }
-        .moon-real-photo { width:100%; height:100%; border-radius:50%; object-fit:cover; display:block; }
-        #lune-vrai-photo, #lune-vrai-ciel { background-size:cover !important; background-position:center !important; background-repeat:no-repeat !important; }
-        #lune-ombre-widget, #lune-cache-vrai-ciel { display:none !important; }
-        .lune-dans-le-ciel { border:none !important; box-shadow:0 0 18px rgba(255,255,255,.45),0 0 40px rgba(150,190,255,.18) !important; }
-        .goutte-particule { z-index:1; }
-        .flocon-particule { z-index:1; }
-        @keyframes lightningGlow { 0%,100%{opacity:0} 12%{opacity:.95} 25%{opacity:.08} 34%{opacity:.75} 48%{opacity:0} }
-        .lightning-halo { position:absolute; inset:0; background:radial-gradient(circle at var(--strike-x) var(--strike-y),rgba(220,245,255,.48),rgba(220,245,255,.12) 18%,transparent 48%); opacity:0; pointer-events:none; }
-        .lightning-halo.strike { animation:lightningGlow .48s steps(4,end) forwards; }
-    
-        /* Prévisions : toutes les informations restent strictement dans les cadres */
-        #zone-7-jours{bottom:10vh;height:22vh;overflow:visible !important;}
-        .carte-prev-unique{height:100%;min-height:0;box-sizing:border-box;padding:1vh .35vw !important;justify-content:space-around !important;overflow:hidden !important;}
-        .prev-jour{font-size:1.02vw;font-weight:900;color:#fff;line-height:1;white-space:nowrap;}
-        .prev-date{font-size:.66vw;color:#aaa;font-weight:bold;line-height:1;white-space:nowrap;}
-        .prev-icon{height:5.1vh;display:flex;align-items:center;justify-content:center;flex:0 0 5.1vh;}
-        .prev-icon svg{width:2.65vw !important;height:2.65vw !important;max-height:5.1vh;}
-        .prev-max{font-size:1.65vw;font-weight:900;color:#fff;line-height:1;white-space:nowrap;}
-        .prev-min{font-size:1.05vw;font-weight:900;color:#49a6e9;line-height:1;white-space:nowrap;}
-
-        /* Le même rendu lunaire est utilisé dans le cadre et dans le ciel */
-        #lune-vrai-photo,#lune-vrai-ciel{background-size:cover !important;background-position:center !important;background-repeat:no-repeat !important;}
-
-        /* --- V8 : date et horloge digitale, style panneau moderne (sans flipflap) --- */
-        .boite-flip-haut {
-            background: linear-gradient(180deg, #111a24 0%, #05090e 100%) !important;
-            border: 1.5px solid rgba(49,184,255,.82) !important;
-            border-radius: 10px !important;
-            box-shadow: 0 6px 16px rgba(0,0,0,.62), inset 0 0 12px rgba(0,0,0,.82), 0 0 5px rgba(20,160,230,.16) !important;
-            overflow: hidden !important;
-        }
-        .boite-flip-haut::after {
-            content: ''; position:absolute; left:0; right:0; bottom:0; height:2.2vh;
-            background: rgba(0,0,0,.22); border-top:1px solid rgba(255,255,255,.06);
-            pointer-events:none;
-        }
-        .boite-flip-haut .flip-tuile-js {
-            height: 100% !important; padding-bottom: 1.9vh;
-            font-family: 'Arial Narrow', 'Arial Black', sans-serif !important;
-            font-size: 2.15vw !important; font-weight: 900 !important;
-            letter-spacing: .8px !important; text-shadow: 0 2px 2px rgba(0,0,0,.9);
-        }
-        .boite-flip-haut .flip-tuile-js::after,
-        .boite-flip-haut .charniere-gauche,
-        .boite-flip-haut .charniere-droite { display:none !important; }
-        #date-jour::after, #date-num::after, #date-mois::after, #date-annee::after {
-            display:block !important; position:absolute; left:0; right:0; top:auto; bottom:.45vh;
-            width:auto; height:auto; border:0 !important; background:none !important;
-            color:#aeb8c2; font-family:Arial,sans-serif; font-size:.52vw; font-weight:700;
-            letter-spacing:.9px; text-shadow:none; z-index:7;
-        }
-        #date-jour::after { content:'JOUR'; }
-        #date-num::after { content:'DATE'; }
-        #date-mois::after { content:'MOIS'; }
-        #date-annee::after { content:'ANNÉE'; }
-        .boite-digitale-bas {
-            position:absolute; right:2vw; top:35.5vh; width:17vw; height:8vh;
-            background:linear-gradient(180deg,#111a24 0%,#05090e 100%) !important;
-            border:1.5px solid rgba(49,184,255,.82) !important;
-            border-radius:10px !important;
-            box-shadow:0 6px 16px rgba(0,0,0,.62), inset 0 0 12px rgba(0,0,0,.82), 0 0 5px rgba(20,160,230,.16) !important;
-            overflow:hidden !important;
-        }
-        .boite-digitale-bas .charniere-gauche, .boite-digitale-bas .charniere-droite { display:none !important; }
-       .heure-digitale-js {
-    height: 6.2vh !important;
-    line-height: 6.2vh !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    font-family: 'Arial Narrow', 'Arial Black', sans-serif !important;
-    font-size: 2.38vw !important;
-    font-weight: 900 !important;
-    text-shadow: 0 2px 2px #000, 0 0 1px rgba(255, 255, 255, .4) !important;
-}
-        .heure-digitale-js::after { display:none !important; }
-        .heure-digitale-labels {
-            position:absolute; left:0; right:0; bottom:.45vh; height:1.15vh;
-            display:grid; grid-template-columns:1fr 1fr 1fr; align-items:center;
-            color:#aeb8c2; font-family:Arial,sans-serif; font-size:.42vw; font-weight:700;
-            letter-spacing:.65px; text-align:center; z-index:6;
-        }
-        .heure-digitale-labels span { white-space:nowrap; }
-    
-        /* --- V9 : finition des horloges et panneaux de date, inspirée de la maquette --- */
         .boite-flip-haut {
             background: linear-gradient(180deg,#111820 0%,#05080d 72%,#030507 100%) !important;
             border: 1.5px solid rgba(43,177,245,.92) !important;
@@ -222,29 +34,31 @@
         .boite-flip-haut .flip-tuile-js {
             font-family:'Arial Narrow','Arial Black',Arial,sans-serif !important;
             font-size:2.08vw !important; letter-spacing:.65px !important;
-            padding-bottom:2.05vh !important;
+            padding-bottom:0vh !important; height:6.2vh !important; line-height:6.2vh !important;
             text-shadow:0 2px 2px rgba(0,0,0,.95),0 0 1px rgba(255,255,255,.35);
+            display: flex !important; align-items: center !important; justify-content: center !important;
         }
-     #date-jour::after,#date-num::after,#date-mois::after,#date-annee::after { display:none !important; }
-.boite-flip-haut::after { height:1.5vh !important; background:linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.48)) !important; border-top:1px solid rgba(255,255,255,.08) !important; }
-.boite-digitale-bas {
-    position: absolute !important;
-    right: 1.65vw !important;
-    top: 3.1vh !important;
-    width: 11.8vw !important;
-    height: 6.2vh !important;
-    background: linear-gradient(180deg,#111820 0%,#05080d 72%,#030507 100%) !important;
-    border: 1.5px solid rgba(43,177,245,.92) !important;
-    border-radius: 9px !important;
-    box-shadow: 0 7px 18px rgba(0,0,0,.72), inset 0 0 11px rgba(0,0,0,.9), 0 0 7px rgba(22,164,230,.22) !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-}
-.heure-digitale-js { font-size: 2.38vw !important; height: 100% !important; line-height: 6.2vh !important; padding-bottom: 0vh !important; display: flex !important; align-items: center !important; justify-content: center !important; font-family: 'Arial Narrow','Arial Black',Arial,sans-serif !important; font-weight: 900 !important; text-shadow: 0 2px 2px #000, 0 0 1px rgba(255,255,255,.4) !important; }
-.heure-digitale-labels { display: none !important; }
-       .heure-digitale-js { font-size: 2.38vw !important; height: 6.2vh !important; line-height: 6.2vh !important; padding-bottom: 0vh !important; display: flex !important; align-items: center !important; justify-content: center !important; font-family: 'Arial Narrow','Arial Black',Arial,sans-serif !important; font-weight: 900 !important; text-shadow: 0 2px 2px #000, 0 0 1px rgba(255,255,255,.4) !important; }
-.heure-digitale-labels { display: none !important; }
+        #date-jour::after,#date-num::after,#date-mois::after,#date-annee::after { display:none !important; }
+        .boite-flip-haut::after { height:1.5vh !important; background:linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.48)) !important; border-top:1px solid rgba(255,255,255,.08) !important; }
+        .boite-digitale-bas {
+            position: absolute !important;
+            right: 1.65vw !important;
+            top: 3.1vh !important;
+            width: 11.8vw !important;
+            height: 6.2vh !important;
+            background: linear-gradient(180deg,#111820 0%,#05080d 72%,#030507 100%) !important;
+            border: 1.5px solid rgba(43,177,245,.92) !important;
+            border-radius: 9px !important;
+            box-shadow: 0 7px 18px rgba(0,0,0,.72), inset 0 0 11px rgba(0,0,0,.9), 0 0 7px rgba(22,164,230,.22) !important;
+            display: flex !important; align-items: center !important; justify-content: center !important;
+        }
+        .heure-digitale-js { 
+            font-size: 2.38vw !important; height: 6.2vh !important; line-height: 6.2vh !important; padding-bottom: 0vh !important; 
+            display: flex !important; align-items: center !important; justify-content: center !important; 
+            font-family: 'Arial Narrow','Arial Black',Arial,sans-serif !important; font-weight: 900 !important; 
+            text-shadow: 0 2px 2px #000, 0 0 1px rgba(255,255,255,.4) !important; 
+        }
+        .heure-digitale-labels { display: none !important; }
         .montre-retro-cercle {
             background:radial-gradient(circle at 50% 45%,#080a0d 0%,#000 72%,#000 100%) !important;
             border:1.8px solid #1f2a36 !important;
@@ -257,36 +71,15 @@
         .minute { width:3px !important; height:4.75vw !important; background:#f4f7fa !important; }
         .seconde { width:1.5px !important; height:5.15vw !important; background:#b8ff00 !important; box-shadow:0 0 4px rgba(184,255,0,.55); }
         .pivot { width:10px !important; height:10px !important; background:#b8ff00 !important; box-shadow:0 0 7px rgba(184,255,0,.75) !important; }
-    
-        /* ================= V10 : nouvelle composition complète, inspirée de la maquette ================= */
+        /* ================= CADRANS GRAPHIQUES DE RÉFÉRENCE ================= */
         :root{--cyan:#25b8f4;--panel:#071018;--panel2:#0d1821;--line:rgba(48,190,255,.78);--muted:#cbd4da;}
-        /* Date : quatre panneaux larges, même composition que la maquette */
-.boite-flip-haut{top:3.1vh !important;background:linear-gradient(180deg,#111820 0%,#070b10 68%,#030507 100%) !important;border:1.5px solid var(--line) !important;border-radius:9px !important;box-shadow:0 7px 18px rgba(0,0,0,.72),inset 0 0 12px rgba(0,0,0,.88),0 0 7px rgba(20,165,230,.22) !important;display:grid !important;align-items:center !important;justify-content:center !important;}
-.boite-flip-haut#date-panel-jour{left:18.5vw !important;width:15.5vw !important;height:6.2vh !important;}
-.boite-flip-haut#date-panel-num{left:34.5vw !important;width:4.8vw !important;height:6.2vh !important;}
-.boite-flip-haut#date-panel-mois{left:39.8vw !important;width:17.5vw !important;height:6.2vh !important;}
-.boite-flip-haut#date-panel-annee{left:57.8vw !important;width:7.6vw !important;height:6.2vh !important;}
-.boite-flip-haut .flip-tuile-js{font-size:2.05vw !important;height:6.2vh !important;line-height:6.2vh !important;display:block !important;padding:0 !important;margin:0 !important;text-align:center !important;font-family:'Arial Narrow','Arial Black',Arial,sans-serif !important;text-shadow:0 2px 2px #000,0 0 1px rgba(255,255,255,.4) !important;}
-#date-jour::after,#date-num::after,#date-mois::after,#date-annee::after{display:none !important;}
-.boite-flip-haut::after{height:1.5vh !important;background:linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.48)) !important;border-top:1px solid rgba(255,255,255,.08) !important;}
-.montre-retro-cercle{right:17.9vw !important;top:1.0vh !important;width:12.0vw !important;height:12.0vw !important;background:#000 !important;border:1.8px solid #263340 !important;border-radius:50% !important;box-shadow:0 7px 18px rgba(0,0,0,.78),inset 0 0 0 1px rgba(255,255,255,.09),0 0 8px rgba(20,155,220,.15) !important;overflow:visible !important;}
-.graduation{background:#c1c8ce !important;opacity:.72 !important;height:7px !important;width:2px !important;position:absolute;left:50%;top:2px;margin-left:-1px;transform-origin:50% 5.85vw !important;z-index:11;}
-.graduation.principale{background:#fff !important;opacity:1 !important;width:3px !important;height:12px !important;top:2px;}
-.chiffre-container-js{position:absolute;width:2vw !important;height:2vw !important;left:50%;top:12px;margin-left:-1vw;transform-origin:50% 5.05vw !important;display:flex !important;align-items:center !important;justify-content:center !important;z-index:12;}
-.chiffre-cadran-fixe{font-family:'Arial Black',Arial,sans-serif !important;font-size:.91vw !important;color:#fff !important;text-shadow:0 1px 1px #000 !important;}
-.heure{width:4px !important;height:3.0vw !important;background:#f4f7fa !important;box-shadow:0 0 2px rgba(255,255,255,.35);}
-.minute{width:3px !important;height:4.75vw !important;background:#f4f7fa !important;box-shadow:0 0 2px rgba(255,255,255,.35);}
-.seconde{width:1.5px !important;height:5.15vw !important;background:#b8ff00 !important;box-shadow:0 0 5px rgba(184,255,0,.6) !important;}
-.pivot{width:10px !important;height:10px !important;background:#b8ff00 !important;box-shadow:0 0 8px rgba(184,255,0,.8) !important;}
-.boite-digitale-bas{right:1.65vw !important;top:3.1vh !important;width:11.8vw !important;height:6.2vh !important;background:linear-gradient(180deg,#111820 0%,#070b10 68%,#030507 100%) !important;border:1.5px solid rgba(43,177,245,.92) !important;border-radius:9px !important;box-shadow:0 7px 18px rgba(0,0,0,.72),inset 0 0 11px rgba(0,0,0,.88),0 0 7px rgba(20,165,230,.22) !important;display:grid !important;align-items:center !important;justify-content:center !important;}
-.heure-digitale-js{font-size:2.38vw !important;height:6.2vh !important;line-height:6.2vh !important;width:100% !important;display:block !important;padding:0 !important;margin:0 !important;text-align:center !important;font-family:'Arial Narrow','Arial Black',Arial,sans-serif !important;font-weight:900 !important;text-shadow:0 2px 2px #000,0 0 1px rgba(255,255,255,.4) !important;}
-.heure-digitale-labels{display:none !important;}
-        /* Horloge digitale : panneau assorti */
-        .boite-digitale-bas{right:1.65vw !important;top:3.2vh !important;width:11.8vw !important;height:9.5vh !important;background:linear-gradient(180deg,#111820 0%,#070b10 68%,#030507 100%) !important;border:1.5px solid rgba(43,177,245,.92) !important;border-radius:9px !important;box-shadow:0 7px 18px rgba(0,0,0,.72),inset 0 0 11px rgba(0,0,0,.88),0 0 7px rgba(20,165,230,.22) !important;}
-.heure-digitale-js{font-size:2.38vw !important;height:100% !important;padding-bottom:0vh !important;display:flex !important;align-items:center !important;justify-content:center !important;font-family:'Arial Narrow','Arial Black',Arial,sans-serif !important;font-weight:900 !important;text-shadow:0 2px 2px #000,0 0 1px rgba(255,255,255,.4) !important;}
-.heure-digitale-labels{display:none !important;}
-        /* Panneau météo actuel : dimensions et hiérarchie de la maquette */
-        #cadran-meteo-g{left:1.25vw !important;top:23.2vh !important;width:28.5vw !important;height:34.8vh !important;padding:1.1vw !important;background:linear-gradient(180deg,#08131d,#061019) !important;border:1.5px solid rgba(35,180,240,.78) !important;border-radius:12px !important;box-shadow:0 8px 18px rgba(0,0,0,.72),inset 0 0 13px rgba(0,0,0,.82),0 0 7px rgba(20,160,230,.12) !important;}
+        
+        #cadran-meteo-g{
+            left:1.25vw !important;top:23.2vh !important;width:28.5vw !important;height:34.8vh !important;padding:1.1vw !important;
+            background:linear-gradient(180deg,#08131d,#061019) !important;
+            border:1.5px solid rgba(35,180,240,.78) !important;border-radius:12px !important;
+            box-shadow:0 8px 18px rgba(0,0,0,.72),inset 0 0 13px rgba(0,0,0,.82),0 0 7px rgba(20,160,230,.12) !important;
+        }
         #cadran-meteo-g>div:first-child{font-size:1.05vw !important;text-align:center !important;}
         #cadran-meteo-g>div:nth-child(2){font-size:.72vw !important;text-align:center !important;margin-bottom:1.0vh !important;}
         #cadran-meteo-g .current-weather-icon{width:6.0vw !important;height:6.0vw !important;}
@@ -296,8 +89,12 @@
         #cadran-meteo-g #courant-desc{font-size:1.0vw !important;}
         #cadran-meteo-g .meteo-label{font-size:.52vw !important;}
         #cadran-meteo-g .meteo-value{font-size:.92vw !important;}
-        /* SAISON : grand arbre réaliste, contenu identique mais composition maquette */
-        #cadran-saison-d{right:1.65vw !important;top:20.0vh !important;width:18.4vw !important;height:40.2vh !important;background:linear-gradient(180deg,#07111a,#050b11) !important;border:1.5px solid rgba(35,180,240,.78) !important;border-radius:12px !important;box-shadow:0 8px 18px rgba(0,0,0,.72),inset 0 0 13px rgba(0,0,0,.82),0 0 7px rgba(20,160,230,.12) !important;overflow:hidden !important;}
+        #cadran-saison-d{
+            right:1.65vw !important;top:20.0vh !important;width:18.4vw !important;height:40.2vh !important;
+            background:linear-gradient(180deg,#07111a,#050b11) !important;
+            border:1.5px solid rgba(35,180,240,.78) !important;border-radius:12px !important;
+            box-shadow:0 8px 18px rgba(0,0,0,.72),inset 0 0 13px rgba(0,0,0,.82),0 0 7px rgba(20,160,230,.12) !important;overflow:hidden !important;
+        }
         #cadran-saison-d>div:first-child{height:64% !important;background:linear-gradient(180deg,#0c1822,#071018) !important;padding:.65vw .9vw !important;align-items:center !important;}
         #cadran-saison-d>div:first-child>div:first-child{position:absolute !important;left:1vw !important;top:.9vh !important;z-index:4 !important;}
         #cadran-saison-d>div:first-child>div:first-child div:first-child{font-size:1.05vw !important;}
@@ -309,9 +106,13 @@
         #cadran-saison-d .soleil-realiste-css{width:3.5vw !important;height:3.5vw !important;}
         #cadran-saison-d>div:nth-child(2)>div:nth-child(2)>div:last-child{gap:.65vw !important;}
         #cadran-saison-d>div:nth-child(2)>div:nth-child(2)>div:last-child div div{font-size:.9vw !important;}
-        /* LUNE : grand panneau, même lune que dans le ciel */
-        #cadran-lune-d{right:1.65vw !important;top:62.2vh !important;width:18.4vw !important;height:25.8vh !important;padding:1.0vw 1.15vw !important;background:linear-gradient(180deg,#07111a,#050b11) !important;border:1.5px solid rgba(35,180,240,.78) !important;border-radius:12px !important;box-shadow:0 8px 18px rgba(0,0,0,.72),inset 0 0 13px rgba(0,0,0,.82),0 0 7px rgba(20,160,230,.12) !important;}
-        #cadran-lune-d>div:first-child>div:first-child{font-size:1.0vw !important;color:#fff !important;text-align:center !important;width:100%;}
+        #cadran-lune-d{
+            right:1.65vw !important;top:62.2vh !important;width:18.4vw !important;height:25.8vh !important;padding:1.0vw 1.15vw !important;
+            background:linear-gradient(180deg,#07111a,#050b11) !important;
+            border:1.5px solid rgba(35,180,240,.78) !important;border-radius:12px !important;
+            box-shadow:0 8px 18px rgba(0,0,0,.72),inset 0 0 13px rgba(0,0,0,.82),0 0 7px rgba(20,160,230,.12) !important;
+        }
+        #cadran-lune-d>div:first-child>div:first-child{font-size:1.0vw !important;color:#fff !important;text-shadow:none !important;text-align:center !important;width:100%;}
         #cadran-lune-d>div:first-child>div:nth-child(2){font-size:.72vw !important;line-height:1.45 !important;margin-top:.7vh !important;}
         #cadran-lune-d>div:first-child>div:nth-child(2) strong{font-size:.85vw !important;color:#ffb000 !important;}
         .lune-doree-image{width:6.8vw !important;height:6.8vw !important;flex:0 0 6.8vw !important;background-color:transparent !important;border:0 !important;box-shadow:0 0 18px rgba(255,255,255,.32) !important;}
@@ -321,7 +122,7 @@
         .carte-prev-unique{width:calc((100% - 2.1vw)/7) !important;height:27.0vh !important;margin-top:2.35vh !important;padding:.95vh .25vw !important;background:linear-gradient(180deg,#0b151e,#071019) !important;border:1px solid rgba(133,171,194,.38) !important;border-radius:6px !important;justify-content:space-between !important;}
         .prev-jour{font-size:.92vw !important;}
         .prev-date{font-size:.60vw !important;color:#d2d8dc !important;}
-        .prev-icon{height:6.2vh !important;flex:0 0 6.2vh !important;}
+        .prev-icon{height:6.2vh !important;display:flex;align-items:center;justify-content:center;flex:0 0 6.2vh !important;}
         .prev-icon svg{width:3.15vw !important;height:3.15vw !important;max-height:6.2vh !important;}
         .prev-max{font-size:1.42vw !important;}
         .prev-min{font-size:1.02vw !important;color:#35b9ff !important;}
@@ -335,506 +136,15 @@
         #back-precipitations{z-index:25 !important;}
         #front-particles{z-index:30 !important;}
         #lightning-flash{z-index:40 !important;}
-        /* à partir de V10, la lune du ciel garde exactement le même atlas que le cadre */
         #lune-vrai-photo,#lune-vrai-ciel{background-color:transparent !important;background-repeat:no-repeat !important;}
-
-            #zone-7-jours .carte-prev-unique{padding:1.0vh .2vw !important;border-radius:8px !important;}
+        #zone-7-jours .carte-prev-unique{padding:1.0vh .2vw !important;border-radius:8px !important;}
         #zone-7-jours .prev-jour{font-size:.90vw !important;}
         #zone-7-jours .prev-date{font-size:.58vw !important;}
         #zone-7-jours .prev-icon svg{width:3.1vw !important;height:3.1vw !important;}
         #zone-7-jours .prev-max{font-size:1.15vw !important;}
         #zone-7-jours .prev-min{font-size:1.02vw !important;color:#25b8f4 !important;}
         #zone-7-jours .prev-wind{font-size:.48vw !important;color:#e5edf2 !important;white-space:nowrap;}
-        
-/* ================= V13 : composition maquette + fond Les Peupliers ================= */
-#school-view-bg{
- position:fixed !important; inset:0 !important; width:100vw !important; height:100vh !important;
- display:block !important; z-index:0 !important; filter:none !important;
- background-image:url("fond-final.png") !important;
- background-repeat:no-repeat !important; background-position:center center !important;
- background-size:100% 100% !important;
-}
-#night-grade{
- position:fixed !important; inset:0 !important; width:100vw !important; height:100vh !important;
- object-fit:fill !important; z-index:0.6 !important; opacity:0 !important; mix-blend-mode:multiply !important;
- transition:opacity 8s ease-in-out !important; pointer-events:none !important;
-}
-#night-lights{
- position:fixed !important; inset:0 !important; width:100vw !important; height:100vh !important;
- object-fit:fill !important; z-index:0.7 !important; opacity:0 !important;
- transition:opacity 8s ease-in-out !important; pointer-events:none !important;
-}
-#brand-logo-protect,#brand-slogan-protect,#logo-ecran-principal,#slogan-ecran-principal{display:none !important;visibility:hidden !important;}
-#sky-gradient{z-index:1 !important;}
-#season-layer{z-index:2 !important;}
-#lune-vrai-ciel{z-index:4 !important;}
-#cloud-layer{z-index:5 !important;}
-#back-precipitations{z-index:7 !important;}
-#night-dimmer{z-index:8 !important;background:transparent !important;}
-#lightning-flash{z-index:9 !important;}
-#front-particles{z-index:40 !important;}
-
-/* Date : exactement la famille visuelle de la maquette */
-.boite-flip-haut{
- top:3.1vh !important;height:12vh !important;
- background:linear-gradient(180deg,#111820 0%,#070b10 68%,#030507 100%) !important;
- border:1.5px solid rgba(43,177,245,.92) !important;border-radius:9px !important;
- box-shadow:0 7px 18px rgba(0,0,0,.72),inset 0 0 11px rgba(0,0,0,.9),0 0 7px rgba(22,164,230,.22) !important;
-}
-#date-panel-jour{left:13.2vw !important;width:14.0vw !important;}
-#date-panel-num{left:27.5vw !important;width:7.3vw !important;}
-#date-panel-mois{left:35.0vw !important;width:15.0vw !important;}
-#date-panel-annee{left:50.4vw !important;width:7.6vw !important;}
-.boite-flip-haut .flip-tuile-js{
- font-size:2.05vw !important;padding-bottom:2.35vh !important;
- font-family:'Arial Narrow','Arial Black',Arial,sans-serif !important;
- text-shadow:0 2px 2px #000,0 0 1px rgba(255,255,255,.4) !important;
-}
-#date-jour::after,#date-num::after,#date-mois::after,#date-annee::after{
- bottom:.52vh !important;font-size:.47vw !important;color:#d8dee3 !important;letter-spacing:.85px !important;
-}
-.boite-flip-haut::after{height:2.65vh !important;}
-
-/* Analogique : taille de la maquette, pas la grosse horloge V12 */
-.montre-retro-cercle{
- right:19.0vw !important;top:1.0vh !important;width:12.1vw !important;height:12.1vw !important;
-}
-.graduation{transform-origin:50% 5.85vw !important;}
-.chiffre-container-js{transform-origin:50% 5.05vw !important;}
-.heure{height:2.25vw !important;}
-.minute{height:3.65vw !important;}
-.seconde{height:4.0vw !important;}
-
-/* Digitale : position/volume de la maquette */
-.boite-digitale-bas{
- right:1.65vw !important;top:3.2vh !important;width:13.9vw !important;height:9.5vh !important;
-}
-.heure-digitale-js{font-size:2.18vw !important;height:6.0vh !important;padding-bottom:.65vh !important;}
-.heure-digitale-labels{font-size:.40vw !important;}
-
-/* Météo actuelle : un peu moins haute pour dégager le bas */
-#cadran-meteo-g{
- left:1.1vw !important;top:19.4vh !important;width:27.8vw !important;height:37.0vh !important;
- padding:1.05vw !important;
-}
-
-/* Saison */
-#cadran-saison-d{
- right:1.9vw !important;top:20.4vh !important;width:18.2vw !important;height:40.0vh !important;
- overflow:hidden !important;
-}
-#cadran-saison-d > div:first-child{
- height:64% !important; min-height:64% !important; display:block !important;
- padding:.9vh 1.0vw !important; background:#071018 !important;
-}
-#cadran-saison-d > div:first-child > div:first-child{position:absolute !important;left:1.0vw !important;top:1.0vh !important;z-index:4 !important;}
-#cadran-saison-d > div:first-child > div:first-child > div:first-child{font-size:1.1vw !important;}
-#cadran-saison-d > div:first-child > div:first-child > div:last-child{font-size:1.75vw !important;margin-top:.3vh !important;}
-#cadran-saison-d .case-illustration-pommier{
- position:absolute !important;left:50% !important;top:7.2vh !important;transform:translateX(-50%) !important;
- width:13.8vw !important;height:19.5vh !important;background:transparent !important;border:0 !important;box-shadow:none !important;z-index:2 !important;
-}
-#season-tree-icon{width:100% !important;height:100% !important;background-size:contain !important;background-position:center !important;background-repeat:no-repeat !important;background-color:transparent !important;border:0 !important;box-shadow:none !important;}
-#cadran-saison-d > div:last-child{height:36% !important;min-height:36% !important;padding:.7vw 1.0vw .8vw !important;}
-#cadran-saison-d > div:last-child > div:first-child{font-size:1.0vw !important;}
-#cadran-saison-d .soleil-realiste-css{width:3.0vw !important;height:3.0vw !important;}
-#cadran-saison-d > div:last-child > div:nth-child(2){gap:1.2vw !important;}
-#cadran-saison-d > div:last-child > div:nth-child(2) > div:last-child{font-size:1vw !important;}
-
-/* Lune */
-#cadran-lune-d{
- right:1.9vw !important;bottom:13.8vh !important;width:18.2vw !important;height:24.0vh !important;
-}
-#lune-vrai-photo{width:6.5vw !important;height:6.5vw !important;background-color:transparent !important;}
-#lune-ombre-widget{display:none !important;}
-
-/* Prévisions : remontées et légèrement réduites pour préserver le slogan */
-#zone-7-jours{
- left:1.1vw !important;bottom:10.8vh !important;width:63.3vw !important;height:29.0vh !important;
- padding:2.7vh .55vw .7vh !important; box-sizing:border-box !important; overflow:hidden !important;
-}
-#zone-7-jours::before{top:.45vh !important;font-size:1.0vw !important;}
-#zone-7-jours .carte-prev-unique{padding:.75vh .2vw !important;height:calc(100% - 2.0vh) !important;min-height:0 !important;box-sizing:border-box !important;}
-#zone-7-jours .prev-icon svg{width:3.0vw !important;height:3.0vw !important;}
-#zone-7-jours .prev-max{font-size:1.15vw !important;}
-#zone-7-jours .prev-min{font-size:1.02vw !important;}
-#zone-7-jours .prev-wind{font-size:.48vw !important;}
-
-/* Protection du slogan : aucun effet décoratif ne doit le recouvrir */
-#brand-slogan-protect{display:none !important;}
-
-
-/* V13 : éclairage nocturne doux, sans voile noir */
-#night-grade,#night-lights{will-change:opacity;}
-#night-lights{mix-blend-mode:screen !important;}
-#lamp-glow{z-index:0.8 !important;pointer-events:none !important;opacity:0;}
-
-/* V15 FINAL FIXES */
-#school-view-bg{background:url("fond-final.png") center center / 100% 100% no-repeat !important;z-index:0 !important;}
-#night-grade{z-index:.6 !important;pointer-events:none !important;}
-#night-lights{z-index:.7 !important;pointer-events:none !important;}
-#lune-vrai-ciel{display:none;overflow:hidden;}
-#lune-vrai-photo{overflow:hidden;}
-#zone-7-jours{box-sizing:border-box !important;overflow:hidden !important;}
-#zone-7-jours .carte-prev-unique{box-sizing:border-box !important;overflow:hidden !important;}
-
-/* ================= V17 : fond réel + maquette strictement reprise ================= */
-html,body{background:#000 !important;}
-body{background-image:none !important;}
-
-/* Le fond de l'école est une vraie image, jamais une image de remplacement opaque. */
-#school-view-bg{
-  position:fixed !important; inset:0 !important;
-  width:100vw !important; height:100vh !important;
-  display:block !important;
-  object-fit:fill !important;
-  z-index:0 !important;
-  background:none !important;
-  filter:none !important;
-}
-
-/* Effet nuit naturel : simple ambiance colorimétrique semi-transparente,
-   laissant visibles bâtiment, arbres, logo et slogan. */
-#night-atmosphere{
-  position:fixed !important; inset:0 !important;
-  width:100vw !important; height:100vh !important;
-  z-index:.6 !important; pointer-events:none !important;
-  opacity:0 !important;
-  background:
-    radial-gradient(ellipse at 50% 28%,rgba(16,42,78,.10),transparent 52%),
-    linear-gradient(to bottom,rgba(2,13,32,.42),rgba(3,17,31,.20) 58%,rgba(0,7,15,.16) 100%) !important;
-  mix-blend-mode:multiply !important;
-  transition:opacity 8s ease-in-out !important;
-}
-
-/* Lumières chaudes des fenêtres : couche transparente, jamais de fond noir. */
-#night-lights{
-  position:fixed !important; inset:0 !important;
-  width:100vw !important; height:100vh !important;
-  z-index:.75 !important; pointer-events:none !important;
-  opacity:0 !important;
-  background:
-    radial-gradient(ellipse 5vw 3vh at 73.8% 48.7%,rgba(255,190,70,.55),transparent 70%),
-    radial-gradient(ellipse 4vw 2.5vh at 78.8% 48.9%,rgba(255,174,55,.48),transparent 70%),
-    radial-gradient(ellipse 3vw 2vh at 69.2% 48.8%,rgba(255,204,100,.38),transparent 70%) !important;
-  mix-blend-mode:screen !important;
-  transition:opacity 8s ease-in-out !important;
-}
-
-/* ciel : le masque ne touche qu'au ciel */
-#sky-gradient{
-  z-index:1 !important;
-  -webkit-mask-image:url("assets/sky-mask-v21.png") !important;
-  mask-image:url("assets/sky-mask-v21.png") !important;
-  -webkit-mask-size:100% 100% !important;
-  mask-size:100% 100% !important;
-  -webkit-mask-repeat:no-repeat !important;
-  mask-repeat:no-repeat !important;
-}
-
-/* Tous les effets restent derrière les cadres et le branding intégré au fond. */
-#season-layer{z-index:2 !important;}
-#lune-vrai-ciel{z-index:4 !important;}
-#cloud-layer{z-index:5 !important;}
-#back-precipitations{z-index:7 !important;}
-#lightning-flash{z-index:9 !important;}
-#front-particles{z-index:40 !important;}
-#logo-ecran-principal,#slogan-ecran-principal{display:none !important;}
-
-/* DATE : mêmes proportions/encadrements que la maquette */
-.boite-flip-haut{
-  top:3.0vh !important;height:12.0vh !important;
-  background:linear-gradient(180deg,#111820 0%,#070b10 68%,#030507 100%) !important;
-  border:1.5px solid rgba(43,177,245,.92) !important;
-  border-radius:9px !important;
-  box-shadow:0 7px 18px rgba(0,0,0,.72),inset 0 0 11px rgba(0,0,0,.90),0 0 7px rgba(22,164,230,.22) !important;
-}
-#date-panel-jour{left:13.2vw !important;width:14.0vw !important;}
-#date-panel-num{left:27.5vw !important;width:7.3vw !important;}
-#date-panel-mois{left:35.0vw !important;width:15.0vw !important;}
-#date-panel-annee{left:50.4vw !important;width:7.6vw !important;}
-.boite-flip-haut .flip-tuile-js{
-  font-size:2.05vw !important;padding-bottom:2.35vh !important;
-  font-family:'Arial Narrow','Arial Black',Arial,sans-serif !important;
-  text-shadow:0 2px 2px #000,0 0 1px rgba(255,255,255,.4) !important;
-}
-#date-jour::after,#date-num::after,#date-mois::after,#date-annee::after{
-  bottom:.52vh !important;font-size:.47vw !important;color:#d8dee3 !important;letter-spacing:.85px !important;
-}
-
-/* HORLOGE ANALOGIQUE : taille de la maquette */
-.montre-retro-cercle{
-  right:18.8vw !important;top:1.0vh !important;
-  width:12.0vw !important;height:12.0vw !important;
-  background:radial-gradient(circle at 50% 45%,#080b0e 0%,#000 72%,#000 100%) !important;
-  border:1.8px solid #263340 !important;
-}
-.graduation{background:#c1c8ce !important;opacity:.72 !important;}
-.graduation.principale{background:#fff !important;opacity:1 !important;}
-.chiffre-container-js{transform-origin:50% 6.0vw !important;}
-.chiffre-cadran-fixe{font-size:.91vw !important;color:#fff !important;}
-.heure{width:4px !important;height:3.0vw !important;background:#f4f7fa !important;}
-.minute{width:3px !important;height:4.75vw !important;background:#f4f7fa !important;}
-.seconde{width:1.5px !important;height:5.15vw !important;background:#b8ff00 !important;}
-.pivot{width:10px !important;height:10px !important;background:#b8ff00 !important;}
-
-/* HORLOGE DIGITALE : même panneau que la maquette */
-.boite-digitale-bas{
-  right:1.65vw !important;top:3.2vh !important;
-  width:13.9vw !important;height:9.5vh !important;
-  background:linear-gradient(180deg,#111820 0%,#070b10 68%,#030507 100%) !important;
-  border:1.5px solid rgba(43,177,245,.92) !important;border-radius:9px !important;
-}
-.heure-digitale-js{
-  font-size:2.18vw !important;height:6.0vh !important;padding-bottom:.65vh !important;
-  font-family:'Arial Narrow','Arial Black',Arial,sans-serif !important;
-}
-.heure-digitale-labels{font-size:.40vw !important;}
-
-/* METEO : format maquette */
-#cadran-meteo-g{
-  left:1.1vw !important;top:19.4vh !important;
-  width:27.8vw !important;height:35.6vh !important;
-  padding:1.05vw !important;
-  background:linear-gradient(180deg,#08131d,#061019) !important;
-  border:1.5px solid rgba(35,180,240,.78) !important;border-radius:12px !important;
-  overflow:hidden !important;
-}
-#cadran-meteo-g .current-weather-icon{width:6.0vw !important;height:6.0vw !important;flex:0 0 6.0vw !important;}
-#cadran-meteo-g .current-weather-icon svg{width:6.0vw !important;height:6.0vw !important;}
-#cadran-meteo-g #courant-temp{font-size:4.0vw !important;}
-#cadran-meteo-g #courant-ressenti{font-size:.95vw !important;}
-#cadran-meteo-g #courant-desc{font-size:1.0vw !important;}
-
-/* SAISON : vrai arbre local, grande illustration */
-#cadran-saison-d{
-  right:1.9vw !important;top:20.4vh !important;
-  width:18.2vw !important;height:40.0vh !important;
-  background:linear-gradient(180deg,#07111a,#050b11) !important;
-  overflow:hidden !important;
-}
-#cadran-saison-d>div:first-child{
-  height:64% !important;min-height:64% !important;display:block !important;
-  padding:.9vh 1.0vw !important;background:#071018 !important;
-}
-#cadran-saison-d>div:first-child>div:first-child{
-  position:absolute !important;left:1.0vw !important;top:1.0vh !important;z-index:4 !important;
-}
-#cadran-saison-d>div:first-child>div:first-child>div:first-child{font-size:1.1vw !important;}
-#cadran-saison-d>div:first-child>div:first-child>div:last-child{font-size:1.75vw !important;}
-.case-illustration-pommier{
-  position:absolute !important;left:2.0vw !important;top:7.0vh !important;
-  width:14.2vw !important;height:19.5vh !important;
-  display:flex !important;align-items:flex-end !important;justify-content:center !important;
-  background:transparent !important;border:0 !important;box-shadow:none !important;z-index:2 !important;
-}
-#season-tree-icon{
-  display:block !important;width:100% !important;height:100% !important;
-  object-fit:contain !important;object-position:center bottom !important;
-  background:transparent !important;border:0 !important;
-}
-#cadran-saison-d>div:last-child{height:36% !important;min-height:36% !important;padding:.7vw 1.0vw .8vw !important;}
-#cadran-saison-d .soleil-realiste-css{width:3.0vw !important;height:3.0vw !important;}
-
-/* LUNE : même phase réaliste que dans le ciel */
-#cadran-lune-d{
-  right:1.9vw !important;bottom:13.8vh !important;
-  width:18.2vw !important;height:24.0vh !important;
-  padding:1.0vw 1.15vw !important;
-}
-#lune-vrai-photo{
-  width:6.7vw !important;height:6.7vw !important;flex:0 0 6.7vw !important;
-  background-color:transparent !important;background-repeat:no-repeat !important;
-  background-size:contain !important;background-position:center !important;
-  border:0 !important;box-shadow:0 0 18px rgba(255,255,255,.30) !important;
-}
-#lune-ombre-widget{display:none !important;}
-#lune-vrai-ciel{
-  width:5.3vw !important;height:5.3vw !important;
-  border-radius:50% !important;background-color:transparent !important;
-  background-repeat:no-repeat !important;background-size:contain !important;background-position:center !important;
-  border:0 !important;box-shadow:0 0 18px rgba(255,255,255,.34) !important;
-}
-
-/* PREVISIONS : 7 cartes strictement contenues dans le grand cadre */
-#zone-7-jours{
-  left:1.1vw !important;bottom:10.8vh !important;
-  width:63.3vw !important;height:29.0vh !important;
-  padding:2.7vh .55vw .7vh !important;
-  display:flex !important;gap:.35vw !important;
-  justify-content:space-between !important;align-items:stretch !important;
-  box-sizing:border-box !important;overflow:hidden !important;
-}
-#zone-7-jours::before{top:.45vh !important;font-size:1.0vw !important;}
-#zone-7-jours .carte-prev-unique{
-  flex:1 1 0 !important;width:auto !important;min-width:0 !important;
-  height:calc(100% - 2.0vh) !important;margin-top:2.0vh !important;
-  padding:.75vh .15vw !important;box-sizing:border-box !important;
-  overflow:hidden !important;
-}
-#zone-7-jours .prev-icon{height:6.2vh !important;flex:0 0 6.2vh !important;}
-#zone-7-jours .prev-icon svg{width:3.15vw !important;height:3.15vw !important;max-height:6.2vh !important;}
-#zone-7-jours .prev-max{font-size:1.15vw !important;}
-#zone-7-jours .prev-min{font-size:1.02vw !important;color:#25b8f4 !important;}
-#zone-7-jours .prev-wind{font-size:.48vw !important;white-space:nowrap !important;}
-
-/* aucun texte de description météo sous les pictogrammes */
-#zone-7-jours .prev-desc,#zone-7-jours .prev-description{display:none !important;}
-
-
-/* ================= V18 : REFERENCE MAQUETTE + FOND LES PEUPLIERS ================= */
-html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#000 !important;}
-body{background-image:url("fond-final.png") !important;background-position:center center !important;background-repeat:no-repeat !important;background-size:100% 100% !important;}
-#school-view-bg{position:fixed !important;inset:0 !important;width:100vw !important;height:100vh !important;z-index:0 !important;background:url("fond-final.png") center center / 100% 100% no-repeat !important;display:block !important;pointer-events:none !important;}
-#night-atmosphere{z-index:.6 !important;mix-blend-mode:multiply !important;}
-#night-lights{z-index:.7 !important;mix-blend-mode:screen !important;}
-#sky-gradient{z-index:1 !important;}
-#season-layer{z-index:2 !important;}
-#lune-vrai-ciel{z-index:4 !important;}
-#cloud-layer{z-index:5 !important;}
-#back-precipitations{z-index:7 !important;}
-#lightning-flash{z-index:9 !important;}
-#front-particles{z-index:40 !important;}
-#logo-ecran-principal,#slogan-ecran-principal,#brand-logo-protect,#brand-slogan-protect{display:none !important;visibility:hidden !important;}
-/* Date : proportions de la maquette */
-.boite-flip-haut{top:3.0vh !important;height:12.0vh !important;background:linear-gradient(180deg,#101820 0%,#05080d 72%,#020406 100%) !important;border:1.5px solid rgba(43,177,245,.92) !important;border-radius:9px !important;box-shadow:0 7px 18px rgba(0,0,0,.72),inset 0 0 11px rgba(0,0,0,.9),0 0 7px rgba(22,164,230,.22) !important;overflow:hidden !important;}
-#date-panel-jour{left:13.1vw !important;width:14.0vw !important;}
-#date-panel-num{left:27.5vw !important;width:7.4vw !important;}
-#date-panel-mois{left:35.0vw !important;width:15.2vw !important;}
-#date-panel-annee{left:50.4vw !important;width:7.7vw !important;}
-.boite-flip-haut .flip-tuile-js{font-family:'Arial Narrow','Arial Black',Arial,sans-serif !important;font-size:2.08vw !important;font-weight:900 !important;padding-bottom:2.25vh !important;color:#fff !important;text-shadow:0 2px 2px #000 !important;}
-#date-jour::after,#date-num::after,#date-mois::after,#date-annee::after{bottom:.5vh !important;color:#dce2e6 !important;font-size:.47vw !important;}
-/* Analog clock */
-.montre-retro-cercle{right:17.9vw !important;top:1.0vh !important;width:13.0vw !important;height:13.0vw !important;background:#000 !important;border:1.8px solid #303b46 !important;border-radius:50% !important;box-shadow:0 7px 18px rgba(0,0,0,.8),inset 0 0 0 1px rgba(255,255,255,.08) !important;}
-.graduation{width:2px !important;height:7px !important;background:#d9e0e5 !important;opacity:.75 !important;top:3px !important;transform-origin:50% 6.2vw !important;}
-.graduation.principale{width:3px !important;height:11px !important;background:#fff !important;}
-.chiffre-container-js{width:1.8vw !important;height:1.8vw !important;top:10px !important;margin-left:-.9vw !important;transform-origin:50% 5.6vw !important;}
-.chiffre-cadran-fixe{font-size:.88vw !important;color:#fff !important;font-family:'Arial Black',Arial,sans-serif !important;}
-.aiguille.heure{width:4px !important;height:3.1vw !important;background:#f4f7fa !important;}
-.aiguille.minute{width:3px !important;height:4.7vw !important;background:#f4f7fa !important;}
-.aiguille.seconde{width:1.6px !important;height:5.05vw !important;background:#b7ff00 !important;}
-.pivot{width:10px !important;height:10px !important;background:#b7ff00 !important;box-shadow:0 0 7px rgba(183,255,0,.75) !important;}
-/* Digital */
-.boite-digitale-bas{right:1.9vw !important;top:3.2vh !important;width:14.1vw !important;height:9.7vh !important;background:linear-gradient(180deg,#101820,#05080d) !important;border:1.5px solid rgba(43,177,245,.92) !important;border-radius:9px !important;box-shadow:0 7px 18px rgba(0,0,0,.72),inset 0 0 11px rgba(0,0,0,.9),0 0 7px rgba(22,164,230,.22) !important;}
-.heure-digitale-js{font-size:2.18vw !important;height:6.1vh !important;padding-bottom:.65vh !important;font-family:'Arial Narrow','Arial Black',Arial,sans-serif !important;font-weight:900 !important;}
-.heure-digitale-labels{font-size:.40vw !important;color:#d0d8de !important;}
-/* Current weather */
-#cadran-meteo-g{left:1.1vw !important;top:19.5vh !important;width:28.4vw !important;height:36.2vh !important;padding:1.05vw !important;background:linear-gradient(180deg,#07131e,#051019) !important;border:1.5px solid rgba(35,180,240,.82) !important;border-radius:12px !important;box-shadow:0 8px 18px rgba(0,0,0,.72),inset 0 0 13px rgba(0,0,0,.82),0 0 7px rgba(20,160,230,.12) !important;overflow:hidden !important;}
-#cadran-meteo-g>div:first-child{text-align:center !important;font-size:1.04vw !important;}
-#cadran-meteo-g>div:nth-child(2){text-align:center !important;font-size:.72vw !important;margin-bottom:1vh !important;}
-#cadran-meteo-g .current-weather-icon{width:7.2vw !important;height:6.4vw !important;flex:0 0 7.2vw !important;display:flex !important;align-items:center !important;justify-content:center !important;overflow:visible !important;}
-#cadran-meteo-g .weather-art-large{width:7.2vw !important;height:6.4vw !important;object-fit:contain !important;display:block !important;}
-#cadran-meteo-g #courant-temp{font-size:3.9vw !important;}
-#cadran-meteo-g #courant-ressenti{font-size:.92vw !important;}
-#cadran-meteo-g #courant-desc{font-size:.98vw !important;}
-#cadran-meteo-g .meteo-label{font-size:.51vw !important;}
-#cadran-meteo-g .meteo-value{font-size:.92vw !important;}
-/* Season */
-#cadran-saison-d{right:1.9vw !important;top:19.6vh !important;width:18.1vw !important;height:40.5vh !important;background:linear-gradient(180deg,#07131e,#050b10) !important;border:1.5px solid rgba(35,180,240,.82) !important;border-radius:12px !important;overflow:hidden !important;}
-#cadran-saison-d>div:first-child{height:65% !important;background:#07131e !important;padding:.8vh 1vw !important;position:relative !important;display:block !important;}
-#cadran-saison-d>div:first-child>div:first-child{position:absolute !important;left:1vw !important;top:.8vh !important;z-index:5 !important;}
-#cadran-saison-d>div:first-child>div:first-child>div:first-child{font-size:1.05vw !important;}
-#cadran-saison-d>div:first-child>div:first-child>div:last-child{font-size:1.72vw !important;margin-top:.25vh !important;}
-#cadran-saison-d .case-illustration-pommier{position:absolute !important;left:50% !important;top:5.7vh !important;transform:translateX(-50%) !important;width:15.0vw !important;height:21vh !important;z-index:2 !important;background:transparent !important;}
-#season-tree-icon{display:block !important;width:100% !important;height:100% !important;background-repeat:no-repeat !important;background-position:center !important;background-size:contain !important;}
-#cadran-saison-d>div:last-child{height:35% !important;padding:.75vw 1vw !important;background:#061018 !important;}
-#cadran-saison-d .soleil-realiste-css{width:3.2vw !important;height:3.2vw !important;background:url('assets/reference/sun.png') center/contain no-repeat !important;box-shadow:none !important;}
-/* Moon */
-#cadran-lune-d{right:1.9vw !important;bottom:13.8vh !important;width:18.1vw !important;height:24.0vh !important;background:linear-gradient(180deg,#07131e,#050b10) !important;border:1.5px solid rgba(35,180,240,.82) !important;border-radius:12px !important;overflow:hidden !important;}
-#lune-vrai-photo{width:7.0vw !important;height:7.0vw !important;background-color:transparent !important;background-size:contain !important;background-position:center !important;background-repeat:no-repeat !important;border-radius:50% !important;box-shadow:0 0 18px rgba(210,225,240,.18) !important;}
-/* Forecast */
-#zone-7-jours{left:1.1vw !important;bottom:4.0vh !important;width:63.4vw !important;height:31.5vh !important;padding:2.75vh .55vw .65vh !important;display:flex !important;gap:.35vw !important;justify-content:space-between !important;align-items:stretch !important;background:linear-gradient(180deg,rgba(5,14,21,.96),rgba(3,9,14,.98)) !important;border:1.5px solid rgba(35,180,240,.82) !important;border-radius:12px !important;box-shadow:0 8px 18px rgba(0,0,0,.72),inset 0 0 13px rgba(0,0,0,.82),0 0 7px rgba(20,160,230,.12) !important;box-sizing:border-box !important;overflow:hidden !important;}
-#zone-7-jours::before{content:'PRÉVISIONS SUR 7 JOURS' !important;position:absolute !important;left:0 !important;right:0 !important;top:.45vh !important;text-align:center !important;color:#fff !important;font-size:1.0vw !important;font-weight:900 !important;}
-#zone-7-jours .carte-prev-unique{width:calc((100% - 2.1vw)/7) !important;height:100% !important;min-width:0 !important;padding:1vh .15vw !important;display:flex !important;flex-direction:column !important;justify-content:space-around !important;align-items:center !important;background:#07131c !important;border:1px solid #294355 !important;border-radius:8px !important;box-sizing:border-box !important;overflow:hidden !important;}
-#zone-7-jours .prev-jour{font-size:.94vw !important;}
-#zone-7-jours .prev-date{font-size:.58vw !important;}
-#zone-7-jours .prev-icon{height:7.0vh !important;flex:0 0 7.0vh !important;width:100% !important;display:flex !important;align-items:center !important;justify-content:center !important;}
-#zone-7-jours .prev-icon .weather-art{width:6.0vw !important;height:5.7vh !important;object-fit:contain !important;display:block !important;}
-#zone-7-jours .prev-max{font-size:1.18vw !important;color:#fff !important;}
-#zone-7-jours .prev-min{font-size:1.02vw !important;color:#20b7f5 !important;}
-#zone-7-jours .prev-wind{font-size:.48vw !important;color:#e7eef3 !important;}
-#zone-7-jours .prev-desc,#zone-7-jours .prev-description{display:none !important;}
-/* No decorative stars over the logo/slogan: mask strictly to sky */
-.stars{-webkit-mask-image:url('assets/sky-mask-v21.png') !important;mask-image:url('assets/sky-mask-v21.png') !important;-webkit-mask-size:100% 100% !important;mask-size:100% 100% !important;}
-
-
-/* V19.1 : lune réellement graphique, issue des phases lunaires réalistes locales. */
-#lune-vrai-photo, #lune-vrai-ciel{
-  background-image:none !important;
-  background-color:transparent !important;
-  background-repeat:no-repeat !important;
-  background-position:center !important;
-  background-size:contain !important;
-}
-#lune-vrai-photo{overflow:visible !important;}
-#lune-vrai-ciel{overflow:visible !important;}
-/* V19 : cadran analogique basé sur le cadran graphique de la maquette de référence. */
-.montre-retro-cercle{
-  right:17.9vw !important; top:1.0vh !important;
-  width:12.0vw !important; height:12.0vw !important;
-  background:#000 url('assets/reference/clock-face-clean.png') center/contain no-repeat !important;
-  border:0 !important; box-shadow:none !important;
-  overflow:visible !important;
-}
-.montre-retro-cercle .graduation,.montre-retro-cercle .chiffre-container-js{display:none !important;}
-.montre-retro-cercle .aiguille.heure{width:3px !important;height:3.0vw !important;background:#f4f7fa !important;box-shadow:0 0 2px rgba(255,255,255,.55);}
-.montre-retro-cercle .aiguille.minute{width:2.5px !important;height:4.35vw !important;background:#f4f7fa !important;box-shadow:0 0 2px rgba(255,255,255,.55);}
-.montre-retro-cercle .aiguille.seconde{width:1.4px !important;height:4.65vw !important;background:#b7ff00 !important;box-shadow:0 0 3px rgba(183,255,0,.65);}
-.montre-retro-cercle .pivot{width:9px !important;height:9px !important;background:#b7ff00 !important;box-shadow:0 0 7px rgba(183,255,0,.8) !important;}
-/* Le fond reste identique : ces deux copies transparentes ne font que protéger les pixels du logo/slogan pendant la nuit. */
-#brand-logo-protect,#brand-slogan-protect{position:fixed !important;pointer-events:none !important;background-image:url('fond-final.png') !important;background-repeat:no-repeat !important;background-size:100vw 100vh !important;z-index:0.65 !important;display:block !important;}
-#brand-logo-protect{left:0 !important;top:0 !important;width:14.2vw !important;height:24.5vh !important;background-position:0 0 !important;}
-#brand-slogan-protect{left:7.2vw !important;bottom:0 !important;width:80vw !important;height:11.5vh !important;background-position:calc(-7.2vw) calc(100vh - 11.5vh) !important;}
-
-
-/* V20 : illustrations locales explicites — aucune image météo/lune/arbre ne dépend d'un SVG ou d'un background CSS. */
-#season-tree-img{display:block !important;width:100% !important;height:100% !important;object-fit:contain !important;object-position:center bottom !important;filter:drop-shadow(0 3px 5px rgba(0,0,0,.45)) !important;}
-#lune-vrai-photo{display:flex !important;align-items:center !important;justify-content:center !important;background:transparent !important;}
-#lune-panel-img{display:block !important;width:100% !important;height:100% !important;object-fit:contain !important;object-position:center !important;}
-#lune-vrai-ciel{display:none;align-items:center !important;justify-content:center !important;background:transparent !important;overflow:visible !important;border:0 !important;box-shadow:none !important;}
-#lune-ciel-img{display:block !important;width:100% !important;height:100% !important;object-fit:contain !important;object-position:center !important;}
-.current-weather-icon img.weather-art-large{display:block !important;width:100% !important;height:100% !important;object-fit:contain !important;}
-.prev-icon img.weather-art{display:block !important;width:6vw !important;height:5.7vh !important;object-fit:contain !important;}
-/* La vraie image de cadran reste visible si le navigateur applique les règles précédentes. */
-.montre-retro-cercle{background:#000 url('assets/reference/clock-face-clean.png') center/contain no-repeat !important;}
-
-
-/* ================= V21 : finition visuelle fidèle à la maquette ================= */
-/* Le ciel doit aussi recouvrir les petites ouvertures bleues entre les arbres. */
-#sky-gradient,#cloud-layer,.stars{
-  -webkit-mask-image:url("assets/sky-mask-v21.png") !important;
-  mask-image:url("assets/sky-mask-v21.png") !important;
-  -webkit-mask-size:100% 100% !important; mask-size:100% 100% !important;
-  -webkit-mask-repeat:no-repeat !important; mask-repeat:no-repeat !important;
-}
-/* Logo et slogan intégrés du fond : copies au-dessus des effets nocturnes. */
-#brand-logo-protect,#brand-slogan-protect{z-index:50 !important;display:block !important;visibility:visible !important;background-repeat:no-repeat !important;background-size:100% 100% !important;}
-#brand-logo-protect{left:0 !important;top:0 !important;width:14.0vw !important;height:24.7vh !important;background-image:url("assets/reference/logo-protect.png") !important;background-position:center !important;}
-#brand-slogan-protect{left:7.8vw !important;bottom:0 !important;width:82.8vw !important;height:8.0vh !important;background-image:url("assets/reference/slogan-protect.png") !important;background-position:center !important;}
-/* Date : même famille de cadres, légèrement décalée pour ne jamais rogner le logo. */
-#date-panel-jour{left:14.2vw !important;width:13.9vw !important;}
-#date-panel-num{left:28.35vw !important;width:7.4vw !important;}
-#date-panel-mois{left:35.9vw !important;width:15.2vw !important;}
-#date-panel-annee{left:51.35vw !important;width:7.7vw !important;}
-/* Horloge : une seule image de cadran, sans les anciennes aiguilles imprimées. */
-.montre-retro-cercle{
-  right:17.9vw !important;top:1.0vh !important;width:12.0vw !important;height:12.0vw !important;
-  background:#000 url("assets/reference/clock-face-dynamic.png") center/contain no-repeat !important;
-  border:0 !important;box-shadow:none !important;overflow:visible !important;
-}
-.montre-retro-cercle .graduation,.montre-retro-cercle .chiffre-container-js{display:none !important;}
-/* Aiguilles uniques et centrées sur le cadran de référence. */
-.montre-retro-cercle .aiguille.heure{width:3px !important;height:2.95vw !important;}
-.montre-retro-cercle .aiguille.minute{width:2.5px !important;height:4.25vw !important;}
-.montre-retro-cercle .aiguille.seconde{width:1.4px !important;height:4.55vw !important;}
-/* Arbres : conserver leurs couleurs natives, sans fausses rotations de teinte. */
-.season-tree-spring,.season-tree-summer,.season-tree-autumn,.season-tree-winter{filter:drop-shadow(0 3px 5px rgba(0,0,0,.45)) !important;}
-#season-tree-img{filter:drop-shadow(0 3px 5px rgba(0,0,0,.45)) !important;}
-/* Lune du panneau plus proche de la maquette. */
-#lune-vrai-photo{width:7.0vw !important;height:7.0vw !important;flex:0 0 7.0vw !important;box-shadow:0 0 18px rgba(255,255,255,.24) !important;}
-#lune-panel-img{width:100% !important;height:100% !important;object-fit:contain !important;}
-
-</style>
+    </style>
 </head>
 <body>
     <div id="season-layer"><img id="season-weather-overlay" alt=""><div id="season-ground"></div><div id="winter-snow"></div></div>
@@ -850,17 +160,15 @@ body{background-image:url("fond-final.png") !important;background-position:cente
     <div id="cloud-layer"></div> <div id="lightning-flash"></div> <div id="back-precipitations"></div> <div id="front-particles"></div>
     
     <div id="logo-ecran-principal"></div>
-
-    <div class="pos boite-flip-haut" id="date-panel-jour" style="left: 17.5vw; top: 2.5vh; width: 15.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-jour">--</div><div class="charniere-droite"></div></div>
-    <div class="pos boite-flip-haut" id="date-panel-num" style="left: 34.5vw; top: 2.5vh; width: 7.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-num">--</div><div class="charniere-droite"></div></div>
-    <div class="pos boite-flip-haut" id="date-panel-mois" style="left: 43.5vw; top: 2.5vh; width: 23.5vw; height: 10vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-mois">--</div><div class="charniere-droite"></div></div>
-    <div class="pos boite-flip-haut" id="date-panel-annee" style="left: 51.9vw; top: 2.5vh; width: 7.8vw; height: 12vh;"><div class="charniere-gauche"></div><div class="flip-tuile-js" id="date-annee">----</div><div class="charniere-droite"></div></div>
+    <div class="pos boite-flip-haut" id="date-panel-jour"><div class="flip-tuile-js" id="date-jour">--</div></div>
+    <div class="pos boite-flip-haut" id="date-panel-num"><div class="flip-tuile-js" id="date-num">--</div></div>
+    <div class="pos boite-flip-haut" id="date-panel-mois"><div class="flip-tuile-js" id="date-mois">--</div></div>
+    <div class="pos boite-flip-haut" id="date-panel-annee"><div class="flip-tuile-js" id="date-annee">----</div></div>
 
     <div class="montre-retro-cercle" id="cadran-montre">
         <div class="pivot"></div> <div class="aiguille heure" id="needle-hour"></div> <div class="aiguille minute" id="needle-minute"></div> <div class="aiguille seconde" id="needle-second"></div>
     </div>
-    <div class="boite-digitale-bas"><div class="charniere-gauche"></div><div class="heure-digitale-js" id="horloge-texte">--:--:--</div><div class="heure-digitale-labels"><span>HEURES</span><span>MINUTES</span><span>SECONDES</span></div><div class="charniere-droite"></div></div>
-    
+    <div class="boite-digitale-bas"><div class="heure-digitale-js" id="horloge-texte">--:--:--</div></div>
     <div class="cadran-relief-bleu" id="cadran-meteo-g" style="position: absolute; left: 1.5vw; top: 25vh; width: 28.5vw; height: 35vh; padding: 1.3vw; color: #ffffff;">
         <div style="font-size: 1.1vw; color: #ffffff; font-weight: bold; margin-bottom: 2px; text-align: left;">Marloie (Marche-en-Famenne)</div>
         <div style="font-size: 0.75vw; color: #aaaaaa; text-transform: uppercase; margin-bottom: 1.2vh; letter-spacing: 1px;">MÉTÉO ACTUELLE</div>
@@ -879,7 +187,7 @@ body{background-image:url("fond-final.png") !important;background-position:cente
             <div class="meteo-stat"><div class="meteo-label">💧 PRÉCIP.</div><div class="meteo-value" id="courant-precip">-- mm</div></div>
         </div>
         <div id="weather-updated" style="font-size:.55vw;color:#8f9aa7;margin-top:.55vh;text-align:right;"></div>
-        <div id="open-meteo-credit" style="font-size:.45vw;color:#687581;text-align:right;margin-top:.15vh;">Données météo : <a href="https://open-meteo.com/" target="_blank" rel="noopener" style="color:#7d8d9b;text-decoration:none;">Open-Meteo</a></div>
+        <div id="open-meteo-credit" style="font-size:.45vw;color:#687581;text-align:right;margin-top:.15vh;">Données météo : <a href="https://open-meteo.com" target="_blank" rel="noopener" style="color:#7d8d9b;text-decoration:none;">Open-Meteo</a></div>
     </div>
     <div class="cadran-relief-noir-bloc" id="cadran-saison-d" style="position: absolute; right: 2vw; top: 45.5vh; width: 17vw; height: 28vh; display: flex; flex-direction: column; justify-content: space-between;">
         <div style="display: flex; justify-content: space-between; align-items: center; height: 46%; background: #121b24; padding: 0.5vw 1.2vw; position: relative;">
@@ -902,7 +210,6 @@ body{background-image:url("fond-final.png") !important;background-position:cente
             </div>
         </div>
     </div>
-
     <div class="cadran-relief-noir-bloc" id="cadran-lune-d" style="position: absolute; right: 2vw; top: 75vh; width: 17vw; height: 17vh; padding: 1.1vw 1.2vw; display: flex; justify-content: space-between; align-items: center; font-family:'Arial'; font-weight:bold;">
         <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; text-align: left;">
             <div style="font-size: 1.1vw; color: #8ad400; font-weight: bold; letter-spacing: 0.5px; font-family:'Arial Black';">LUNE</div>
@@ -915,7 +222,6 @@ body{background-image:url("fond-final.png") !important;background-position:cente
     </div>
     
     <div style="position: absolute; left: 1.5vw; bottom: 10.2vh; width: 77.5vw; height: 20.5vh; display: flex !important; justify-content: space-between !important; z-index: 99999 !important; overflow: visible !important;" id="zone-7-jours"></div>
-
     <script>
         let vitesseVentActuelle=11, windDirectionActuelle=0, currentSaison="ÉTÉ", weatherDescriptionGlobal="Ciel dégagé", currentWeatherCode=0, isDay=true, weatherData=null;
         const $=id=>document.getElementById(id);
@@ -1013,7 +319,7 @@ body{background-image:url("fond-final.png") !important;background-position:cente
         }
         function dirText(deg){const dirs=['N','NE','E','SE','S','SO','O','NO'];return dirs[Math.round(deg/45)%8]}
         function executerMeteo(){
-          const u='https://api.open-meteo.com/v1/forecast?latitude=50.20&longitude=5.31&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m,wind_gusts_10m,uv_index,precipitation,rain,showers,snowfall,cloud_cover,is_day&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,uv_index_max,precipitation_sum,snowfall_sum,wind_speed_10m_max,wind_direction_10m_dominant&forecast_days=7&timezone=Europe%2FBrussels';
+          const u='https://open-meteo.com';
           fetch(u,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('API météo '+r.status);return r.json()}).then(data=>{
             weatherData=data; localStorage.setItem('lesPeupliersWeather',JSON.stringify({savedAt:Date.now(),data:data})); appliquerDonneesMeteo(data,false);
           }).catch(err=>{
@@ -1145,7 +451,6 @@ body{background-image:url("fond-final.png") !important;background-position:cente
           const halo=document.createElement('div'); halo.className='lightning-halo strike'; halo.style.setProperty('--strike-x',x+'vw'); halo.style.setProperty('--strike-y',y+'vh'); host.appendChild(halo);
           setTimeout(()=>{host.innerHTML=''; if(currentWeatherCode>=95) lightningTimer=setTimeout(lancerEclair,5000+Math.random()*9000)},650);
         }
-        // Horloge analogique
         const mC=$('cadran-montre'); for(let i=1;i<=12;i++){let box=document.createElement('div');box.className='chiffre-container-js';box.style.transform=`rotate(${i*30}deg)`;let n=document.createElement('div');n.className='chiffre-cadran-fixe';n.textContent=i;n.style.transform=`rotate(${-i*30}deg)`;box.appendChild(n);mC.appendChild(box)} for(let j=0;j<60;j++){let g=document.createElement('div');g.className=j%5===0?'graduation principale':'graduation';g.style.transform=`rotate(${j*6}deg)`;mC.appendChild(g)}
         const bg=$('school-view-bg'); if(bg){bg.onerror=()=>{document.body.style.backgroundImage='url("fond-final.png")';document.body.style.backgroundSize='100% 100%';};}
         applySkyMask(); setInterval(actualiserHorloge,1000); actualiserHorloge(); calculPhaseLune(); executerMeteo(); setInterval(executerMeteo,300000); setInterval(calculPhaseLune,300000);
